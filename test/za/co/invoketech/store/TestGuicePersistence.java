@@ -10,6 +10,7 @@ import com.google.inject.persist.jpa.JpaPersistModule;
 
 public class TestGuicePersistence {
 	
+	// Test change
 	private static final String PERSISTENCE_UNIT = "storeJpaUnit";
 	private static Injector injector;
 	
