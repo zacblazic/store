@@ -2,7 +2,7 @@ package za.co.invoketech.store.repository;
 
 import javax.persistence.EntityManager;
 
-import za.co.invoketech.store.model.productsystem.software.Game;
+import za.co.invoketech.store.model.product.software.Game;
 
 import com.google.inject.Inject;
 import com.google.inject.persist.Transactional;
