@@ -1,7 +1,11 @@
 package za.co.invoketech.store.model.productsystem.software;
 
 import java.io.Serializable;
-import javax.persistence.*;
+
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 import za.co.invoketech.store.model.productsystem.Product;
 

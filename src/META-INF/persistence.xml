@@ -6,6 +6,8 @@
 		<class>za.co.invoketech.store.model.productsystem.Product</class>
 		<class>za.co.invoketech.store.model.productsystem.software.Software</class>
 		<class>za.co.invoketech.store.model.productsystem.software.Game</class>
+		<class>za.co.invoketech.store.model.productsystem.software.OperatingSystem</class>
+		<class>za.co.invoketech.store.model.productsystem.software.AntiVirus</class>
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/store"/>
 			<property name="javax.persistence.jdbc.user" value="root"/>
