@@ -3,7 +3,7 @@ package za.co.invoketech.store;
 import java.math.BigDecimal;
 
 import za.co.invoketech.store.application.config.ApplicationInitializer;
-import za.co.invoketech.store.model.productsystem.software.Game;
+import za.co.invoketech.store.model.product.software.Game;
 import za.co.invoketech.store.repository.GameDao;
 
 import com.google.inject.Guice;

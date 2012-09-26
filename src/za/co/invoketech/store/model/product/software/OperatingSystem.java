@@ -1,10 +1,9 @@
-package za.co.invoketech.store.model.productsystem.software;
+package za.co.invoketech.store.model.product.software;
 
 import java.io.Serializable;
-import java.lang.String;
-import javax.persistence.*;
 
-import za.co.invoketech.store.model.productsystem.software.Software;
+import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 /**
  * Entity implementation class for Entity: OperatingSystem
