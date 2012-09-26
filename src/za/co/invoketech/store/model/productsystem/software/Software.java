@@ -7,7 +7,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.PrimaryKeyJoinColumn;
 
-import za.co.invoketech.store.model.productsystem.Product;
+import za.co.invoketech.store.model.product.Product;
 
 /**
  * Entity implementation class for Entity: Software

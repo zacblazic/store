@@ -1,4 +1,4 @@
-package za.co.invoketech.store.model.productsystem;
+package za.co.invoketech.store.model.product;
 
 import java.io.Serializable;
 import java.lang.String;
