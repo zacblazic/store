@@ -13,10 +13,11 @@ import javax.persistence.PrimaryKeyJoinColumn;
 @PrimaryKeyJoinColumn(name = "PRODUCT_ID")
 public class OperatingSystem extends Software implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	private String platform;
 	private String architechture;
 	private int licences;
-	private static final long serialVersionUID = 1L;
 
 	public OperatingSystem() {
 		super();

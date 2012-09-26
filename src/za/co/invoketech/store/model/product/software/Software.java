@@ -18,7 +18,6 @@ import za.co.invoketech.store.model.product.Product;
 @PrimaryKeyJoinColumn (name = "PRODUCT_ID")
 public class Software extends Product implements Serializable {
 
-	
 	private static final long serialVersionUID = 1L;
 		
 	private String developer;
