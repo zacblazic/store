@@ -15,6 +15,8 @@ import javax.persistence.*;
 @DiscriminatorColumn(name = "PRODUCT_TYPE", discriminatorType=DiscriminatorType.STRING)
 public class Product implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column (name = "PRODUCT_ID")
@@ -24,7 +26,6 @@ public class Product implements Serializable {
 	private String description;
 	private BigDecimal price;
 	private boolean discontinued;
-	private static final long serialVersionUID = 1L;
 
 	public Product() 
 	{

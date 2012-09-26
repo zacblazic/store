@@ -13,9 +13,9 @@ import javax.persistence.PrimaryKeyJoinColumn;
 @PrimaryKeyJoinColumn(name = "PRODUCT_ID")
 public class AntiVirus extends Software implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	
 	private int licences;
-	private static final long serialVersionUID = 1L;
 
 	public AntiVirus() {
 		super();

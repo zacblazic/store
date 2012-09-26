@@ -12,9 +12,10 @@ import javax.persistence.PrimaryKeyJoinColumn;
 @Entity
 @PrimaryKeyJoinColumn(name = "PRODUCT_ID")
 public class Game extends Software implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	
 	private String publisher;
-	private static final long serialVersionUID = 1L;
 
 	public Game() {
 		super();
