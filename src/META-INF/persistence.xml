@@ -5,18 +5,19 @@
 		<class>za.co.invoketech.store.model.product.peripheral.Audio</class>
 		<class>za.co.invoketech.store.model.Chassis</class>
 		<class>za.co.invoketech.store.model.product.peripheral.Mouse</class>
-		<class>za.co.invoketech.store.model.customer.PrivateBagAddress</class>
+		<class>za.co.invoketech.store.model.address.PrivateBagAddress</class>
 		<class>za.co.invoketech.store.model.product.peripheral.Peripheral</class>
 		<class>za.co.invoketech.store.model.product.peripheral.Display</class>
-		<class>za.co.invoketech.store.model.customer.PhysicalAddress</class>
+		<class>za.co.invoketech.store.model.address.PhysicalAddress</class>
 		<class>za.co.invoketech.store.model.product.software.Game</class>
-		<class>za.co.invoketech.store.model.customer.Address</class>
-		<class>za.co.invoketech.store.model.customer.PostOfficeBoxAddress</class>
+		<class>za.co.invoketech.store.model.address.Address</class>
+		<class>za.co.invoketech.store.model.address.PostOfficeBoxAddress</class>
 		<class>za.co.invoketech.store.model.product.software.Software</class>
 		<class>za.co.invoketech.store.model.product.software.AntiVirus</class>
 		<class>za.co.invoketech.store.model.product.software.OperatingSystem</class>
 		<class>za.co.invoketech.store.model.product.Product</class>
 		<class>za.co.invoketech.store.model.product.peripheral.Keyboard</class>
+		<class>za.co.invoketech.store.model.address.AddressBook</class>
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/store"/>
 			<property name="javax.persistence.jdbc.user" value="root"/>
