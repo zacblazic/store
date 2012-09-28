@@ -2,6 +2,7 @@ package za.co.invoketech.store.model.address;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,29 +13,65 @@ import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
 @Entity
-@Inheritance(strategy=InheritanceType.JOINED)
-@DiscriminatorColumn(name="ADDRESS_TYPE")
-@Table(name="ADDRESS")
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name = "ADDRESS_TYPE")
+@Table(name = "ADDRESS")
 public class Address implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "ADDRESS_ID")
 	private long addressId;
 	
-	private String identifier;
+	private String label;
+	private String firstName;
+	private String lastName;
+	private String phoneNumber;
 	private String suburb;
 	private String city;
 	private String postalCode;
 	private String country;
 	
-	public String getIdentifier() {
-		return identifier;
+	public long getAddressId() {
+		return addressId;
 	}
 	
-	public void setIdentifier(String identifier) {
-		this.identifier = identifier;
+	public void setAddressId(long addressId) {
+		this.addressId = addressId;
+	}
+	
+	public String getLabel() {
+		return label;
+	}
+	
+	public void setLabel(String label) {
+		this.label = label;
+	}
+	
+	public String getFirstName() {
+		return firstName;
+	}
+	
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	
+	public String getLastName() {
+		return lastName;
+	}
+	
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+	
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 	
 	public String getSuburb() {
@@ -67,9 +104,5 @@ public class Address implements Serializable {
 	
 	public void setCountry(String country) {
 		this.country = country;
-	}
-	
-	public long getAddressId() {
-		return addressId;
 	}
 }
