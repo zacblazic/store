@@ -1,4 +1,4 @@
-package za.co.invoketech.store.model.product.peripheral;
+package za.co.invoketech.store.model.product.component;
 
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
@@ -10,14 +10,14 @@ import za.co.invoketech.store.model.product.Brand;
 import za.co.invoketech.store.model.product.Product;
 
 /**
- * Entity implementation class for Entity: Peripheral
+ * Entity implementation class for Entity: Component
  *
  */
 @Entity
-@Table (name = "PERIPHERAL")
+@Table (name = "COMPONENT")
 @Inheritance(strategy=InheritanceType.JOINED)
-@PrimaryKeyJoinColumn (name = "PRODUCT_ID")
-public class Peripheral extends Product {
+@PrimaryKeyJoinColumn(name = "PRODUCT_ID")
+public class Component extends Product {
 
 	private static final long serialVersionUID = 1L;
 
@@ -31,5 +31,5 @@ public class Peripheral extends Product {
 		this.brand = brand;
 	} 
    
-   
+	
 }
