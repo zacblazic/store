@@ -11,6 +11,7 @@ import javax.persistence.*;
  *
  */
 @Entity
+@Table (name = "PRODUCT")
 @Inheritance (strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "PRODUCT_TYPE", discriminatorType=DiscriminatorType.STRING)
 public class Product implements Serializable {
@@ -22,15 +23,12 @@ public class Product implements Serializable {
 	@Column (name = "PRODUCT_ID")
 	private long id;
 	
+	@Column (unique = true)
 	private String productCode;
+	
 	private String description;
 	private BigDecimal price;
 	private boolean discontinued;
-
-	public Product() 
-	{
-		super();
-	}   
 	
 	public long getId() 
 	{

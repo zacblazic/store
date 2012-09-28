@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 import za.co.invoketech.store.application.config.ApplicationInitializer;
 import za.co.invoketech.store.model.product.software.Game;
-import za.co.invoketech.store.repository.GameDao;
+import za.co.invoketech.store.repository.ProductDao;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -26,7 +26,7 @@ public class TestGuicePersistence {
 //		
 //		ChassisDao dao = injector.getInstance(ChassisDao.class);
 //		dao.persist(chassis);
-		
+
 		Game game = new Game();
 		game.setDeveloper("DICE");
 		game.setPublisher("EA Games");
@@ -34,7 +34,16 @@ public class TestGuicePersistence {
 		game.setPrice(new BigDecimal(666.12));
 		game.setProductCode("GM-EDBF12");
 		
-		GameDao dao = injector.getInstance(GameDao.class);
-		dao.persist(game);
+		ProductDao prodDao = injector.getInstance(ProductDao.class);
+		prodDao.persist(game);
+		
+		Game game2 = new Game();
+		game2.setDeveloper("Grim");
+		game2.setPublisher("Ubisoft");
+		game2.setDescription("Ghost Recon 666");
+		game2.setPrice(new BigDecimal(450.25));
+		game2.setProductCode("GM-UGGR666");
+		
+		prodDao.persist(game2);
 	}
 }

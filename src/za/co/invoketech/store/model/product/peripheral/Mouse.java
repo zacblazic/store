@@ -1,26 +1,23 @@
 package za.co.invoketech.store.model.product.peripheral;
 
-import java.io.Serializable;
-import javax.persistence.*;
-
-import za.co.invoketech.store.model.product.peripheral.Peripheral;
+import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
 
 /**
  * Entity implementation class for Entity: Mouse
  *
  */
 @Entity
+@Table (name = "MOUSE")
 @PrimaryKeyJoinColumn (name = "PRODUCT_ID")
-public class Mouse extends Peripheral implements Serializable {
+public class Mouse extends Peripheral {
 
 	private static final long serialVersionUID = 1L;
 	
 	private int dpi;
 	private int buttons;
-
-	public Mouse() {
-		super();
-	}   
+	
 	public int getDpi() {
 		return this.dpi;
 	}
