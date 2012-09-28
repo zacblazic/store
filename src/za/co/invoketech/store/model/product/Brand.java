@@ -18,6 +18,7 @@ public class Brand implements Serializable {
 	@GeneratedValue (strategy = GenerationType.AUTO)
 	private long brand_id;
 	
+	@Column (unique = true)
 	private String brandName;  
   
 	public String getBrandName() {
