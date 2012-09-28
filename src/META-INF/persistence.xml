@@ -18,6 +18,11 @@
 		<class>za.co.invoketech.store.model.product.Product</class>
 		<class>za.co.invoketech.store.model.product.peripheral.Keyboard</class>
 		<class>za.co.invoketech.store.model.address.AddressBook</class>
+		<class>za.co.invoketech.store.model.product.component.Component</class>
+		<class>za.co.invoketech.store.model.product.Brand</class>
+		<class>za.co.invoketech.store.model.product.computer.Computer</class>
+		<class>za.co.invoketech.store.model.product.computer.CustomComputer</class>
+		<class>za.co.invoketech.store.model.product.computer.PreBuiltComputer</class>
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/store"/>
 			<property name="javax.persistence.jdbc.user" value="root"/>
