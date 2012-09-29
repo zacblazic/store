@@ -9,6 +9,6 @@ public class PersistenceModule extends AbstractModule {
 
 	@Override
 	protected void configure() {
-		bind(AddressDao.class).to(AddressDaoImpl.class);
+		bind(AddressDao.class).to(AddressDaoImpl.class);		
 	}
 }

@@ -1,4 +1,5 @@
 package za.co.invoketech.store;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -91,7 +92,6 @@ public class AddressDaoTest {
    
 		dao.persist(addressList.get(i));
 		addressIds.add(addressList.get(i).getAddressId());
-		Address add = dao.findById(addressIds.get(i));
 		Assert.assertNotNull(dao.findById(addressIds.get(i)));
 	}
  }

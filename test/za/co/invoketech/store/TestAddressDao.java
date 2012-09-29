@@ -18,13 +18,16 @@ public class TestAddressDao {
 		
 		injector = Guice.createInjector(new PersistenceModule(), new JpaPersistModule(PERSISTENCE_UNIT));
 		injector.getInstance(ApplicationInitializer.class);
-		
 		AddressDao dao = injector.getInstance(AddressDao.class);
 		
 		PhysicalAddress home = injector.getInstance(PhysicalAddress.class);
 		home.setUnitNumber("122");
 		home.setStreetName("Athens Road");
-		
 		dao.persist(home);
+		
+		Long homeId = home.getAddressId();
+		PhysicalAddress foundHome = (PhysicalAddress)dao.findById(homeId);
+		
+		System.out.println("Street name: " + foundHome.getStreetName());
 	}
 }
