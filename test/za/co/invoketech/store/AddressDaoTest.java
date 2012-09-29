@@ -40,6 +40,8 @@ public class AddressDaoTest {
   List<Address> addressList = createAddresses();
   List<Long> addressIds = new ArrayList<Long>();
   testPersist(addressList, addressIds);
+  testUpdate(addressIds);
+  testDelete(addressIds);
  }
  
  private List<Address> createAddresses(){
@@ -83,7 +85,7 @@ public class AddressDaoTest {
   return addressList;
  }
  
- private void testPersist(List<Address> addressList, List<Long>addressIds) {
+ private void testPersist(List<Address> addressList, List <Long>addressIds) {
   
 	for(int i = 0; i < addressList.size(); i++){
    
@@ -92,5 +94,21 @@ public class AddressDaoTest {
 		Address add = dao.findById(addressIds.get(i));
 		Assert.assertNotNull(dao.findById(addressIds.get(i)));
 	}
+ }
+ 
+ private void testUpdate(List<Long> addressIds){
+	 
+	 Address initialAddress = dao.findById(addressIds.get(1));
+	 initialAddress.setCity("Johannesburg");
+	 dao.merge(initialAddress);
+	 Address updatedAddress = dao.findById(initialAddress.getAddressId());
+	 Assert.assertFalse(initialAddress.getCity() == updatedAddress.getCity());
+ }
+ 
+ private void testDelete(List<Long> addressIds){
+	 Address add = dao.findById(addressIds.get(1));
+	 Long id = add.getAddressId();
+	 dao.removeById(id);
+	 Assert.assertNull(dao.findById(id));
  }
 }
