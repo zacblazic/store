@@ -5,12 +5,12 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
-import za.co.invoketech.store.repository.dao.GenericDao;
+import za.co.invoketech.store.service.dao.Dao;
 
 import com.google.inject.Inject;
 
-public class EclipseLinkGenericDao<T extends Serializable, ID> implements GenericDao<T, ID> {
-
+public class GenericDao<T extends Serializable, ID> implements Dao<T, ID> {
+	
 	@Inject
     EntityManager em;
 

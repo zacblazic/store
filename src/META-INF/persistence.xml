@@ -3,7 +3,6 @@
 	<persistence-unit name="storeJpaUnit" transaction-type="RESOURCE_LOCAL">		
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<class>za.co.invoketech.store.model.product.peripheral.Audio</class>
-		<class>za.co.invoketech.store.model.Chassis</class>
 		<class>za.co.invoketech.store.model.product.Brand</class>
 		<class>za.co.invoketech.store.model.product.software.Game</class>
 		<class>za.co.invoketech.store.model.address.PostOfficeBoxAddress</class>
