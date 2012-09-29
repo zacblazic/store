@@ -12,9 +12,13 @@ public abstract class GenericDaoImpl<T, ID> implements GenericDao<T, ID> {
 	
 	@Inject
     protected EntityManager em;
-
-	private Class<T> type;
-
+	
+	private final Class<T> type;
+	
+	public GenericDaoImpl(Class<T> type) {
+		this.type = type;
+	}
+	
 	@Override
 	public T findById(ID id) {
 		return em.find(type, id);
