@@ -2,13 +2,11 @@ package za.co.invoketech.store;
 
 import za.co.invoketech.store.application.config.ApplicationInitializer;
 import za.co.invoketech.store.application.config.PersistenceModule;
-import za.co.invoketech.store.model.address.Address;
 import za.co.invoketech.store.model.address.PhysicalAddress;
-import za.co.invoketech.store.service.dao.Dao;
+import za.co.invoketech.store.service.dao.AddressDao;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import com.google.inject.Key;
 import com.google.inject.persist.jpa.JpaPersistModule;
 
 public class TestAddressDao {
@@ -21,8 +19,7 @@ public class TestAddressDao {
 		injector = Guice.createInjector(new PersistenceModule(), new JpaPersistModule(PERSISTENCE_UNIT));
 		injector.getInstance(ApplicationInitializer.class);
 		
-		
-		Dao<Address, Long> dao = injector.getInstance(new Key<Dao<Address, Long>>(){});
+		AddressDao dao = injector.getInstance(AddressDao.class);
 		
 		PhysicalAddress home = injector.getInstance(PhysicalAddress.class);
 		home.setUnitNumber("122");
