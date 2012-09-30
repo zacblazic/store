@@ -3,6 +3,7 @@ package za.co.invoketech.store.repository.dao.generic.internal;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
 import za.co.invoketech.store.repository.dao.generic.GenericDao;
 
@@ -24,24 +25,29 @@ public abstract class GenericDaoImpl<T, ID> implements GenericDao<T, ID> {
 		return em.find(type, id);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public T findByAttribute(String attribute, String value) {
-		List<T> list = (List<T>) em.createQuery("SELECT e FROM " + type.getName() + " e WHERE e." + attribute + "=?1").setParameter(1, value).getResultList();
-        return (list.isEmpty()) ? null : list.get(0);
+		String sql = "SELECT e FROM " + type.getSimpleName() + " e WHERE e." + attribute + " = :attribute";
+		TypedQuery<T> query = em.createQuery(sql, type).setParameter("attribute", value);
+		List<T> results = query.getResultList();
+		
+		return results.isEmpty() ? null : results.get(0);
 	}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public List<T> findEntitiesByAttribute(String attribute, String value) {
-		List<T> list = em.createQuery("SELECT e FROM  " + type.getName() + " e WHERE e." + attribute + "=?1").setParameter(1, value).getResultList();
-        return list;
-	}
-
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<T> findAll() {
-		return em.createQuery("FROM " + type.getName()).getResultList();
+		String sql = "SELECT e FROM " + type.getSimpleName() + " e";
+		TypedQuery<T> query = em.createQuery(sql, type);
+		
+		return query.getResultList();
+	}
+	
+	@Override
+	public List<T> findAllByAttribute(String attribute, String value) {
+		String sql = "SELECT e FROM " + type.getSimpleName() + " e WHERE e." + attribute + " = :attribute";
+		TypedQuery<T> query = em.createQuery(sql, type).setParameter("attribute", value);
+		
+		return query.getResultList();
 	}
 
 	@Override
@@ -67,6 +73,9 @@ public abstract class GenericDaoImpl<T, ID> implements GenericDao<T, ID> {
 
 	@Override
 	public long count() {
-		return (long) em.createQuery("SELECT count(e) FROM " + type.getName() + " e").getSingleResult();
+		String sql = "SELECT COUNT(e) FROM " + type.getSimpleName() + " e";
+		TypedQuery<Long> query = em.createQuery(sql, Long.class);
+		
+		return query.getSingleResult().longValue();
 	}
 }

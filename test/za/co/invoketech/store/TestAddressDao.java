@@ -28,6 +28,6 @@ public class TestAddressDao {
 		Long homeId = home.getAddressId();
 		PhysicalAddress foundHome = (PhysicalAddress)dao.findById(homeId);
 		
-		System.out.println("Street name: " + foundHome.getStreetName());
+		System.out.println(foundHome.getUnitNumber() + " " + foundHome.getStreetName());
 	}
 }
