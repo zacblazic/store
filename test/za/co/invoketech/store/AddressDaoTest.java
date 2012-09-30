@@ -102,7 +102,7 @@ public class AddressDaoTest {
 	 initialAddress.setCity("Johannesburg");
 	 dao.merge(initialAddress);
 	 Address updatedAddress = dao.findById(initialAddress.getAddressId());
-	 Assert.assertFalse(initialAddress.getCity() == updatedAddress.getCity());
+	 Assert.assertTrue(updatedAddress.getCity().equals("Johannesburg"));
  }
  
  private void testDelete(List<Long> addressIds){
