@@ -14,21 +14,22 @@
  * the License.
  */
 
-package za.co.invoketech.store.repository.dao.internal;
+package za.co.invoketech.store.repository.dao;
 
-import za.co.invoketech.store.model.address.Address;
-import za.co.invoketech.store.service.dao.AddressDao;
-
-import com.google.inject.persist.Transactional;
+import java.util.List;
 
 /**
  * @author zacblazic@gmail.com (Zac Blazic)
  */
+public interface GenericDao<T, ID> {
 
-@Transactional
-class AddressDaoImpl extends GenericDaoImpl<Address, Long> implements AddressDao {
-	
-	public AddressDaoImpl() {
-		super(Address.class);
-	}
+    public T findById(final ID id);
+    public T findByAttribute(String attribute, String value);
+    public List<T> findAll();
+    public List<T> findAllByAttribute(String attribute, String value);
+    public void persist(final T entity);
+    public void merge(final T entity);
+    public void remove(final T entity);
+    public void removeById(final ID id);
+    public long count();
 }

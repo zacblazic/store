@@ -9,11 +9,11 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import za.co.invoketech.store.application.config.ApplicationInitializer;
-import za.co.invoketech.store.application.config.PersistenceModule;
 import za.co.invoketech.store.model.address.Address;
 import za.co.invoketech.store.model.address.PhysicalAddress;
 import za.co.invoketech.store.model.address.PostOfficeBoxAddress;
 import za.co.invoketech.store.model.address.PrivateBagAddress;
+import za.co.invoketech.store.repository.dao.internal.PersistenceModule;
 import za.co.invoketech.store.service.dao.AddressDao;
 
 import com.google.inject.Guice;
