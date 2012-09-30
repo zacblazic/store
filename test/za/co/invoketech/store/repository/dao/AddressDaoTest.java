@@ -1,4 +1,4 @@
-package za.co.invoketech.store;
+package za.co.invoketech.store.repository.dao;
 
 import java.util.ArrayList;
 import java.util.List;
