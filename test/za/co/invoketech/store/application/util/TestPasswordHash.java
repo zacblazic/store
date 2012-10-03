@@ -1,3 +1,4 @@
+package za.co.invoketech.store.application.util;
 
 public class TestPasswordHash {
 
@@ -6,9 +7,9 @@ public class TestPasswordHash {
 	 */
 	public static void main(String[] args) throws Exception {
 
-		String password = "Kingston58";
+		String password = "mushki12";
 		byte[] salt = {4,5,3,5,4,3,8,4,3};
-		byte[] hashedPassword = PasswordHash.getPasswordHash(password, salt);
+		byte[] hashedPassword = Hash.sha2(password, salt);
 		
 		System.out.println("Password: " + password);
 		System.out.println("Hashed password: ");
