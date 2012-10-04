@@ -8,7 +8,7 @@ public class Hash {
 	
 	public static byte[] sha2(String password, byte[] salt) throws NoSuchAlgorithmException, UnsupportedEncodingException{
 		
-		MessageDigest digest = MessageDigest.getInstance("SHA2");
+		MessageDigest digest = MessageDigest.getInstance("SSHA-256");
 		digest.reset();
 		digest.update(salt);
 		return digest.digest(password.getBytes("UTF-8"));
