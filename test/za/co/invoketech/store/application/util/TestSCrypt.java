@@ -18,6 +18,7 @@ public class TestSCrypt {
         System.out.println("Password: " + password);
         System.out.println("Hasshed password 1: " + hashedPassword1);
         System.out.println("Hasshed password 2: " + hashedPassword2);
+        
+        System.out.println("Check status: " + SCrypt.check(password, hashedpassword1));
 	}
-
 }
