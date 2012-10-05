@@ -11,6 +11,21 @@
 		<class>za.co.invoketech.store.model.address.Address</class>
 		<class>za.co.invoketech.store.model.customer.Customer</class>
 		<class>za.co.invoketech.store.model.address.PhysicalAddress</class>
+		<class>za.co.invoketech.store.model.product.peripheral.Audio</class>
+		<class>za.co.invoketech.store.model.product.Brand</class>
+		<class>za.co.invoketech.store.model.product.software.Game</class>
+		<class>za.co.invoketech.store.model.product.software.OperatingSystem</class>
+		<class>za.co.invoketech.store.model.product.Product</class>
+		<class>za.co.invoketech.store.model.product.computer.Computer</class>
+		<class>za.co.invoketech.store.model.product.peripheral.Keyboard</class>
+		<class>za.co.invoketech.store.model.product.component.Component</class>
+		<class>za.co.invoketech.store.model.product.peripheral.Mouse</class>
+		<class>za.co.invoketech.store.model.product.peripheral.Peripheral</class>
+		<class>za.co.invoketech.store.model.product.peripheral.Display</class>
+		<class>za.co.invoketech.store.model.product.software.Software</class>
+		<class>za.co.invoketech.store.model.product.computer.CustomComputer</class>
+		<class>za.co.invoketech.store.model.product.computer.PreBuiltComputer</class>
+		<class>za.co.invoketech.store.model.product.software.AntiVirus</class>
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/store"/>
 			<property name="javax.persistence.jdbc.user" value="root"/>
