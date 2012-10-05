@@ -2,6 +2,7 @@ package za.co.invoketech.store.model.address;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,8 +10,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "ADDRESS")
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "ADDRESS_TYPE")
 public class Address implements Serializable {
@@ -19,6 +22,7 @@ public class Address implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "ADDRESS_ID")
 	private Long addressId;
 	
 	private String label;
@@ -29,6 +33,7 @@ public class Address implements Serializable {
 	private String city;
 	private String postalCode;
 	private String country;
+	private boolean deleted;
 	
 	public long getAddressId() {
 		return addressId;
@@ -100,5 +105,13 @@ public class Address implements Serializable {
 	
 	public void setCountry(String country) {
 		this.country = country;
+	}
+	
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 }
