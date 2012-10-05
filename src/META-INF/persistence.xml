@@ -2,26 +2,6 @@
 <persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
 	<persistence-unit name="storeJpaUnit" transaction-type="RESOURCE_LOCAL">		
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-		<class>za.co.invoketech.store.model.product.peripheral.Audio</class>
-		<class>za.co.invoketech.store.model.product.Brand</class>
-		<class>za.co.invoketech.store.model.product.software.Game</class>
-		<class>za.co.invoketech.store.model.address.PostOfficeBoxAddress</class>
-		<class>za.co.invoketech.store.model.product.software.OperatingSystem</class>
-		<class>za.co.invoketech.store.model.product.Product</class>
-		<class>za.co.invoketech.store.model.product.computer.Computer</class>
-		<class>za.co.invoketech.store.model.product.peripheral.Keyboard</class>
-		<class>za.co.invoketech.store.model.product.component.Component</class>
-		<class>za.co.invoketech.store.model.product.peripheral.Mouse</class>
-		<class>za.co.invoketech.store.model.product.peripheral.Peripheral</class>
-		<class>za.co.invoketech.store.model.product.peripheral.Display</class>
-		<class>za.co.invoketech.store.model.address.AddressBook</class>
-		<class>za.co.invoketech.store.model.address.PrivateBagAddress</class>
-		<class>za.co.invoketech.store.model.product.computer.CustomComputer</class>
-		<class>za.co.invoketech.store.model.product.software.Software</class>
-		<class>za.co.invoketech.store.model.product.computer.PreBuiltComputer</class>
-		<class>za.co.invoketech.store.model.product.software.AntiVirus</class>
-		<class>za.co.invoketech.store.model.address.Address</class>
-		<class>za.co.invoketech.store.model.address.PhysicalAddress</class>
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/store"/>
 			<property name="javax.persistence.jdbc.user" value="root"/>
