@@ -1,4 +1,4 @@
-package za.co.invoketech.store.application.util;
+package za.co.invoketech.store.application.security;
 
 import za.co.invoketech.store.application.security.PBKDF2;
 

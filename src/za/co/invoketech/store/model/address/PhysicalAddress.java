@@ -15,7 +15,6 @@ public class PhysicalAddress extends Address {
 
 	private String unitNumber;
 	private String streetName;
-	private boolean deleted;
 	
 	public String getUnitNumber() {
 		return unitNumber;
@@ -31,13 +30,5 @@ public class PhysicalAddress extends Address {
 	
 	public void setStreetName(String streetName) {
 		this.streetName = streetName;
-	}
-	
-	public boolean isDeleted() {
-		return deleted;
-	}
-
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
 	}
 }
