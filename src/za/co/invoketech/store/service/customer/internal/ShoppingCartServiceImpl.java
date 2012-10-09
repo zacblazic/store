@@ -1,36 +1,41 @@
 package za.co.invoketech.store.service.customer.internal;
 
+import com.google.inject.Inject;
+
 import za.co.invoketech.store.service.customer.ShoppingCartService;
+import za.co.invoketech.store.service.dao.CustomerDao;
+import za.co.invoketech.store.service.dao.ProductDao;
 
 public class ShoppingCartServiceImpl implements ShoppingCartService {
+	
+	@Inject
+	private CustomerDao customerDao;
+	
+	@Inject
+	private ProductDao productDao;
 
 	@Override
 	public void addToCart(Long productId) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void removeFromCart(Long shoppingCartItemId) {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void updateCart() {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void moveToWishlist() {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void checkout() {
-		// TODO Auto-generated method stub
 		
 	}
 

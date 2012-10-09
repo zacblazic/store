@@ -30,6 +30,16 @@ public class Product implements Serializable {
 	private BigDecimal price;
 	private boolean discontinued;
 	
+	public Product() {
+	}
+	
+	public Product(Product product) {
+		this.id = product.id;
+		this.productCode = product.productCode;
+		this.price = product.price;
+		this.discontinued = product.discontinued;
+	}
+
 	public long getId() 
 	{
 		return id;
