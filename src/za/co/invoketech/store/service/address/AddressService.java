@@ -13,5 +13,4 @@ public interface AddressService {
 	public List<Address> getAddressList();
 	public Address getPrimaryAddress();
 	public void setPrimaryAddress();
-	 
 }
