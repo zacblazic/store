@@ -24,7 +24,7 @@ public class ShoppingCart implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "SHOPPING_CART_ID")
-	private long shoppingCartId;
+	private long id;
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "SHOPPING_CART_ID", nullable = false)
@@ -33,14 +33,14 @@ public class ShoppingCart implements Serializable {
 	@Column(name = "DELETED")
 	private boolean deleted;
 	
-	public long getShoppingCartId() {
-		return shoppingCartId;
+	public long getId() {
+		return id;
 	}
 
-	public void setShoppingCartId(long shoppingCartId) {
-		this.shoppingCartId = shoppingCartId;
+	public void setId(long id) {
+		this.id = id;
 	}
-	
+
 	public void addItem(ShoppingCartItem item) {	
 		itemList.add(new ShoppingCartItem(item));
 	}
@@ -55,7 +55,7 @@ public class ShoppingCart implements Serializable {
 		while(iterator.hasNext()) {
 			ShoppingCartItem item = iterator.next();
 			
-			if(item.getShoppingCartItemId() == itemId) {
+			if(item.getId() == itemId) {
 				iterator.remove();
 				break;
 			}
@@ -74,5 +74,13 @@ public class ShoppingCart implements Serializable {
 	
 	public int getItemCount() {
 		return itemList.size();
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
 }
