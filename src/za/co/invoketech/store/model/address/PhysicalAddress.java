@@ -1,5 +1,6 @@
 package za.co.invoketech.store.model.address;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -13,8 +14,13 @@ public class PhysicalAddress extends Address {
 
 	private static final long serialVersionUID = 1L;
 
+	@Column(name = "UNIT_NUMBER")
 	private String unitNumber;
+	
+	@Column(name = "STREET_NAME")
 	private String streetName;
+	
+	// TODO: Add static constructor
 	
 	public String getUnitNumber() {
 		return unitNumber;

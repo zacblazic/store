@@ -54,7 +54,7 @@ public class AddressBookServiceImpl implements AddressBookService {
 		while(iterator.hasNext()) {
 			Address address = iterator.next();
 			
-			if(address.getAddressId() == addressId) {
+			if(address.getId() == addressId) {
 				iterator.remove();
 				break;
 			}

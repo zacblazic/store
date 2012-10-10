@@ -1,6 +1,7 @@
-package za.co.invoketech.store.model.shoppingcart;
+package za.co.invoketech.store.model.order;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,47 +14,52 @@ import javax.persistence.Table;
 
 import za.co.invoketech.store.model.product.Product;
 
-/**
- * @author zacblazic@gmail.com (Zac Blazic)
- */
 @Entity
-@Table(name = "SHOPPING_CART_ITEM")
-public class ShoppingCartItem implements Serializable {
-	
+@Table(name = "ORDER_ITEM")
+public class OrderItem implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 	private static final int DEFAULT_QUANTITY = 1;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "SHOPPING_CART_ITEM_ID")
+	@Column(name = "ORDER_ITEM_ID")
 	private long id;
 	
 	@OneToOne
-	@JoinColumn(name = "PRODUCT_ID", nullable = false)
+	@JoinColumn(name = "PRODUCT_ID")
 	private Product product;
 	
 	@Column(name = "QUANTITY")
 	private int quantity;
 	
+	@Column(name = "UNIT_PRICE")
+	private BigDecimal unitPrice;
+	
 	@Column(name = "DELETED")
 	private boolean deleted;
 	
-	public static ShoppingCartItem getInstance(Product product) {
-		return getInstance(product, DEFAULT_QUANTITY);
+	public static OrderItem getInstance(Product product, BigDecimal unitPrice) {
+		return getInstance(product, DEFAULT_QUANTITY, unitPrice);
 	}
 	
-	public static ShoppingCartItem getInstance(Product product, int quantity) {
+	public static OrderItem getInstance(Product product, int quantity, BigDecimal unitPrice) {
 		if(quantity <= 0) {
 			// TODO: Handle invalid quantity
 		}
 		
-		ShoppingCartItem item = new ShoppingCartItem();
+		if(unitPrice.compareTo(BigDecimal.ZERO) < 0) {
+			// TODO: Handle invalid unit price
+		}
+		
+		OrderItem item = new OrderItem();
 		item.product = product;
 		item.quantity = quantity;
+		item.unitPrice = unitPrice;
 		
 		return item;
 	}
-	
+
 	public long getId() {
 		return id;
 	}
@@ -80,6 +86,18 @@ public class ShoppingCartItem implements Serializable {
 		}
 		
 		this.quantity = quantity;
+	}
+
+	public BigDecimal getUnitPrice() {
+		return unitPrice;
+	}
+
+	public void setUnitPrice(BigDecimal unitPrice) {
+		if(unitPrice.compareTo(BigDecimal.ZERO) < 0) {
+			// TODO: Handle invalid unit price
+		}
+		
+		this.unitPrice = unitPrice;
 	}
 
 	public boolean isDeleted() {

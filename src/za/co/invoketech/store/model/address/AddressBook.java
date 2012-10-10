@@ -23,7 +23,7 @@ public class AddressBook implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ADDRESS_BOOK_ID")
-	private long addressBookId;
+	private long id;
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "PRIMARY_ADDRESS_ID")
@@ -33,8 +33,24 @@ public class AddressBook implements Serializable {
 	@JoinColumn(name = "ADDRESS_BOOK_ID", nullable = false)
 	private List<Address> addressList;
 	
+	@Column(name = "DELETED")
 	private boolean deleted;
 	
+	public static AddressBook getInstance(Address primaryAddress) {
+		AddressBook book = new AddressBook();
+		book.primaryAddress = primaryAddress;
+		
+		return book;
+	}
+	
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
 	public Address getPrimaryAddress() {
 		return primaryAddress;
 	}

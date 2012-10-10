@@ -23,24 +23,33 @@ public class Customer implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "CUSTOMER_ID")
-	private long customerId;
+	private long id;
 	
+	@Column(name = "TITLE")
 	private String title;
+	
+	@Column(name = "FIRST_NAME")
 	private String firstName;
+	
+	@Column(name = "LAST_NAME")
 	private String lastName;
+	
+	@Column(name = "PHONE_NUMBER")
 	private String phoneNumber;
+	
+	@Column(name = "DELETED")
 	private boolean deleted;
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "ADDRESS_BOOK_ID", nullable = false)
 	private AddressBook addressBook;
 
-	public long getCustomerId() {
-		return customerId;
+	public long getId() {
+		return id;
 	}
 
-	public void setCustomerId(long customerId) {
-		this.customerId = customerId;
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getTitle() {

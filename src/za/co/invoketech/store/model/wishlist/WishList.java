@@ -45,10 +45,6 @@ public class WishList implements Serializable {
 	@Column(name = "DELETED")
 	private boolean deleted;
 	
-	public WishList() {
-		
-	}
-	
 	public static WishList getInstance (String label) {
 		WishList list = new WishList();
 		list.label = label;

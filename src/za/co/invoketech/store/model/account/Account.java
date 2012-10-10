@@ -1,6 +1,7 @@
 package za.co.invoketech.store.model.account;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -37,15 +38,12 @@ public class Account implements Serializable {
 	
 	@Column(name = "DELETED")
 	private boolean deleted;
-
-	public Account() {
-		
-	}
 	
 	public static Account getInstance(String username, String password) {
 		Account account = new Account();
 		account.username = username;
 		account.password = password;
+		account.preferenceList = new ArrayList<Preference>();
 		
 		return account;
 	}
@@ -72,6 +70,14 @@ public class Account implements Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public void addPreference(Preference preference) {
+		preferenceList.add(preference);
+	}
+	
+	public void removePreference(Preference preference) {
+		preferenceList.remove(preference);
 	}
 
 	public List<Preference> getPreferenceList() {

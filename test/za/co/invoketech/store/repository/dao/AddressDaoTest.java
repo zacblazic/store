@@ -89,7 +89,7 @@ public class AddressDaoTest {
 
 		for (int i = 0; i < addressList.size(); i++) {
 			dao.persist(addressList.get(i));
-			addressIds.add(addressList.get(i).getAddressId());
+			addressIds.add(addressList.get(i).getId());
 			Assert.assertNotNull(dao.findById(addressIds.get(i)));
 		}
 	}
@@ -99,14 +99,14 @@ public class AddressDaoTest {
 		Address initialAddress = dao.findById(addressIds.get(1));
 		initialAddress.setCity("Johannesburg");
 		dao.merge(initialAddress);
-		Address updatedAddress = dao.findById(initialAddress.getAddressId());
+		Address updatedAddress = dao.findById(initialAddress.getId());
 		Assert.assertTrue(updatedAddress.getCity().equals("Johannesburg"));
 	}
 
 	private void testDelete(List<Long> addressIds) {
 
 		Address add = dao.findById(addressIds.get(1));
-		Long id = add.getAddressId();
+		Long id = add.getId();
 		dao.removeById(id);
 		Assert.assertNull(dao.findById(id));
 	}

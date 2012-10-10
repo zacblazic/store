@@ -40,10 +40,6 @@ public class WishListItem implements Serializable {
 	
 	@Column(name = "DELETED")
 	private boolean deleted;
-
-	public WishListItem() {
-		
-	}
 	
 	public static WishListItem getInstance (Product product) {
 		// TODO: Check that this is the best way to get current date

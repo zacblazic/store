@@ -23,26 +23,45 @@ public abstract class Address implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ADDRESS_ID")
-	private Long addressId;
+	private long id;
 	
-	private String label;
-	private String firstName;
-	private String lastName;
-	private String phoneNumber;
-	private String suburb;
-	private String city;
-	private String postalCode;
-	private String country;
-	private boolean deleted;
+	@Column(name = "LABEL")
+	protected String label;
 	
-	public long getAddressId() {
-		return addressId;
+	@Column(name = "FIRST_NAME")
+	protected String firstName;
+	
+	@Column(name = "LAST_NAME")
+	protected String lastName;
+	
+	@Column(name = "PHONE_NUMBER")
+	protected String phoneNumber;
+	
+	@Column(name = "SUBURB")
+	protected String suburb;
+	
+	@Column(name = "CITY")
+	protected String city;
+	
+	@Column(name = "POSTAL_CODE")
+	protected String postalCode;
+	
+	@Column(name = "COUNTRY")
+	protected String country;
+	
+	@Column(name = "DELETED")
+	protected boolean deleted;
+	
+	// TODO: Add static constructor
+	
+	public long getId() {
+		return id;
 	}
-	
-	public void setAddressId(long addressId) {
-		this.addressId = addressId;
+
+	public void setId(long id) {
+		this.id = id;
 	}
-	
+
 	public String getLabel() {
 		return label;
 	}

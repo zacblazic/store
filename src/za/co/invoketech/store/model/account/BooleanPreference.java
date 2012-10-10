@@ -18,10 +18,6 @@ public class BooleanPreference extends Preference {
 	@Column(name = "VALUE")
 	private boolean value;
 	
-	public BooleanPreference() {
-		
-	}
-	
 	public static BooleanPreference getInstance(String name) {
 		return getInstance(name, DEFAULT_BOOLEAN_PREFERENCE_VALUE);
 	}
