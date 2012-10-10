@@ -13,6 +13,9 @@ import javax.persistence.Table;
 
 import za.co.invoketech.store.model.product.Product;
 
+/**
+ * @author zacblazic@gmail.com (Zac Blazic)
+ */
 @Entity
 @Table(name = "SHOPPING_CART_ITEM")
 public class ShoppingCartItem implements Serializable {
@@ -39,19 +42,20 @@ public class ShoppingCartItem implements Serializable {
 		
 	}
 	
-	public ShoppingCartItem(Product product) {
-		this(product, DEFAULT_QUANTITY);
+	public static ShoppingCartItem getInstance(Product product) {
+		return getInstance(product, DEFAULT_QUANTITY);
 	}
 	
-	public ShoppingCartItem(Product product, int quantity) {
-		this.product = new Product(product);
-		this.quantity = quantity;
-	}
-	
-	public ShoppingCartItem(ShoppingCartItem item) {
-		this.id = item.id;
-		this.product = item.product;
-		this.quantity = item.quantity;
+	public static ShoppingCartItem getInstance(Product product, int quantity) {
+		if(quantity <= 0) {
+			// TODO: Handle invalid quantity
+		}
+		
+		ShoppingCartItem item = new ShoppingCartItem();
+		item.product = product;
+		item.quantity = quantity;
+		
+		return item;
 	}
 	
 	public long getId() {
@@ -63,11 +67,11 @@ public class ShoppingCartItem implements Serializable {
 	}
 
 	public Product getProduct() {
-		return new Product(product);
+		return product;
 	}
 
 	public void setProduct(Product product) {
-		this.product = new Product(product);
+		this.product = product;
 	}
 
 	public int getQuantity() {

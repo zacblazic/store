@@ -23,21 +23,39 @@ public class Account implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ACCOUNT_ID")
-	private long accountId;
+	private long id;
 	
+	@Column(name = "USERNAME")
 	private String username;
+	
+	@Column(name = "PASSWORD")
 	private String password;
    
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "ACCOUNT_ID")
 	private List<Preference> preferenceList;
+	
+	@Column(name = "DELETED")
+	private boolean deleted;
 
-	public long getAccountId() {
-		return accountId;
+	public Account() {
+		
+	}
+	
+	public static Account getInstance(String username, String password) {
+		Account account = new Account();
+		account.username = username;
+		account.password = password;
+		
+		return account;
+	}
+	
+	public long getId() {
+		return id;
 	}
 
-	public void setAccountId(long accountId) {
-		this.accountId = accountId;
+	public void setId(long id) {
+		this.id = id;
 	}
 
 	public String getUsername() {
@@ -59,8 +77,14 @@ public class Account implements Serializable {
 	public List<Preference> getPreferenceList() {
 		return preferenceList;
 	}
+	
+	// TODO: Should we allow setPreferenceList()?
 
-	public void setPreferenceList(List<Preference> preferenceList) {
-		this.preferenceList = preferenceList;
+	public boolean isDeleted() {
+		return deleted;
 	}
+
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
+	}	
 }
