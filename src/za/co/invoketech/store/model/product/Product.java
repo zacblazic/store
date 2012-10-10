@@ -23,21 +23,24 @@ public class Product implements Serializable {
 	@Column (name = "PRODUCT_ID")
 	private long id;
 	
-	@Column (unique = true)
+	@Column (name = "PRODUCT_CODE", unique = true)
 	private String productCode;
 	
+	@Column (name = "DESCRIPTION")
 	private String description;
+	
+	@Column (name = "PRICE")
 	private BigDecimal price;
+	
+	@Column (name = "DISCONTINUED")
 	private boolean discontinued;
 	
 	public Product() {
 	}
 	
-	public Product(Product product) {
-		this.id = product.id;
-		this.productCode = product.productCode;
-		this.price = product.price;
-		this.discontinued = product.discontinued;
+	public static Product getInstance() {
+		Product product = new Product();
+		return product;
 	}
 
 	public long getId() 
