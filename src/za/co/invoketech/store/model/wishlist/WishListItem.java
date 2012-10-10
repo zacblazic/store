@@ -19,7 +19,6 @@ import za.co.invoketech.store.model.product.Product;
 /**
  * @author zacblazic@gmail.com (Zac Blazic)
  */
-
 @Entity
 @Table(name = "WISH_LIST_ITEM")
 public class WishListItem implements Serializable {
@@ -31,13 +30,13 @@ public class WishListItem implements Serializable {
 	@Column(name = "WISH_LIST_ITEM_ID")
 	private long id;
 	
-	@Temporal(TemporalType.DATE)
-	@Column(name = "ADDED_DATE")
-	private Date addedDate;
-	
 	@OneToOne
 	@JoinColumn(name = "PRODUCT_ID", nullable = false)
 	private Product product;
+	
+	@Temporal(TemporalType.DATE)
+	@Column(name = "ADDED_DATE")
+	private Date addedDate;
 	
 	@Column(name = "DELETED")
 	private boolean deleted;
@@ -46,13 +45,17 @@ public class WishListItem implements Serializable {
 		
 	}
 	
+	public static WishListItem getInstance (Product product) {
+		// TODO: Check that this is the best way to get current date
+		return getInstance(product, new Date());
+	}
 	
-	
-	public WishListItem(WishListItem item) {
-		this.id = item.id;
-		this.addedDate = item.addedDate;
-		this.product = item.product;
-		this.deleted = item.deleted;
+	public static WishListItem getInstance(Product product, Date addedDate) {
+		WishListItem item = new WishListItem();
+		item.product = product;
+		item.addedDate = addedDate;
+		
+		return item;
 	}
 	
 	public long getId() {
@@ -64,19 +67,19 @@ public class WishListItem implements Serializable {
 	}
 
 	public Date getAddedDate() {
-		return new Date(addedDate.getTime());
+		return addedDate;
 	}
 
 	public void setAddedDate(Date addedDate) {
-		this.addedDate = new Date(addedDate.getTime());
+		this.addedDate = addedDate;
 	}
 
 	public Product getProduct() {
-		return new Product(product);
+		return product;
 	}
 
 	public void setProduct(Product product) {
-		this.product = new Product(product);
+		this.product = product;
 	}
 
 	public boolean isDeleted() {

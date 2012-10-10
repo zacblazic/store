@@ -16,7 +16,7 @@ import javax.persistence.Table;
 @Table(name = "ADDRESS")
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "ADDRESS_TYPE")
-public class Address implements Serializable {
+public abstract class Address implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	

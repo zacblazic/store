@@ -2,7 +2,6 @@ package za.co.invoketech.store.model.shoppingcart;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -15,6 +14,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+/**
+ * @author zacblazic@gmail.com (Zac Blazic)
+ */
 @Entity
 @Table(name = "SHOPPING_CART")
 public class ShoppingCart implements Serializable {
@@ -33,6 +35,17 @@ public class ShoppingCart implements Serializable {
 	@Column(name = "DELETED")
 	private boolean deleted;
 	
+	public ShoppingCart() {
+		
+	}
+
+	public static ShoppingCart getInstance() {
+		ShoppingCart cart = new ShoppingCart();
+		cart.itemList = new ArrayList<ShoppingCartItem>();
+		
+		return cart;
+	}
+	
 	public long getId() {
 		return id;
 	}
@@ -42,35 +55,23 @@ public class ShoppingCart implements Serializable {
 	}
 
 	public void addItem(ShoppingCartItem item) {	
-		itemList.add(new ShoppingCartItem(item));
+		itemList.add(item);
 	}
 	
 	public void removeItem(ShoppingCartItem item) {
 		itemList.remove(item);
 	}
 	
-	public void removeItem(long itemId) {
-		Iterator<ShoppingCartItem> iterator = itemList.iterator();
-		
-		while(iterator.hasNext()) {
-			ShoppingCartItem item = iterator.next();
-			
-			if(item.getId() == itemId) {
-				iterator.remove();
-				break;
-			}
-		}
+	public void removeAllItems() {
+		// Used instead of clear to remove unused memory
+		itemList = new ArrayList<ShoppingCartItem>();
 	}
 	
-	public List<ShoppingCartItem> getItems() {
-		List<ShoppingCartItem> resultList = new ArrayList<ShoppingCartItem>();
-		
-		for(ShoppingCartItem item : itemList) {
-			resultList.add(new ShoppingCartItem(item));
-		}
-		
-		return resultList;
+	public List<ShoppingCartItem> getItems() { 
+		return itemList;
 	}
+	
+	// TODO: Should we allow setItems()?
 	
 	public int getItemCount() {
 		return itemList.size();

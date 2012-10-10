@@ -1,6 +1,7 @@
 package za.co.invoketech.store.model.wishlist;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,6 +17,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+/**
+ * @author zacblazic@gmail.com (Zac Blazic)
+ */
 @Entity
 @Table(name = "WISH_LIST")
 public class WishList implements Serializable {
@@ -40,6 +44,21 @@ public class WishList implements Serializable {
 	
 	@Column(name = "DELETED")
 	private boolean deleted;
+	
+	public WishList() {
+		
+	}
+	
+	public static WishList getInstance (String label) {
+		WishList list = new WishList();
+		list.label = label;
+		
+		// TODO: Check that this is the best way to get current date
+		list.creationDate = new Date();
+		list.itemList = new ArrayList<WishListItem>();
+		
+		return list;
+	}
 
 	public long getId() {
 		return id;
@@ -60,13 +79,28 @@ public class WishList implements Serializable {
 	public Date getCreationDate() {
 		return new Date(creationDate.getTime());
 	}
-
-	public void setCreationDate(Date creationDate) {
-		this.creationDate = new Date(creationDate.getTime());
-	}
 	
 	public void addItem(WishListItem item) {
-		itemList.add(new WishListItem(item));
+		itemList.add(item);
+	}
+	
+	public void removeItem(WishListItem item) {
+		itemList.remove(item);
+	}
+	
+	public void removeAllItems() {
+		// Used instead of clear to remove unused memory
+		itemList = new ArrayList<WishListItem>();
+	}
+	
+	public List<WishListItem> getItems() {
+		return itemList;
+	}
+	
+	// TODO: Should we allow setItems()?
+	
+	public int getItemCount() {
+		return itemList.size();
 	}
 
 	public boolean isDeleted() {
