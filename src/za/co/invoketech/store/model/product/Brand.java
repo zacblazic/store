@@ -16,10 +16,17 @@ public class Brand implements Serializable {
 	 
 	@Id
 	@GeneratedValue (strategy = GenerationType.AUTO)
-	private long brand_id;
+	private long id;
 	
-	@Column (unique = true)
-	private String brandName;  
+	@Column (name = "BRAND_NAME", unique = true)
+	private String brandName; 
+
+	public Brand (){		
+	}
+	
+	public Brand (String brandName){
+		setBrandName(brandName);
+	}
   
 	public String getBrandName() {
 		return this.brandName;
@@ -27,13 +34,14 @@ public class Brand implements Serializable {
 
 	public void setBrandName(String brandName) {
 		this.brandName = brandName;
-	}   
-	public long getBrand_id() {
-		return this.brand_id;
+	} 
+	
+	public long getId() {
+		return this.id;
 	}
 
-	public void setBrand_id(long brand_id) {
-		this.brand_id = brand_id;
+	public void setId(long id) {
+		this.id = id;
 	}
    
 }
