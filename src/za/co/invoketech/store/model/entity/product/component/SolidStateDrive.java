@@ -1,4 +1,4 @@
-package za.co.invoketech.store.model.product.component;
+package za.co.invoketech.store.model.entity.product.component;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

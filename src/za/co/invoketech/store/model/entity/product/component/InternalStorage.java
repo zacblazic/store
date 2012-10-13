@@ -1,9 +1,10 @@
-package za.co.invoketech.store.model.product.component;
+package za.co.invoketech.store.model.entity.product.component;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+
 
 /**
  * Entity implementation class for Entity: InternalStorage

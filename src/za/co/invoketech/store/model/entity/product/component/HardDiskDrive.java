@@ -1,10 +1,10 @@
-package za.co.invoketech.store.model.product.component;
+package za.co.invoketech.store.model.entity.product.component;
 
 import java.io.Serializable;
 import java.lang.String;
 import javax.persistence.*;
 
-import za.co.invoketech.store.model.product.component.InternalStorage;
+import za.co.invoketech.store.model.entity.product.component.InternalStorage;
 
 /**
  * Entity implementation class for Entity: HardDiskDrive
