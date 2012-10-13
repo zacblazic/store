@@ -17,6 +17,7 @@
 package za.co.invoketech.store.repository.dao.internal;
 
 import za.co.invoketech.store.service.dao.AddressDao;
+import za.co.invoketech.store.service.dao.ProductDao;
 
 import com.google.inject.AbstractModule;
 
@@ -28,6 +29,7 @@ public class PersistenceModule extends AbstractModule {
 
 	@Override
 	protected void configure() {
-		bind(AddressDao.class).to(AddressDaoImpl.class);		
+		bind(AddressDao.class).to(AddressDaoImpl.class);
+		bind(ProductDao.class).to(ProductDaoImpl.class);
 	}
 }

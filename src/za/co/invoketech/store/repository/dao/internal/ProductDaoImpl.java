@@ -27,7 +27,7 @@ import com.google.inject.persist.Transactional;
 @Transactional
 class ProductDaoImpl extends GenericDaoImpl<Product, Long> implements ProductDao{
 
-	public ProductDaoImpl(Class<Product> type) {
+	public ProductDaoImpl() {
 		super(Product.class);
 	}
 }
