@@ -10,9 +10,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import za.co.invoketech.store.application.config.ApplicationInitializer;
-import za.co.invoketech.store.model.product.Brand;
-import za.co.invoketech.store.model.product.Product;
-import za.co.invoketech.store.model.product.peripheral.Mouse;
+import za.co.invoketech.store.model.entity.product.Brand;
+import za.co.invoketech.store.model.entity.product.Product;
+import za.co.invoketech.store.model.entity.product.peripheral.Mouse;
 import za.co.invoketech.store.repository.dao.internal.PersistenceModule;
 import za.co.invoketech.store.service.dao.ProductDao;
 
