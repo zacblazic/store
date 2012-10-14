@@ -3,14 +3,18 @@
 	<persistence-unit name="storeJpaUnit" transaction-type="RESOURCE_LOCAL">		
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<class>za.co.invoketech.store.model.product.peripheral.Audio</class>
+		<class>za.co.invoketech.store.model.order.OrderItem</class>
+		<class>za.co.invoketech.store.model.wishlist.WishListItem</class>
 		<class>za.co.invoketech.store.model.account.Preference</class>
-		<class>za.co.invoketech.store.model.account.Account</class>
 		<class>za.co.invoketech.store.model.product.software.OperatingSystem</class>
+		<class>za.co.invoketech.store.model.account.Account</class>
 		<class>za.co.invoketech.store.model.product.Product</class>
 		<class>za.co.invoketech.store.model.product.computer.Computer</class>
 		<class>za.co.invoketech.store.model.product.peripheral.Keyboard</class>
 		<class>za.co.invoketech.store.model.product.peripheral.Mouse</class>
 		<class>za.co.invoketech.store.model.product.peripheral.Display</class>
+		<class>za.co.invoketech.store.model.order.Invoice</class>
+		<class>za.co.invoketech.store.model.wishlist.WishList</class>
 		<class>za.co.invoketech.store.model.product.computer.CustomComputer</class>
 		<class>za.co.invoketech.store.model.address.PrivateBagAddress</class>
 		<class>za.co.invoketech.store.model.product.software.Software</class>
@@ -21,13 +25,21 @@
 		<class>za.co.invoketech.store.model.shoppingcart.ShoppingCart</class>
 		<class>za.co.invoketech.store.model.account.BooleanPreference</class>
 		<class>za.co.invoketech.store.model.product.Brand</class>
-		<class>za.co.invoketech.store.model.shoppingcart.ShoppingCartItem</class>
 		<class>za.co.invoketech.store.model.product.software.Game</class>
+		<class>za.co.invoketech.store.model.shoppingcart.ShoppingCartItem</class>
 		<class>za.co.invoketech.store.model.address.PostOfficeBoxAddress</class>
 		<class>za.co.invoketech.store.model.product.component.Component</class>
 		<class>za.co.invoketech.store.model.product.peripheral.Peripheral</class>
+		<class>za.co.invoketech.store.model.order.Order</class>
 		<class>za.co.invoketech.store.model.address.Address</class>
 		<class>za.co.invoketech.store.model.address.PhysicalAddress</class>
+		<class>za.co.invoketech.store.model.product.component.Processor</class>
+		<class>za.co.invoketech.store.model.product.component.IntegratedGPU</class>
+		<class>za.co.invoketech.store.model.product.component.Memory</class>
+		<class>za.co.invoketech.store.model.product.component.PowerSupplyUnit</class>
+		<class>za.co.invoketech.store.model.product.component.InternalStorage</class>
+		<class>za.co.invoketech.store.model.product.component.HardDiskDrive</class>
+		<class>za.co.invoketech.store.model.product.component.SolidStateDrive</class>
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/store"/>
 			<property name="javax.persistence.jdbc.user" value="root"/>
