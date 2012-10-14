@@ -31,8 +31,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import static com.google.common.base.Preconditions.*;
 import za.co.invoketech.store.model.entity.role.Role;
+
+import static com.google.common.base.Preconditions.*;
 
 /** 
  * @author zacblazic@gmail.com (Zac Blazic)
@@ -60,7 +61,7 @@ public class Account implements Serializable {
 			   inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
 	private List<Role> roleList;
 	
-	@Column(name = "DELETED", nullable = false)
+	@Column(name = "DELETED")
 	private boolean deleted;
 	
 	public static Account getInstance(String email, String password) {

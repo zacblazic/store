@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import static com.google.common.base.Preconditions.*;
+
 /**
  * @author zacblazic@gmail.com (Zac Blazic)
  * 
@@ -28,8 +30,17 @@ public class Role implements Serializable {
 	@Column(name = "ROLE_NAME", nullable = false, unique = true)
 	private String roleName;
 	
-	@Column(name = "DELETED", nullable = false)
+	@Column(name = "DELETED")
 	private boolean deleted;
+	
+	public static Role getInstance(String roleName) {
+		checkNotNull(roleName);
+		checkArgument(!roleName.isEmpty(), "roleName cannot be empty");
+		
+		Role role = new Role();
+		role.roleName = roleName;
+		return role;
+	}
 
 	public long getId() {
 		return id;
@@ -44,6 +55,8 @@ public class Role implements Serializable {
 	}
 
 	public void setRoleName(String roleName) {
+		checkNotNull(roleName);
+		checkArgument(!roleName.isEmpty(), "roleName cannot be empty");
 		this.roleName = roleName;
 	}
 
@@ -53,5 +66,18 @@ public class Role implements Serializable {
 
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
+	}
+	
+	@Override
+	public boolean equals(Object object) {
+		if(!(object instanceof Role)) {
+			return false;
+		}
+		
+		Role other = (Role)object;
+		if(!this.roleName.equals(other.roleName)) {
+			return false;
+		}
+		return true;
 	}
 }
