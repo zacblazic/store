@@ -2,7 +2,6 @@
 <persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
 	<persistence-unit name="storeJpaUnit" transaction-type="RESOURCE_LOCAL">		
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-<<<<<<< HEAD
 		<class>za.co.invoketech.store.model.entity.product.component.SolidStateDrive</class>
 		<class>za.co.invoketech.store.model.entity.order.OrderItem</class>
 		<class>za.co.invoketech.store.model.entity.order.Invoice</class>
@@ -38,43 +37,6 @@
 		<class>za.co.invoketech.store.model.value.Address</class>
 		<class>za.co.invoketech.store.model.entity.product.component.Processor</class>
 		<class>za.co.invoketech.store.model.entity.shoppingcart.ShoppingCart</class>
-=======
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
->>>>>>> branch 'master' of https://github.com/invoketech/store.git
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/store"/>
 			<property name="javax.persistence.jdbc.user" value="root"/>
