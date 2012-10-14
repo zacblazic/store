@@ -13,13 +13,13 @@ import javax.persistence.Table;
 public class BooleanPreference extends Preference {
 	
 	private static final long serialVersionUID = 1L;
-	private static final boolean DEFAULT_BOOLEAN_PREFERENCE_VALUE = false;
+	private static final boolean DEFAULT_VALUE = false;
 	
 	@Column(name = "VALUE")
 	private boolean value;
 	
 	public static BooleanPreference getInstance(String name) {
-		return getInstance(name, DEFAULT_BOOLEAN_PREFERENCE_VALUE);
+		return getInstance(name, DEFAULT_VALUE);
 	}
 	
 	public static BooleanPreference getInstance(String name, boolean value) {

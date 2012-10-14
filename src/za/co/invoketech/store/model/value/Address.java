@@ -3,30 +3,12 @@ package za.co.invoketech.store.model.value;
 import java.io.Serializable;
 
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.Table;
+import javax.persistence.Embeddable;
 
-@Entity
-@Table(name = "ADDRESS")
-@Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name = "ADDRESS_TYPE")
-public abstract class Address implements Serializable {
+@Embeddable
+public class Address implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "ADDRESS_ID")
-	private long id;
-	
-	@Column(name = "LABEL")
-	protected String label;
 	
 	@Column(name = "FIRST_NAME")
 	protected String firstName;
@@ -51,24 +33,6 @@ public abstract class Address implements Serializable {
 	
 	@Column(name = "DELETED")
 	protected boolean deleted;
-	
-	// TODO: Add static constructor
-	
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public String getLabel() {
-		return label;
-	}
-	
-	public void setLabel(String label) {
-		this.label = label;
-	}
 	
 	public String getFirstName() {
 		return firstName;

@@ -21,14 +21,6 @@ public abstract class Preference implements Serializable {
 	
 	@Column(name = "DELETED")
 	protected boolean deleted;
-	
-	public static Preference getBooleanPreference(String name) {
-		return BooleanPreference.getInstance(name);
-	}
-	
-	public static Preference getBooleanPreference(String name, boolean value) {
-		return BooleanPreference.getInstance(name, value);
-	}
 
 	public long getId() {
 		return id;

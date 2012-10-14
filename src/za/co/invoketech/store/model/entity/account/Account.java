@@ -2,19 +2,24 @@ package za.co.invoketech.store.model.entity.account;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import za.co.invoketech.store.model.entity.role.Role;
 
+/** 
+ * @author zacblazic@gmail.com (Zac Blazic)
+ */
 @Entity
 @Table(name = "ACCOUNT")
 public class Account implements Serializable {
@@ -24,44 +29,50 @@ public class Account implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ACCOUNT_ID")
-	private long id;
+	private Long id;
 	
-	@Column(name = "USERNAME")
-	private String username;
+	@Column(name = "EMAIL", nullable = false, unique = true)
+	private String email;
 	
-	@Column(name = "PASSWORD")
+	@Column(name = "PASSWORD", nullable = false)
 	private String password;
-   
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "ACCOUNT_ID")
-	private List<Preference> preferenceList;
 	
-	@Column(name = "DELETED")
+	@ManyToMany
+	@JoinTable(name = "ACCOUNT_ROLE",
+			   joinColumns = @JoinColumn(name = "ACCOUNT_ID"),
+			   inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
+	private List<Role> roleList;
+	
+	@Column(name = "DELETED", nullable = false)
 	private boolean deleted;
 	
-	public static Account getInstance(String username, String password) {
+	public static Account getInstance(String email, String password) {
+		return getInstance(email, password, new ArrayList<Role>());
+	}
+	
+	public static Account getInstance(String email, String password, List<Role> roleList) {
 		Account account = new Account();
-		account.username = username;
+		account.email = email;
 		account.password = password;
-		account.preferenceList = new ArrayList<Preference>();
+		account.roleList = roleList;
 		
 		return account;
 	}
 	
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
-	public String getUsername() {
-		return username;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getPassword() {
@@ -72,19 +83,46 @@ public class Account implements Serializable {
 		this.password = password;
 	}
 	
-	public void addPreference(Preference preference) {
-		preferenceList.add(preference);
+	public void addRole(Role role) {
+		roleList.add(role);
 	}
 	
-	public void removePreference(Preference preference) {
-		preferenceList.remove(preference);
-	}
-
-	public List<Preference> getPreferenceList() {
-		return preferenceList;
+	public void removeRole(Role role) {
+		roleList.remove(role);
 	}
 	
-	// TODO: Should we allow setPreferenceList()?
+	public void removeRole(String roleName) {
+		Iterator<Role> iterator = roleList.iterator();
+		
+		while(iterator.hasNext()) {
+			Role role = iterator.next();
+			
+			if(role.getRoleName().equals(roleName)) {
+				iterator.remove();
+				break;
+			}
+		}
+	}
+	
+	public boolean hasRole(Role role) {
+		return roleList.contains(role);
+	}
+	
+	public int getRoleCount() {
+		return roleList.size();
+	}
+	
+	public void removeAllRoles() {
+		roleList = new ArrayList<Role>();
+	}
+	
+	public List<Role> getRoleList() {
+		return new ArrayList<Role>(roleList);
+	}
+	
+	public void setRoleList(List<Role> roleList) {
+		this.roleList = new ArrayList<Role>(roleList);
+	}
 
 	public boolean isDeleted() {
 		return deleted;
@@ -92,5 +130,13 @@ public class Account implements Serializable {
 
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
-	}	
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		if(!(object instanceof Account)) {
+			return false;
+		}
+		return false;
+	}
 }

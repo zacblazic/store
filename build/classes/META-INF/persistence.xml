@@ -2,6 +2,41 @@
 <persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
 	<persistence-unit name="storeJpaUnit" transaction-type="RESOURCE_LOCAL">		
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+		<class>za.co.invoketech.store.model.entity.product.component.SolidStateDrive</class>
+		<class>za.co.invoketech.store.model.entity.order.OrderItem</class>
+		<class>za.co.invoketech.store.model.entity.order.Invoice</class>
+		<class>za.co.invoketech.store.model.entity.product.peripheral.Keyboard</class>
+		<class>za.co.invoketech.store.model.entity.product.software.Software</class>
+		<class>za.co.invoketech.store.model.entity.product.peripheral.Mouse</class>
+		<class>za.co.invoketech.store.model.entity.account.Account</class>
+		<class>za.co.invoketech.store.model.entity.product.computer.CustomComputer</class>
+		<class>za.co.invoketech.store.model.entity.product.component.HardDiskDrive</class>
+		<class>za.co.invoketech.store.model.entity.product.component.IntegratedGPU</class>
+		<class>za.co.invoketech.store.model.entity.product.computer.PreBuiltComputer</class>
+		<class>za.co.invoketech.store.model.entity.product.Product</class>
+		<class>za.co.invoketech.store.model.entity.product.software.AntiVirus</class>
+		<class>za.co.invoketech.store.model.entity.product.component.InternalStorage</class>
+		<class>za.co.invoketech.store.model.entity.product.component.PowerSupplyUnit</class>
+		<class>za.co.invoketech.store.model.entity.account.Preference</class>
+		<class>za.co.invoketech.store.model.entity.product.peripheral.Peripheral</class>
+		<class>za.co.invoketech.store.model.entity.shoppingcart.ShoppingCartItem</class>
+		<class>za.co.invoketech.store.model.entity.customer.Customer</class>
+		<class>za.co.invoketech.store.model.entity.product.Brand</class>
+		<class>za.co.invoketech.store.model.entity.product.component.Component</class>
+		<class>za.co.invoketech.store.model.entity.product.software.Game</class>
+		<class>za.co.invoketech.store.model.entity.product.peripheral.Display</class>
+		<class>za.co.invoketech.store.model.entity.wishlist.WishListItem</class>
+		<class>za.co.invoketech.store.model.entity.product.computer.Computer</class>
+		<class>za.co.invoketech.store.model.entity.product.software.OperatingSystem</class>
+		<class>za.co.invoketech.store.model.entity.wishlist.WishList</class>
+		<class>za.co.invoketech.store.model.entity.account.BooleanPreference</class>
+		<class>za.co.invoketech.store.model.entity.role.Role</class>
+		<class>za.co.invoketech.store.model.entity.product.component.Memory</class>
+		<class>za.co.invoketech.store.model.entity.product.peripheral.Audio</class>
+		<class>za.co.invoketech.store.model.entity.order.Order</class>
+		<class>za.co.invoketech.store.model.value.Address</class>
+		<class>za.co.invoketech.store.model.entity.product.component.Processor</class>
+		<class>za.co.invoketech.store.model.entity.shoppingcart.ShoppingCart</class>
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/store"/>
 			<property name="javax.persistence.jdbc.user" value="root"/>
