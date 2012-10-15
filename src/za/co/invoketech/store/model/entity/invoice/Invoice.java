@@ -14,51 +14,49 @@
  * the License.
  */
 
-package za.co.invoketech.store.model.entity.role;
-
-import static com.google.common.base.Preconditions.checkArgument;
-import static com.google.common.base.Preconditions.checkNotNull;
+package za.co.invoketech.store.model.entity.invoice;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import za.co.invoketech.store.model.entity.order.Order;
 
 /**
  * @author zacblazic@gmail.com (Zac Blazic)
- * 
- * An entity representing an Account's role. Used for authorization purposes.
  */
 @Entity
-@Table(name = "ROLE")
-public class Role implements Serializable {
+@Table(name = "INVOICE")
+public class Invoice implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "ROLE_ID")
+	@Column(name = "INVOICE_ID")
 	private long id;
 	
-	@Column(name = "ROLE_NAME", nullable = false, unique = true)
-	private String roleName;
+	@Temporal(TemporalType.DATE)
+	@Column(name = "INVOICE_DATE", nullable = false)
+	private Date invoiceDate;
+	
+	@OneToOne
+	@JoinColumn(name = "ORDER_ID", nullable = false)
+	private Order order;
 	
 	@Column(name = "DELETED")
 	private boolean deleted;
 	
-	public static Role getInstance(String roleName) {
-		checkNotNull(roleName);
-		checkArgument(!roleName.isEmpty(), "roleName cannot be empty");
-		
-		Role role = new Role();
-		role.roleName = roleName;
-		return role;
-	}
-
 	public long getId() {
 		return id;
 	}
@@ -67,14 +65,20 @@ public class Role implements Serializable {
 		this.id = id;
 	}
 
-	public String getRoleName() {
-		return roleName;
+	public Date getInvoiceDate() {
+		return invoiceDate;
 	}
 
-	public void setRoleName(String roleName) {
-		checkNotNull(roleName);
-		checkArgument(!roleName.isEmpty(), "roleName cannot be empty");
-		this.roleName = roleName;
+	public void setInvoiceDate(Date invoiceDate) {
+		this.invoiceDate = invoiceDate;
+	}
+
+	public Order getOrder() {
+		return order;
+	}
+
+	public void setOrder(Order order) {
+		this.order = order;
 	}
 
 	public boolean isDeleted() {
@@ -83,18 +87,5 @@ public class Role implements Serializable {
 
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
-	}
-	
-	@Override
-	public boolean equals(Object object) {
-		if(!(object instanceof Role)) {
-			return false;
-		}
-		
-		Role other = (Role)object;
-		if(!this.roleName.equals(other.roleName)) {
-			return false;
-		}
-		return true;
 	}
 }

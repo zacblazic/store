@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
 @Embeddable
 public class Address implements Serializable {
@@ -11,90 +13,102 @@ public class Address implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Column(name = "FIRST_NAME")
-	protected String firstName;
+	private String firstName;
 	
 	@Column(name = "LAST_NAME")
-	protected String lastName;
+	private String lastName;
 	
 	@Column(name = "PHONE_NUMBER")
-	protected String phoneNumber;
+	private String phoneNumber;
 	
-	@Column(name = "SUBURB")
-	protected String suburb;
+	@Column(name = "LINE_1")
+	private String line1;
+	
+	@Column(name = "LINE_2")
+	private String line2;
 	
 	@Column(name = "CITY")
-	protected String city;
+	private String city;
 	
 	@Column(name = "POSTAL_CODE")
-	protected String postalCode;
+	private String postalCode;
 	
 	@Column(name = "COUNTRY")
-	protected String country;
+	private String country;
 	
-	@Column(name = "DELETED")
-	protected boolean deleted;
-	
+	@Enumerated(EnumType.STRING)
+	@Column(name = "ADDRESS_TYPE")
+	private AddressType addressType;
+
 	public String getFirstName() {
 		return firstName;
 	}
-	
+
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
-	
+
 	public String getLastName() {
 		return lastName;
 	}
-	
+
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	
+
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
-	
+
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
-	
-	public String getSuburb() {
-		return suburb;
+
+	public String getLine1() {
+		return line1;
 	}
-	
-	public void setSuburb(String suburb) {
-		this.suburb = suburb;
+
+	public void setLine1(String line1) {
+		this.line1 = line1;
 	}
-	
+
+	public String getLine2() {
+		return line2;
+	}
+
+	public void setLine2(String line2) {
+		this.line2 = line2;
+	}
+
 	public String getCity() {
 		return city;
 	}
-	
+
 	public void setCity(String city) {
 		this.city = city;
 	}
-	
+
 	public String getPostalCode() {
 		return postalCode;
 	}
-	
+
 	public void setPostalCode(String postalCode) {
 		this.postalCode = postalCode;
 	}
-	
+
 	public String getCountry() {
 		return country;
 	}
-	
+
 	public void setCountry(String country) {
 		this.country = country;
 	}
-	
-	public boolean isDeleted() {
-		return deleted;
+
+	public AddressType getAddressType() {
+		return addressType;
 	}
 
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
+	public void setAddressType(AddressType addressType) {
+		this.addressType = addressType;
 	}
 }

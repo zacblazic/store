@@ -16,6 +16,9 @@
 
 package za.co.invoketech.store.model.entity.account;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -33,8 +36,6 @@ import javax.persistence.Table;
 
 import za.co.invoketech.store.model.entity.role.Role;
 
-import static com.google.common.base.Preconditions.*;
-
 /** 
  * @author zacblazic@gmail.com (Zac Blazic)
  */
@@ -47,7 +48,7 @@ public class Account implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ACCOUNT_ID")
-	private Long id;
+	private long id;
 	
 	@Column(name = "EMAIL", nullable = false, unique = true)
 	private String email;
@@ -59,7 +60,7 @@ public class Account implements Serializable {
 	@JoinTable(name = "ACCOUNT_ROLE",
 			   joinColumns = @JoinColumn(name = "ACCOUNT_ID"),
 			   inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
-	private List<Role> roleList;
+	private List<Role> roles;
 	
 	@Column(name = "DELETED")
 	private boolean deleted;
@@ -68,17 +69,17 @@ public class Account implements Serializable {
 		return getInstance(email, password, new ArrayList<Role>());
 	}
 	
-	public static Account getInstance(String email, String password, List<Role> roleList) {
+	public static Account getInstance(String email, String password, List<Role> roles) {
 		checkNotNull(email);
 		checkNotNull(password);
-		checkNotNull(roleList);
+		checkNotNull(roles);
 		checkArgument(!email.isEmpty(), "email cannot be empty");
 		checkArgument(!password.isEmpty(), "password cannot be empty");
 		
 		Account account = new Account();
 		account.email = email;
 		account.password = password;
-		account.roleList = roleList;
+		account.roles = roles;
 		return account;
 	}
 	
@@ -112,19 +113,19 @@ public class Account implements Serializable {
 	
 	public void addRole(Role role) {
 		checkNotNull(role);
-		roleList.add(role);
+		roles.add(role);
 	}
 	
 	public void removeRole(Role role) {
 		checkNotNull(role);
-		roleList.remove(role);
+		roles.remove(role);
 	}
 	
 	public void removeRole(String roleName) {
 		checkNotNull(roleName);
 		checkArgument(!roleName.isEmpty(), "roleName cannot be empty");
 		
-		Iterator<Role> iterator = roleList.iterator();
+		Iterator<Role> iterator = roles.iterator();
 		while(iterator.hasNext()) {
 			Role role = iterator.next();
 			if(role.getRoleName().equals(roleName)) {
@@ -136,14 +137,14 @@ public class Account implements Serializable {
 	
 	public boolean hasRole(Role role) {
 		checkNotNull(role);
-		return roleList.contains(role);
+		return roles.contains(role);
 	}
 	
 	public boolean hasRole(String roleName) {
 		checkNotNull(roleName);
 		checkArgument(!roleName.isEmpty(), "roleName cannot be empty");
 		
-		for(Role role : roleList) {
+		for(Role role : roles) {
 			if(role.getRoleName().equals(roleName)) {
 				return true;
 			}
@@ -152,20 +153,20 @@ public class Account implements Serializable {
 	}
 	
 	public int getRoleCount() {
-		return roleList.size();
+		return roles.size();
 	}
 	
 	public void removeAllRoles() {
-		roleList = new ArrayList<Role>();
+		roles = new ArrayList<Role>();
 	}
 	
-	public List<Role> getRoleList() {
-		return new ArrayList<Role>(roleList);
+	public List<Role> getRoles() {
+		return new ArrayList<Role>(roles);
 	}
 	
-	public void setRoleList(List<Role> roleList) {
-		checkNotNull(roleList);
-		this.roleList = new ArrayList<Role>(roleList);
+	public void setRoles(List<Role> roles) {
+		checkNotNull(roles);
+		this.roles = new ArrayList<Role>(roles);
 	}
 
 	public boolean isDeleted() {
