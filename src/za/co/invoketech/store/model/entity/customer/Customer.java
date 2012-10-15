@@ -134,6 +134,22 @@ public class Customer implements Serializable {
 		this.phoneNumber = phoneNumber;
 	}
 	
+	public CustomerAddress getPrimaryAddress() {
+		return new CustomerAddress(primaryAddress);
+	}
+
+	public void setPrimaryAddress(CustomerAddress primaryAddress) {
+		this.primaryAddress = new CustomerAddress(primaryAddress);
+	}
+
+	public List<CustomerAddress> getAddresses() {
+		return addresses;
+	}
+
+	public void setAddresses(List<CustomerAddress> addresses) {
+		this.addresses = addresses;
+	}
+
 	public ShoppingCart getShoppingCart() {
 		return shoppingCart;
 	}
