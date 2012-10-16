@@ -1,7 +1,5 @@
 package za.co.invoketech.store.repository.dao;
 
-import static org.junit.Assert.fail;
-
 import java.math.BigDecimal;
 
 import junit.framework.Assert;
@@ -36,6 +34,7 @@ public class ProductDaoTest {
 	@Test
 	public void test() {
 		// Create
+		System.out.println("Creating");
 		Mouse mouse = injector.getInstance(Mouse.class);
 		mouse.setDpi(5600);
 		mouse.setButtons(7);
@@ -49,20 +48,22 @@ public class ProductDaoTest {
 		Assert.assertTrue(true);
 		
 		// Read
+		System.out.println("Reading");
 		Product p =  dao.findById(mouse.getId());		
-		if (p instanceof Mouse)
-		{
-			System.out.println("Product is a Mouse");
-			Mouse mo = (Mouse)p;
-			Assert.assertTrue(mo.getButtons() == mouse.getButtons());
-		}
-		else fail("Nope");
+		Assert.assertTrue(p.getProductCode() == mouse.getProductCode());		
 		
 		// Update
+		System.out.println("Updating");
+		p.setProductCode("Mo-RO7");
+		dao.merge(p);
 		
-		
+		Product p2 = dao.findById(p.getId());
+		Assert.assertTrue(p.getProductCode() == p2.getProductCode());
+				
 		// Delete
-		
+		System.out.println("Deleting");
+		dao.remove(p);
+		Assert.assertNull(dao.findById(p.getId()));
 		
 	}
 
