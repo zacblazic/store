@@ -47,6 +47,7 @@ public class ProductDaoTest {
 		dao.persist(mouse);
 		Assert.assertTrue(true);
 		
+		
 		// Read
 		System.out.println("Reading");
 		Product p =  dao.findById(mouse.getId());		
