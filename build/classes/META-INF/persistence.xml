@@ -11,7 +11,7 @@
 		<class>za.co.invoketech.store.model.entity.account.Account</class>
 		<class>za.co.invoketech.store.model.entity.product.computer.CustomComputer</class>
 		<class>za.co.invoketech.store.model.entity.product.component.HardDiskDrive</class>
-		<class>za.co.invoketech.store.model.entity.product.component.IntegratedGPU</class>
+		<class>za.co.invoketech.store.model.entity.product.component.value.IntegratedGPU</class>
 		<class>za.co.invoketech.store.model.entity.product.computer.PreBuiltComputer</class>
 		<class>za.co.invoketech.store.model.entity.product.Product</class>
 		<class>za.co.invoketech.store.model.entity.product.software.AntiVirus</class>

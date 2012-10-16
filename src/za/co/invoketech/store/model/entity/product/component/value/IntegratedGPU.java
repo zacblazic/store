@@ -1,4 +1,4 @@
-package za.co.invoketech.store.model.entity.product.component;
+package za.co.invoketech.store.model.entity.product.component.value;
 
 import javax.persistence.Embeddable;
 

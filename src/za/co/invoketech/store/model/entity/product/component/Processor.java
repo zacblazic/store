@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
+import za.co.invoketech.store.model.entity.product.component.value.IntegratedGPU;
+
 /**
  * Entity implementation class for Entity: Processor
  *
