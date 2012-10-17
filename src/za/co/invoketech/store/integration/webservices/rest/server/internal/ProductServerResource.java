@@ -16,20 +16,32 @@ public class ProductServerResource extends ServerResource implements
 	
 	@Override
 	public Product retrieve(long productId) {
-		// TODO Auto-generated method stub
-		return null;
+		Product product = dao.findById(productId);
+		return product;
 	}
 
 	@Override
 	public void store(Product p) {
-		// TODO Auto-generated method stub
-		
+		try
+		{
+			dao.persist(p);
+		}
+		catch (Exception ex)
+		{
+			try 
+			{
+				dao.merge(p);
+			} 
+			catch (Exception e) 
+			{
+				System.err.println("Error: \n" + ex.getMessage() + "\n" + e.getMessage());
+			}
+		}
 	}
 
 	@Override
 	public void remove(long productId) {
-		// TODO Auto-generated method stub
-		
+		dao.removeById(productId);		
 	}
 
 	
