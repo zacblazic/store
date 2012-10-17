@@ -1,18 +1,17 @@
 package za.co.invoketech.store.application.security;
 
-import za.co.invoketech.store.application.security.PBKDF2;
+import junit.framework.Assert;
+
+import org.junit.Test;
 
 public class PasswordHashTest {
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) throws Exception {
-
+	@Test
+	public void test() throws Exception {
 		String password = "password";
 		String saltedHash = PBKDF2.getSaltedHash(password);
-		System.out.print(saltedHash);
 		
-		System.out.println(PBKDF2.check("password", saltedHash) ? "Match" : "No match");	
+		Assert.assertTrue(PBKDF2.check(password, saltedHash));
 	}
+
 }
