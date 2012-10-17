@@ -12,6 +12,7 @@ public class FileServiceTest {
 	public void testUploadImage() {
 		String path = "C:/Users/Orion/Pictures/dhx-ddr3-angled - Copy.png";
 		String productCode = "mem123";
+		
 		FileService.UploadImage(path, productCode);
 		
 		File image = new File("images/" + productCode + "/image.png");
