@@ -6,6 +6,7 @@ public class GuiceServletModule extends ServletModule {
 	
 	@Override
 	protected void configureServlets() {
+		//filter("/*").through(PersistFilter.class);
 		serve("*.jsf").with(GuiceFacesServlet.class);
 		serve("*.faces").with(GuiceFacesServlet.class);
 		serve("*.xhtml").with(GuiceFacesServlet.class);
