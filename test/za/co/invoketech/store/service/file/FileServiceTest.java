@@ -10,12 +10,13 @@ public class FileServiceTest {
 
 	@Test
 	public void testUploadImage() {
+		String size = "large";
 		String path = "C:/Users/Orion/Pictures/dhx-ddr3-angled - Copy.png";
 		String productCode = "mem123";
 		
-		FileService.UploadImage(path, productCode);
+		FileService.uploadImage(path, productCode, size);
 		
-		File image = new File("images/" + productCode + "/image.png");
+		File image = new File("res/images/" + productCode + "/" + size + ".png");
 		
 		Assert.assertTrue(image.getAbsolutePath() + " does not exist", image.exists());
 	}

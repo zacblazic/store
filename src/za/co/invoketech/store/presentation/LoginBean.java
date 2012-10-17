@@ -14,6 +14,10 @@ public class LoginBean implements Serializable {
 	private String email;
 	private String password;
 	
+	public LoginBean() {
+		System.out.println("LOGIN_BEAN_CONSTRUCTOR");
+	}
+	
 	public String getEmail() {
 		return email;
 	}

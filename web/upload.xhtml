@@ -6,17 +6,22 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
- 
+
 <h:head>
 </h:head>
 <h:body style="font-size: 12px;">
-	<h:form enctype="multipart/form-data">
-		<p:messages showDetail="true"/>  
-  
-    	<p:fileUpload value="#{FileUploadBean.file}" mode="simple"/>  
-  
-    	<p:commandButton value="Submit" ajax="false"  
-        	        actionListener="#{FileUploadBean.upload}"/>
+	<h:form>
+		<p:panel id="panel" header="Upload" style="margin-bottom:10px; width:500px">
+			
+			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+			<h:panelGrid columns="1">
+
+				<p:fileUpload value="#{fileUploadBean.file}" mode="simple" />
+				
+				<p:commandButton value="Submit" ajax="false" actionListener="#{fileUploadBean.upload}" />
+
+			</h:panelGrid>
+		</p:panel>
 	</h:form>
 </h:body>
 </html>
