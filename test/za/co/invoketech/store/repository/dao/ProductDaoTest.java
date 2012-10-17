@@ -13,6 +13,8 @@ import za.co.invoketech.store.model.entity.product.Product;
 import za.co.invoketech.store.model.entity.product.peripheral.Mouse;
 import za.co.invoketech.store.repository.dao.internal.PersistenceModule;
 import za.co.invoketech.store.service.dao.ProductDao;
+import za.co.invoketech.store.service.product.ProductPricingService;
+import za.co.invoketech.store.service.product.internal.ProductPricingServiceImpl;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -32,13 +34,15 @@ public class ProductDaoTest {
 	}
 
 	@Test
-	public void test() {
+	public void test() throws Exception {
 		// Create
+		ProductPricingService productPricingService = new ProductPricingServiceImpl();
+		
 		System.out.println("Creating");
 		Mouse mouse = injector.getInstance(Mouse.class);
 		mouse.setDpi(5600);
 		mouse.setButtons(7);
-		mouse.setPrice(new BigDecimal(1200.00));
+		mouse.setPrice(productPricingService.setStandardMarkupPrice(new BigDecimal(1200)));
 		mouse.setDescription("Ouroboros");
 		mouse.setBrand(new Brand("Razer"));
 		mouse.setProductCode("Mo-RO");
