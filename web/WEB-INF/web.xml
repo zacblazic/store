@@ -7,6 +7,10 @@
 	id="invoketech" 
 	version="3.0">
   
+  <listener>
+  	<listener-class>za.co.invoketech.store.application.config.GuiceServletConfig</listener-class>
+  </listener>
+  
   <display-name>Invoke Tech</display-name>
   
   <context-param>
@@ -27,9 +31,5 @@
   	<filter-name>GuiceFilter</filter-name>
   	<url-pattern>/*</url-pattern>
   </filter-mapping>
-  
-  <listener>
-  	<listener-class>za.co.invoketech.store.application.config.GuiceServletConfig</listener-class>
-  </listener>
   
 </web-app>

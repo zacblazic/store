@@ -4,22 +4,24 @@ import java.io.Serializable;
 
 import javax.faces.bean.ManagedBean;
 
+import za.co.invoketech.store.application.config.Goose;
 import za.co.invoketech.store.model.entity.role.Role;
 import za.co.invoketech.store.service.dao.RoleDao;
 
 import com.google.inject.Inject;
-import com.google.inject.servlet.RequestScoped;
 
 @ManagedBean
-@RequestScoped
 public class RoleBean implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
 	@Inject
-	private RoleDao roleDao;
-	
+	private RoleDao dao;
 	private String roleName;
+	
+	public RoleBean() {
+		Goose.getInjector().injectMembers(this);
+	}
 
 	public String getRoleName() {
 		return roleName;
@@ -29,10 +31,13 @@ public class RoleBean implements Serializable{
 		this.roleName = roleName;
 	}
 	
-	public void saveRole()
-	{
-		Role role = Role.getInstance(roleName);
-		roleDao.persist(role);
-	}
 	
+	public void saveRole() {
+		Role role = Role.getInstance(roleName);
+		
+		System.out.println(role.getRoleName());
+		System.out.println(dao);
+		
+		dao.persist(role);
+	}
 }

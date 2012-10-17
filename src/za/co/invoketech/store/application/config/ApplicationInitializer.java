@@ -28,5 +28,7 @@ public class ApplicationInitializer {
 	@Inject
 	public ApplicationInitializer(PersistService service) {
 		service.start();
+		
+		System.out.println("PERSISTANCE HAS BEEN INITTED");
 	}
 }

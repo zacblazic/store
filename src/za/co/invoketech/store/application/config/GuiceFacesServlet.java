@@ -21,7 +21,7 @@ public class GuiceFacesServlet extends HttpServlet {
 	private FacesServlet servlet;
 	
 	@Override
-	public void init(ServletConfig config) throws ServletException {
+	public void init(ServletConfig config) throws ServletException {		
 		servlet.init(config);
 	}
 	
