@@ -34,7 +34,7 @@ public class ShoppingCart implements Serializable {
 	
 	@Column(name = "DELETED")
 	private boolean deleted;
-
+	
 	public static ShoppingCart getInstance() {
 		ShoppingCart cart = new ShoppingCart();
 		cart.itemList = new ArrayList<ShoppingCartItem>();
