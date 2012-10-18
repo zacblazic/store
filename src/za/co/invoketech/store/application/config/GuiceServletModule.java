@@ -1,6 +1,7 @@
 package za.co.invoketech.store.application.config;
 
 import za.co.invoketech.store.repository.dao.internal.PersistenceModule;
+import za.co.invoketech.store.service.file.internal.FileModule;
 
 import com.google.inject.persist.PersistFilter;
 import com.google.inject.persist.jpa.JpaPersistModule;
@@ -14,13 +15,13 @@ public class GuiceServletModule extends ServletModule {
 	protected void configureServlets() {
 		install(new JpaPersistModule(PERSISTENCE_UNIT));
 		install(new PersistenceModule());
+		install(new FileModule());
 		
 		filter("/*").through(PersistFilter.class);
+		filter("/*").through(GuiceFileUploadFilter.class);
 		
 		serve("*.jsf").with(GuiceFacesServlet.class);
 		serve("*.faces").with(GuiceFacesServlet.class);
 		serve("*.xhtml").with(GuiceFacesServlet.class);
-		
-		System.out.println("SERVLETMODULE INNITTED");
 	}
 }
