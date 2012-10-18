@@ -11,5 +11,4 @@ class RoleDaoImpl extends GenericDaoImpl<Role, Long> implements RoleDao{
 	public RoleDaoImpl() {
 		super(Role.class);
 	}
-
 }
