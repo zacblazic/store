@@ -50,20 +50,10 @@ public class Role implements Serializable {
 	@Column(name = "DELETED")
 	private boolean deleted;
 	
-	public static Role getInstance(String roleName) {
-		checkNotNull(roleName);
-		checkArgument(!roleName.isEmpty(), "roleName cannot be empty");
-		
-		Role role = new Role();
-		role.roleName = roleName;
-		return role;
-	}
-	
-	public Role () {
-		
-	}
+	public Role() {}
 	
 	public Role (String roleName) {
+		checkRoleName(roleName);
 		this.roleName = roleName;
 	}
 
@@ -80,8 +70,7 @@ public class Role implements Serializable {
 	}
 
 	public void setRoleName(String roleName) {
-		checkNotNull(roleName);
-		checkArgument(!roleName.isEmpty(), "roleName cannot be empty");
+		checkRoleName(roleName);
 		this.roleName = roleName;
 	}
 
@@ -104,5 +93,10 @@ public class Role implements Serializable {
 			return false;
 		}
 		return true;
+	}
+	
+	private void checkRoleName(String roleName) {
+		checkNotNull(roleName);
+		checkArgument(!roleName.isEmpty(), "roleName cannot be empty");
 	}
 }

@@ -33,7 +33,7 @@ public class RoleBean implements Serializable{
 	
 	
 	public void saveRole() {
-		Role role = Role.getInstance(roleName);
+		Role role = new Role(roleName);
 		
 		System.out.println(role.getRoleName());
 		System.out.println(dao);

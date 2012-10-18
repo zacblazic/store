@@ -13,18 +13,18 @@ public class RoleTest {
 	
 	@Before
 	public void setUp() {
-		admin = Role.getInstance("administrator");
+		admin = new Role("administrator");
 	}
 	
 	@Test
 	public void rolesAreEqual() {
-		Role other = Role.getInstance("administrator");
+		Role other = new Role("administrator");
 		assertEquals(admin, other);
 	}
 	
 	@Test
 	public void rolesAreNotEqual() {
-		Role other = Role.getInstance("user");
+		Role other = new Role("user");
 		assertFalse(admin.equals(other));
 	}
 }

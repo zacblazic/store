@@ -35,7 +35,5 @@ public class PersistenceModule extends AbstractModule {
 		bind(ProductDao.class).to(ProductDaoImpl.class);
 		bind(RoleDao.class).to(RoleDaoImpl.class);
 		bind(AccountDao.class).to(AccountDaoImpl.class);
-		
-		System.out.println("PERSISTANCE STUFFS DONE");
 	}
 }
