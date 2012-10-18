@@ -19,7 +19,7 @@ public class AccountTest {
 	
 	@Before
 	public void setUp() {
-		account = Account.getInstance("zacblazic@gmail.com", "password");
+		account = new Account("zacblazic@gmail.com", "password");
 		administrator = Role.getInstance("administrator");
 		user = Role.getInstance("user");
 		
@@ -54,13 +54,13 @@ public class AccountTest {
 	
 	@Test
 	public void accountsAreEqual() {
-		Account other = Account.getInstance("zacblazic@gmail.com", "password");
+		Account other = new Account("zacblazic@gmail.com", "password");
 		assertEquals(account, other);
 	}
 	
 	@Test
 	public void accountsAreNotEqual() {
-		Account other = Account.getInstance("mollerruan@gmail.com", "password");
+		Account other = new Account("mollerruan@gmail.com", "password");
 		assertFalse(account.equals(other));
 	}
 }
