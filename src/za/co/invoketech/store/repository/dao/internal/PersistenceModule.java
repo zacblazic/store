@@ -16,6 +16,7 @@
 
 package za.co.invoketech.store.repository.dao.internal;
 
+import za.co.invoketech.store.service.dao.AccountDao;
 import za.co.invoketech.store.service.dao.AddressDao;
 import za.co.invoketech.store.service.dao.ProductDao;
 import za.co.invoketech.store.service.dao.RoleDao;
@@ -33,6 +34,7 @@ public class PersistenceModule extends AbstractModule {
 		bind(AddressDao.class).to(AddressDaoImpl.class);
 		bind(ProductDao.class).to(ProductDaoImpl.class);
 		bind(RoleDao.class).to(RoleDaoImpl.class);
+		bind(AccountDao.class).to(AccountDaoImpl.class);
 		
 		System.out.println("PERSISTANCE STUFFS DONE");
 	}

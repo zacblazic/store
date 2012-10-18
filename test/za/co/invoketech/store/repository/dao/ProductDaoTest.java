@@ -49,7 +49,7 @@ public class ProductDaoTest {
 		mouse.setDiscontinued(false);
 		
 		dao.persist(mouse);
-		Assert.assertTrue(true);
+		Assert.assertTrue(mouse.getId() != 0);
 		
 		
 		// Read

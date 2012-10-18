@@ -65,24 +65,29 @@ public class Account implements Serializable {
 	@Column(name = "DELETED")
 	private boolean deleted;
 	
-	public static Account getInstance(String email, String password) {
-		return getInstance(email, password, new ArrayList<Role>());
+	
+	public Account() {
+		roles = new ArrayList<Role>();
 	}
 	
-	public static Account getInstance(String email, String password, List<Role> roles) {
+	public Account (String email, String password){
+		this.email = email;
+		this.password = password;
+	}
+	
+	public Account (String email, String password, List<Role> roles){
 		checkNotNull(email);
 		checkNotNull(password);
 		checkNotNull(roles);
 		checkArgument(!email.isEmpty(), "email cannot be empty");
 		checkArgument(!password.isEmpty(), "password cannot be empty");
 		
-		Account account = new Account();
-		account.email = email;
-		account.password = password;
-		account.roles = roles;
-		return account;
+		this.email = email;
+		this.password = password;
+		this.roles = roles;
+		
 	}
-	
+
 	public Long getId() {
 		return id;
 	}
