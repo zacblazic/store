@@ -65,27 +65,22 @@ public class Account implements Serializable {
 	@Column(name = "DELETED")
 	private boolean deleted;
 	
-	
-	public Account() {
-		roles = new ArrayList<Role>();
-	}
+	/**
+	 * Default constructor used by JPA. Do not make use of it.
+	 */
+	public Account() {}
 	
 	public Account (String email, String password){
-		this.email = email;
-		this.password = password;
+		this(email, password, new ArrayList<Role>());
 	}
 	
 	public Account (String email, String password, List<Role> roles){
-		checkNotNull(email);
-		checkNotNull(password);
-		checkNotNull(roles);
-		checkArgument(!email.isEmpty(), "email cannot be empty");
-		checkArgument(!password.isEmpty(), "password cannot be empty");
-		
+		checkEmail(email);
+		checkPassword(password);
+		checkRoles(roles);
 		this.email = email;
 		this.password = password;
 		this.roles = roles;
-		
 	}
 
 	public Long getId() {
@@ -101,8 +96,7 @@ public class Account implements Serializable {
 	}
 	
 	public void setEmail(String email) {
-		checkNotNull(email);
-		checkArgument(!email.isEmpty(), "email cannot be empty");
+		checkEmail(email);
 		this.email = email;
 	}
 
@@ -111,25 +105,22 @@ public class Account implements Serializable {
 	}
 
 	public void setPassword(String password) {
-		checkNotNull(password);
-		checkArgument(!password.isEmpty(), "password cannot be empty");
+		checkPassword(password);
 		this.password = password;
 	}
 	
 	public void addRole(Role role) {
-		checkNotNull(role);
+		checkRole(role);
 		roles.add(role);
 	}
 	
 	public void removeRole(Role role) {
-		checkNotNull(role);
+		checkRole(role);
 		roles.remove(role);
 	}
 	
 	public void removeRole(String roleName) {
-		checkNotNull(roleName);
-		checkArgument(!roleName.isEmpty(), "roleName cannot be empty");
-		
+		checkRoleName(roleName);
 		Iterator<Role> iterator = roles.iterator();
 		while(iterator.hasNext()) {
 			Role role = iterator.next();
@@ -141,14 +132,12 @@ public class Account implements Serializable {
 	}
 	
 	public boolean hasRole(Role role) {
-		checkNotNull(role);
+		checkRole(role);
 		return roles.contains(role);
 	}
 	
 	public boolean hasRole(String roleName) {
-		checkNotNull(roleName);
-		checkArgument(!roleName.isEmpty(), "roleName cannot be empty");
-		
+		checkRoleName(roleName);
 		for(Role role : roles) {
 			if(role.getRoleName().equals(roleName)) {
 				return true;
@@ -170,7 +159,7 @@ public class Account implements Serializable {
 	}
 	
 	public void setRoles(List<Role> roles) {
-		checkNotNull(roles);
+		checkRoles(roles);
 		this.roles = new ArrayList<Role>(roles);
 	}
 
@@ -193,5 +182,28 @@ public class Account implements Serializable {
 			return false;
 		}
 		return true;
+	}
+	
+	private void checkEmail(String email) {
+		checkNotNull(email, "email cannot be null");
+		checkArgument(!email.isEmpty(), "email cannot be empty");
+	}
+	
+	private void checkPassword(String password) {
+		checkNotNull(password, "password cannot be null");
+		checkArgument(!password.isEmpty(), "password cannot be empty");
+	}
+	
+	private void checkRole(Role role) {
+		checkNotNull(role, "rolee cannot be null");
+	}
+	
+	private void checkRoles(List<Role> roles) {
+		checkNotNull(roles, "roles cannot be null");
+	}
+	
+	private void checkRoleName(String roleName) {
+		checkNotNull(roleName);
+		checkArgument(!roleName.isEmpty(), "roleName cannot be empty");
 	}
 }

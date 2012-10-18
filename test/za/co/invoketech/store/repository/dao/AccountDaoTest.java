@@ -31,9 +31,7 @@ public class AccountDaoTest {
 	@Test
 	public void test() {
 		// Create
-		Account account = injector.getInstance(Account.class);
-		account.setEmail("garethc@invoketech.co.za");
-		account.setPassword("invoke");
+		Account account = new Account(null, "password");
 		
 		Role x = new Role("Admin");
 		Role y = new Role("User");

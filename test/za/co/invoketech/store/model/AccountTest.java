@@ -20,8 +20,8 @@ public class AccountTest {
 	@Before
 	public void setUp() {
 		account = new Account("zacblazic@gmail.com", "password");
-		administrator = Role.getInstance("administrator");
-		user = Role.getInstance("user");
+		administrator = new Role("administrator");
+		user = new Role("user");
 		
 		List<Role> roles = new ArrayList<Role>();
 		roles.add(administrator);
@@ -32,7 +32,7 @@ public class AccountTest {
 	
 	@Test
 	public void canAddRole() {
-		Role moderator = Role.getInstance("moderator");
+		Role moderator = new Role("moderator");
 		account.addRole(moderator);
 		assertTrue(account.hasRole(moderator));
 		assertTrue(account.hasRole("moderator"));
