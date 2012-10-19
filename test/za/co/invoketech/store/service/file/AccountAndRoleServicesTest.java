@@ -54,7 +54,7 @@ public class AccountAndRoleServicesTest {
 		
 		Assert.assertTrue(account.getId() != 0);
 		System.out.println("Account ID is: " + account.getId());
-		System.out.println("NoRoleTest: Read Success");
+		System.out.println("NoRoleTest: Persist Success");
 		
 		// Read
 		Account acc2 = accountService.retrieveAccount(account.getId());
