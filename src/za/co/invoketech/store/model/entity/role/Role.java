@@ -47,9 +47,6 @@ public class Role implements Serializable {
 	@Column(name = "ROLE_NAME", nullable = false, unique = true)
 	private String roleName;
 	
-	@Column(name = "DELETED")
-	private boolean deleted;
-	
 	public Role() {}
 	
 	public Role (String roleName) {
@@ -73,14 +70,6 @@ public class Role implements Serializable {
 		checkRoleName(roleName);
 		this.roleName = roleName;
 	}
-
-	public boolean isDeleted() {
-		return deleted;
-	}
-
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
-	}
 	
 	@Override
 	public boolean equals(Object object) {
@@ -96,7 +85,7 @@ public class Role implements Serializable {
 	}
 	
 	private void checkRoleName(String roleName) {
-		checkNotNull(roleName);
+		checkNotNull(roleName, "roleName cannot be null");
 		checkArgument(!roleName.isEmpty(), "roleName cannot be empty");
 	}
 }

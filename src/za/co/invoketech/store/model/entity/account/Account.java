@@ -62,9 +62,6 @@ public class Account implements Serializable {
 			   inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
 	private List<Role> roles;
 	
-	@Column(name = "DELETED")
-	private boolean deleted;
-	
 	/**
 	 * Default constructor used by JPA. Do not make use of it.
 	 */
@@ -163,14 +160,6 @@ public class Account implements Serializable {
 		this.roles = new ArrayList<Role>(roles);
 	}
 
-	public boolean isDeleted() {
-		return deleted;
-	}
-
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
-	}
-
 	@Override
 	public boolean equals(Object object) {
 		if(!(object instanceof Account)) {
@@ -195,7 +184,7 @@ public class Account implements Serializable {
 	}
 	
 	private void checkRole(Role role) {
-		checkNotNull(role, "rolee cannot be null");
+		checkNotNull(role, "role cannot be null");
 	}
 	
 	private void checkRoles(List<Role> roles) {
@@ -203,7 +192,7 @@ public class Account implements Serializable {
 	}
 	
 	private void checkRoleName(String roleName) {
-		checkNotNull(roleName);
+		checkNotNull(roleName, "roleName cannot be null");
 		checkArgument(!roleName.isEmpty(), "roleName cannot be empty");
 	}
 }
