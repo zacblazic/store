@@ -83,6 +83,7 @@ public class AccountAndRoleServicesTest {
 	}
 
 	
+	@SuppressWarnings("unused")
 	@Test (expected=NonExistentRoleException.class)
 	public void withNullRoleTest() throws NonExistentRoleException {
 		
@@ -94,6 +95,7 @@ public class AccountAndRoleServicesTest {
 	}
 
 	
+	@SuppressWarnings("unused")
 	@Test (expected=NonExistentRoleException.class)
 	public void withNonExistentRoleTest() throws NonExistentRoleException {
 		
