@@ -10,14 +10,14 @@ import org.junit.Test;
 
 import za.co.invoketech.store.application.config.ApplicationInitializer;
 import za.co.invoketech.store.application.exception.AccountNotFoundException;
-import za.co.invoketech.store.application.exception.NonExistentRoleException;
+import za.co.invoketech.store.application.exception.InvalidRoleNameException;
+import za.co.invoketech.store.application.exception.RoleNotFoundException;
 import za.co.invoketech.store.model.entity.account.Account;
 import za.co.invoketech.store.model.entity.role.Role;
 import za.co.invoketech.store.repository.dao.internal.PersistenceModule;
 import za.co.invoketech.store.service.account.AccountService;
+import za.co.invoketech.store.service.account.RoleService;
 import za.co.invoketech.store.service.account.internal.AccountRoleModule;
-import za.co.invoketech.store.service.dao.AccountDao;
-import za.co.invoketech.store.service.dao.RoleDao;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -26,26 +26,24 @@ import com.google.inject.persist.jpa.JpaPersistModule;
 public class AccountAndRoleServicesTest {
 	private static final String PERSISTENCE_UNIT = "storeJpaUnit";
 	private static Injector injector;
-	private static AccountDao dao;
-	private static RoleDao roleDao;
+	private static AccountService accountService;
+	private static RoleService roleService;
+	
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 
-		injector = Guice.createInjector(new PersistenceModule(), new AccountRoleModule(), new JpaPersistModule(PERSISTENCE_UNIT));
+		injector = Guice.createInjector(new AccountRoleModule(), new PersistenceModule(), new JpaPersistModule(PERSISTENCE_UNIT));
 		injector.getInstance(ApplicationInitializer.class);
-		dao = injector.getInstance(AccountDao.class);
-		roleDao = injector.getInstance(RoleDao.class);
+		accountService = injector.getInstance(AccountService.class);
+		roleService = injector.getInstance(RoleService.class);
 	}
 	
 	@Test
-	public void withRoleTest() throws NonExistentRoleException, AccountNotFoundException {
-		
-		AccountService accountService = injector.getInstance(AccountService.class);
+	public void accountWithRoleTest() throws RoleNotFoundException, AccountNotFoundException, InvalidRoleNameException {
 		
 		// Create
-		Role role = new Role("Admin");
-		roleDao.persist(role);
+		Role role = roleService.createRole("Admin");
 		
 		List<Role> roles = new ArrayList<Role>();
 		roles.add(role);
@@ -67,51 +65,90 @@ public class AccountAndRoleServicesTest {
 		
 		accountService.updateAccount(acc2);
 		
-		Account acc3 = dao.findById(acc2.getId());
+		Account acc3 = accountService.retrieveAccount(acc2.getId());
 		
 		Assert.assertTrue(acc3.getEmail().equals(acc2.getEmail()));
 		System.out.println("NoRoleTest: Update Success");
 		
 		// Delete
 		accountService.removeAccount(account);
-		roleDao.remove(role);
+		roleService.removeRole(role);
+		
+		try 
+		{
+			Assert.assertNull(accountService.retrieveAccount(acc3.getId()));
+			Assert.assertNull(roleService.retrieveRole(role.getId()));
+		} 
+		catch (AccountNotFoundException e) 
+		{
+			System.out.println("NoRoleTest: Delete Account Success");
+		} 
+		catch (RoleNotFoundException e) 
+		{
+			System.out.println("NoRoleTest: Delete Role Success");
+		}
 
-		Assert.assertNull(dao.findById(acc3.getId()));
-		Assert.assertNull(roleDao.findById(role.getId()));
-		System.out.println("NoRoleTest: Delete Success");
 		
 	}
 
 	
-	@SuppressWarnings("unused")
-	@Test (expected=NonExistentRoleException.class)
-	public void withNullRoleTest() throws NonExistentRoleException {
-		
-		AccountService accountService = injector.getInstance(AccountService.class);
-		
+	@Test (expected=RoleNotFoundException.class)
+	public void accountWithNullRoleTest() throws RoleNotFoundException {		
 		// Create
 		Account account = accountService.createAccount("garethc@invoketech.co.za", "invoke", null);
-				
+		Assert.assertNull(account);
 	}
 
-	
-	@SuppressWarnings("unused")
-	@Test (expected=NonExistentRoleException.class)
-	public void withNonExistentRoleTest() throws NonExistentRoleException {
-		
-		AccountService accountService = injector.getInstance(AccountService.class);
-		
+	@Test (expected=RoleNotFoundException.class)
+	public void accountWithNonExistentRoleTest() throws RoleNotFoundException {		
 		// Create
 		List<Role> roles = new ArrayList<Role>();
 		roles.add(new Role("Admin"));
 		
-		Account account = accountService.createAccount("garethc@invoketech.co.za", "invoke", roles);		
+		Account account = accountService.createAccount("garethc@invoketech.co.za", "invoke", roles);
+		Assert.assertNull(account);	
 	}
 	
 	@Test (expected=AccountNotFoundException.class)
 	public void noAccountTest() throws AccountNotFoundException
 	{
-		AccountService accountService = injector.getInstance(AccountService.class);
-		accountService.retrieveAccount(999999);
+		Account account = accountService.retrieveAccount(999999);
+		Assert.assertNull(account);		
+	}
+	
+	@Test
+	public void roleCrudTest() throws RoleNotFoundException, InvalidRoleNameException
+	{
+		// Create
+		Role role = roleService.createRole("User");
+		Assert.assertTrue(role.getId() != 0);
+		
+		System.out.println("RoleCrud: Persist Success");
+		
+		// Read
+		Role newRole = roleService.retrieveRole(role.getId());
+		Assert.assertTrue(role.equals(newRole));
+
+		System.out.println("RoleCrud: Read Success");
+		
+		// Update
+		newRole.setRoleName("Shopper");
+		roleService.updateRole(newRole);
+		
+		Role newRole2 = roleService.retrieveRole(newRole.getId());
+		Assert.assertTrue(newRole2.getRoleName().equals(newRole.getRoleName()));
+
+		System.out.println("RoleCrud: Update Success");
+		
+		// Delete
+		roleService.removeRole(newRole2);
+		try 
+		{
+			Assert.assertNull(roleService.retrieveRole(newRole2.getId()));
+		} 
+		catch (RoleNotFoundException e) 
+		{
+			System.out.println("RoleCrud: Remove Success");
+		}				
 	}
 }
