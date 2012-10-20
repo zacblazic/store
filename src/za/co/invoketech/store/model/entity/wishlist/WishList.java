@@ -1,3 +1,19 @@
+/**
+ * Copyright (c) 2012 Invoke Tech
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
+
 package za.co.invoketech.store.model.entity.wishlist;
 
 import java.io.Serializable;
@@ -41,20 +57,6 @@ public class WishList implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "WISH_LIST_ID", nullable = false)
 	private List<WishListItem> itemList;
-	
-	@Column(name = "DELETED")
-	private boolean deleted;
-	
-	public static WishList getInstance (String label) {
-		WishList list = new WishList();
-		list.label = label;
-		
-		// TODO: Check that this is the best way to get current date
-		list.creationDate = new Date();
-		list.itemList = new ArrayList<WishListItem>();
-		
-		return list;
-	}
 
 	public long getId() {
 		return id;
@@ -97,13 +99,5 @@ public class WishList implements Serializable {
 	
 	public int getItemCount() {
 		return itemList.size();
-	}
-
-	public boolean isDeleted() {
-		return deleted;
-	}
-
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
 	}
 }

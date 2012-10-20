@@ -1,6 +1,23 @@
+/**
+ * Copyright (c) 2012 Invoke Tech
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
+
 package za.co.invoketech.store.model.entity.wishlist;
 
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -35,23 +52,29 @@ public class WishListItem implements Serializable {
 	private Product product;
 	
 	@Temporal(TemporalType.DATE)
-	@Column(name = "ADDED_DATE")
+	@Column(name = "ADDED_DATE", nullable = false)
 	private Date addedDate;
 	
-	@Column(name = "DELETED")
-	private boolean deleted;
+	/**
+	 * @deprecated
+	 * Default constructor should only be used by the persistence mechanism.
+	 */
+	public WishListItem() {}
 	
-	public static WishListItem getInstance (Product product) {
-		// TODO: Check that this is the best way to get current date
-		return getInstance(product, new Date());
+	public WishListItem(Product product) {
+		this(product, Calendar.getInstance().getTime());
 	}
 	
-	public static WishListItem getInstance(Product product, Date addedDate) {
-		WishListItem item = new WishListItem();
-		item.product = product;
-		item.addedDate = addedDate;
-		
-		return item;
+	public WishListItem(Product product, Date addedDate) {
+		this.product = product;
+		this.addedDate = addedDate;
+	}
+	
+	// TODO: Defenisively copy product
+	public WishListItem(WishListItem item) {
+		this.id = item.id;
+		this.product = item.product;
+		this.addedDate = new Date(item.addedDate.getTime());
 	}
 	
 	public long getId() {
@@ -76,13 +99,5 @@ public class WishListItem implements Serializable {
 
 	public void setProduct(Product product) {
 		this.product = product;
-	}
-
-	public boolean isDeleted() {
-		return deleted;
-	}
-
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
 	}
 }

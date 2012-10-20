@@ -20,11 +20,13 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -63,28 +65,31 @@ public class Customer implements Serializable {
 	@Column(name = "PHONE_NUMBER", nullable = false)
 	private String phoneNumber;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "PRIMARY_ADDRESS_ID")
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "PRIMARY_ADDRESS_ID", nullable = false)
 	private CustomerAddress primaryAddress;
 	
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "CUSTOMER_ID")
+	@JoinColumn(name = "CUSTOMER_ID", nullable = false)
 	private List<CustomerAddress> addresses;
 	
-	@OneToOne
-	@JoinColumn(name = "ACCOUNT_ID")
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ACCOUNT_ID", nullable = false)
 	private Account account;
 	
-	@OneToOne
-	@JoinColumn(name = "SHOPPING_CART_ID")
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "SHOPPING_CART_ID", nullable = false) 
 	private ShoppingCart shoppingCart;
 	
-	@OneToMany
-	@JoinColumn(name = "CUSTOMER_ID")
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "CUSTOMER_ID", nullable = false)
 	private List<WishList> wishLists;
 	
-	@Column(name = "DELETED")
-	private boolean deleted;
+	/**
+	 * @deprecated
+	 * Default constructor should only be used by the persistence mechanism.
+	 */
+	public Customer() {}
 
 	public long getId() {
 		return id;
@@ -99,8 +104,7 @@ public class Customer implements Serializable {
 	}
 
 	public void setTitle(String title) {
-		checkNotNull(title);
-		checkArgument(!title.isEmpty(), "title cannot be empty");
+		checkTitle(title);
 		this.title = title;
 	}
 
@@ -109,8 +113,7 @@ public class Customer implements Serializable {
 	}
 
 	public void setFirstName(String firstName) {
-		checkNotNull(firstName);
-		checkArgument(!firstName.isEmpty(), "firstName cannot be empty");
+		checkFirstName(firstName);
 		this.firstName = firstName;
 	}
 
@@ -119,8 +122,7 @@ public class Customer implements Serializable {
 	}
 
 	public void setLastName(String lastName) {
-		checkNotNull(lastName);
-		checkArgument(!lastName.isEmpty(), "lastName cannot be empty");
+		checkLastName(lastName);
 		this.lastName = lastName;
 	}
 
@@ -129,8 +131,7 @@ public class Customer implements Serializable {
 	}
 
 	public void setPhoneNumber(String phoneNumber) {
-		checkNotNull(phoneNumber);
-		checkArgument(!phoneNumber.isEmpty(), "phoneNumber cannot be empty");
+		checkPhoneNumber(phoneNumber);
 		this.phoneNumber = phoneNumber;
 	}
 	
@@ -139,38 +140,98 @@ public class Customer implements Serializable {
 	}
 
 	public void setPrimaryAddress(CustomerAddress primaryAddress) {
+		checkPrimaryAddress(primaryAddress);
 		this.primaryAddress = new CustomerAddress(primaryAddress);
 	}
 
 	public List<CustomerAddress> getAddresses() {
-		return addresses;
+		List<CustomerAddress> copiedAddresses = new ArrayList<CustomerAddress>();
+		
+		for(CustomerAddress address : addresses) {
+			copiedAddresses.add(new CustomerAddress(address));
+		}
+		
+		return copiedAddresses;
 	}
 
 	public void setAddresses(List<CustomerAddress> addresses) {
-		this.addresses = addresses;
+		checkAddresses(addresses);
+		
+		List<CustomerAddress> copiedAddresses = new ArrayList<CustomerAddress>();
+		
+		for(CustomerAddress address : addresses) {
+			copiedAddresses.add(new CustomerAddress(address));
+		}
+		
+		this.addresses = copiedAddresses;
 	}
 
 	public ShoppingCart getShoppingCart() {
-		return shoppingCart;
+		return new ShoppingCart(shoppingCart);
 	}
 
 	public void setShoppingCart(ShoppingCart shoppingCart) {
-		this.shoppingCart = shoppingCart;
+		checkShoppingCart(shoppingCart);
+		this.shoppingCart = new ShoppingCart(shoppingCart);
 	}
 
 	public List<WishList> getWishLists() {
+		//return copyWishLists(wishLists);
 		return wishLists;
 	}
 
 	public void setWishLists(List<WishList> wishLists) {
+		checkWishLists(wishLists);
+		//this.wishLists = copyWishLists(wishLists);
 		this.wishLists = wishLists;
 	}
-
-	public boolean isDeleted() {
-		return deleted;
+	
+//	private List<WishList> copyWishLists(List<WishList> wishLists) {
+//		List<WishList> copiedWishLists = new ArrayList<WishList>();
+//		
+//		for(WishList wishList : wishLists) {
+//			copiedWishLists.add(new WishList(wishList));
+//		}
+//		
+//		return copiedWishLists;
+//	}
+	
+	private void checkTitle(String title) {
+		checkNotNull(title, "title cannot be null");
+		checkArgument(!title.isEmpty(), "title cannot be empty");
 	}
-
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
+	
+	private void checkFirstName(String firstName) {
+		checkNotNull(firstName, "firstName cannot be null");
+		checkArgument(!firstName.isEmpty(), "firstName cannot be empty");
+	}
+	
+	private void checkLastName(String lastName) {
+		checkNotNull(lastName, "lastName cannot be null");
+		checkArgument(!lastName.isEmpty(), "lastName cannot be empty");
+	}
+	
+	private void checkPhoneNumber(String phoneNumber) {
+		checkNotNull(phoneNumber, "phoneNumber cannot be null");
+		checkArgument(!phoneNumber.isEmpty(), "phoneNumber cannot be empty");
+	}
+	
+	private void checkPrimaryAddress(CustomerAddress primaryAddress) {
+		checkNotNull(primaryAddress, "primaryAddress cannot be null");
+	}
+	
+	private void checkAddresses(List<CustomerAddress> addresses) {
+		checkNotNull(addresses, "addresses cannot be null");
+		checkArgument(addresses.size() != 0, "addresses cannot be empty");
+		checkArgument(!addresses.contains(null), "addresses cannot contain nulls");
+	}
+	
+	private void checkShoppingCart(ShoppingCart shoppingCart) {
+		checkNotNull(shoppingCart, "shoppingCart cannot be null");
+	}
+	
+	private void checkWishLists(List<WishList> wishLists) {
+		checkNotNull(wishLists, "wishLists cannot be null");
+		checkArgument(!wishLists.contains(null), "wishLists cannot contain nulls");
 	}
 }

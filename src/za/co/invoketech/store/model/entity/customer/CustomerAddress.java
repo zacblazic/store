@@ -1,3 +1,19 @@
+/**
+ * Copyright (c) 2012 Invoke Tech
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
+
 package za.co.invoketech.store.model.entity.customer;
 
 import java.io.Serializable;
@@ -16,8 +32,7 @@ import za.co.invoketech.store.model.value.AddressType;
 import static com.google.common.base.Preconditions.*;
 
 /**
- * Entity implementation class for Entity: CustomerAddress
- *
+ * @author zacblazic@gmail.com (Zac Blazic)
  */
 @Entity
 @Table(name = "CUSTOMER_ADDRESS")
@@ -58,8 +73,7 @@ public class CustomerAddress implements Serializable {
 	}
 
 	public void setLabel(String label) {
-		checkNotNull(label);
-		checkArgument(!label.isEmpty(), "label cannot be empty");
+		checkLabel(label);
 		this.label = label;
 	}
 
@@ -133,5 +147,10 @@ public class CustomerAddress implements Serializable {
 
 	public void setAddressType(AddressType addressType) {
 		address.setAddressType(addressType);
+	}
+	
+	private void checkLabel(String label) {
+		checkNotNull(label, "label cannot be null");
+		checkArgument(!label.isEmpty(), "label cannot be empty");
 	}
 }

@@ -1,5 +1,8 @@
 package za.co.invoketech.store.model.entity.shoppingcart;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,16 +33,24 @@ public class ShoppingCart implements Serializable {
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "SHOPPING_CART_ID", nullable = false)
-	private List<ShoppingCartItem> itemList;
+	private List<ShoppingCartItem> items;
 	
-	@Column(name = "DELETED")
-	private boolean deleted;
+	/**
+	 * @deprecated
+	 * Default constructor should only be used by the persistence mechanism.
+	 */
+	public ShoppingCart() {}
 	
-	public static ShoppingCart getInstance() {
-		ShoppingCart cart = new ShoppingCart();
-		cart.itemList = new ArrayList<ShoppingCartItem>();
-		
-		return cart;
+	// TODO: Maybe allow the use of default constructor, if testing passes
+	
+	public ShoppingCart(List<ShoppingCartItem> items) {
+		checkItems(items);
+		this.items = copyItems(items);
+	}
+	
+	public ShoppingCart(ShoppingCart cart) {
+		this.id = cart.id;
+		this.items = copyItems(items);
 	}
 	
 	public long getId() {
@@ -50,34 +61,52 @@ public class ShoppingCart implements Serializable {
 		this.id = id;
 	}
 
-	public void addItem(ShoppingCartItem item) {	
-		itemList.add(item);
+	public void addItem(ShoppingCartItem item) {
+		checkItem(item);
+		items.add(new ShoppingCartItem(item));
 	}
 	
 	public void removeItem(ShoppingCartItem item) {
-		itemList.remove(item);
+		items.remove(item);
+	}
+	
+	public boolean hasItem(ShoppingCartItem item) {
+		return items.contains(item);
 	}
 	
 	public void removeAllItems() {
-		// Used instead of clear to remove unused memory
-		itemList = new ArrayList<ShoppingCartItem>();
+		items = new ArrayList<ShoppingCartItem>();
 	}
 	
-	public List<ShoppingCartItem> getItems() { 
-		return itemList;
+	public List<ShoppingCartItem> getItems() {
+		return copyItems(items);
 	}
 	
-	// TODO: Should we allow setItems()?
+	public void setItems(List<ShoppingCartItem> items) {
+		checkItems(items);
+		this.items = copyItems(items);
+	}
 	
 	public int getItemCount() {
-		return itemList.size();
+		return items.size();
 	}
-
-	public boolean isDeleted() {
-		return deleted;
+	
+	private void checkItem(ShoppingCartItem item) {
+		checkNotNull(item, "item cannot be null");
 	}
-
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
+	
+	private void checkItems(List<ShoppingCartItem> items) {
+		checkNotNull(items, "items cannot be null");
+		checkArgument(!items.contains(null), "items cannot contain nulls");
+	}
+	
+	private List<ShoppingCartItem> copyItems(List<ShoppingCartItem> items) {
+		List<ShoppingCartItem> copiedItems = new ArrayList<ShoppingCartItem>();
+		
+		for(ShoppingCartItem item : items) {
+			copiedItems.add(new ShoppingCartItem(item));
+		}
+		
+		return copiedItems;
 	}
 }

@@ -1,9 +1,28 @@
+/**
+ * Copyright (c) 2012 Invoke Tech
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
+
 package za.co.invoketech.store.model.entity.shoppingcart;
+
+import static com.google.common.base.Preconditions.*;
 
 import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -28,30 +47,34 @@ public class ShoppingCartItem implements Serializable {
 	@Column(name = "SHOPPING_CART_ITEM_ID")
 	private long id;
 	
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "PRODUCT_ID", nullable = false)
 	private Product product;
 	
-	@Column(name = "QUANTITY")
+	@Column(name = "QUANTITY", nullable = false)
 	private int quantity;
 	
-	@Column(name = "DELETED")
-	private boolean deleted;
+	/**
+	 * @deprecated
+	 * Default constructor should only be used by the persistence mechanism.
+	 */
+	public ShoppingCartItem() {}
 	
-	public static ShoppingCartItem getInstance(Product product) {
-		return getInstance(product, DEFAULT_QUANTITY);
+	public ShoppingCartItem(Product product) {
+		this(product, DEFAULT_QUANTITY);
 	}
 	
-	public static ShoppingCartItem getInstance(Product product, int quantity) {
-		if(quantity <= 0) {
-			// TODO: Handle invalid quantity
-		}
-		
-		ShoppingCartItem item = new ShoppingCartItem();
-		item.product = product;
-		item.quantity = quantity;
-		
-		return item;
+	public ShoppingCartItem(Product product, int quantity) {
+		checkProduct(product);
+		checkQuantity(quantity);
+		this.product = product;
+		this.quantity = quantity;
+	}
+	
+	public ShoppingCartItem(ShoppingCartItem item) {
+		this.id = item.id;
+		this.product = item.product;
+		this.quantity = item.quantity;
 	}
 	
 	public long getId() {
@@ -67,6 +90,7 @@ public class ShoppingCartItem implements Serializable {
 	}
 
 	public void setProduct(Product product) {
+		checkProduct(product);
 		this.product = product;
 	}
 
@@ -75,18 +99,31 @@ public class ShoppingCartItem implements Serializable {
 	}
 
 	public void setQuantity(int quantity) {
-		if(quantity <= 0) {
-			// TODO: Handle invalid quantity
-		}
-		
+		checkQuantity(quantity);
 		this.quantity = quantity;
 	}
-
-	public boolean isDeleted() {
-		return deleted;
+	
+	@Override
+	public boolean equals(Object object) {
+		if(!(object instanceof ShoppingCartItem)) {
+			return false;
+		}
+		
+		ShoppingCartItem other = (ShoppingCartItem)object;
+		
+		if(!this.product.equals(other.product)) {
+			return false;
+		}
+		
+		return true;
 	}
-
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
+	
+	private void checkProduct(Product product) {
+		checkNotNull(product, "product cannot be null");
+		checkArgument(product.getId() != 0, "product must be persisted");
+	}
+	
+	private void checkQuantity(int quantity) {
+		checkArgument(quantity < 1, "quantity cannot be < 1");
 	}
 }
