@@ -46,7 +46,7 @@ public class Account implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "ACCOUNT_ID")
 	private long id;
 	
@@ -167,7 +167,7 @@ public class Account implements Serializable {
 		}
 		
 		Account other = (Account)object;
-		if(!this.email.equals(other.email)) {
+		if(!this.email.equalsIgnoreCase(other.email)) {
 			return false;
 		}
 		return true;

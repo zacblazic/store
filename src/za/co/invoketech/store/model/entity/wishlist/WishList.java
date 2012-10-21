@@ -16,8 +16,12 @@
 
 package za.co.invoketech.store.model.entity.wishlist;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -43,20 +47,53 @@ public class WishList implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "WISH_LIST_ID")
 	private long id;
 	
-	@Column(name = "LABEL")
+	@Column(name = "LABEL", nullable = false)
 	private String label;
 	
 	@Temporal(TemporalType.DATE)
-	@Column(name = "CREATION_DATE")
-	private Date creationDate;
+	@Column(name = "CREATED_DATE", nullable = false)
+	private Date createdDate;
+	
+	@Temporal(TemporalType.DATE)
+	@Column(name = "LAST_UPDATE_DATE", nullable = false)
+	private Date lastUpdatedDate;
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "WISH_LIST_ID", nullable = false)
-	private List<WishListItem> itemList;
+	private List<WishListItem> items;
+	
+	/**
+	 * @deprecated
+	 * Default constructor should only be used by the persistence mechanism.
+	 */
+	public WishList() {}
+	
+	public WishList(String label) {
+		this(label, new ArrayList<WishListItem>());
+	}
+	
+	public WishList(String label, List<WishListItem> items) {
+		checkLabel(label);
+		checkItems(items);
+		
+		Date currentDate = Calendar.getInstance().getTime();
+		
+		this.label = label;
+		this.createdDate = currentDate;
+		this.lastUpdatedDate = currentDate;
+		this.items = copyItems(items);
+	}
+	
+	public WishList(WishList wishList) {
+		this.id = wishList.id;
+		this.label = wishList.label;
+		this.createdDate = new Date(wishList.createdDate.getTime());
+		this.items = copyItems(items);
+	}
 
 	public long getId() {
 		return id;
@@ -71,33 +108,71 @@ public class WishList implements Serializable {
 	}
 
 	public void setLabel(String label) {
+		checkLabel(label);
 		this.label = label;
 	}
 
-	public Date getCreationDate() {
-		return new Date(creationDate.getTime());
+	public Date getCreatedDate() {
+		return new Date(createdDate.getTime());
+	}
+	
+	public Date getLastUpdatedDate() {
+		return new Date(lastUpdatedDate.getTime());
 	}
 	
 	public void addItem(WishListItem item) {
-		itemList.add(item);
+		checkItem(item);
+		items.add(item);
 	}
 	
 	public void removeItem(WishListItem item) {
-		itemList.remove(item);
+		checkItem(item);
+		items.remove(item);
+	}
+	
+	public boolean hasItem(WishListItem item) {
+		checkItem(item);
+		return items.contains(item);
 	}
 	
 	public void removeAllItems() {
-		// Used instead of clear to remove unused memory
-		itemList = new ArrayList<WishListItem>();
+		items = new ArrayList<WishListItem>();
 	}
 	
 	public List<WishListItem> getItems() {
-		return itemList;
+		return copyItems(items);
 	}
 	
-	// TODO: Should we allow setItems()?
+	public void setItems(List<WishListItem> items) {
+		checkItems(items);
+		this.items = copyItems(items);
+	}
 	
 	public int getItemCount() {
-		return itemList.size();
+		return items.size();
+	}
+	
+	private List<WishListItem> copyItems(List<WishListItem> items) {
+		List<WishListItem> copiedItems = new ArrayList<WishListItem>();
+		
+		for(WishListItem item : items) {
+			copiedItems.add(new WishListItem(item));
+		}
+		
+		return copiedItems;
+	}
+	
+	private void checkLabel(String label) {
+		checkNotNull(label, "label cannot be null");
+		checkArgument(!label.isEmpty(), "label cannot be empty");
+	}
+	
+	private void checkItem(WishListItem item) {
+		checkNotNull(item, "item cannot be null");
+	}
+	
+	private void checkItems(List<WishListItem> items) {
+		checkNotNull(items, "items cannot be null");
+		checkArgument(!items.contains(null), "items cannot contain nulls");
 	}
 }

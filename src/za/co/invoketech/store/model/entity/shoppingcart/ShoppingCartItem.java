@@ -43,7 +43,7 @@ public class ShoppingCartItem implements Serializable {
 	private static final int DEFAULT_QUANTITY = 1;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "SHOPPING_CART_ITEM_ID")
 	private long id;
 	
@@ -103,6 +103,22 @@ public class ShoppingCartItem implements Serializable {
 		this.quantity = quantity;
 	}
 	
+	public void increaseQuantity(int amount) {
+		int newQuantity = quantity + amount;
+		checkQuantity(newQuantity);
+		quantity = newQuantity;
+	}
+	
+	public void decreaseQuantity(int amount) {
+		int newQuantity = quantity - amount;
+		checkQuantity(newQuantity);
+		quantity = newQuantity;
+	}
+	
+	public void resetQuantity() {
+		quantity = 1;
+	}
+	
 	@Override
 	public boolean equals(Object object) {
 		if(!(object instanceof ShoppingCartItem)) {
@@ -120,10 +136,10 @@ public class ShoppingCartItem implements Serializable {
 	
 	private void checkProduct(Product product) {
 		checkNotNull(product, "product cannot be null");
-		checkArgument(product.getId() != 0, "product must be persisted");
+		checkArgument(product.getId() != 0, "product has not been persisted");
 	}
 	
 	private void checkQuantity(int quantity) {
-		checkArgument(quantity < 1, "quantity cannot be < 1");
+		checkArgument(quantity > 0, "quantity cannot be < 1");
 	}
 }

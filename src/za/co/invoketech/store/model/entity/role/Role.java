@@ -40,7 +40,7 @@ public class Role implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "ROLE_ID")
 	private long id;
 	
@@ -78,7 +78,7 @@ public class Role implements Serializable {
 		}
 		
 		Role other = (Role)object;
-		if(!this.roleName.equals(other.roleName)) {
+		if(!this.roleName.equalsIgnoreCase(other.roleName)) {
 			return false;
 		}
 		return true;
