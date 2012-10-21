@@ -18,6 +18,8 @@ package za.co.invoketech.store.model.entity.wishlist;
 
 import static com.google.common.base.Preconditions.*;
 
+import static za.co.invoketech.store.application.util.DefensiveDate.copyDate;
+
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
@@ -71,11 +73,12 @@ public class WishListItem implements Serializable {
 	}
 	
 	public WishListItem(WishListItem item) {
+		checkWishListItem(item);
 		this.id = item.id;
 		this.product = item.product;
-		this.addedDate = new Date(item.addedDate.getTime());
+		this.addedDate = copyDate(item.addedDate);
 	}
-	
+
 	public long getId() {
 		return id;
 	}
@@ -85,7 +88,7 @@ public class WishListItem implements Serializable {
 	}
 
 	public Date getAddedDate() {
-		return new Date(addedDate.getTime());
+		return copyDate(addedDate);
 	}
 
 	public Product getProduct() {
@@ -110,6 +113,10 @@ public class WishListItem implements Serializable {
 		}
 		
 		return true;
+	}
+	
+	private void checkWishListItem(WishListItem item) {
+		checkNotNull(item, "item cannot be null");
 	}
 	
 	private void checkProduct(Product product) {

@@ -59,9 +59,7 @@ public class Address implements Serializable {
 	@Column(name = "ADDRESS_TYPE")
 	private AddressType addressType;
 
-	public Address() {
-		
-	}
+	public Address() {}
 	
 	public Address(Address address) {
 		this.firstName = address.firstName;

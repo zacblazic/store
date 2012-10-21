@@ -47,13 +47,23 @@ public class Role implements Serializable {
 	@Column(name = "ROLE_NAME", nullable = false, unique = true)
 	private String roleName;
 	
+	/**
+	 * @deprecated
+	 * Default constructor should only be used by the persistence mechanism.
+	 */
 	public Role() {}
 	
 	public Role (String roleName) {
 		checkRoleName(roleName);
 		this.roleName = roleName;
 	}
-
+	
+	public Role(Role role) {
+		checkRole(role);
+		this.id = role.id;
+		this.roleName = role.roleName;
+	}
+	
 	public long getId() {
 		return id;
 	}
@@ -82,6 +92,10 @@ public class Role implements Serializable {
 			return false;
 		}
 		return true;
+	}
+	
+	private void checkRole(Role role) {
+		checkNotNull(role, "role cannot be null");
 	}
 	
 	private void checkRoleName(String roleName) {

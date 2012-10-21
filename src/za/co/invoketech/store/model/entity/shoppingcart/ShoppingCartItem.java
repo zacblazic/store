@@ -72,6 +72,7 @@ public class ShoppingCartItem implements Serializable {
 	}
 	
 	public ShoppingCartItem(ShoppingCartItem item) {
+		checkShoppingCartItem(item);
 		this.id = item.id;
 		this.product = item.product;
 		this.quantity = item.quantity;
@@ -132,6 +133,10 @@ public class ShoppingCartItem implements Serializable {
 		}
 		
 		return true;
+	}
+	
+	private void checkShoppingCartItem(ShoppingCartItem item) {
+		checkNotNull(item, "item cannot be null");
 	}
 	
 	private void checkProduct(Product product) {

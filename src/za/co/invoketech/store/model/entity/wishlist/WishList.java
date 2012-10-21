@@ -19,6 +19,8 @@ package za.co.invoketech.store.model.entity.wishlist;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import static za.co.invoketech.store.application.util.DefensiveDate.copyDate;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -89,9 +91,11 @@ public class WishList implements Serializable {
 	}
 	
 	public WishList(WishList wishList) {
+		checkWishList(wishList);
 		this.id = wishList.id;
 		this.label = wishList.label;
-		this.createdDate = new Date(wishList.createdDate.getTime());
+		this.createdDate = copyDate(wishList.createdDate);
+		this.lastUpdatedDate = copyDate(wishList.lastUpdatedDate);
 		this.items = copyItems(items);
 	}
 
@@ -110,24 +114,27 @@ public class WishList implements Serializable {
 	public void setLabel(String label) {
 		checkLabel(label);
 		this.label = label;
+		setLastUpdatedDate();
 	}
 
 	public Date getCreatedDate() {
-		return new Date(createdDate.getTime());
+		return copyDate(createdDate);
 	}
 	
 	public Date getLastUpdatedDate() {
-		return new Date(lastUpdatedDate.getTime());
+		return copyDate(lastUpdatedDate);
 	}
 	
 	public void addItem(WishListItem item) {
 		checkItem(item);
 		items.add(item);
+		setLastUpdatedDate();
 	}
 	
 	public void removeItem(WishListItem item) {
 		checkItem(item);
 		items.remove(item);
+		setLastUpdatedDate();
 	}
 	
 	public boolean hasItem(WishListItem item) {
@@ -137,6 +144,7 @@ public class WishList implements Serializable {
 	
 	public void removeAllItems() {
 		items = new ArrayList<WishListItem>();
+		setLastUpdatedDate();
 	}
 	
 	public List<WishListItem> getItems() {
@@ -146,10 +154,15 @@ public class WishList implements Serializable {
 	public void setItems(List<WishListItem> items) {
 		checkItems(items);
 		this.items = copyItems(items);
+		setLastUpdatedDate();
 	}
 	
 	public int getItemCount() {
 		return items.size();
+	}
+	
+	private void setLastUpdatedDate() {
+		lastUpdatedDate = Calendar.getInstance().getTime();
 	}
 	
 	private List<WishListItem> copyItems(List<WishListItem> items) {
@@ -160,6 +173,10 @@ public class WishList implements Serializable {
 		}
 		
 		return copiedItems;
+	}
+	
+	private void checkWishList(WishList wishList) {
+		checkNotNull(wishList, "wishList cannot be null");
 	}
 	
 	private void checkLabel(String label) {

@@ -18,7 +18,10 @@ package za.co.invoketech.store.model.entity.order;
 
 import static com.google.common.base.Preconditions.*;
 
+import static za.co.invoketech.store.application.util.DefensiveDate.copyDate;
+
 import java.io.Serializable;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -46,13 +49,13 @@ public class Payment implements Serializable {
 	@Column(name = "PAYMENT_ID")
 	private long id;
 	
+	@Enumerated(EnumType.STRING)
+	@Column(name = "PAYMENT_METHOD", nullable = false)
+	private PaymentMethod method;
+	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "PAID_DATE")
 	private Date paidDate;
-	
-	@Enumerated(EnumType.STRING)
-	@Column(name = "PAYMENT_METHOD")
-	private PaymentMethod method;
 	
 	/**
 	 * @deprecated
@@ -60,15 +63,15 @@ public class Payment implements Serializable {
 	 */
 	public Payment() {}
 	
-	public Payment(Date paidDate, PaymentMethod method) {
-		this.paidDate = new Date(paidDate.getTime());
+	public Payment(PaymentMethod method) {
+		checkMethod(method);
 		this.method = method;
 	}
 	
 	public Payment(Payment payment) {
 		checkPayment(payment);
 		this.id = payment.id;
-		this.paidDate = new Date(payment.paidDate.getTime());
+		this.paidDate = copyDate(payment.paidDate);
 		this.method = payment.method;
 	}
 
@@ -80,23 +83,36 @@ public class Payment implements Serializable {
 		this.id = id;
 	}
 
-	public Date getPaidDate() {
-		return new Date(paidDate.getTime());
-	}
-
-	public void setPaidDate(Date paidDate) {
-		this.paidDate = new Date(paidDate.getTime());
-	}
-
 	public PaymentMethod getMethod() {
 		return method;
 	}
 
 	public void setMethod(PaymentMethod method) {
+		checkMethod(method);
 		this.method = method;
 	}
 	
-	private Payment checkPayment(Payment payment) {
-		return checkNotNull(payment, "payment cannot be null");
+	public Date getPaidDate() {
+		return copyDate(paidDate);
+	}
+	
+	public boolean isPaid() {
+		return paidDate != null ? true : false;
+	}
+	
+	public void setPaid(boolean paid) {
+		if(paid) {
+			paidDate = Calendar.getInstance().getTime();
+		} else {
+			paidDate = null;
+		}
+	}
+	
+	private void checkMethod(PaymentMethod method) {
+		checkNotNull(method, "method cannot be null");
+	}
+	
+	private void checkPayment(Payment payment) {
+		checkNotNull(payment, "payment cannot be null");
 	}
 }

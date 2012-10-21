@@ -16,7 +16,12 @@
 
 package za.co.invoketech.store.model.entity.invoice;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+import static za.co.invoketech.store.application.util.DefensiveDate.copyDate;
+
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -47,14 +52,33 @@ public class Invoice implements Serializable {
 	@Column(name = "INVOICE_ID")
 	private long id;
 	
-	@Temporal(TemporalType.DATE)
-	@Column(name = "INVOICE_DATE", nullable = false)
-	private Date invoiceDate;
-	
 	@OneToOne(mappedBy = "invoice", fetch = FetchType.LAZY)
 	@JoinColumn(name = "INVOICE_ID", nullable = false)
 	private Order order;
 	
+	@Temporal(TemporalType.DATE)
+	@Column(name = "INVOICE_DATE", nullable = false)
+	private Date invoiceDate;
+	
+	/**
+	 * @deprecated
+	 * Default constructor should only be used by the persistence mechanism.
+	 */
+	public Invoice() {}
+	
+	public Invoice(Order order) {
+		checkOrder(order);
+		this.order = order;
+		this.invoiceDate = Calendar.getInstance().getTime();
+	}
+	
+	public Invoice(Invoice invoice) {
+		checkInvoice(invoice);
+		this.id = invoice.id;
+		this.order = invoice.order;
+		this.invoiceDate = copyDate(invoice.invoiceDate);
+	}
+
 	public long getId() {
 		return id;
 	}
@@ -63,19 +87,35 @@ public class Invoice implements Serializable {
 		this.id = id;
 	}
 
-	public Date getInvoiceDate() {
-		return invoiceDate;
-	}
-
-	public void setInvoiceDate(Date invoiceDate) {
-		this.invoiceDate = invoiceDate;
-	}
-
 	public Order getOrder() {
-		return order;
+		return new Order(order);
 	}
-
-	public void setOrder(Order order) {
-		this.order = order;
+	
+	public Date getInvoiceDate() {
+		return copyDate(invoiceDate);
+	}
+	
+	public int getItemCount() {
+		return order.getItemCount();
+	}
+	
+	public BigDecimal getAmount() {
+		return order.getAmount();
+	}
+	
+	public BigDecimal getTax() {
+		return order.getTax();
+	}
+	
+	public BigDecimal getAmountWithTax() {
+		return order.getAmountWithTax();
+	}
+	
+	private void checkOrder(Order order) {
+		checkNotNull(order, "order cannot be null");
+	}
+	
+	private void checkInvoice(Invoice invoice) {
+		checkNotNull(invoice, "invoice cannot be null");
 	}
 }

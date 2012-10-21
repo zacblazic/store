@@ -36,7 +36,9 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import za.co.invoketech.store.model.entity.account.Account;
+import za.co.invoketech.store.model.entity.order.Order;
 import za.co.invoketech.store.model.entity.shoppingcart.ShoppingCart;
+import za.co.invoketech.store.model.entity.shoppingcart.ShoppingCartItem;
 import za.co.invoketech.store.model.entity.wishlist.WishList;
 
 /**
@@ -85,11 +87,91 @@ public class Customer implements Serializable {
 	@JoinColumn(name = "CUSTOMER_ID", nullable = false)
 	private List<WishList> wishLists;
 	
+	@OneToMany(mappedBy = "customer")
+	@JoinColumn(name = "CUSTOMER_ID", nullable = false)
+	private List<Order> orders;
+	
+	public class Builder {
+		
+		private String title;
+		private String firstName;
+		private String lastName;
+		private String phoneNumber;
+		
+		private CustomerAddress primaryAddress;
+		private List<CustomerAddress> addresses;
+		private Account account;
+		
+		public Builder(String title, String firstName, String lastName) {
+			this.title = title;
+			this.firstName = firstName;
+			this.lastName = lastName;
+		}
+		
+		public Builder phoneNumber(String phoneNumber) {
+			this.phoneNumber = phoneNumber;
+			return this;
+		}
+		
+		public Builder primaryAddress(CustomerAddress primaryAddress) {
+			this.primaryAddress = primaryAddress;
+			return this;
+		}
+		
+		public Builder addresses(List<CustomerAddress> addresses) {
+			this.addresses = addresses;
+			return this;
+		}
+		
+		public Builder account(Account account) {
+			this.account = account;
+			return this;
+		}
+		
+		public Customer build() {
+			return new Customer(this);
+		}
+	}
+	
 	/**
 	 * @deprecated
 	 * Default constructor should only be used by the persistence mechanism.
 	 */
 	public Customer() {}
+	
+	private Customer(Builder builder) {
+		checkTitle(builder.title);
+		checkFirstName(builder.firstName);
+		checkLastName(builder.lastName);
+		checkPhoneNumber(builder.phoneNumber);
+		checkPrimaryAddress(builder.primaryAddress);
+		checkAddresses(builder.addresses);
+		checkAccount(builder.account);
+		this.title = builder.title;
+		this.firstName = builder.firstName;
+		this.lastName = builder.lastName;
+		this.phoneNumber = builder.phoneNumber;
+		this.primaryAddress = new CustomerAddress(builder.primaryAddress);
+		this.addresses = copyAddresses(builder.addresses);
+		this.account = new Account(builder.account);
+		this.shoppingCart = createEmptyShoppingCart();
+		this.wishLists = new ArrayList<WishList>();
+		this.orders = new ArrayList<Order>();
+	}
+	
+	public Customer(Customer customer) {
+		checkCustomer(customer);
+		this.id = customer.id;
+		this.firstName = customer.firstName;
+		this.lastName = customer.lastName;
+		this.phoneNumber = customer.phoneNumber;
+		this.primaryAddress = new CustomerAddress(customer.primaryAddress);
+		this.addresses = copyAddresses(customer.addresses);
+		this.account = new Account(customer.account);
+		this.shoppingCart = new ShoppingCart(customer.shoppingCart);
+		this.wishLists = copyWishLists(customer.wishLists);
+		this.orders = copyOrders(customer.orders);
+	}
 
 	public long getId() {
 		return id;
@@ -145,25 +227,12 @@ public class Customer implements Serializable {
 	}
 
 	public List<CustomerAddress> getAddresses() {
-		List<CustomerAddress> copiedAddresses = new ArrayList<CustomerAddress>();
-		
-		for(CustomerAddress address : addresses) {
-			copiedAddresses.add(new CustomerAddress(address));
-		}
-		
-		return copiedAddresses;
+		return copyAddresses(addresses);
 	}
 
 	public void setAddresses(List<CustomerAddress> addresses) {
 		checkAddresses(addresses);
-		
-		List<CustomerAddress> copiedAddresses = new ArrayList<CustomerAddress>();
-		
-		for(CustomerAddress address : addresses) {
-			copiedAddresses.add(new CustomerAddress(address));
-		}
-		
-		this.addresses = copiedAddresses;
+		this.addresses = copyAddresses(addresses);
 	}
 
 	public ShoppingCart getShoppingCart() {
@@ -176,25 +245,59 @@ public class Customer implements Serializable {
 	}
 
 	public List<WishList> getWishLists() {
-		//return copyWishLists(wishLists);
-		return wishLists;
+		return copyWishLists(wishLists);
 	}
 
 	public void setWishLists(List<WishList> wishLists) {
 		checkWishLists(wishLists);
-		//this.wishLists = copyWishLists(wishLists);
-		this.wishLists = wishLists;
+		this.wishLists = copyWishLists(wishLists);
 	}
 	
-//	private List<WishList> copyWishLists(List<WishList> wishLists) {
-//		List<WishList> copiedWishLists = new ArrayList<WishList>();
-//		
-//		for(WishList wishList : wishLists) {
-//			copiedWishLists.add(new WishList(wishList));
-//		}
-//		
-//		return copiedWishLists;
-//	}
+	public List<Order> getOrders() {
+		return copyOrders(orders);
+	}
+	
+	public void setOrders(List<Order> orders) {
+		this.orders = copyOrders(orders);
+	}
+	
+	private ShoppingCart createEmptyShoppingCart() {
+		return new ShoppingCart(new ArrayList<ShoppingCartItem>());
+	}
+	
+	private List<CustomerAddress> copyAddresses(List<CustomerAddress> addresses) {
+		List<CustomerAddress> copiedAddresses = new ArrayList<CustomerAddress>();
+		
+		for(CustomerAddress address : addresses) {
+			copiedAddresses.add(new CustomerAddress(address));
+		}
+		
+		return copiedAddresses;
+	}
+	
+	private List<WishList> copyWishLists(List<WishList> wishLists) {
+		List<WishList> copiedWishLists = new ArrayList<WishList>();
+		
+		for(WishList wishList : wishLists) {
+			copiedWishLists.add(new WishList(wishList));
+		}
+		
+		return copiedWishLists;
+	}
+	
+	private List<Order> copyOrders(List<Order> orders) {
+		List<Order> copiedOrders = new ArrayList<Order>();
+		
+		for(Order order : orders) {
+			copiedOrders.add(new Order(order));
+		}
+		
+		return copiedOrders;
+	}
+	
+	private void checkCustomer(Customer customer) {
+		checkNotNull(customer, "customer cannot be null");
+	}
 	
 	private void checkTitle(String title) {
 		checkNotNull(title, "title cannot be null");
@@ -224,6 +327,10 @@ public class Customer implements Serializable {
 		checkNotNull(addresses, "addresses cannot be null");
 		checkArgument(addresses.size() != 0, "addresses cannot be empty");
 		checkArgument(!addresses.contains(null), "addresses cannot contain nulls");
+	}
+	
+	private void checkAccount(Account account) {
+		checkNotNull(account, "account cannot be null");
 	}
 	
 	private void checkShoppingCart(ShoppingCart shoppingCart) {

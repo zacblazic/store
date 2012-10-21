@@ -59,15 +59,15 @@ public class Account implements Serializable {
 	@Column(name = "PASSWORD", nullable = false)
 	private String password;
 	
-	@OneToOne(mappedBy = "account", fetch = FetchType.LAZY)
-	@JoinColumn(name = "ACCOUNT_ID", nullable = false)
-	private Customer customer;
-	
 	@ManyToMany
 	@JoinTable(name = "ACCOUNT_ROLE",
 			   joinColumns = @JoinColumn(name = "ACCOUNT_ID"),
 			   inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
 	private List<Role> roles;
+	
+	@OneToOne(mappedBy = "account", fetch = FetchType.LAZY)
+	@JoinColumn(name = "ACCOUNT_ID", nullable = false)
+	private Customer customer;
 	
 	/**
 	 * @deprecated
@@ -85,7 +85,16 @@ public class Account implements Serializable {
 		checkRoles(roles);
 		this.email = email;
 		this.password = password;
-		this.roles = roles;
+		this.roles = copyRoles(roles);
+	}
+	
+	public Account(Account account) {
+		checkAccount(account);
+		this.id = account.id;
+		this.email = account.email;
+		this.password = account.password;
+		this.roles = copyRoles(account.roles);
+		this.customer = new Customer(account.customer);
 	}
 
 	public Long getId() {
@@ -115,12 +124,12 @@ public class Account implements Serializable {
 	}
 	
 	public Customer getCustomer() {
-		return customer;
+		return new Customer(customer);
 	}
 	
 	public void setCustomer(Customer customer) {
 		checkCustomer(customer);
-		this.customer = customer;
+		this.customer = new Customer(customer);
 	}
 	
 	public void addRole(Role role) {
@@ -169,12 +178,12 @@ public class Account implements Serializable {
 	}
 	
 	public List<Role> getRoles() {
-		return new ArrayList<Role>(roles);
+		return copyRoles(roles);
 	}
 	
 	public void setRoles(List<Role> roles) {
 		checkRoles(roles);
-		this.roles = new ArrayList<Role>(roles);
+		this.roles = copyRoles(roles);
 	}
 
 	@Override
@@ -188,6 +197,20 @@ public class Account implements Serializable {
 			return false;
 		}
 		return true;
+	}
+	
+	private List<Role> copyRoles(List<Role> roles) {
+		List<Role> copiedRoles = new ArrayList<Role>();
+		
+		for(Role role : roles) {
+			copiedRoles.add(new Role(role));
+		}
+		
+		return copiedRoles;
+	}
+	
+	private void checkAccount(Account account) {
+		checkNotNull(account, "account cannot be null");
 	}
 	
 	private void checkEmail(String email) {

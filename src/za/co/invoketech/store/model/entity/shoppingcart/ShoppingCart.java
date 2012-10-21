@@ -56,15 +56,14 @@ public class ShoppingCart implements Serializable {
 	 * Default constructor should only be used by the persistence mechanism.
 	 */
 	public ShoppingCart() {}
-	
-	// TODO: Maybe allow the use of default constructor, if testing passes
-	
+
 	public ShoppingCart(List<ShoppingCartItem> items) {
 		checkItems(items);
 		this.items = copyItems(items);
 	}
 	
 	public ShoppingCart(ShoppingCart cart) {
+		checkShoppingCart(cart);
 		this.id = cart.id;
 		this.items = copyItems(items);
 	}
@@ -142,6 +141,10 @@ public class ShoppingCart implements Serializable {
 		}
 		
 		return copiedItems;
+	}
+	
+	private void checkShoppingCart(ShoppingCart cart) {
+		checkNotNull(cart, "cart cannot be null");
 	}
 	
 	private void checkItem(ShoppingCartItem item) {
