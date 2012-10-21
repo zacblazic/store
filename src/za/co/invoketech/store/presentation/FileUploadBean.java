@@ -45,11 +45,12 @@ public class FileUploadBean implements Serializable {
 	}
 
 	public void upload() {
-
+		
 		if(file != null && productId != 0) {
 			
 			try {
-				fileUploadService.uploadImage(file.getInputstream(), productId);
+				String extension = file.getFileName().substring(file.getFileName().lastIndexOf('.')+1);
+				fileUploadService.uploadImage(file.getInputstream(), extension, productId);
 			} catch (IOException e) {
 				System.out.println(e);
 			}

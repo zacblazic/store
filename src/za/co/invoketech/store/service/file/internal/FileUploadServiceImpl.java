@@ -59,17 +59,61 @@ public class FileUploadServiceImpl implements FileUploadService {
 		}
 	}  
 	
-	public void uploadImage(InputStream is, long productId) throws IOException {
-		
-		File directory = new File(IMAGE_RESOURCE_PATH + productId);
+	public void uploadImage(InputStream is, String extension, long productId) throws IOException {
+		File directory = new File(fileManager.getApplicationRoot() + IMAGE_RESOURCE_PATH + productId);
 		
 		if(!directory.exists()) {
 			directory.mkdirs();
+			Path path = Paths.get(directory.getPath() + "/img_" + productId + "_1." + extension);
+			System.out.println(path);
+			Files.copy(is, path, StandardCopyOption.REPLACE_EXISTING);
 		}
+		else {
+			File[] files = directory.listFiles();			
+			
+			String currentFile;
+			int currentFileIteration;
+			
+			if(files.length > 0)
+			{
+				boolean created = false;
+				files = sortFileArray(files);
+				
+				
+				for(int i = 0; i < files.length && !created; i++) {
+					currentFile = files[i].getName();
+					currentFileIteration = Integer.parseInt(currentFile.substring(currentFile.lastIndexOf('_') + 1, currentFile.lastIndexOf('_') + 2));
+					
+					if( currentFileIteration != (i+1) ) {
+						Path path = Paths.get(directory.getPath() + "/img_" + productId + "_" + (i + 1) + "." + extension);
+						Files.copy(is, path, StandardCopyOption.REPLACE_EXISTING);
+						created = true;
+					}
+				}
+				
+				if(!created) {
+					Path path = Paths.get(directory.getPath() + "/img_" + productId + "_" + (files.length + 1) + "." + extension);
+					Files.copy(is, path, StandardCopyOption.REPLACE_EXISTING);
+				}
+			}
+			else {
+				Path path = Paths.get(directory.getPath() + "/img_" + productId + "_1." + extension);
+				Files.copy(is, path, StandardCopyOption.REPLACE_EXISTING);
+			}
+		}
+	}
+	
+	private File[] sortFileArray (File[] files) {
 		
-		// TODO: Image should to the correct directory
-		
-		Path path = Paths.get(directory.getPath() + "/img_" + productId + "_.jpg");
-		Files.copy(is, path, StandardCopyOption.REPLACE_EXISTING);
+		for(int out = 0; out < files.length; out++) {
+			for(int in = 0; in < out; in++) {
+				if(files[in].getName().compareTo(files[in + 1].getName()) > 0) {
+					File temp = files[in];
+					files[in] = files[in + 1];
+					files[in + 1] = temp;
+				}
+			}
+		}
+		return files;
 	}
 }

@@ -5,8 +5,8 @@ import java.io.InputStream;
 
 public interface FileUploadService {
 
-	final static String IMAGE_RESOURCE_PATH = "/images";
+	final static String IMAGE_RESOURCE_PATH = "/images/";
 	
 	void uploadImage(String path, String productCode, String size);
-	void uploadImage(InputStream is, long productId) throws IOException;
+	void uploadImage(InputStream is, String extension, long productId) throws IOException;
 }
