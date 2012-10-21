@@ -24,6 +24,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -49,7 +50,7 @@ public class WishListItem implements Serializable {
 	@Column(name = "WISH_LIST_ITEM_ID")
 	private long id;
 	
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "PRODUCT_ID", nullable = false)
 	private Product product;
 	

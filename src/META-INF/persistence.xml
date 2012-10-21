@@ -7,6 +7,7 @@
 		<class>za.co.invoketech.store.model.entity.order.OrderItem</class>
 		<class>za.co.invoketech.store.model.entity.order.DeliveryAddress</class>
 		<class>za.co.invoketech.store.model.entity.product.peripheral.Keyboard</class>
+		<class>za.co.invoketech.store.model.entity.product.component.GraphicsCard</class>
 		<class>za.co.invoketech.store.model.entity.product.software.Software</class>
 		<class>za.co.invoketech.store.model.entity.product.peripheral.Mouse</class>
 		<class>za.co.invoketech.store.model.entity.account.Account</class>
@@ -41,7 +42,6 @@
 		<class>za.co.invoketech.store.model.value.Address</class>
 		<class>za.co.invoketech.store.model.entity.product.component.Processor</class>
 		<class>za.co.invoketech.store.model.entity.shoppingcart.ShoppingCart</class>
-		<class>za.co.invoketech.store.model.entity.product.component.GraphicsCard</class>
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/store"/>
 			<property name="javax.persistence.jdbc.user" value="root"/>
