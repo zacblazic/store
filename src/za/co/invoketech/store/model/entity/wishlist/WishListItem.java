@@ -16,12 +16,15 @@
 
 package za.co.invoketech.store.model.entity.wishlist;
 
+import static com.google.common.base.Preconditions.*;
+
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -43,11 +46,11 @@ public class WishListItem implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "WISH_LIST_ITEM_ID")
 	private long id;
 	
-	@OneToOne
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "PRODUCT_ID", nullable = false)
 	private Product product;
 	
@@ -62,15 +65,11 @@ public class WishListItem implements Serializable {
 	public WishListItem() {}
 	
 	public WishListItem(Product product) {
-		this(product, Calendar.getInstance().getTime());
-	}
-	
-	public WishListItem(Product product, Date addedDate) {
+		checkProduct(product);
 		this.product = product;
-		this.addedDate = addedDate;
+		this.addedDate = Calendar.getInstance().getTime();
 	}
 	
-	// TODO: Defenisively copy product
 	public WishListItem(WishListItem item) {
 		this.id = item.id;
 		this.product = item.product;
@@ -86,11 +85,7 @@ public class WishListItem implements Serializable {
 	}
 
 	public Date getAddedDate() {
-		return addedDate;
-	}
-
-	public void setAddedDate(Date addedDate) {
-		this.addedDate = addedDate;
+		return new Date(addedDate.getTime());
 	}
 
 	public Product getProduct() {
@@ -98,6 +93,27 @@ public class WishListItem implements Serializable {
 	}
 
 	public void setProduct(Product product) {
+		checkProduct(product);
 		this.product = product;
+	}
+	
+	@Override
+	public boolean equals(Object object) {
+		if(!(object instanceof WishListItem)) {
+			return false;
+		}
+		
+		WishListItem other = (WishListItem)object;
+		
+		if(!this.product.equals(other.product)) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	private void checkProduct(Product product) {
+		checkNotNull(product, "product cannot be null");
+		checkArgument(product.getId() != 0, "product has not been persisted");
 	}
 }

@@ -21,6 +21,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -42,7 +43,7 @@ public class Invoice implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "INVOICE_ID")
 	private long id;
 	
@@ -50,12 +51,9 @@ public class Invoice implements Serializable {
 	@Column(name = "INVOICE_DATE", nullable = false)
 	private Date invoiceDate;
 	
-	@OneToOne
-	@JoinColumn(name = "ORDER_ID", nullable = false)
+	@OneToOne(mappedBy = "invoice", fetch = FetchType.LAZY)
+	@JoinColumn(name = "INVOICE_ID", nullable = false)
 	private Order order;
-	
-	@Column(name = "DELETED")
-	private boolean deleted;
 	
 	public long getId() {
 		return id;
@@ -79,13 +77,5 @@ public class Invoice implements Serializable {
 
 	public void setOrder(Order order) {
 		this.order = order;
-	}
-
-	public boolean isDeleted() {
-		return deleted;
-	}
-
-	public void setDeleted(boolean deleted) {
-		this.deleted = deleted;
 	}
 }

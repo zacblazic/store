@@ -26,14 +26,17 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import za.co.invoketech.store.model.entity.customer.Customer;
 import za.co.invoketech.store.model.entity.role.Role;
 
 /** 
@@ -46,7 +49,7 @@ public class Account implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "ACCOUNT_ID")
 	private long id;
 	
@@ -56,6 +59,10 @@ public class Account implements Serializable {
 	@Column(name = "PASSWORD", nullable = false)
 	private String password;
 	
+	@OneToOne(mappedBy = "account", fetch = FetchType.LAZY)
+	@JoinColumn(name = "ACCOUNT_ID", nullable = false)
+	private Customer customer;
+	
 	@ManyToMany
 	@JoinTable(name = "ACCOUNT_ROLE",
 			   joinColumns = @JoinColumn(name = "ACCOUNT_ID"),
@@ -63,7 +70,8 @@ public class Account implements Serializable {
 	private List<Role> roles;
 	
 	/**
-	 * Default constructor used by JPA. Do not make use of it.
+	 * @deprecated
+	 * Default constructor should only be used by the persistence mechanism.
 	 */
 	public Account() {}
 	
@@ -104,6 +112,15 @@ public class Account implements Serializable {
 	public void setPassword(String password) {
 		checkPassword(password);
 		this.password = password;
+	}
+	
+	public Customer getCustomer() {
+		return customer;
+	}
+	
+	public void setCustomer(Customer customer) {
+		checkCustomer(customer);
+		this.customer = customer;
 	}
 	
 	public void addRole(Role role) {
@@ -167,7 +184,7 @@ public class Account implements Serializable {
 		}
 		
 		Account other = (Account)object;
-		if(!this.email.equals(other.email)) {
+		if(!this.email.equalsIgnoreCase(other.email)) {
 			return false;
 		}
 		return true;
@@ -194,5 +211,9 @@ public class Account implements Serializable {
 	private void checkRoleName(String roleName) {
 		checkNotNull(roleName, "roleName cannot be null");
 		checkArgument(!roleName.isEmpty(), "roleName cannot be empty");
+	}
+	
+	private void checkCustomer(Customer customer) {
+		checkNotNull(customer, "customer cannot be null");
 	}
 }
