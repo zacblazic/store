@@ -148,7 +148,7 @@ public class Account implements Serializable {
 	
 	public void removeRole(Role role) {
 		checkRole(role);
-		roles.remove(role);
+		roles.remove(Role.copy(role));
 	}
 	
 	public void removeRole(String roleName) {
@@ -165,7 +165,7 @@ public class Account implements Serializable {
 	
 	public boolean hasRole(Role role) {
 		checkRole(role);
-		return roles.contains(role);
+		return roles.contains(Role.copy(role));
 	}
 	
 	public boolean hasRole(String roleName) {

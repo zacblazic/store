@@ -103,7 +103,7 @@ public class Customer implements Serializable {
 	private Customer(Customer customer) {
 		this.id = customer.id;
 		this.person = Person.copy(customer.person);
-		this.primaryAddress = new CustomerAddress(customer.primaryAddress);
+		this.primaryAddress = CustomerAddress.copy(customer.primaryAddress);
 		this.addresses = copyAddresses(customer.addresses);
 		this.account = Account.copy(customer.account);
 		this.shoppingCart = new ShoppingCart(customer.shoppingCart);
@@ -112,7 +112,7 @@ public class Customer implements Serializable {
 	}
 	
 	/**
-	 * Defensively copies a customer.
+	 * Defensively copies a Customer.
 	 */
 	public static Customer copy(Customer customer) {
 		if(customer != null) {
@@ -163,12 +163,12 @@ public class Customer implements Serializable {
 	}
 
 	public CustomerAddress getPrimaryAddress() {
-		return new CustomerAddress(primaryAddress);
+		return CustomerAddress.copy(primaryAddress);
 	}
 
 	public void setPrimaryAddress(CustomerAddress primaryAddress) {
 		checkPrimaryAddress(primaryAddress);
-		this.primaryAddress = new CustomerAddress(primaryAddress);
+		this.primaryAddress = CustomerAddress.copy(primaryAddress);
 	}
 
 	public List<CustomerAddress> getAddresses() {
@@ -210,7 +210,7 @@ public class Customer implements Serializable {
 		List<CustomerAddress> copiedAddresses = new ArrayList<CustomerAddress>();
 		
 		for(CustomerAddress address : addresses) {
-			copiedAddresses.add(new CustomerAddress(address));
+			copiedAddresses.add(CustomerAddress.copy(address));
 		}
 		
 		return copiedAddresses;
