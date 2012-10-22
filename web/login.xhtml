@@ -10,20 +10,27 @@
 <h:head>
 </h:head>
 <h:body style="font-size: 12px;">
-	<h:form>
-		<p:panel id="panel" header="Login" style="margin-bottom:10px; width:300px">
+	<h:form action="" id="LoginForm">
+		<p:panel id="login-panel" header="Login" style="margin-bottom:10px; width:30%">
+			<p:messages id="messages" closable="true" autoUpdate="true" showDetail="true"/> 
 			<h:panelGrid columns="2">
 				<h:outputText value="Email: " />
-		  		<p:inputText id="email" required="true" value="#{loginBean.email}"/>
+		  		<p:inputText id="email" name="email" required="true" value="#{loginBean.email}">
+		  		<f:validateLength minimum="2" />
+		  		</p:inputText> 
 		  	
 		  		<h:outputText value="Password: " />
-		  		<p:password id="password" required="true" value="#{loginBean.password}"/>
+		  		<p:password id="password" name="password" required="true" value="#{loginBean.password}">
+		  		<f:validateLength minimum="6" />
+		  		</p:password>
+		  		
+		  		<p:selectBooleanCheckbox id="rememberMe" value="#{loginBean.remember}"/>
+		  		<h:outputText value="Remember me" />
 			</h:panelGrid>
 		</p:panel>
+		<p:commandButton type="submit" id="login" value="Login" action="#{loginBean.login}" update="login-panel" />
 		
-		<p:commandButton value="Submit" action="success?faces-redirect=true" />
-		
-	</h:form>
+	</h:form> 
 	
 </h:body>
 </html>
