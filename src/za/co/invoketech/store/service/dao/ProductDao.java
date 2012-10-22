@@ -23,6 +23,6 @@ import za.co.invoketech.store.repository.dao.GenericDao;
  * @author garethc18@gmail.com (Gareth Conry)
  */
 
-public interface ProductDao extends GenericDao<Product, Long>{
+public interface ProductDao extends GenericDao<Product, Long> {
 
 }

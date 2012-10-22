@@ -17,7 +17,9 @@
 package za.co.invoketech.store.repository.dao.internal;
 
 import za.co.invoketech.store.service.dao.AccountDao;
-import za.co.invoketech.store.service.dao.AddressDao;
+import za.co.invoketech.store.service.dao.CustomerDao;
+import za.co.invoketech.store.service.dao.InvoiceDao;
+import za.co.invoketech.store.service.dao.OrderDao;
 import za.co.invoketech.store.service.dao.ProductDao;
 import za.co.invoketech.store.service.dao.RoleDao;
 
@@ -31,9 +33,11 @@ public class PersistenceModule extends AbstractModule {
 
 	@Override
 	protected void configure() {
-		bind(AddressDao.class).to(AddressDaoImpl.class);
+		bind(AccountDao.class).to(AccountDaoImpl.class);
+		bind(CustomerDao.class).to(CustomerDaoImpl.class);
+		bind(InvoiceDao.class).to(InvoiceDaoImpl.class);
+		bind(OrderDao.class).to(OrderDaoImpl.class);
 		bind(ProductDao.class).to(ProductDaoImpl.class);
 		bind(RoleDao.class).to(RoleDaoImpl.class);
-		bind(AccountDao.class).to(AccountDaoImpl.class);
 	}
 }

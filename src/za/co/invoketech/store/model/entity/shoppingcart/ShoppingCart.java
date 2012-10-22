@@ -21,6 +21,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -32,6 +33,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * @author zacblazic@gmail.com (Zac Blazic)
@@ -47,8 +50,12 @@ public class ShoppingCart implements Serializable {
 	@Column(name = "SHOPPING_CART_ID")
 	private long id;
 	
+	@Temporal(TemporalType.DATE)
+	@Column(name = "LAST_UPDATED_DATE")
+	private Date lastUpdatedDate;
+	
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "SHOPPING_CART_ID", nullable = false)
+	@JoinColumn(name = "SHOPPING_CART_ID")
 	private List<ShoppingCartItem> items;
 	
 	/**
@@ -65,7 +72,7 @@ public class ShoppingCart implements Serializable {
 	public ShoppingCart(ShoppingCart cart) {
 		checkShoppingCart(cart);
 		this.id = cart.id;
-		this.items = copyItems(items);
+		this.items = copyItems(cart.items);
 	}
 	
 	public long getId() {

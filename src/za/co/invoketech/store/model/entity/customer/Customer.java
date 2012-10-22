@@ -25,6 +25,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -40,6 +41,7 @@ import za.co.invoketech.store.model.entity.order.Order;
 import za.co.invoketech.store.model.entity.shoppingcart.ShoppingCart;
 import za.co.invoketech.store.model.entity.shoppingcart.ShoppingCartItem;
 import za.co.invoketech.store.model.entity.wishlist.WishList;
+import za.co.invoketech.store.model.value.Person;
 
 /**
  * @author zacblazic@gmail.com (Zac Blazic)
@@ -55,24 +57,15 @@ public class Customer implements Serializable {
 	@Column(name = "CUSTOMER_ID")
 	private long id;
 	
-	@Column(name = "TITLE", nullable = false)
-	private String title;
-	
-	@Column(name = "FIRST_NAME", nullable = false)
-	private String firstName;
-	
-	@Column(name = "LAST_NAME", nullable = false)
-	private String lastName;
-	
-	@Column(name = "PHONE_NUMBER", nullable = false)
-	private String phoneNumber;
+	@Embedded
+	private Person person;
 	
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "PRIMARY_ADDRESS_ID", nullable = false)
+	@JoinColumn(name = "PRIMARY_ADDRESS_ID")
 	private CustomerAddress primaryAddress;
 	
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "CUSTOMER_ID", nullable = false)
+	@JoinColumn(name = "CUSTOMER_ID")
 	private List<CustomerAddress> addresses;
 	
 	@OneToOne(fetch = FetchType.LAZY)
@@ -84,54 +77,12 @@ public class Customer implements Serializable {
 	private ShoppingCart shoppingCart;
 	
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "CUSTOMER_ID", nullable = false)
+	@JoinColumn(name = "CUSTOMER_ID")
 	private List<WishList> wishLists;
 	
 	@OneToMany(mappedBy = "customer")
-	@JoinColumn(name = "CUSTOMER_ID", nullable = false)
+	@JoinColumn(name = "CUSTOMER_ID")
 	private List<Order> orders;
-	
-	public class Builder {
-		
-		private String title;
-		private String firstName;
-		private String lastName;
-		private String phoneNumber;
-		
-		private CustomerAddress primaryAddress;
-		private List<CustomerAddress> addresses;
-		private Account account;
-		
-		public Builder(String title, String firstName, String lastName) {
-			this.title = title;
-			this.firstName = firstName;
-			this.lastName = lastName;
-		}
-		
-		public Builder phoneNumber(String phoneNumber) {
-			this.phoneNumber = phoneNumber;
-			return this;
-		}
-		
-		public Builder primaryAddress(CustomerAddress primaryAddress) {
-			this.primaryAddress = primaryAddress;
-			return this;
-		}
-		
-		public Builder addresses(List<CustomerAddress> addresses) {
-			this.addresses = addresses;
-			return this;
-		}
-		
-		public Builder account(Account account) {
-			this.account = account;
-			return this;
-		}
-		
-		public Customer build() {
-			return new Customer(this);
-		}
-	}
 	
 	/**
 	 * @deprecated
@@ -139,38 +90,33 @@ public class Customer implements Serializable {
 	 */
 	public Customer() {}
 	
-	private Customer(Builder builder) {
-		checkTitle(builder.title);
-		checkFirstName(builder.firstName);
-		checkLastName(builder.lastName);
-		checkPhoneNumber(builder.phoneNumber);
-		checkPrimaryAddress(builder.primaryAddress);
-		checkAddresses(builder.addresses);
-		checkAccount(builder.account);
-		this.title = builder.title;
-		this.firstName = builder.firstName;
-		this.lastName = builder.lastName;
-		this.phoneNumber = builder.phoneNumber;
-		this.primaryAddress = new CustomerAddress(builder.primaryAddress);
-		this.addresses = copyAddresses(builder.addresses);
-		this.account = new Account(builder.account);
-		this.shoppingCart = createEmptyShoppingCart();
-		this.wishLists = new ArrayList<WishList>();
-		this.orders = new ArrayList<Order>();
+	public Customer(Person person, Account account) {
+		checkPerson(person);
+		checkAccount(account);
+		this.person = Person.copy(person);
+		this.account = Account.copy(account);
 	}
 	
-	public Customer(Customer customer) {
-		checkCustomer(customer);
+	private Customer(Customer customer) {
 		this.id = customer.id;
-		this.firstName = customer.firstName;
-		this.lastName = customer.lastName;
-		this.phoneNumber = customer.phoneNumber;
+		this.person = Person.copy(customer.person);
 		this.primaryAddress = new CustomerAddress(customer.primaryAddress);
 		this.addresses = copyAddresses(customer.addresses);
-		this.account = new Account(customer.account);
+		this.account = Account.copy(customer.account);
 		this.shoppingCart = new ShoppingCart(customer.shoppingCart);
 		this.wishLists = copyWishLists(customer.wishLists);
 		this.orders = copyOrders(customer.orders);
+	}
+	
+	/**
+	 * Defensively copies a customer.
+	 */
+	public static Customer copy(Customer customer) {
+		if(customer != null) {
+			return new Customer(customer);
+		} else {
+			return null;
+		}
 	}
 
 	public long getId() {
@@ -180,43 +126,39 @@ public class Customer implements Serializable {
 	public void setId(long id) {
 		this.id = id;
 	}
-
+	
 	public String getTitle() {
-		return title;
+		return person.getTitle();
 	}
 
 	public void setTitle(String title) {
-		checkTitle(title);
-		this.title = title;
+		person.setTitle(title);
 	}
 
 	public String getFirstName() {
-		return firstName;
+		return person.getFirstName();
 	}
 
 	public void setFirstName(String firstName) {
-		checkFirstName(firstName);
-		this.firstName = firstName;
+		person.setFirstName(firstName);
 	}
 
 	public String getLastName() {
-		return lastName;
+		return person.getLastName();
 	}
 
 	public void setLastName(String lastName) {
-		checkLastName(lastName);
-		this.lastName = lastName;
+		person.setLastName(lastName);
 	}
 
 	public String getPhoneNumber() {
-		return phoneNumber;
+		return person.getPhoneNumber();
 	}
 
 	public void setPhoneNumber(String phoneNumber) {
-		checkPhoneNumber(phoneNumber);
-		this.phoneNumber = phoneNumber;
+		person.setPhoneNumber(phoneNumber);
 	}
-	
+
 	public CustomerAddress getPrimaryAddress() {
 		return new CustomerAddress(primaryAddress);
 	}
@@ -295,28 +237,8 @@ public class Customer implements Serializable {
 		return copiedOrders;
 	}
 	
-	private void checkCustomer(Customer customer) {
-		checkNotNull(customer, "customer cannot be null");
-	}
-	
-	private void checkTitle(String title) {
-		checkNotNull(title, "title cannot be null");
-		checkArgument(!title.isEmpty(), "title cannot be empty");
-	}
-	
-	private void checkFirstName(String firstName) {
-		checkNotNull(firstName, "firstName cannot be null");
-		checkArgument(!firstName.isEmpty(), "firstName cannot be empty");
-	}
-	
-	private void checkLastName(String lastName) {
-		checkNotNull(lastName, "lastName cannot be null");
-		checkArgument(!lastName.isEmpty(), "lastName cannot be empty");
-	}
-	
-	private void checkPhoneNumber(String phoneNumber) {
-		checkNotNull(phoneNumber, "phoneNumber cannot be null");
-		checkArgument(!phoneNumber.isEmpty(), "phoneNumber cannot be empty");
+	private void checkPerson(Person person) {
+		checkNotNull(person, "person cannot be null");
 	}
 	
 	private void checkPrimaryAddress(CustomerAddress primaryAddress) {

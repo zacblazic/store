@@ -114,7 +114,7 @@ public class Order implements Serializable {
 		this.items = copyItems(items);
 		this.payment = new Payment(payment);
 		this.delivery = new Delivery(delivery);
-		this.customer = new Customer(customer);
+		this.customer = Customer.copy(customer);
 		this.createdDate = Calendar.getInstance().getTime();
 	}
 	
@@ -125,7 +125,7 @@ public class Order implements Serializable {
 		this.items = copyItems(order.items);
 		this.payment = new Payment(order.payment);
 		this.delivery = new Delivery(order.delivery);
-		this.customer = new Customer(order.customer);
+		this.customer = Customer.copy(order.customer);
 		this.invoice = new Invoice(order.invoice);
 		this.createdDate = copyDate(order.createdDate);
 		this.cancelledDate = copyDate(order.cancelledDate);
@@ -199,12 +199,12 @@ public class Order implements Serializable {
 	}
 	
 	public Customer getCustomer() {
-		return new Customer(customer);
+		return Customer.copy(customer);
 	}
 
 	public void setCustomer(Customer customer) {
 		checkCustomer(customer);
-		this.customer = new Customer(customer);
+		this.customer = Customer.copy(customer);
 	}
 
 	public Invoice getInvoice() {

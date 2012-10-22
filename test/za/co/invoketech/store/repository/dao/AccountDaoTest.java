@@ -16,7 +16,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.persist.jpa.JpaPersistModule;
 
-public class AccountAndRoleDaoTest {
+public class AccountDaoTest {
 	private static final String PERSISTENCE_UNIT = "storeJpaUnit";
 	private static Injector injector;
 	private static AccountDao dao;
@@ -71,41 +71,6 @@ public class AccountAndRoleDaoTest {
 
 		Assert.assertNull(dao.findById(acc3.getId()));
 		Assert.assertNull(roleDao.findById(x.getId()));
-		Assert.assertNull(roleDao.findById(y.getId()));
-		
+		Assert.assertNull(roleDao.findById(y.getId()));	
 	}
-	
-	@Test
-	public void roleCrudTest()
-	{
-		// Create
-		Role role = new Role("User");
-		roleDao.persist(role);
-		Assert.assertTrue(role.getId() != 0);
-		
-		System.out.println("RoleCrud: Persist Success");
-		
-		// Read
-		Role newRole = roleDao.findById(role.getId());
-		Assert.assertTrue(role.equals(newRole));
-
-		System.out.println("RoleCrud: Read Success");
-		
-		// Update
-		newRole.setRoleName("Shopper");
-		roleDao.merge(newRole);
-		
-		Role newRole2 = roleDao.findById(newRole.getId());
-		Assert.assertTrue(newRole2.getRoleName().equals(newRole.getRoleName()));
-
-		System.out.println("RoleCrud: Update Success");
-		
-		// Delete
-		roleDao.remove(newRole2);
-		
-		Assert.assertNull(roleDao.findById(newRole2.getId()));
-		System.out.println("RoleCrud: Remove Success");
-				
-	}
-
 }
