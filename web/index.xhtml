@@ -12,15 +12,12 @@
 </h:head>
 <h:body>
 	<h:form>
+		<ui:insert name="header">
+			<ui:include src="components/header.xhtml" />
+		</ui:insert>
+
 	
-	
-		<div id="header">
-			<ui:insert name="header">
-				<ui:include src="components/header.xhtml" />
-			</ui:insert>
-		</div>
-		
-		
+		<p:commandButton value="Test" ajax="false" action="register?faces-redirect=true" />
 	
 		<ui:insert name="side-navigation">
 			<ui:include src="components/side-navigation.xhtml" />
