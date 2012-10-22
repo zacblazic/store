@@ -3,10 +3,13 @@ body {
 	font-family: sans-serif;
 }
 
-#header-buttons {
-	
+.side-navigation {
+	width: 200px;
+	float: left;
+	display: block;
+	font-size: 12px;
 }
 
-.testPanel td, .testPanel tr, .testPanel table {
-	border-color: white;
+.login-grid-panel tr, .login-grid-panel td {
+	border: none !important;
 }

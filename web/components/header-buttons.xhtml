@@ -14,8 +14,11 @@
 	<ui:composition>
 		
 		<p:toolbar>
+			<p:toolbarGroup align="left">
+				<p:commandButton value="Home" ajax="false" action="/index?faces-redirect=true" />
+			</p:toolbarGroup>
 			<p:toolbarGroup align="right">
-				<p:commandButton id="loginButton" value="Login" action="/admin/login?faces-redirect=true" />
+				<p:commandButton id="loginButton" value="Login"/>
 				
 				<p:overlayPanel for="loginButton" hideEffect="fade">
 					<ui:insert>
@@ -23,8 +26,8 @@
 					</ui:insert>
 				</p:overlayPanel>
 				
-				<p:commandButton value="Register"/>
-				<p:commandButton value="Account" />
+				<p:commandButton value="Register" ajax="false"  action="/register?faces-redirect=true" />
+				<p:commandButton value="Account" ajax="false" action="/admin/upload?faces-redirect=true" />
 				<p:commandButton value="Help"/>
 			</p:toolbarGroup>
 		</p:toolbar>
