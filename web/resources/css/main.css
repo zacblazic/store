@@ -10,11 +10,6 @@ body {
 	font-size: 12px;
 }
 
-<<<<<<< HEAD
-.testPanel td, .testPanel tr, .testPanel table {
-    border-color:transparent;
-=======
 .login-grid-panel tr, .login-grid-panel td {
 	border: none !important;
->>>>>>> branch 'master' of https://github.com/invoketech/store.git
 }
