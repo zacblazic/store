@@ -2,6 +2,8 @@ package za.co.invoketech.store.service.account.internal;
 
 import java.util.List;
 
+import org.apache.shiro.crypto.hash.Sha256Hash;
+
 import za.co.invoketech.store.application.exception.AccountNotFoundException;
 import za.co.invoketech.store.application.exception.RoleNotFoundException;
 import za.co.invoketech.store.model.entity.account.Account;
@@ -34,7 +36,7 @@ public class AccountServiceImpl implements AccountService {
 				for (Role role : roles)
 				roleDao.findByAttribute("roleName", role.getRoleName());
 
-				account = new Account(email, password, roles);
+				account = new Account(email, new Sha256Hash((String)password).toString(), roles);
 				accountDao.persist(account);
 			} 
 			catch (Exception e) 
