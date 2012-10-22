@@ -11,20 +11,15 @@
 	<h:outputStylesheet library="css" name="main.css" />
 </h:head>
 <h:body>
-	<h:form>
+	<ui:composition>
 	
-	
-		<div id="header">
-			<ui:insert name="header">
-				<ui:include src="components/header.xhtml" />
+			
+		<div id="header-buttons">
+			<ui:insert>
+				<ui:include src="header-buttons.xhtml" />
 			</ui:insert>
 		</div>
 		
-		
-	
-		<ui:insert name="side-navigation">
-			<ui:include src="components/side-navigation.xhtml" />
-		</ui:insert>
-	</h:form>
+	</ui:composition>
 </h:body>
 </html>

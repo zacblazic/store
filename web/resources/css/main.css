@@ -1,0 +1,12 @@
+body {
+	font-size: 12px;
+	font-family: sans-serif;
+}
+
+#header-buttons {
+	
+}
+
+.testPanel td, .testPanel tr, .testPanel table {
+	border-color: white;
+}

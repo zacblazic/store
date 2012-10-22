@@ -11,20 +11,21 @@
 	<h:outputStylesheet library="css" name="main.css" />
 </h:head>
 <h:body>
-	<h:form>
-	
-	
-		<div id="header">
-			<ui:insert name="header">
-				<ui:include src="components/header.xhtml" />
-			</ui:insert>
-		</div>
-		
-		
-	
-		<ui:insert name="side-navigation">
-			<ui:include src="components/side-navigation.xhtml" />
-		</ui:insert>
-	</h:form>
+	<ui:composition>
+		<p:panelMenu style="width: 180px" >
+			<p:submenu label="Component">
+				<p:menuitem value="Test" />
+			</p:submenu>
+			<p:submenu label="Computer">
+				<p:menuitem value="Test" />
+			</p:submenu>
+			<p:submenu label="Peripheral">
+				<p:menuitem value="Test" />
+			</p:submenu>
+			<p:submenu label="Software">
+				<p:menuitem value="Test" />
+			</p:submenu>
+		</p:panelMenu>
+	</ui:composition>
 </h:body>
 </html>
