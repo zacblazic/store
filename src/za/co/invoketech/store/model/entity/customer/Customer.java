@@ -95,6 +95,9 @@ public class Customer implements Serializable {
 		checkAccount(account);
 		this.person = Person.copy(person);
 		this.account = Account.copy(account);
+		shoppingCart = new ShoppingCart(new ArrayList<ShoppingCartItem>());
+		wishLists = new ArrayList<WishList>();
+		orders = new ArrayList<Order>();
 	}
 	
 	private Customer(Customer customer) {
@@ -201,10 +204,6 @@ public class Customer implements Serializable {
 	
 	public void setOrders(List<Order> orders) {
 		this.orders = copyOrders(orders);
-	}
-	
-	private ShoppingCart createEmptyShoppingCart() {
-		return new ShoppingCart(new ArrayList<ShoppingCartItem>());
 	}
 	
 	private List<CustomerAddress> copyAddresses(List<CustomerAddress> addresses) {

@@ -96,6 +96,9 @@ public class Account implements Serializable {
 		this.customer = Customer.copy(account.customer);
 	}
 	
+	/**
+	 * Defensively copies a Role.
+	 */
 	public static Account copy(Account account) {
 		if(account != null) {
 			return new Account(account);
@@ -135,13 +138,12 @@ public class Account implements Serializable {
 	}
 	
 	public void setCustomer(Customer customer) {
-		checkCustomer(customer);
 		this.customer = Customer.copy(customer);
 	}
 	
 	public void addRole(Role role) {
 		checkRole(role);
-		roles.add(role);
+		roles.add(Role.copy(role));
 	}
 	
 	public void removeRole(Role role) {
@@ -228,9 +230,5 @@ public class Account implements Serializable {
 	private void checkRoleName(String roleName) {
 		checkNotNull(roleName, "roleName cannot be null");
 		checkArgument(!roleName.isEmpty(), "roleName cannot be empty");
-	}
-	
-	private void checkCustomer(Customer customer) {
-		checkNotNull(customer, "customer cannot be null");
 	}
 }
