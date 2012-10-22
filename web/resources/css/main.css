@@ -8,5 +8,5 @@ body {
 }
 
 .testPanel td, .testPanel tr, .testPanel table {
-	border-color: white;
+    border-color:transparent;
 }
