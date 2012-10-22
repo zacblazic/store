@@ -5,23 +5,20 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:shiro="http://shiro.apache.org/tags">
  
 <h:head>
 </h:head>
 <h:body style="font-size: 12px;">
+	
+	
+	
 	<h:form>
-		<p:panel id="panel" header="Login" style="margin-bottom:10px; width:300px">
-			<h:panelGrid columns="2">
-				<h:outputText value="Email: " />
-		  		<p:inputText id="email" required="true" value="#{loginBean.email}"/>
-		  	
-		  		<h:outputText value="Password: " />
-		  		<p:password id="password" required="true" value="#{loginBean.password}"/>
-			</h:panelGrid>
-		</p:panel>
-		
-		<p:commandButton value="Submit" action="success?faces-redirect=true" />
+		<h1>This is the administration page</h1>
+	<h2>Welcome, <shiro:user><shiro:principal/></shiro:user></h2>
+	
+	<shiro:authenticated><h:commandLink id="logout" value="Logout" action="#{loginBean.logout}"/></shiro:authenticated>
 		
 	</h:form>
 	
