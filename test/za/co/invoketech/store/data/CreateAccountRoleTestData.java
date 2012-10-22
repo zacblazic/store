@@ -38,18 +38,22 @@ public class CreateAccountRoleTestData {
 	@Test
 	public void createData() throws RoleNotFoundException, InvalidRoleNameException {
 		Role admin = roleService.createRole("Admin");
+		Role manager = roleService.createRole("Manager");
 		Role user = roleService.createRole("User");
 
-		List<Role> adminRole = new ArrayList<Role>();
-		adminRole.add(roleService.retrieveRole(admin.getId()));
+		List<Role> adminAndManagerRole = new ArrayList<Role>();
+		adminAndManagerRole.add(roleService.retrieveRole(admin.getId()));
+		adminAndManagerRole.add(roleService.retrieveRole(manager.getId()));
+		
+		List<Role> managerRole = new ArrayList<Role>();
+		managerRole.add(roleService.retrieveRole(manager.getId()));
 		
 		List<Role> userRole = new ArrayList<Role>();
-		userRole.add(roleService.retrieveRole(user.getId()));
+		userRole.add(roleService.retrieveRole(user.getId()));		
 		
-		
-		
-		accountService.createAccount("gconry@invoketech.co.za", "administrator", adminRole);
-		accountService.createAccount("garethc18@gmail.com", "user", userRole);
+		accountService.createAccount("gconry@invoketech.co.za", "iamadmin", adminAndManagerRole);
+		accountService.createAccount("manager@invoketech.co.za", "iammanager",managerRole);
+		accountService.createAccount("garethc18@gmail.com", "iamuser", userRole);
 	}
 
 }
