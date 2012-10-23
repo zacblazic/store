@@ -35,8 +35,11 @@ public class AccountServiceImpl implements AccountService {
 			{
 				for (Role role : roles)
 				roleDao.findByAttribute("roleName", role.getRoleName());
-
-				account = new Account(email, new Sha256Hash((String)password).toString(), roles);
+				
+				String salt = (System.currentTimeMillis()*((int)(Math.random()*10))) + "";
+				System.out.println("Salt is: " + salt);
+				
+				account = new Account(email, new Sha256Hash((String)password, (String)salt, 512000).toString(), roles);
 				accountDao.persist(account);
 			} 
 			catch (Exception e) 
