@@ -31,8 +31,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import za.co.invoketech.store.domain.shared.InternalAddress;
 import za.co.invoketech.store.domain.shared.AddressType;
+import za.co.invoketech.store.domain.shared.InternalAddress;
 
 /**
  * @author zacblazic@gmail.com (Zac Blazic)
@@ -51,7 +51,7 @@ public class Address implements Serializable {
 	@Column(name = "LABEL", nullable = false)
 	private String label;
 	
-	@Column(name = "PRIMARY", nullable = false)
+	@Column(name = "IS_PRIMARY", nullable = false)
 	private boolean primary;
 	
 	@Embedded
