@@ -15,6 +15,7 @@
  */
 package za.co.invoketech.store.service.account.internal;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import za.co.invoketech.store.application.exception.InvalidRoleNameException;
@@ -95,7 +96,10 @@ public class RoleServiceImpl implements RoleService {
 
 	@Override
 	public List<Role> retrieveRolesForAccount(Account account) {
-		List<Role> roles = accountDao.findById(account.getId()).getRoles();
+		List<Role> roles;
+		if (account == null) roles = new ArrayList<>();
+		else roles = accountDao.findById(account.getId()).getRoles();
+		System.out.println("Yellow");
 		return roles;
 	}
 

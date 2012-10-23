@@ -1,6 +1,7 @@
 package za.co.invoketech.store.application.config;
 
 import za.co.invoketech.store.persistence.internal.PersistenceModule;
+import za.co.invoketech.store.service.account.internal.AccountRoleModule;
 import za.co.invoketech.store.service.file.internal.FileModule;
 
 import com.google.inject.persist.PersistFilter;
@@ -16,6 +17,7 @@ public class GuiceServletModule extends ServletModule {
 		install(new JpaPersistModule(PERSISTENCE_UNIT));
 		install(new PersistenceModule());
 		install(new FileModule());
+		install(new AccountRoleModule());
 		
 		filter("/*").through(PersistFilter.class);
 		filter("/*").through(GuiceFileUploadFilter.class);

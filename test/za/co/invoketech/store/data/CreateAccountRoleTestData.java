@@ -26,8 +26,12 @@ import za.co.invoketech.store.application.config.ApplicationInitializer;
 import za.co.invoketech.store.application.exception.InvalidRoleNameException;
 import za.co.invoketech.store.application.exception.RoleNotFoundException;
 import za.co.invoketech.store.domain.model.account.Account;
+import za.co.invoketech.store.domain.model.customer.Address;
 import za.co.invoketech.store.domain.model.customer.Customer;
 import za.co.invoketech.store.domain.model.role.Role;
+import za.co.invoketech.store.domain.shared.AddressType;
+import za.co.invoketech.store.domain.shared.Gender;
+import za.co.invoketech.store.domain.shared.InternalAddress;
 import za.co.invoketech.store.domain.shared.Person;
 import za.co.invoketech.store.persistence.internal.PersistenceModule;
 import za.co.invoketech.store.service.account.AccountService;
@@ -82,10 +86,17 @@ public class CreateAccountRoleTestData {
 		accountService.createAccount("manager@invoketech.co.za", "iammanager",managerRole);
 		Account userAcc = accountService.createAccount("garethc18@gmail.com", "iamuser", userRole);
 		
-//		Person p = new Person("Gareth", "TheUser", "0839491159");
-//		Customer cust = new Customer(p, userAcc);
-//		
-//		customerDao.persist(cust);
+		Person p = new Person("Gareth", "TheUser", Gender.MALE, "0839491159");
+		InternalAddress internalAddress = new InternalAddress.Builder("Zac", "Blazic", "0828943000")
+		.line1("122 Athens Road")
+		.line2("Table View")
+		.city("Cape Town")
+		.postalCode("7441")
+		.country("South Africa")
+		.addressType(AddressType.PHYSICAL).build();
+		Customer cust = new Customer(p, new Address("home", internalAddress), userAcc);
+		
+		customerDao.persist(cust);
 	}
 
 }

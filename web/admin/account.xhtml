@@ -14,7 +14,7 @@
 	
 	
 	
-	<h:form>
+	<h:form id="form">
 		<h1>Account Management</h1>
 	
 		<shiro:authenticated><p:commandLink id="logout" value="Logout" action="#{loginBean.logout}"/></shiro:authenticated>
@@ -22,7 +22,49 @@
 		<p:commandButton id="to-manage" value="Manage Page" action="/manage/manage?faces-redirect=true"/>
 		<br />
 		<p:commandButton id="to-home" value="Homepage" action="/index?faces-redirect=true"/>
-	
+		<br/>
+		<br/>
+		
+		<p:dataTable id="accounts" var="account" value="#{adminAccountRoleBean.accounts}" rowKey="#{account.id}"  
+                 selection="#{adminAccountRoleBean.selectedAccount}" selectionMode="single">  
+	        <f:facet name="header">  
+	            Click "View" button after selecting a row to see details  
+	        </f:facet>  
+	  
+	        <p:column headerText="ID">  
+	            #{account.id}  
+	        </p:column>  
+	  
+	        <p:column headerText="Email">  
+	            #{account.email}  
+	        </p:column>  
+	  
+	        <p:column headerText="Password Hash" >  
+	            #{account.password}
+	        </p:column>	  
+	        <f:facet name="footer">  
+	            <p:commandButton id="viewButton" value="View"  
+	                    update=":form:display" oncomplete="accountDialog.show()" actionListener="#{adminAccountRoleBean.cows}"/>  
+	        </f:facet>  
+    	</p:dataTable>
+		
+		<p:dialog id="dialog" header="Account Detail" widgetVar="accountDialog" resizable="false"  
+              showEffect="clip" hideEffect="fold">    
+	        <p:outputPanel id="display" autoUpdate="true">	
+                	
+                <h:outputText value="#{adminAccountRoleBean.selectedAccount.email}"/><br/>
+            	          
+	            <h:outputText value="Roles:" /> <br/>
+	            <p:dataList value="#{adminAccountRoleBean.rolesForAccount}" var="rfa" itemType="disc">  
+				    #{rfa.roleName}  
+				</p:dataList>
+				
+	            <h:outputText value="Pass:" />  
+	            <h:outputText value="#{adminAccountRoleBean.selectedAccount.password}" /> <br/>
+	        </p:outputPanel>  
+    	</p:dialog> 
+    	
+    	
 	</h:form>
 	
 </h:body>
