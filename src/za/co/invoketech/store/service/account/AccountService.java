@@ -4,8 +4,8 @@ import java.util.List;
 
 import za.co.invoketech.store.application.exception.AccountNotFoundException;
 import za.co.invoketech.store.application.exception.RoleNotFoundException;
-import za.co.invoketech.store.model.entity.account.Account;
-import za.co.invoketech.store.model.entity.role.Role;
+import za.co.invoketech.store.domain.model.account.Account;
+import za.co.invoketech.store.domain.model.role.Role;
 
 public interface AccountService {
 	public Account createAccount(String email, String password, List<Role> roles) throws RoleNotFoundException;

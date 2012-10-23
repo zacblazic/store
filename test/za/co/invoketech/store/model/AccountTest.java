@@ -8,8 +8,8 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import za.co.invoketech.store.model.entity.account.Account;
-import za.co.invoketech.store.model.entity.role.Role;
+import za.co.invoketech.store.domain.model.account.Account;
+import za.co.invoketech.store.domain.model.role.Role;
 
 public class AccountTest {
 
