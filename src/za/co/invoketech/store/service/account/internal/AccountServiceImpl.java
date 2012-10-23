@@ -81,4 +81,34 @@ public class AccountServiceImpl implements AccountService {
 		accountDao.remove(account);
 	}
 
+	@Override
+	public List<Account> retrieveAccountsForRole(Role role) {
+		List<Account> accounts = accountDao.findAll();
+		boolean remove;		
+		for (Account account : accounts) {
+			remove = true;
+			List<Role> roles = account.getRoles();
+			for (Role roleItem : roles) {
+				if (roleItem.equals(role)) remove = false;				
+			}
+			if (remove) accounts.remove(account);
+		}		
+		return accounts;
+	}
+
+	@Override
+	public List<Account> retrieveAllAccounts() {
+		List<Account> accounts = accountDao.findAll();
+		return accounts;
+	}
+
+	@Override
+	public List<Account> retrieveNonCustomerAccounts() {
+		List<Account> accounts = accountDao.findAll();
+		for (Account account : accounts) {
+			if (account.getCustomer() != null) accounts.remove(account);
+		}
+		return accounts;
+	}
+
 }

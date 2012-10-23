@@ -12,4 +12,7 @@ public interface AccountService {
 	public Account retrieveAccount(long accountId) throws AccountNotFoundException;
 	public void updateAccount(Account account) throws AccountNotFoundException;
 	public void removeAccount(Account account) throws AccountNotFoundException;
+	public List<Account> retrieveAccountsForRole(Role role);
+	public List<Account> retrieveAllAccounts();
+	public List<Account> retrieveNonCustomerAccounts();
 }

@@ -15,15 +15,15 @@
 	
 	
 	<h:form>
-		<h1>This is the administration page</h1>
-	<h2>Welcome, <shiro:user><shiro:principal/></shiro:user></h2>
+		<h1>This is the manager page</h1>
+		<h2>Welcome, <shiro:user><shiro:principal/></shiro:user></h2>
 	
-	<shiro:authenticated><p:commandLink id="logout" value="Logout" action="#{loginBean.logout}"/></shiro:authenticated>
+	<shiro:authenticated><h:commandLink id="logout" value="Logout" action="#{loginBean.logout}"/></shiro:authenticated>
 	<br />
-	<p:commandButton id="to-manage" value="Manage Page" action="/manage/manage?faces-redirect=true"/>
+	<shiro:hasRole name="admin"><p:commandButton id="to-admin" value="Admin Page" action="/admin/admin?faces-redirect=true"/></shiro:hasRole>
 	<br />
 	<p:commandButton id="to-home" value="Homepage" action="/index?faces-redirect=true"/>
-	
+		
 	</h:form>
 	
 </h:body>
