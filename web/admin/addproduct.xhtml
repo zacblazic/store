@@ -10,10 +10,14 @@
 <h:head>
 </h:head>
 <h:body style="font-size: 12px;">
-	<h:form>
+	<h:form enctype="multipart/form-data">
 		<p:panel id="panel" header="Add Product" style="margin-bottom:10px; width:85%" align="">
-			<h:outputText value="updated and pushed. Yet not showing... push reverted? whats up wit daaatt?? (Anybody got access to my pc and can push it asap?)">
+			<p:selectOneMenu id="category" value="#{productBean.selected}" valueChangeListener="#{productBean.generateElement}">
+				<f:selectItems value="#{productBean.categories}" />
+			</p:selectOneMenu>
+			<h:outputText id="el" value="#{productBean.element}" />
 		</p:panel>
+		<p:commandButton value="button" ajax="false" actionListener="#{productBean.generateElement}" />
 	</h:form>
 </h:body>
 </html>
