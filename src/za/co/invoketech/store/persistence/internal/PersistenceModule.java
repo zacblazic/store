@@ -27,8 +27,8 @@ import com.google.inject.AbstractModule;
 
 /**
  * @author zacblazic@gmail.com (Zac Blazic)
+ * @author garethc18@gmail.com (Gareth Conry)
  */
-
 public class PersistenceModule extends AbstractModule {
 
 	@Override
