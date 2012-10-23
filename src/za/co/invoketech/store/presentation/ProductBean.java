@@ -36,30 +36,31 @@ public class ProductBean implements Serializable {
 		
 	private static final long serialVersionUID = 1L;
 	private List<Category> categories = new ArrayList<Category>();
-	private Category selected;
-	private String element;
+	private List<Category> subCategories = new ArrayList<Category>();
+	private List<String> extraElementList = new ArrayList<String>();
+	private String selected;
 	
 	public ProductBean() {
 		System.out.println("construct method..........");
 		initialiseCategoryList();
 	}
 	
-	public Category getSelected() {
+	public List<String> getExtraElementList() {
+		return extraElementList;
+	}
+	
+	public void setExtraElementList(List<String> extraElementList) {
+		this.extraElementList = extraElementList;
+	}
+	
+	public String getSelected() {
 		System.out.println("get method.........." + selected);
 		return selected;
 	}
 	
-	public void setSelected(Category selected) {
+	public void setSelected(String selected) {
 		System.out.println("set method..........");
 		this.selected = selected;
-	}
-	
-	public String getElement() {
-		return element;
-	}
-	
-	public void setElement(String element) {
-		this.element = element;
 	}
 	
 	public List<Category> getCategories() {
@@ -70,11 +71,30 @@ public class ProductBean implements Serializable {
 		this.categories = categories;
 	}
 	
+	public List<Category> getSubCategories() {
+		return subCategories;
+	}
+	
+	public void setSubCategories(List<Category> subCategories) {
+		this.subCategories = subCategories;
+	}
+	
 	public void generateElement() {
-		System.out.println("generateElement method..........");
-		element = "<p:selectOneMenu id='category' value=''>\n" +
-				"<f:selectItem itemLabel='Select' itemValue='' />\n" +
-				"</p:selectOneMenu>";
+		boolean found = false;
+		for(int i = 0; i < categories.size() && !found; i++) {
+			if(categories.get(i).getName().equals(selected)) {
+				System.out.println(categories.get(i).getSubCategories());
+				found = true;
+				subCategories = categories.get(i).getSubCategories();
+				if(subCategories.size() > 0 && extraElementList.size() == 0 || selected.equals("Component")) {
+					extraElementList.add("");
+				}
+				else if(subCategories.size() > 0) {
+					extraElementList.remove(0);
+				}
+				
+			}
+		}
 	}
 		
 	private void initialiseCategoryList() {
