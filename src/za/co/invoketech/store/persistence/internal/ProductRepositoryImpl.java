@@ -13,19 +13,22 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 package za.co.invoketech.store.persistence.internal;
 
 import za.co.invoketech.store.domain.model.product.Product;
 import za.co.invoketech.store.service.repository.ProductRepository;
 
+import com.google.inject.Singleton;
 import com.google.inject.persist.Transactional;
 
 /**
+ * @author zacblazic@gmail.com (Zac Blazic)
  * @author garethc18@gmail.com (Gareth Conry)
  */
-
+@Singleton
 @Transactional
-class ProductRepositoryImpl extends GenericDaoImpl<Product, Long> implements ProductRepository{
+class ProductRepositoryImpl extends GenericDaoImpl<Product, Long> implements ProductRepository {
 
 	public ProductRepositoryImpl() {
 		super(Product.class);
