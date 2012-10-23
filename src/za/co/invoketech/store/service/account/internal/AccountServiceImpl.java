@@ -1,8 +1,10 @@
 package za.co.invoketech.store.service.account.internal;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.shiro.crypto.hash.Sha256Hash;
+import org.apache.shiro.authc.credential.DefaultPasswordService;
+import org.apache.shiro.authc.credential.PasswordService;
 
 import za.co.invoketech.store.application.exception.AccountNotFoundException;
 import za.co.invoketech.store.application.exception.RoleNotFoundException;
@@ -36,10 +38,9 @@ public class AccountServiceImpl implements AccountService {
 				for (Role role : roles)
 				roleDao.findByAttribute("roleName", role.getRoleName());
 				
-				String salt = (System.currentTimeMillis()*((int)(Math.random()*10))) + "";
-				System.out.println("Salt is: " + salt);
+				PasswordService psvc = new DefaultPasswordService();
 				
-				account = new Account(email, new Sha256Hash((String)password, (String)salt, 512000).toString(), roles);
+				account = new Account(email, psvc.encryptPassword(password), roles);
 				accountDao.persist(account);
 			} 
 			catch (Exception e) 
@@ -87,6 +88,7 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public List<Account> retrieveAccountsForRole(Role role) {
 		List<Account> accounts = accountDao.findAll();
+		List<Account> returnAccounts = new ArrayList<Account>();
 		boolean remove;		
 		for (Account account : accounts) {
 			remove = true;
@@ -94,9 +96,9 @@ public class AccountServiceImpl implements AccountService {
 			for (Role roleItem : roles) {
 				if (roleItem.equals(role)) remove = false;				
 			}
-			if (remove) accounts.remove(account);
+			if (!remove) returnAccounts.add(account);
 		}		
-		return accounts;
+		return returnAccounts;
 	}
 
 	@Override
@@ -108,10 +110,11 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public List<Account> retrieveNonCustomerAccounts() {
 		List<Account> accounts = accountDao.findAll();
+		List<Account> returnAccounts = new ArrayList<Account>();
 		for (Account account : accounts) {
-			if (account.getCustomer() != null) accounts.remove(account);
+			if (account.getCustomer() == null) returnAccounts.add(account);
 		}
-		return accounts;
+		return returnAccounts;
 	}
 
 }
