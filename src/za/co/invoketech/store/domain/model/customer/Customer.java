@@ -62,11 +62,11 @@ public class Customer implements Serializable {
 	
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "PRIMARY_ADDRESS_ID")
-	private CustomerAddress primaryAddress;
+	private Address primaryAddress;
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "CUSTOMER_ID")
-	private List<CustomerAddress> addresses;
+	private List<Address> addresses;
 	
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "ACCOUNT_ID", nullable = false)
@@ -140,22 +140,22 @@ public class Customer implements Serializable {
 		person.setPhoneNumber(phoneNumber);
 	}
 
-	public CustomerAddress getPrimaryAddress() {
-		return CustomerAddress.copy(primaryAddress);
+	public Address getPrimaryAddress() {
+		return Address.copy(primaryAddress);
 	}
 
-	public void setPrimaryAddress(CustomerAddress primaryAddress) {
+	public void setPrimaryAddress(Address primaryAddress) {
 		checkPrimaryAddress(primaryAddress);
-		this.primaryAddress = CustomerAddress.copy(primaryAddress);
+		this.primaryAddress = Address.copy(primaryAddress);
 	}
 
-	public List<CustomerAddress> getAddresses() {
-		return CustomerAddress.copyAll(addresses);
+	public List<Address> getAddresses() {
+		return Address.copyAll(addresses);
 	}
 
-	public void setAddresses(List<CustomerAddress> addresses) {
+	public void setAddresses(List<Address> addresses) {
 		checkAddresses(addresses);
-		this.addresses = CustomerAddress.copyAll(addresses);
+		this.addresses = Address.copyAll(addresses);
 	}
 
 	public ShoppingCart getShoppingCart() {
@@ -211,11 +211,11 @@ public class Customer implements Serializable {
 		checkNotNull(person, "person cannot be null");
 	}
 	
-	private void checkPrimaryAddress(CustomerAddress primaryAddress) {
+	private void checkPrimaryAddress(Address primaryAddress) {
 		checkNotNull(primaryAddress, "primaryAddress cannot be null");
 	}
 	
-	private void checkAddresses(List<CustomerAddress> addresses) {
+	private void checkAddresses(List<Address> addresses) {
 		checkNotNull(addresses, "addresses cannot be null");
 		checkArgument(addresses.size() != 0, "addresses cannot be empty");
 		checkArgument(!addresses.contains(null), "addresses cannot contain nulls");

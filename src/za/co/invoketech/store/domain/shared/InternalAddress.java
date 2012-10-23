@@ -30,7 +30,7 @@ import javax.persistence.Enumerated;
  * @author zacblazic@gmail.com (Zac Blazic)
  */
 @Embeddable
-public class Address implements Serializable {
+public class InternalAddress implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -110,8 +110,8 @@ public class Address implements Serializable {
 			return this;
 		}
 		
-		public Address build() {
-			return new Address(this);
+		public InternalAddress build() {
+			return new InternalAddress(this);
 		}
 	}
 	
@@ -119,9 +119,9 @@ public class Address implements Serializable {
 	 * @deprecated
 	 * Default constructor should only be used by the persistence mechanism.
 	 */
-	public Address() {}
+	public InternalAddress() {}
 	
-	private Address(Builder builder) {
+	private InternalAddress(Builder builder) {
 		checkFirstName(builder.firstName);
 		checkLastName(builder.lastName);
 		checkPhoneNumber(builder.phoneNumber);
@@ -142,7 +142,7 @@ public class Address implements Serializable {
 		addressType = builder.addressType;
 	}
 	
-	private Address(Address address) {
+	private InternalAddress(InternalAddress address) {
 		firstName = address.firstName;
 		lastName = address.lastName;
 		phoneNumber = address.phoneNumber;
@@ -157,9 +157,9 @@ public class Address implements Serializable {
 	/**
 	 * Defensively copies an Address.
 	 */
-	public static Address copy(Address address) {
+	public static InternalAddress copy(InternalAddress address) {
 		if(address != null) {
-			return new Address(address);
+			return new InternalAddress(address);
 		}
 		return null;
 	}
