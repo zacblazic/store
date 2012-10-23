@@ -11,10 +11,10 @@ import za.co.invoketech.store.application.config.ApplicationInitializer;
 import za.co.invoketech.store.domain.model.product.Brand;
 import za.co.invoketech.store.domain.model.product.Product;
 import za.co.invoketech.store.domain.model.product.peripheral.Mouse;
-import za.co.invoketech.store.repository.dao.internal.PersistenceModule;
-import za.co.invoketech.store.service.dao.ProductDao;
+import za.co.invoketech.store.persistence.internal.PersistenceModule;
 import za.co.invoketech.store.service.product.ProductPricingService;
 import za.co.invoketech.store.service.product.internal.ProductPricingServiceImpl;
+import za.co.invoketech.store.service.repository.ProductRepository;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -23,14 +23,14 @@ import com.google.inject.persist.jpa.JpaPersistModule;
 public class ProductDaoTest {
 	private static final String PERSISTENCE_UNIT = "storeJpaUnit";
 	private static Injector injector;
-	private static ProductDao dao;
+	private static ProductRepository dao;
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 
 		injector = Guice.createInjector(new PersistenceModule(), new JpaPersistModule(PERSISTENCE_UNIT));
 		injector.getInstance(ApplicationInitializer.class);
-		dao = injector.getInstance(ProductDao.class);
+		dao = injector.getInstance(ProductRepository.class);
 	}
 
 	@Test

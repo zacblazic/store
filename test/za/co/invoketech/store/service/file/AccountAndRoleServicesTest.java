@@ -14,7 +14,7 @@ import za.co.invoketech.store.application.exception.InvalidRoleNameException;
 import za.co.invoketech.store.application.exception.RoleNotFoundException;
 import za.co.invoketech.store.domain.model.account.Account;
 import za.co.invoketech.store.domain.model.role.Role;
-import za.co.invoketech.store.repository.dao.internal.PersistenceModule;
+import za.co.invoketech.store.persistence.internal.PersistenceModule;
 import za.co.invoketech.store.service.account.AccountService;
 import za.co.invoketech.store.service.account.RoleService;
 import za.co.invoketech.store.service.account.internal.AccountRoleModule;

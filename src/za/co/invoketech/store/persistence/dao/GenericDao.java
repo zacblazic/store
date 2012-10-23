@@ -14,15 +14,22 @@
  * the License.
  */
 
-package za.co.invoketech.store.service.dao;
+package za.co.invoketech.store.persistence.dao;
 
-import za.co.invoketech.store.domain.model.product.Product;
-import za.co.invoketech.store.repository.dao.GenericDao;
+import java.util.List;
 
 /**
- * @author garethc18@gmail.com (Gareth Conry)
+ * @author zacblazic@gmail.com (Zac Blazic)
  */
+public interface GenericDao<T, ID> {
 
-public interface ProductDao extends GenericDao<Product, Long> {
-
+    public T findById(final ID id);
+    public T findByAttribute(String attribute, String value);
+    public List<T> findAll();
+    public List<T> findAllByAttribute(String attribute, String value);
+    public void persist(final T entity);
+    public void merge(final T entity);
+    public void remove(final T entity);
+    public void removeById(final ID id);
+    public long count();
 }

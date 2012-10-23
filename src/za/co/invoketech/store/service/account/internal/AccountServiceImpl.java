@@ -9,8 +9,8 @@ import za.co.invoketech.store.application.exception.RoleNotFoundException;
 import za.co.invoketech.store.domain.model.account.Account;
 import za.co.invoketech.store.domain.model.role.Role;
 import za.co.invoketech.store.service.account.AccountService;
-import za.co.invoketech.store.service.dao.AccountDao;
-import za.co.invoketech.store.service.dao.RoleDao;
+import za.co.invoketech.store.service.repository.AccountRepository;
+import za.co.invoketech.store.service.repository.RoleRepository;
 
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
@@ -19,10 +19,10 @@ import com.google.inject.Singleton;
 public class AccountServiceImpl implements AccountService {
 	
 	@Inject
-	private RoleDao roleDao;
+	private RoleRepository roleDao;
 	
 	@Inject
-	private AccountDao accountDao;
+	private AccountRepository accountDao;
 	
 	@Override
 	public Account createAccount(String email, String password, List<Role> roles) throws RoleNotFoundException {

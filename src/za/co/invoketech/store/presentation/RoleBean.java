@@ -6,7 +6,7 @@ import javax.faces.bean.ManagedBean;
 
 import za.co.invoketech.store.application.config.Goose;
 import za.co.invoketech.store.domain.model.role.Role;
-import za.co.invoketech.store.service.dao.RoleDao;
+import za.co.invoketech.store.service.repository.RoleRepository;
 
 import com.google.inject.Inject;
 
@@ -16,7 +16,7 @@ public class RoleBean implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Inject
-	private RoleDao dao;
+	private RoleRepository dao;
 	private String roleName;
 	
 	public RoleBean() {

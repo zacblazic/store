@@ -7,8 +7,8 @@ import org.junit.Test;
 
 import za.co.invoketech.store.application.config.ApplicationInitializer;
 import za.co.invoketech.store.domain.model.role.Role;
-import za.co.invoketech.store.repository.dao.internal.PersistenceModule;
-import za.co.invoketech.store.service.dao.RoleDao;
+import za.co.invoketech.store.persistence.internal.PersistenceModule;
+import za.co.invoketech.store.service.repository.RoleRepository;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -17,14 +17,14 @@ import com.google.inject.persist.jpa.JpaPersistModule;
 public class RoleDaoTest {
 	private static final String PERSISTENCE_UNIT = "storeJpaUnit";
 	private static Injector injector;
-	private static RoleDao roleDao;
+	private static RoleRepository roleDao;
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 
 		injector = Guice.createInjector(new PersistenceModule(), new JpaPersistModule(PERSISTENCE_UNIT));
 		injector.getInstance(ApplicationInitializer.class);
-		roleDao = injector.getInstance(RoleDao.class);
+		roleDao = injector.getInstance(RoleRepository.class);
 	}
 	
 	@Test

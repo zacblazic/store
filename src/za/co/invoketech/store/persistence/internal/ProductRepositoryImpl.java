@@ -13,23 +13,21 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+package za.co.invoketech.store.persistence.internal;
 
-package za.co.invoketech.store.repository.dao;
+import za.co.invoketech.store.domain.model.product.Product;
+import za.co.invoketech.store.service.repository.ProductRepository;
 
-import java.util.List;
+import com.google.inject.persist.Transactional;
 
 /**
- * @author zacblazic@gmail.com (Zac Blazic)
+ * @author garethc18@gmail.com (Gareth Conry)
  */
-public interface GenericDao<T, ID> {
 
-    public T findById(final ID id);
-    public T findByAttribute(String attribute, String value);
-    public List<T> findAll();
-    public List<T> findAllByAttribute(String attribute, String value);
-    public void persist(final T entity);
-    public void merge(final T entity);
-    public void remove(final T entity);
-    public void removeById(final ID id);
-    public long count();
+@Transactional
+class ProductRepositoryImpl extends GenericDaoImpl<Product, Long> implements ProductRepository{
+
+	public ProductRepositoryImpl() {
+		super(Product.class);
+	}
 }

@@ -14,14 +14,16 @@
  * the License.
  */
 
-package za.co.invoketech.store.repository.dao.internal;
+package za.co.invoketech.store.persistence.internal;
 
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
-import za.co.invoketech.store.repository.dao.GenericDao;
+import za.co.invoketech.store.persistence.dao.GenericDao;
+
+
 
 import com.google.inject.Inject;
 

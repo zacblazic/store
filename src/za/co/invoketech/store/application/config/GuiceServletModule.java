@@ -1,6 +1,6 @@
 package za.co.invoketech.store.application.config;
 
-import za.co.invoketech.store.repository.dao.internal.PersistenceModule;
+import za.co.invoketech.store.persistence.internal.PersistenceModule;
 import za.co.invoketech.store.service.file.internal.FileModule;
 
 import com.google.inject.persist.PersistFilter;

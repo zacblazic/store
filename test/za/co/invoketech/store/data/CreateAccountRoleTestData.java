@@ -13,11 +13,11 @@ import za.co.invoketech.store.domain.model.account.Account;
 import za.co.invoketech.store.domain.model.customer.Customer;
 import za.co.invoketech.store.domain.model.role.Role;
 import za.co.invoketech.store.domain.shared.Person;
-import za.co.invoketech.store.repository.dao.internal.PersistenceModule;
+import za.co.invoketech.store.persistence.internal.PersistenceModule;
 import za.co.invoketech.store.service.account.AccountService;
 import za.co.invoketech.store.service.account.RoleService;
 import za.co.invoketech.store.service.account.internal.AccountRoleModule;
-import za.co.invoketech.store.service.dao.CustomerDao;
+import za.co.invoketech.store.service.repository.CustomerRepository;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -28,7 +28,7 @@ public class CreateAccountRoleTestData {
 	private static Injector injector;
 	private static AccountService accountService;
 	private static RoleService roleService;
-	private static CustomerDao customerDao;
+	private static CustomerRepository customerDao;
 
 	
 	@BeforeClass
@@ -38,7 +38,7 @@ public class CreateAccountRoleTestData {
 		injector.getInstance(ApplicationInitializer.class);
 		accountService = injector.getInstance(AccountService.class);
 		roleService = injector.getInstance(RoleService.class);
-		customerDao = injector.getInstance(CustomerDao.class);
+		customerDao = injector.getInstance(CustomerRepository.class);
 	}
 	
 	@Test

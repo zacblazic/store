@@ -6,13 +6,13 @@ import com.google.inject.Inject;
 
 import za.co.invoketech.store.domain.model.product.Product;
 import za.co.invoketech.store.integration.webservices.rest.server.ProductResource;
-import za.co.invoketech.store.service.dao.ProductDao;
+import za.co.invoketech.store.service.repository.ProductRepository;
 
 public class ProductServerResource extends ServerResource implements
 		ProductResource {
 
 	@Inject
-	private ProductDao dao;
+	private ProductRepository dao;
 	
 	@Override
 	public Product retrieve(long productId) {
