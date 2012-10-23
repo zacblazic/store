@@ -1,4 +1,4 @@
-package za.co.invoketech.store.repository.dao;
+package za.co.invoketech.store.persistence;
 
 import java.math.BigDecimal;
 
@@ -20,7 +20,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.persist.jpa.JpaPersistModule;
 
-public class ProductDaoTest {
+public class ProductRepositoryTest {
 	private static final String PERSISTENCE_UNIT = "storeJpaUnit";
 	private static Injector injector;
 	private static ProductRepository dao;

@@ -1,4 +1,4 @@
-package za.co.invoketech.store.repository.dao;
+package za.co.invoketech.store.persistence;
 
 import junit.framework.Assert;
 
@@ -16,7 +16,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.persist.jpa.JpaPersistModule;
 
-public class AccountDaoTest {
+public class AccountRepositoryTest {
 	private static final String PERSISTENCE_UNIT = "storeJpaUnit";
 	private static Injector injector;
 	private static AccountRepository dao;
