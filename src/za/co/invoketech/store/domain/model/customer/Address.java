@@ -51,6 +51,9 @@ public class Address implements Serializable {
 	@Column(name = "LABEL", nullable = false)
 	private String label;
 	
+	@Column(name = "PRIMARY", nullable = false)
+	private boolean primary;
+	
 	@Embedded
 	private InternalAddress internalAddress;
 	
@@ -61,15 +64,21 @@ public class Address implements Serializable {
 	public Address() {}
 	
 	public Address(String label, InternalAddress internalAddress) {
+		this(label, internalAddress, false);
+	}
+	
+	public Address(String label, InternalAddress internalAddress, boolean primary) {
 		checkLabel(label);
 		checkInternalAddress(internalAddress);
 		this.label = label;
 		this.internalAddress = InternalAddress.copy(internalAddress);
+		this.primary = primary;
 	}
 	
 	private Address(Address address) {
 		id = address.id;
 		label = address.label;
+		primary = address.primary;
 		internalAddress = InternalAddress.copy(address.internalAddress);
 	}
 	
@@ -105,6 +114,14 @@ public class Address implements Serializable {
 		this.label = label;
 	}
 	
+	public boolean isPrimary() {
+		return primary;
+	}
+
+	public void setPrimary(boolean primary) {
+		this.primary = primary;
+	}
+
 	public String getFirstName() {
 		return internalAddress.getFirstName();
 	}

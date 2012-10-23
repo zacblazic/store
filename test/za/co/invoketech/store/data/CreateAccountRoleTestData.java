@@ -1,4 +1,4 @@
-package za.co.invoketech.store.data;
+/*package za.co.invoketech.store.data;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,10 +61,11 @@ public class CreateAccountRoleTestData {
 		accountService.createAccount("manager@invoketech.co.za", "iammanager",managerRole);
 		Account userAcc = accountService.createAccount("garethc18@gmail.com", "iamuser", userRole);
 		
-		Person p = new Person("Mr", "Gareth", "TheUser", "0839491159");
+		Person p = new Person("Gareth", "TheUser", "0839491159");
 		Customer cust = new Customer(p, userAcc);
 		
 		customerDao.persist(cust);
 	}
 
 }
+*/

@@ -41,6 +41,7 @@ import za.co.invoketech.store.domain.model.cart.ShoppingCart;
 import za.co.invoketech.store.domain.model.cart.ShoppingCartItem;
 import za.co.invoketech.store.domain.model.order.Order;
 import za.co.invoketech.store.domain.model.wishlist.WishList;
+import za.co.invoketech.store.domain.shared.Gender;
 import za.co.invoketech.store.domain.shared.Person;
 
 /**
@@ -60,17 +61,13 @@ public class Customer implements Serializable {
 	@Embedded
 	private Person person;
 	
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "PRIMARY_ADDRESS_ID")
-	private Address primaryAddress;
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ACCOUNT_ID", nullable = false)
+	private Account account;
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "CUSTOMER_ID")
 	private List<Address> addresses;
-	
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ACCOUNT_ID", nullable = false)
-	private Account account;
 	
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "SHOPPING_CART_ID", nullable = false) 
@@ -90,11 +87,13 @@ public class Customer implements Serializable {
 	 */
 	public Customer() {}
 	
-	public Customer(Person person, Account account) {
+	public Customer(Person person, Address primary, Account account) {
 		checkPerson(person);
 		checkAccount(account);
+		checkPrimaryAddress(primary);
 		this.person = Person.copy(person);
 		this.account = account;
+		this.addresses = createAddressesWithPrimary(primary);
 		shoppingCart = createShoppingCart();
 		wishLists = createWishLists();
 		orders = createOrders();
@@ -106,14 +105,6 @@ public class Customer implements Serializable {
 
 	public void setId(long id) {
 		this.id = id;
-	}
-	
-	public String getTitle() {
-		return person.getTitle();
-	}
-
-	public void setTitle(String title) {
-		person.setTitle(title);
 	}
 
 	public String getFirstName() {
@@ -132,6 +123,14 @@ public class Customer implements Serializable {
 		person.setLastName(lastName);
 	}
 
+	public Gender getGender() {
+		return person.getGender();
+	}
+
+	public void setGender(Gender gender) {
+		person.setGender(gender);
+	}
+
 	public String getPhoneNumber() {
 		return person.getPhoneNumber();
 	}
@@ -139,23 +138,54 @@ public class Customer implements Serializable {
 	public void setPhoneNumber(String phoneNumber) {
 		person.setPhoneNumber(phoneNumber);
 	}
-
-	public Address getPrimaryAddress() {
-		return Address.copy(primaryAddress);
+	
+	public void addAddress(Address address) {
+		checkAddress(address);
+		
+		if(address.isPrimary()) {
+			setPrimaryAddress(address);
+		}
+	}
+	
+	public void removeAddress() {
+		
 	}
 
-	public void setPrimaryAddress(Address primaryAddress) {
-		checkPrimaryAddress(primaryAddress);
-		this.primaryAddress = Address.copy(primaryAddress);
+	public Address getPrimaryAddress() {
+		for(Address address : addresses) {
+			if(address.isPrimary()) {
+				return address;
+			}
+		}
+		return null;
+	}
+	
+	public void setPrimaryAddress(Address address) {
+		checkPrimaryAddress(address);
+		getPrimaryAddress().setPrimary(false);
+	}
+
+	public int getAddressCount() {
+		return addresses.size();
 	}
 
 	public List<Address> getAddresses() {
 		return Address.copyAll(addresses);
 	}
-
+	
 	public void setAddresses(List<Address> addresses) {
 		checkAddresses(addresses);
 		this.addresses = Address.copyAll(addresses);
+	}
+	
+	private int getPrimaryAddressCount(List<Address> addresses) {
+		int count = 0;
+		for(Address address : addresses) {
+			if(address.isPrimary()) {
+				count++;
+			}
+		}
+		return count;
 	}
 
 	public ShoppingCart getShoppingCart() {
@@ -185,6 +215,13 @@ public class Customer implements Serializable {
 		this.orders = orders;
 	}
 	
+	private List<Address> createAddressesWithPrimary(Address address) {
+		List<Address> addresses = new ArrayList<>();
+		address.setPrimary(true);
+		addresses.add(address);
+		return addresses;
+	}
+	
 	private ArrayList<Order> createOrders() {
 		return new ArrayList<Order>();
 	}
@@ -207,18 +244,27 @@ public class Customer implements Serializable {
 		return copiedWishLists;
 	}
 	
+	
+	
 	private void checkPerson(Person person) {
 		checkNotNull(person, "person cannot be null");
 	}
 	
-	private void checkPrimaryAddress(Address primaryAddress) {
-		checkNotNull(primaryAddress, "primaryAddress cannot be null");
+	private void checkAddress(Address address) {
+		checkNotNull(address, "address cannot be null");
+	}
+	
+	private void checkPrimaryAddress(Address address) {
+		checkNotNull(address, "address cannot be null");
+		checkNotNull(address.isPrimary(), "address must be primary");
 	}
 	
 	private void checkAddresses(List<Address> addresses) {
 		checkNotNull(addresses, "addresses cannot be null");
 		checkArgument(addresses.size() != 0, "addresses cannot be empty");
 		checkArgument(!addresses.contains(null), "addresses cannot contain nulls");
+		checkArgument(getPrimaryAddressCount(addresses) < 1, "addresses does not contain a primary address");
+		checkArgument(getPrimaryAddressCount(addresses) > 1, "addresses contains too many primary addresses");
 	}
 	
 	private void checkAccount(Account account) {

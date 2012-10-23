@@ -21,6 +21,8 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 
 /**
  * @author zacblazic@gmail.com (Zac Blazic)
@@ -28,14 +30,15 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class Person {
 
-	@Column(name = "TITLE", nullable = false)
-	private String title;
-	
 	@Column(name = "FIRST_NAME", nullable = false)
 	private String firstName;
 	
 	@Column(name = "LAST_NAME", nullable = false)
 	private String lastName;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(name = "GENDER", nullable = false)
+	private Gender gender;
 	
 	@Column(name = "PHONE_NUMBER", nullable = false)
 	private String phoneNumber;
@@ -46,21 +49,21 @@ public class Person {
 	 */
 	public Person() {}
 	
-	public Person(String title, String firstName, String lastName, String phoneNumber) {
-		checkTitle(title);
+	public Person(String firstName, String lastName, Gender gender, String phoneNumber) {
 		checkFirstName(firstName);
 		checkLastName(lastName);
+		checkGender(gender);
 		checkPhoneNumber(phoneNumber);
-		this.title = title;
 		this.firstName = firstName;
 		this.lastName = lastName;
+		this.gender = gender;
 		this.phoneNumber = phoneNumber;
 	}
 	
 	private Person(Person person) {
-		title = person.title;
 		firstName = person.firstName;
 		lastName = person.lastName;
+		gender = person.gender;
 		phoneNumber = person.phoneNumber;
 	}
 	
@@ -72,15 +75,6 @@ public class Person {
 			return new Person(person);
 		} 
 		return null;
-	}
-	
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		checkTitle(title);
-		this.title = title;
 	}
 
 	public String getFirstName() {
@@ -101,6 +95,15 @@ public class Person {
 		this.lastName = lastName;
 	}
 
+	public Gender getGender() {
+		return gender;
+	}
+
+	public void setGender(Gender gender) {
+		checkGender(gender);
+		this.gender = gender;
+	}
+
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
@@ -108,11 +111,6 @@ public class Person {
 	public void setPhoneNumber(String phoneNumber) {
 		checkPhoneNumber(phoneNumber);
 		this.phoneNumber = phoneNumber;
-	}
-
-	private void checkTitle(String title) {
-		checkNotNull(title, "title cannot be null");
-		checkArgument(!title.isEmpty(), "title cannot be empty");
 	}
 	
 	private void checkFirstName(String firstName) {
@@ -123,6 +121,10 @@ public class Person {
 	private void checkLastName(String lastName) {
 		checkNotNull(lastName, "lastName cannot be null");
 		checkArgument(!lastName.isEmpty(), "lastName cannot be empty");
+	}
+	
+	private void checkGender(Gender gender) {
+		checkNotNull(gender, "gender cannot be null");
 	}
 	
 	private void checkPhoneNumber(String phoneNumber) {

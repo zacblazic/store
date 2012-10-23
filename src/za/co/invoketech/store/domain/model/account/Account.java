@@ -136,6 +136,16 @@ public class Account implements Serializable {
 		return roles.contains(role);
 	}
 	
+	public boolean hasRole(String roleName) {
+		checkRoleName(roleName);
+		for(Role role : roles) {
+			if(role.getRoleName().equalsIgnoreCase(roleName)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public int getRoleCount() {
 		return roles.size();
 	}
@@ -174,6 +184,11 @@ public class Account implements Serializable {
 	private void checkPassword(String password) {
 		checkNotNull(password, "password cannot be null");
 		checkArgument(!password.isEmpty(), "password cannot be empty");
+	}
+	
+	private void checkRoleName(String roleName) {
+		checkNotNull(roleName, "roleName cannot be null");
+		checkArgument(!roleName.isEmpty(), "roleName cannot be empty");
 	}
 	
 	private void checkRole(Role role) {
