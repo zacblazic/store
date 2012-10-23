@@ -5,7 +5,8 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:shiro="http://shiro.apache.org/tags">
  
 <h:head>
 	<h:outputStylesheet library="css" name="main.css" />
@@ -18,16 +19,33 @@
 				<p:commandButton value="Home" ajax="false" action="/index?faces-redirect=true" />
 			</p:toolbarGroup>
 			<p:toolbarGroup align="right">
-				<p:commandButton id="loginButton" value="Login"/>
+			<!-- 	<p:commandButton id="loginButton" value="Login"/>
 				
 				<p:overlayPanel for="loginButton" hideEffect="fade">
 					<ui:insert>
 						<ui:include src="/components/login.xhtml" />
 					</ui:insert>
-				</p:overlayPanel>
+				</p:overlayPanel>  -->
 				
-				<p:commandButton value="Register" ajax="false"  action="/register?faces-redirect=true" />
-				<p:commandButton value="Account" ajax="false" action="/admin/upload?faces-redirect=true" />
+				<shiro:guest>
+					<p:commandButton value="Login" ajax="false"  action="/login?faces-redirect=true" />
+					<p:commandButton value="Register" ajax="false"  action="/register?faces-redirect=true" />
+				</shiro:guest>
+				
+				<shiro:authenticated>
+					<p:commandButton value="Uploader" ajax="false" action="/admin/upload?faces-redirect=true" />
+					
+					<shiro:hasRole name="admin">
+						<p:commandButton value="Administration" ajax="false" action="/admin/admin?faces-redirect=true" />
+					</shiro:hasRole>
+					<shiro:hasRole name="manager">
+						<p:commandButton value="Management" ajax="false" action="/manage/manage?faces-redirect=true" />
+					</shiro:hasRole>
+					
+					<p:commandButton value="Logout" ajax="false" action="#{loginBean.logout}" />
+				
+				</shiro:authenticated>
+				
 				<p:commandButton value="Help"/>
 			</p:toolbarGroup>
 		</p:toolbar>

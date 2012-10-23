@@ -1,10 +1,37 @@
+/**
+ * Copyright (c) 2012 Invoke Tech
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ */
 package za.co.invoketech.store.presentation;
 
 import java.io.Serializable;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
+
+/**
+ * 
+ * @author garethc18@gmail.com (Gareth Conry)
+ *
+ */
 @SessionScoped
 @ManagedBean
 public class LoginBean implements Serializable {
@@ -13,10 +40,9 @@ public class LoginBean implements Serializable {
 	
 	private String email;
 	private String password;
+	private boolean remember;
 	
-	public LoginBean() {
-		System.out.println("LOGIN_BEAN_CONSTRUCTOR");
-	}
+	public LoginBean() {}
 	
 	public String getEmail() {
 		return email;
@@ -32,5 +58,42 @@ public class LoginBean implements Serializable {
 	
 	public void setPassword(String password) {
 		this.password = password;
-	}	
+	}
+		
+	public boolean isRemember() {
+		return remember;
+	}
+
+	public void setRemember(boolean remember) {
+		this.remember = remember;
+	}
+
+	public String login(){
+		String returnAction = "/index?faces-redirect=true";
+		
+		UsernamePasswordToken token = new UsernamePasswordToken(email, password);
+		token.setRememberMe(remember);
+		
+		Subject currentUser = SecurityUtils.getSubject();
+
+		try {
+		    currentUser.login(token);
+		}
+		catch ( AuthenticationException ae ) {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Login Error", "Incorrect Credentials"));
+			returnAction="";
+		}
+		
+		return returnAction;
+	}
+	
+	public String logout()
+	{
+		String returnAction = "/index?faces-redirect=true";
+		
+		Subject currentUser = SecurityUtils.getSubject();
+		currentUser.logout();
+				
+		return returnAction;
+	}
 }
