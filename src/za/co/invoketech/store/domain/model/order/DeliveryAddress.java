@@ -28,7 +28,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import za.co.invoketech.store.domain.shared.Address;
+import za.co.invoketech.store.domain.shared.InternalAddress;
 import za.co.invoketech.store.domain.shared.AddressType;
 
 /**
@@ -46,7 +46,7 @@ public class DeliveryAddress implements Serializable {
 	private long id;
 	
 	@Embedded
-	private Address address;
+	private InternalAddress internalAddress;
 	
 	/**
 	 * @deprecated
@@ -54,19 +54,19 @@ public class DeliveryAddress implements Serializable {
 	 */
 	public DeliveryAddress() {}
 	
-	public DeliveryAddress(Address address) {
-		checkAddress(address);
-		this.address = Address.copy(address);
+	public DeliveryAddress(InternalAddress internalAddress) {
+		checkInternalAddress(internalAddress);
+		this.internalAddress = InternalAddress.copy(internalAddress);
 	}
 	
-	private DeliveryAddress(DeliveryAddress address) {
-		id = address.id;
-		this.address = Address.copy(address.address);
+	private DeliveryAddress(DeliveryAddress deliveryAddress) {
+		id = deliveryAddress.id;
+		internalAddress = InternalAddress.copy(deliveryAddress.internalAddress);
 	}
 	
-	public static DeliveryAddress copy(DeliveryAddress address) {
-		if(address != null) {
-			return new DeliveryAddress(address);
+	public static DeliveryAddress copy(DeliveryAddress deliveryAddress) {
+		if(deliveryAddress != null) {
+			return new DeliveryAddress(deliveryAddress);
 		}
 		return null;
 	}
@@ -80,78 +80,78 @@ public class DeliveryAddress implements Serializable {
 	}
 	
 	public String getFirstName() {
-		return address.getFirstName();
+		return internalAddress.getFirstName();
 	}
 
 	public void setFirstName(String firstName) {
-		address.setFirstName(firstName);
+		internalAddress.setFirstName(firstName);
 	}
 
 	public String getLastName() {
-		return address.getLastName();
+		return internalAddress.getLastName();
 	}
 
 	public void setLastName(String lastName) {
-		address.setLastName(lastName);
+		internalAddress.setLastName(lastName);
 	}
 
 	public String getPhoneNumber() {
-		return address.getPhoneNumber();
+		return internalAddress.getPhoneNumber();
 	}
 
 	public void setPhoneNumber(String phoneNumber) {
-		address.setPhoneNumber(phoneNumber);
+		internalAddress.setPhoneNumber(phoneNumber);
 	}
 
 	public String getLine1() {
-		return address.getLine1();
+		return internalAddress.getLine1();
 	}
 
 	public void setLine1(String line1) {
-		address.setLine1(line1);
+		internalAddress.setLine1(line1);
 	}
 
 	public String getLine2() {
-		return address.getLine2();
+		return internalAddress.getLine2();
 	}
 
 	public void setLine2(String line2) {
-		address.setLine2(line2);
+		internalAddress.setLine2(line2);
 	}
 
 	public String getCity() {
-		return address.getCity();
+		return internalAddress.getCity();
 	}
 
 	public void setCity(String city) {
-		address.setCity(city);
+		internalAddress.setCity(city);
 	}
 
 	public String getPostalCode() {
-		return address.getPostalCode();
+		return internalAddress.getPostalCode();
 	}
 
 	public void setPostalCode(String postalCode) {
-		address.setPostalCode(postalCode);
+		internalAddress.setPostalCode(postalCode);
 	}
 
 	public String getCountry() {
-		return address.getCountry();
+		return internalAddress.getCountry();
 	}
 
 	public void setCountry(String country) {
-		address.setCountry(country);
+		internalAddress.setCountry(country);
 	}
 
 	public AddressType getAddressType() {
-		return address.getAddressType();
+		return internalAddress.getAddressType();
 	}
 
 	public void setAddressType(AddressType addressType) {
-		address.setAddressType(addressType);
+		internalAddress.setAddressType(addressType);
 	}
 
-	private void checkAddress(Address address) {
-		checkNotNull(address, "address cannot be null");
+	private void checkInternalAddress(InternalAddress internalAddress) {
+		checkNotNull(internalAddress, "internalAddress cannot be null");
 	}
 }
