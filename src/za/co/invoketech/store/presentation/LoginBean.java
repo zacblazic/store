@@ -42,9 +42,7 @@ public class LoginBean implements Serializable {
 	private String password;
 	private boolean remember;
 	
-	public LoginBean() {
-		System.out.println("LOGIN_BEAN_CONSTRUCTOR");
-	}
+	public LoginBean() {}
 	
 	public String getEmail() {
 		return email;
@@ -71,7 +69,7 @@ public class LoginBean implements Serializable {
 	}
 
 	public String login(){
-		String returnAction = "?faces-redirect=true";
+		String returnAction = "/index?faces-redirect=true";
 		
 		UsernamePasswordToken token = new UsernamePasswordToken(email, password);
 		token.setRememberMe(remember);
@@ -95,7 +93,7 @@ public class LoginBean implements Serializable {
 		
 		Subject currentUser = SecurityUtils.getSubject();
 		currentUser.logout();
-		
+				
 		return returnAction;
 	}
 }
