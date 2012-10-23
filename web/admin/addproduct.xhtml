@@ -12,10 +12,12 @@
 <h:body style="font-size: 12px;">
 	<h:form enctype="multipart/form-data">
 		<p:panel id="panel" header="Add Product" style="margin-bottom:10px; width:85%" align="">
-			<p:selectOneMenu id="category1" value="hallo">
-				<f:selectItems value="">
-			<p:selectOneMenu />
+			<p:selectOneMenu id="category" value="#{productBean.selected}" valueChangeListener="#{productBean.generateElement}">
+				<f:selectItems value="#{productBean.categories}" />
+			</p:selectOneMenu>
+			<h:outputText id="el" value="#{productBean.element}" />
 		</p:panel>
+		<p:commandButton value="button" ajax="false" actionListener="#{productBean.generateElement}" />
 	</h:form>
 </h:body>
 </html>
