@@ -20,6 +20,8 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -30,6 +32,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import za.co.invoketech.store.model.value.Address;
+import za.co.invoketech.store.model.value.AddressType;
 
 /**
  * @author zacblazic@gmail.com (Zac Blazic)
@@ -63,18 +66,25 @@ public class CustomerAddress implements Serializable {
 		this.address = Address.copy(address);
 	}
 	
-	private CustomerAddress(CustomerAddress customerAddress) {
-		id = customerAddress.id;
-		label = customerAddress.label;
-		address = Address.copy(customerAddress.address);
+	private CustomerAddress(CustomerAddress address) {
+		id = address.id;
+		label = address.label;
+		this.address = Address.copy(address.address);
 	}
 	
-	public static CustomerAddress copy(CustomerAddress customerAddress) {
-		if(customerAddress != null) {
-			return new CustomerAddress(customerAddress);
-		} else {
-			return null;
+	public static CustomerAddress copy(CustomerAddress address) {
+		if(address != null) {
+			return new CustomerAddress(address);
 		}
+		return null;
+	}
+	
+	public static List<CustomerAddress> copyAll(List<CustomerAddress> addresses) {
+		List<CustomerAddress> copiedAddresses = new ArrayList<>();
+		for(CustomerAddress address : addresses) {
+			copiedAddresses.add(copy(address));
+		}
+		return copiedAddresses;
 	}
 
 	public long getId() {
@@ -94,8 +104,78 @@ public class CustomerAddress implements Serializable {
 		this.label = label;
 	}
 	
-	
-	
+	public String getFirstName() {
+		return address.getFirstName();
+	}
+
+	public void setFirstName(String firstName) {
+		address.setFirstName(firstName);
+	}
+
+	public String getLastName() {
+		return address.getLastName();
+	}
+
+	public void setLastName(String lastName) {
+		address.setLastName(lastName);
+	}
+
+	public String getPhoneNumber() {
+		return address.getPhoneNumber();
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		address.setPhoneNumber(phoneNumber);
+	}
+
+	public String getLine1() {
+		return address.getLine1();
+	}
+
+	public void setLine1(String line1) {
+		address.setLine1(line1);
+	}
+
+	public String getLine2() {
+		return address.getLine2();
+	}
+
+	public void setLine2(String line2) {
+		address.setLine2(line2);
+	}
+
+	public String getCity() {
+		return address.getCity();
+	}
+
+	public void setCity(String city) {
+		address.setCity(city);
+	}
+
+	public String getPostalCode() {
+		return address.getPostalCode();
+	}
+
+	public void setPostalCode(String postalCode) {
+		address.setPostalCode(postalCode);
+	}
+
+	public String getCountry() {
+		return address.getCountry();
+	}
+
+	public void setCountry(String country) {
+		address.setCountry(country);
+	}
+
+	public AddressType getAddressType() {
+		return address.getAddressType();
+	}
+
+	public void setAddressType(AddressType addressType) {
+		address.setAddressType(addressType);
+	}
+
 	private void checkLabel(String label) {
 		checkNotNull(label, "label cannot be null");
 		checkArgument(!label.isEmpty(), "label cannot be empty");

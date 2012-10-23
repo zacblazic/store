@@ -20,8 +20,6 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -58,35 +56,6 @@ public class Role implements Serializable {
 	public Role (String roleName) {
 		checkRoleName(roleName);
 		this.roleName = roleName;
-	}
-	
-	private Role(Role role) {
-		this.id = role.id;
-		this.roleName = role.roleName;
-	}
-	
-	/**
-	 * Defensively copies a Role.
-	 */
-	public static Role copy(Role role) {
-		if(role != null) {
-			return new Role(role);
-		} else {
-			return null;
-		}
-	}
-	
-	/**
-	 * Defensively copies a list of Roles.
-	 */
-	public static List<Role> copyAll(List<Role> roles) {
-		List<Role> copiedRoles = new ArrayList<Role>();
-		
-		for(Role role : roles) {
-			copiedRoles.add(copy(role));
-		}
-		
-		return copiedRoles;
 	}
 	
 	public long getId() {

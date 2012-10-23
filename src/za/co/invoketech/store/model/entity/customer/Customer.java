@@ -94,32 +94,10 @@ public class Customer implements Serializable {
 		checkPerson(person);
 		checkAccount(account);
 		this.person = Person.copy(person);
-		this.account = Account.copy(account);
-		shoppingCart = new ShoppingCart(new ArrayList<ShoppingCartItem>());
-		wishLists = new ArrayList<WishList>();
-		orders = new ArrayList<Order>();
-	}
-	
-	private Customer(Customer customer) {
-		this.id = customer.id;
-		this.person = Person.copy(customer.person);
-		this.primaryAddress = CustomerAddress.copy(customer.primaryAddress);
-		this.addresses = copyAddresses(customer.addresses);
-		this.account = Account.copy(customer.account);
-		this.shoppingCart = new ShoppingCart(customer.shoppingCart);
-		this.wishLists = copyWishLists(customer.wishLists);
-		this.orders = copyOrders(customer.orders);
-	}
-	
-	/**
-	 * Defensively copies a Customer.
-	 */
-	public static Customer copy(Customer customer) {
-		if(customer != null) {
-			return new Customer(customer);
-		} else {
-			return null;
-		}
+		this.account = account;
+		shoppingCart = createShoppingCart();
+		wishLists = createWishLists();
+		orders = createOrders();
 	}
 
 	public long getId() {
@@ -172,12 +150,12 @@ public class Customer implements Serializable {
 	}
 
 	public List<CustomerAddress> getAddresses() {
-		return copyAddresses(addresses);
+		return CustomerAddress.copyAll(addresses);
 	}
 
 	public void setAddresses(List<CustomerAddress> addresses) {
 		checkAddresses(addresses);
-		this.addresses = copyAddresses(addresses);
+		this.addresses = CustomerAddress.copyAll(addresses);
 	}
 
 	public ShoppingCart getShoppingCart() {
@@ -199,41 +177,34 @@ public class Customer implements Serializable {
 	}
 	
 	public List<Order> getOrders() {
-		return copyOrders(orders);
+		return orders;
 	}
 	
 	public void setOrders(List<Order> orders) {
-		this.orders = copyOrders(orders);
+		checkOrders(orders);
+		this.orders = orders;
 	}
 	
-	private List<CustomerAddress> copyAddresses(List<CustomerAddress> addresses) {
-		List<CustomerAddress> copiedAddresses = new ArrayList<CustomerAddress>();
-		
-		for(CustomerAddress address : addresses) {
-			copiedAddresses.add(CustomerAddress.copy(address));
-		}
-		
-		return copiedAddresses;
+	private ArrayList<Order> createOrders() {
+		return new ArrayList<Order>();
+	}
+
+	private ArrayList<WishList> createWishLists() {
+		return new ArrayList<WishList>();
+	}
+
+	private ShoppingCart createShoppingCart() {
+		return new ShoppingCart(new ArrayList<ShoppingCartItem>());
 	}
 	
 	private List<WishList> copyWishLists(List<WishList> wishLists) {
-		List<WishList> copiedWishLists = new ArrayList<WishList>();
+		List<WishList> copiedWishLists = createWishLists();
 		
 		for(WishList wishList : wishLists) {
 			copiedWishLists.add(new WishList(wishList));
 		}
 		
 		return copiedWishLists;
-	}
-	
-	private List<Order> copyOrders(List<Order> orders) {
-		List<Order> copiedOrders = new ArrayList<Order>();
-		
-		for(Order order : orders) {
-			copiedOrders.add(new Order(order));
-		}
-		
-		return copiedOrders;
 	}
 	
 	private void checkPerson(Person person) {
@@ -261,5 +232,10 @@ public class Customer implements Serializable {
 	private void checkWishLists(List<WishList> wishLists) {
 		checkNotNull(wishLists, "wishLists cannot be null");
 		checkArgument(!wishLists.contains(null), "wishLists cannot contain nulls");
+	}
+	
+	private void checkOrders(List<Order> orders) {
+		checkNotNull(orders, "orders cannot be null");
+		checkArgument(!orders.contains(null), "orders cannot contain nulls");
 	}
 }

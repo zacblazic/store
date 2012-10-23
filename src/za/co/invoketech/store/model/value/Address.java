@@ -115,6 +115,10 @@ public class Address implements Serializable {
 		}
 	}
 	
+	/**
+	 * @deprecated
+	 * Default constructor should only be used by the persistence mechanism.
+	 */
 	public Address() {}
 	
 	private Address(Builder builder) {
@@ -156,9 +160,8 @@ public class Address implements Serializable {
 	public static Address copy(Address address) {
 		if(address != null) {
 			return new Address(address);
-		} else {
-			return null;
 		}
+		return null;
 	}
 	
 	public String getFirstName() {

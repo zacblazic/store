@@ -55,7 +55,7 @@ public class Delivery implements Serializable {
 		checkAddress(address);
 		checkCost(cost);
 		this.method = method;
-		this.address = new DeliveryAddress(address);
+		this.address = DeliveryAddress.copy(address);
 		this.cost = cost;
 	}
 	
@@ -63,7 +63,7 @@ public class Delivery implements Serializable {
 		checkDelivery(delivery);
 		this.id = delivery.id;
 		this.method = delivery.method;
-		this.address = new DeliveryAddress(delivery.address);
+		this.address = DeliveryAddress.copy(delivery.address);
 		this.cost = delivery.cost;
 		this.instructions = delivery.instructions;
 	}
@@ -86,12 +86,12 @@ public class Delivery implements Serializable {
 	}
 	
 	public DeliveryAddress getAddress() {
-		return new DeliveryAddress(address);
+		return DeliveryAddress.copy(address);
 	}
 
 	public void setAddress(DeliveryAddress address) {
 		checkAddress(address);
-		this.address = new DeliveryAddress(address);
+		this.address = DeliveryAddress.copy(address);
 	}
 
 	public BigDecimal getCost() {

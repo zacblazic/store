@@ -114,21 +114,8 @@ public class Order implements Serializable {
 		this.items = copyItems(items);
 		this.payment = new Payment(payment);
 		this.delivery = new Delivery(delivery);
-		this.customer = Customer.copy(customer);
+		this.customer = customer;
 		this.createdDate = Calendar.getInstance().getTime();
-	}
-	
-	public Order(Order order) {
-		checkOrder(order);
-		this.id = order.id;
-		this.status = order.status;
-		this.items = copyItems(order.items);
-		this.payment = new Payment(order.payment);
-		this.delivery = new Delivery(order.delivery);
-		this.customer = Customer.copy(order.customer);
-		this.invoice = new Invoice(order.invoice);
-		this.createdDate = copyDate(order.createdDate);
-		this.cancelledDate = copyDate(order.cancelledDate);
 	}
 
 	public long getId() {
@@ -199,21 +186,21 @@ public class Order implements Serializable {
 	}
 	
 	public Customer getCustomer() {
-		return Customer.copy(customer);
+		return customer;
 	}
 
 	public void setCustomer(Customer customer) {
 		checkCustomer(customer);
-		this.customer = Customer.copy(customer);
+		this.customer = customer;
 	}
 
 	public Invoice getInvoice() {
-		return new Invoice(invoice);
+		return invoice;
 	}
 
 	public void setInvoice(Invoice invoice) {
 		checkInvoice(invoice);
-		this.invoice = new Invoice(invoice);
+		this.invoice = invoice;
 	}
 
 	public Date getCreatedDate() {
@@ -265,10 +252,6 @@ public class Order implements Serializable {
 		}
 		
 		return copiedItems;
-	}
-	
-	private void checkOrder(Order order) {
-		checkNotNull(order, "order cannot be null");
 	}
 	
 	private void checkStatus(OrderStatus status) {

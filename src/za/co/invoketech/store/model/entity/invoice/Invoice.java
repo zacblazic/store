@@ -71,13 +71,6 @@ public class Invoice implements Serializable {
 		this.order = order;
 		this.invoiceDate = Calendar.getInstance().getTime();
 	}
-	
-	public Invoice(Invoice invoice) {
-		checkInvoice(invoice);
-		this.id = invoice.id;
-		this.order = invoice.order;
-		this.invoiceDate = copyDate(invoice.invoiceDate);
-	}
 
 	public long getId() {
 		return id;
@@ -88,7 +81,7 @@ public class Invoice implements Serializable {
 	}
 
 	public Order getOrder() {
-		return new Order(order);
+		return order;
 	}
 	
 	public Date getInvoiceDate() {
@@ -113,9 +106,5 @@ public class Invoice implements Serializable {
 	
 	private void checkOrder(Order order) {
 		checkNotNull(order, "order cannot be null");
-	}
-	
-	private void checkInvoice(Invoice invoice) {
-		checkNotNull(invoice, "invoice cannot be null");
 	}
 }

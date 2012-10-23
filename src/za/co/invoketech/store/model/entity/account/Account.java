@@ -21,7 +21,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -85,26 +84,7 @@ public class Account implements Serializable {
 		checkRoles(roles);
 		this.email = email;
 		this.password = password;
-		this.roles = Role.copyAll(roles);
-	}
-	
-	private Account(Account account) {
-		this.id = account.id;
-		this.email = account.email;
-		this.password = account.password;
-		this.roles = Role.copyAll(account.roles);
-		this.customer = Customer.copy(account.customer);
-	}
-	
-	/**
-	 * Defensively copies a Role.
-	 */
-	public static Account copy(Account account) {
-		if(account != null) {
-			return new Account(account);
-		} else {
-			return null;
-		}
+		this.roles = roles;
 	}
 
 	public Long getId() {
@@ -134,48 +114,26 @@ public class Account implements Serializable {
 	}
 	
 	public Customer getCustomer() {
-		return Customer.copy(customer);
+		return customer;
 	}
 	
 	public void setCustomer(Customer customer) {
-		this.customer = Customer.copy(customer);
+		this.customer = customer;
 	}
 	
 	public void addRole(Role role) {
 		checkRole(role);
-		roles.add(Role.copy(role));
+		roles.add(role);
 	}
 	
 	public void removeRole(Role role) {
 		checkRole(role);
-		roles.remove(Role.copy(role));
-	}
-	
-	public void removeRole(String roleName) {
-		checkRoleName(roleName);
-		Iterator<Role> iterator = roles.iterator();
-		while(iterator.hasNext()) {
-			Role role = iterator.next();
-			if(role.getRoleName().equals(roleName)) {
-				iterator.remove();
-				break;
-			}
-		}
+		roles.remove(role);
 	}
 	
 	public boolean hasRole(Role role) {
 		checkRole(role);
-		return roles.contains(Role.copy(role));
-	}
-	
-	public boolean hasRole(String roleName) {
-		checkRoleName(roleName);
-		for(Role role : roles) {
-			if(role.getRoleName().equals(roleName)) {
-				return true;
-			}
-		}
-		return false;
+		return roles.contains(role);
 	}
 	
 	public int getRoleCount() {
@@ -187,12 +145,12 @@ public class Account implements Serializable {
 	}
 	
 	public List<Role> getRoles() {
-		return Role.copyAll(roles);
+		return roles;
 	}
 	
 	public void setRoles(List<Role> roles) {
 		checkRoles(roles);
-		this.roles = Role.copyAll(roles);
+		this.roles = roles;
 	}
 
 	@Override
@@ -225,10 +183,5 @@ public class Account implements Serializable {
 	private void checkRoles(List<Role> roles) {
 		checkNotNull(roles, "roles cannot be null");
 		checkArgument(!roles.contains(null), "roles cannot contain nulls");
-	}
-	
-	private void checkRoleName(String roleName) {
-		checkNotNull(roleName, "roleName cannot be null");
-		checkArgument(!roleName.isEmpty(), "roleName cannot be empty");
 	}
 }
