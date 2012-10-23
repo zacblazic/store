@@ -5,7 +5,7 @@ import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 
 import za.co.invoketech.store.application.config.Goose;
-import za.co.invoketech.store.model.entity.role.Role;
+import za.co.invoketech.store.domain.model.role.Role;
 import za.co.invoketech.store.service.dao.RoleDao;
 
 import com.google.inject.Inject;

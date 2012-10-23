@@ -4,8 +4,8 @@ import org.restlet.resource.ServerResource;
 
 import com.google.inject.Inject;
 
+import za.co.invoketech.store.domain.model.product.Product;
 import za.co.invoketech.store.integration.webservices.rest.server.ProductResource;
-import za.co.invoketech.store.model.entity.product.Product;
 import za.co.invoketech.store.service.dao.ProductDao;
 
 public class ProductServerResource extends ServerResource implements

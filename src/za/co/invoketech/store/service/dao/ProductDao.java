@@ -16,7 +16,7 @@
 
 package za.co.invoketech.store.service.dao;
 
-import za.co.invoketech.store.model.entity.product.Product;
+import za.co.invoketech.store.domain.model.product.Product;
 import za.co.invoketech.store.repository.dao.GenericDao;
 
 /**

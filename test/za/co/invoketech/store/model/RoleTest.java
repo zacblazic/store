@@ -5,7 +5,7 @@ import static junit.framework.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import za.co.invoketech.store.model.entity.role.Role;
+import za.co.invoketech.store.domain.model.role.Role;
 
 public class RoleTest {
 

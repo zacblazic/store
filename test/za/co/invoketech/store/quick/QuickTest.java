@@ -6,7 +6,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import za.co.invoketech.store.application.config.ApplicationInitializer;
-import za.co.invoketech.store.model.entity.account.Account;
+import za.co.invoketech.store.domain.model.account.Account;
 import za.co.invoketech.store.repository.dao.internal.PersistenceModule;
 import za.co.invoketech.store.service.account.AccountService;
 import za.co.invoketech.store.service.account.RoleService;

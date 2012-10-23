@@ -2,7 +2,7 @@ package za.co.invoketech.store.repository.dao.internal;
 
 import com.google.inject.persist.Transactional;
 
-import za.co.invoketech.store.model.entity.account.Account;
+import za.co.invoketech.store.domain.model.account.Account;
 import za.co.invoketech.store.service.dao.AccountDao;
 
 @Transactional
