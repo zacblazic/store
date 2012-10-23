@@ -51,7 +51,7 @@ public class LoginBean implements Serializable {
 	}
 
 	public String login(){
-		String returnAction = "/index?faces-redirect=true";
+		String returnAction = "?faces-redirect=true";
 		
 		UsernamePasswordToken token = new UsernamePasswordToken(email, password);
 		token.setRememberMe(remember);
