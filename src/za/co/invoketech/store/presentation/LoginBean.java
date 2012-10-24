@@ -17,7 +17,6 @@ package za.co.invoketech.store.presentation;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
@@ -27,7 +26,6 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 
 import za.co.invoketech.store.application.config.Goose;
-import za.co.invoketech.store.presentation.customer.CustomerBean;
 
 /**
  * 
@@ -38,9 +36,9 @@ import za.co.invoketech.store.presentation.customer.CustomerBean;
 @ManagedBean
 public class LoginBean {
 	
-	@ManagedProperty(value="#{customerBean}")
-	private CustomerBean customerBean;
-	
+//	@ManagedProperty(value="#{customerBean}")
+//	private CustomerBean customerBean;
+//	
 	private String email;
 	private String password;
 	private boolean remember;

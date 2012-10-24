@@ -28,7 +28,7 @@
 		<p:dataTable id="accounts" var="account" value="#{adminAccountRoleBean.accounts}" rowKey="#{account.id}"  
                  selection="#{adminAccountRoleBean.selectedAccount}" selectionMode="single">  
 	        <f:facet name="header">  
-	            Click "View" button after selecting a row to see details  
+	            User Accounts  
 	        </f:facet>  
 	  
 	        <p:column headerText="ID">  
@@ -43,14 +43,14 @@
 	            #{account.password}
 	        </p:column>	  
 	        <f:facet name="footer">  
-	            <p:commandButton id="viewButton" value="View"  
-	                    update=":form:display" oncomplete="accountDialog.show()" actionListener="#{adminAccountRoleBean.cows}"/>  
+	            <p:commandButton id="viewButton1" value="View"  
+	                    update=":form:display1" oncomplete="accountDialog.show()" actionListener="#{adminAccountRoleBean.populateRolesForAccount}"/>  
 	        </f:facet>  
     	</p:dataTable>
 		
-		<p:dialog id="dialog" header="Account Detail" widgetVar="accountDialog" resizable="false"  
+		<p:dialog id="dialog1" header="Account Detail" widgetVar="accountDialog" resizable="false"  
               showEffect="clip" hideEffect="fold">    
-	        <p:outputPanel id="display" autoUpdate="true">	
+	        <p:outputPanel id="display1" autoUpdate="true">	
                 	
                 <h:outputText value="#{adminAccountRoleBean.selectedAccount.email}"/><br/>
             	          
@@ -64,6 +64,38 @@
 	        </p:outputPanel>  
     	</p:dialog> 
     	
+    	
+    	<p:dataTable id="roles" var="role" value="#{adminAccountRoleBean.roles}" rowKey="#{role.id}"  
+                 selection="#{adminAccountRoleBean.selectedRole}" selectionMode="single">  
+	        <f:facet name="header">  
+	            User Accounts  
+	        </f:facet>  
+	  
+	        <p:column headerText="ID">  
+	            #{role.id}  
+	        </p:column>  
+	  
+	        <p:column headerText="Role Name">  
+	            #{role.roleName}  
+	        </p:column>  
+	        <f:facet name="footer">  
+	            <p:commandButton id="viewButton2" value="View"  
+	                    update=":form:display2" oncomplete="roleDialog.show()" actionListener="#{adminAccountRoleBean.populateAccountsForRole}"/>  
+	        </f:facet>  
+    	</p:dataTable>
+		
+		<p:dialog id="dialog2" header="Role Detail" widgetVar="roleDialog" resizable="false"  
+              showEffect="clip" hideEffect="fold">    
+	        <p:outputPanel id="display2" autoUpdate="true">	
+                	
+                <h:outputText value="#{adminAccountRoleBean.selectedRole.roleName}"/><br/>
+            	          
+	            <h:outputText value="Accounts:" /> <br/>
+	            <p:dataList value="#{adminAccountRoleBean.accountsForRole}" var="afr" itemType="disc">  
+				    #{afr.email}  
+				</p:dataList>
+	        </p:outputPanel>  
+    	</p:dialog> 
     	
 	</h:form>
 	

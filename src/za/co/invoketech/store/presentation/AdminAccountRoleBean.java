@@ -33,6 +33,7 @@ import com.google.inject.Inject;
  * @author garethc18@gmail.com (Gareth Conry)
  *
  */
+
 @SessionScoped
 @ManagedBean
 public class AdminAccountRoleBean {
@@ -55,14 +56,21 @@ public class AdminAccountRoleBean {
 	public AdminAccountRoleBean(){
 		Goose.getInjector().injectMembers(this);
 		accounts = accountService.retrieveAllAccounts();
-		roles = roleService.retrieveAllRoles();
+		roles = roleService.retrieveAllRoles();		
 	}
 	
-	public void cows()
+	public void populateRolesForAccount()
 	{
-		setRolesForAccount(roleService.retrieveRolesForAccount(selectedAccount));
+		setRolesForAccount(selectedAccount.getRoles());
 	}
 
+
+	public void populateAccountsForRole()
+	{
+		accountService = Goose.getInjector().getInstance(AccountService.class);
+		setAccountsForRole(accountService.retrieveAccountsForRole(selectedRole));
+	}
+	
 	public Account getSelectedAccount() {
 		return selectedAccount;
 	}
