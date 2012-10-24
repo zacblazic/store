@@ -10,7 +10,7 @@ body {
 	font-size: 12px;
 }
 
-.login-grid-panel tr, .login-grid-panel td {
+.panel-grid tr, .panel-grid td {
 	border: none !important;
 }
 

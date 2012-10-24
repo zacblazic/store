@@ -15,10 +15,9 @@
  */
 package za.co.invoketech.store.presentation;
 
-import java.io.Serializable;
-
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
@@ -27,6 +26,9 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 
+import za.co.invoketech.store.application.config.Goose;
+import za.co.invoketech.store.presentation.customer.CustomerBean;
+
 /**
  * 
  * @author garethc18@gmail.com (Gareth Conry)
@@ -34,15 +36,19 @@ import org.apache.shiro.subject.Subject;
  */
 @SessionScoped
 @ManagedBean
-public class LoginBean implements Serializable {
-
-	private static final long serialVersionUID = 1L;
+public class LoginBean {
+	
+	@ManagedProperty(value="#{customerBean}")
+	private CustomerBean customerBean;
 	
 	private String email;
 	private String password;
 	private boolean remember;
 	
-	public LoginBean() {}
+	public LoginBean() {
+		Goose.getInjector().injectMembers(this);
+		
+	}
 	
 	public String getEmail() {
 		return email;

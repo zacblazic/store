@@ -30,9 +30,7 @@ import za.co.invoketech.store.application.exception.RoleNotFoundException;
 import za.co.invoketech.store.domain.model.account.Account;
 import za.co.invoketech.store.domain.model.role.Role;
 import za.co.invoketech.store.persistence.internal.PersistenceModule;
-import za.co.invoketech.store.service.account.AccountService;
-import za.co.invoketech.store.service.account.RoleService;
-import za.co.invoketech.store.service.account.internal.AccountRoleModule;
+import za.co.invoketech.store.service.internal.ServiceModule;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -53,7 +51,7 @@ public class AccountAndRoleServicesTest {
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 
-		injector = Guice.createInjector(new AccountRoleModule(), new PersistenceModule(), new JpaPersistModule(PERSISTENCE_UNIT));
+		injector = Guice.createInjector(new ServiceModule(), new PersistenceModule(), new JpaPersistModule(PERSISTENCE_UNIT));
 		injector.getInstance(ApplicationInitializer.class);
 		accountService = injector.getInstance(AccountService.class);
 		roleService = injector.getInstance(RoleService.class);

@@ -14,7 +14,7 @@
  * the License.
  */
 
-package za.co.invoketech.store.service.file.internal;
+package za.co.invoketech.store.service.internal;
 
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletContext;

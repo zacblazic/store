@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package za.co.invoketech.store.service.product.internal;
+package za.co.invoketech.store.service.internal;
 
 import java.math.BigDecimal;
 

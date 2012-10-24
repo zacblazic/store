@@ -27,8 +27,8 @@ import za.co.invoketech.store.domain.model.product.Brand;
 import za.co.invoketech.store.domain.model.product.Product;
 import za.co.invoketech.store.domain.model.product.peripheral.Mouse;
 import za.co.invoketech.store.persistence.internal.PersistenceModule;
+import za.co.invoketech.store.service.internal.ProductPricingServiceImpl;
 import za.co.invoketech.store.service.product.ProductPricingService;
-import za.co.invoketech.store.service.product.internal.ProductPricingServiceImpl;
 import za.co.invoketech.store.service.repository.ProductRepository;
 
 import com.google.inject.Guice;

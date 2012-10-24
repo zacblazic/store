@@ -1,4 +1,4 @@
-package za.co.invoketech.store.model;
+package za.co.invoketech.store.service.customer;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -20,11 +20,13 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.persist.jpa.JpaPersistModule;
 
-public class AddressTest {
+public class CustomerServiceTest {
 
 	private static Injector injector;
 	private static AccountRepository accountRepository;
 	private static CustomerRepository customerRepository;
+	
+	private static CustomerService customerService;
 	
 	private Person person;
 	private Address address;
@@ -37,6 +39,7 @@ public class AddressTest {
 		injector.getInstance(ApplicationInitializer.class);
 		accountRepository = injector.getInstance(AccountRepository.class);
 		customerRepository = injector.getInstance(CustomerRepository.class);
+		customerService = injector.getInstance(CustomerService.class);
 	}
 	
 	private Person createPerson() {
@@ -71,5 +74,7 @@ public class AddressTest {
 	public void test() {
 		customer = createCustomer();
 		customerRepository.persist(customer);
+		
+		customerService.findCustomerByEmail("zacblazic@gmail.com");
 	}
 }

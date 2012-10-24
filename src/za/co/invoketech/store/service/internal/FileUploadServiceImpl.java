@@ -14,7 +14,7 @@
  * the License.
  */
 
-package za.co.invoketech.store.service.file.internal;
+package za.co.invoketech.store.service.internal;
 
 /**
  * @author a.carel.g.nel@gmail.com (Carel Nel)

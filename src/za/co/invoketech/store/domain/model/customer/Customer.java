@@ -143,7 +143,9 @@ public class Customer implements Serializable {
 		checkAddress(address);
 		
 		if(address.isPrimary()) {
-			setPrimaryAddress(address);
+			// set as primary, remove old primary and add
+		} else {
+			// add normally
 		}
 	}
 	
