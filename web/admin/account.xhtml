@@ -15,20 +15,14 @@
 	
 	
 	<h:form id="form">
-		<h1>Account and Role Management</h1>
-	
-		<shiro:authenticated><p:commandLink id="logout" value="Logout" action="#{loginController.logout}"/></shiro:authenticated>
-		<br />
-		<p:commandButton id="to-admin" value="Admin Page" action="admin?faces-redirect=true"/>
-		<br />
-		<p:commandButton id="to-manage" value="Manage Page" action="/manage/manage?faces-redirect=true"/>
-		<br />
-		<p:commandButton id="to-home" value="Homepage" action="/index?faces-redirect=true"/>
-		<br/>
-		<br/>
+		<ui:insert name="header-buttons">
+			<ui:include src="/components/header.xhtml" />
+		</ui:insert>
 		
+		<h1>Account and Role Management</h1>		
+		<center>
 		<p:dataTable id="accounts" var="account" value="#{adminAccountRoleBean.accounts}" rowKey="#{account.id}"  
-                 selection="#{adminAccountRoleBean.selectedAccount}" selectionMode="single">  
+                 selection="#{adminAccountRoleBean.selectedAccount}" selectionMode="single" style="width:500px;">  
 	        <f:facet name="header">  
 	            User Accounts  
 	        </f:facet>  
@@ -61,7 +55,7 @@
     	
     	
     	<p:dataTable id="roles" var="role" value="#{adminAccountRoleBean.roles}" rowKey="#{role.id}"  
-                 selection="#{adminAccountRoleBean.selectedRole}" selectionMode="single">  
+                 selection="#{adminAccountRoleBean.selectedRole}" selectionMode="single" style="width:500px;">  
 	        <f:facet name="header">  
 	            User Accounts  
 	        </f:facet>  
@@ -91,7 +85,7 @@
 				</p:dataList>
 	        </p:panelGrid> 
     	</p:dialog> 
-    	
+    	</center>
 	</h:form>
 	
 </h:body>

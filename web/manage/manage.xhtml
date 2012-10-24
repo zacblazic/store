@@ -11,18 +11,12 @@
 <h:head>
 </h:head>
 <h:body style="font-size: 12px;">
-	
-	
-	
 	<h:form>
+		<ui:insert name="header-buttons">
+			<ui:include src="/components/header.xhtml" />
+		</ui:insert>
 		<h1>This is the manager page</h1>
 		<h2>Welcome, <shiro:user><shiro:principal/></shiro:user></h2>
-	
-	<shiro:authenticated><h:commandLink id="logout" value="Logout" action="#{loginController.logout}"/></shiro:authenticated>
-	<br />
-	<shiro:hasRole name="admin"><p:commandButton id="to-admin" value="Admin Page" action="/admin/admin?faces-redirect=true"/></shiro:hasRole>
-	<br />
-	<p:commandButton id="to-home" value="Homepage" action="/index?faces-redirect=true"/>
 		
 	</h:form>
 	
