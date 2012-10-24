@@ -13,6 +13,7 @@
 <h:body style="font-size: 12px;">
 	<h:form id="add-address-form" styleClass="panel-grid">
 		<p:panel header="Add Address">
+			<p:messages id="messages" closable="true" autoUpdate="true" showDetail="true"/>
 			<p:panelGrid columns="3">
 				<h:outputText value="Label:" />
 				<p:inputText id="label" value="#{addressBean.label}" required="true" requiredMessage="Please enter a label."/>
@@ -28,7 +29,7 @@
 				
 				<h:outputText value="Address Line 1:" />
 				<p:inputText id="line-1" value="#{addressBean.line1}" required="true" requiredMessage="Please enter line 1."/>
-				<p:message for="line-1" />
+				<p:message for="line-1"  />
 				
 				<h:outputText value="Address Line 2:" />
 				<p:inputText id="line-2" value="#{addressBean.line2}" required="true" requiredMessage="Please enter line 2."/>
@@ -61,7 +62,7 @@
 				<p:message for="phone-number" />
 				
 			</p:panelGrid>
-			<p:commandButton value="Add" update="add-address-form" actionListener="#{addAddressBean.addAddress}" />
+			<p:commandButton value="Add" update="add-address-form" actionListener="#{addressController.add}" />
 		</p:panel>
 	</h:form> 
 </h:body>

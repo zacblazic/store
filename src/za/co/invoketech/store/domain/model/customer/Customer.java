@@ -147,10 +147,10 @@ public class Customer implements Serializable {
 		checkAddress(address);
 		
 		if(address.isPrimary()) {
-			// set as primary, remove old primary and add
-		} else {
-			// add normally
-		}
+			getPrimaryAddress().setPrimary(false);	
+		} 
+		
+		addresses.add(address);
 	}
 	
 	public void removeAddress() {
