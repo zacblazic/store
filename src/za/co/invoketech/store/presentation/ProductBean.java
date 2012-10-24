@@ -37,20 +37,11 @@ public class ProductBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private List<Category> categories = new ArrayList<Category>();
 	private List<Category> subCategories = new ArrayList<Category>();
-	private List<String> extraElementList = new ArrayList<String>();
 	private String selected;
 	
 	public ProductBean() {
 		System.out.println("construct method..........");
 		initialiseCategoryList();
-	}
-	
-	public List<String> getExtraElementList() {
-		return extraElementList;
-	}
-	
-	public void setExtraElementList(List<String> extraElementList) {
-		this.extraElementList = extraElementList;
 	}
 	
 	public String getSelected() {
@@ -86,13 +77,6 @@ public class ProductBean implements Serializable {
 				System.out.println(categories.get(i).getSubCategories());
 				found = true;
 				subCategories = categories.get(i).getSubCategories();
-				if(subCategories.size() > 0 && extraElementList.size() == 0 || selected.equals("Component")) {
-					extraElementList.add("");
-				}
-				else if(subCategories.size() > 0) {
-					extraElementList.remove(0);
-				}
-				
 			}
 		}
 	}
