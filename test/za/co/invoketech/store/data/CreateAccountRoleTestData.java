@@ -71,7 +71,7 @@ public class CreateAccountRoleTestData {
 		// Create roles
 		Role adminRole = roleService.createRole("Admin");
 		Role managerRole = roleService.createRole("Manager");
-		Role userRole = roleService.createRole("User");
+		Role customerRole = roleService.createRole("Customer");
 
 		// Add roles to lists
 		List<Role> adminAndManagerRoles = new ArrayList<Role>();
@@ -81,8 +81,8 @@ public class CreateAccountRoleTestData {
 		List<Role> managerRoles = new ArrayList<Role>();
 		managerRoles.add(roleService.retrieveRole(managerRole.getId()));
 		
-		List<Role> userRoles = new ArrayList<Role>();
-		userRoles.add(roleService.retrieveRole(userRole.getId()));
+		List<Role> customerRoles = new ArrayList<Role>();
+		customerRoles.add(roleService.retrieveRole(customerRole.getId()));
 		
 		// Create persons
 		Person gareth = new Person("Gareth", "Conry", Gender.MALE, "0839491159");
@@ -95,9 +95,9 @@ public class CreateAccountRoleTestData {
 		accountService.createAccount("zacblazic@invoketech.co.za", "adminpass", adminAndManagerRoles);
 		accountService.createAccount("cnel@invoketech.co.za", "adminpass", adminAndManagerRoles);
 
-		Account garethCustAcc = accountService.createAccount("garethc18@gmail.com", "iamuser", userRoles);
-		Account zacCustAcc = accountService.createAccount("zacblazic@gmail.com", "password", userRoles);
-		Account carelCustAcc = accountService.createAccount("a.carel.g.nel@gmail.com", "password", userRoles);
+		Account garethCustAcc = accountService.createAccount("garethc18@gmail.com", "iamuser", customerRoles);
+		Account zacCustAcc = accountService.createAccount("zacblazic@gmail.com", "password", customerRoles);
+		Account carelCustAcc = accountService.createAccount("a.carel.g.nel@gmail.com", "password", customerRoles);
 		
 		Customer garethCustomer = new Customer(gareth, createAddress(), garethCustAcc);
 		Customer zacCustomer = new Customer(zac, createAddress(), zacCustAcc);
