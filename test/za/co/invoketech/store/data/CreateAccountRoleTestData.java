@@ -90,8 +90,9 @@ public class CreateAccountRoleTestData {
 		Person carel = new Person("Carel", "Nel", Gender.MALE, "0825003000");
 		
 		// Create accounts
-		accountService.createAccount("gconry@invoketech.co.za", "iamadmin", adminAndManagerRoles);
+		accountService.createAccount("admin@invoketech.co.za", "adminpass", adminAndManagerRoles);
 		accountService.createAccount("manager@invoketech.co.za", "iammanager",managerRoles);
+		accountService.createAccount("gconry@invoketech.co.za", "iamadmin", adminAndManagerRoles);
 		accountService.createAccount("zacblazic@invoketech.co.za", "adminpass", adminAndManagerRoles);
 		accountService.createAccount("cnel@invoketech.co.za", "adminpass", adminAndManagerRoles);
 
