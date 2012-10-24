@@ -15,18 +15,30 @@
 
 			<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
 			<p:selectOneMenu id="category" value="#{productBean.selected}" valueChangeListener="#{productBean.generateElement}">
-				<f:selectItem itemLabel="select.." />
+				<f:selectItem itemLabel="select.." itemValue="" />
 				<f:selectItems value="#{productBean.categories}" />
 				<p:ajax update="panel" listener="#{productBean.generateElement}" />
 			</p:selectOneMenu>
 			
 			<br />
 			
-				<p:selectOneMenu value="#{productBean.selected}" >
+			<ui:fragment rendered="#{productBean.hasMoreSubCategories}">
+				<p:selectOneMenu value="#{productBean.subSelected}" >
 					<f:selectItem itemLabel="select.." />
 					<f:selectItems value="#{productBean.subCategories}" />
+					<p:ajax update="panel" listener="#{productBean.generateSubElement}" />
 				</p:selectOneMenu>
-
+			</ui:fragment>
+			
+			<br />
+			
+			<ui:fragment rendered="#{productBean.hasMoreSubSubCategories}">
+				<p:selectOneMenu value="#{productBean.subSubSelected}" >
+					<f:selectItem itemLabel="select.." />
+					<f:selectItems value="#{productBean.subSubCategories}" />
+				</p:selectOneMenu>
+			</ui:fragment>
+			
 		</p:panel>
 	</h:form>
 </h:body>
