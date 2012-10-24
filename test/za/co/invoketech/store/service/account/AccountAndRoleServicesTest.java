@@ -24,7 +24,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import za.co.invoketech.store.application.config.ApplicationInitializer;
+import za.co.invoketech.store.application.exception.AccountLinkedException;
 import za.co.invoketech.store.application.exception.AccountNotFoundException;
+import za.co.invoketech.store.application.exception.CustomerLinkedException;
 import za.co.invoketech.store.application.exception.InvalidRoleNameException;
 import za.co.invoketech.store.application.exception.RoleNotFoundException;
 import za.co.invoketech.store.domain.model.account.Account;
@@ -58,7 +60,7 @@ public class AccountAndRoleServicesTest {
 	}
 	
 	@Test
-	public void accountWithRoleTest() throws RoleNotFoundException, AccountNotFoundException, InvalidRoleNameException {
+	public void accountWithRoleTest() throws RoleNotFoundException, AccountNotFoundException, InvalidRoleNameException, CustomerLinkedException, AccountLinkedException {
 		
 		// Create
 		Role role = roleService.createRole("Admin");
@@ -135,7 +137,7 @@ public class AccountAndRoleServicesTest {
 	}
 	
 	@Test
-	public void roleCrudTest() throws RoleNotFoundException, InvalidRoleNameException
+	public void roleCrudTest() throws RoleNotFoundException, InvalidRoleNameException, AccountLinkedException
 	{
 		// Create
 		Role role = roleService.createRole("User");

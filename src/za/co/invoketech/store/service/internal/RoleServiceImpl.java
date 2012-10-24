@@ -18,10 +18,12 @@ package za.co.invoketech.store.service.internal;
 import java.util.ArrayList;
 import java.util.List;
 
+import za.co.invoketech.store.application.exception.AccountLinkedException;
 import za.co.invoketech.store.application.exception.InvalidRoleNameException;
 import za.co.invoketech.store.application.exception.RoleNotFoundException;
 import za.co.invoketech.store.domain.model.account.Account;
 import za.co.invoketech.store.domain.model.role.Role;
+import za.co.invoketech.store.service.account.AccountService;
 import za.co.invoketech.store.service.account.RoleService;
 import za.co.invoketech.store.service.repository.AccountRepository;
 import za.co.invoketech.store.service.repository.RoleRepository;
@@ -40,6 +42,9 @@ public class RoleServiceImpl implements RoleService {
 	
 	@Inject
 	private AccountRepository accountDao;
+	
+	@Inject
+	private AccountService accountService;
 	
 	@Override
 	public Role createRole(String roleName) throws InvalidRoleNameException {
@@ -86,11 +91,16 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	@Override
-	public void removeRole(Role role) throws RoleNotFoundException {
+	public void removeRole(Role role) throws RoleNotFoundException, AccountLinkedException {
 		if (role == null || role.getId() == 0)
 		{
 			throw new RoleNotFoundException();
 		}
+		if (accountService.retrieveAccountsForRole(role).size() != 0)
+		{
+			throw new AccountLinkedException();
+		}
+		
 		roleDao.remove(role);
 	}
 
@@ -99,7 +109,6 @@ public class RoleServiceImpl implements RoleService {
 		List<Role> roles;
 		if (account == null) roles = new ArrayList<>();
 		else roles = accountDao.findById(account.getId()).getRoles();
-		System.out.println("Yellow");
 		return roles;
 	}
 

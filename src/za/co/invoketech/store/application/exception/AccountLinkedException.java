@@ -18,18 +18,18 @@ package za.co.invoketech.store.application.exception;
 /**
  * 
  * @author garethc18@gmail.com (Gareth Conry)
- *
+ * 
  */
-public class RoleNotFoundException extends Exception {
-
+public class AccountLinkedException extends Exception {
 	private static final long serialVersionUID = 1L;
 
-	public RoleNotFoundException() {
-		super("Specified role does not exist.");
+	public AccountLinkedException()
+	{
+		super ("Account(s) still dependant on role");
 	}
 	
-	public RoleNotFoundException(String message) {
-		super(message);
+	public AccountLinkedException(String message)
+	{
+		super (message);
 	}
-	
 }

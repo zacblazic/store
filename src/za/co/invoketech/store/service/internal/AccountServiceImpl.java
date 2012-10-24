@@ -22,6 +22,7 @@ import org.apache.shiro.authc.credential.DefaultPasswordService;
 import org.apache.shiro.authc.credential.PasswordService;
 
 import za.co.invoketech.store.application.exception.AccountNotFoundException;
+import za.co.invoketech.store.application.exception.CustomerLinkedException;
 import za.co.invoketech.store.application.exception.RoleNotFoundException;
 import za.co.invoketech.store.domain.model.account.Account;
 import za.co.invoketech.store.domain.model.role.Role;
@@ -89,17 +90,21 @@ public class AccountServiceImpl implements AccountService {
 	public void updateAccount(Account account) throws AccountNotFoundException {
 		if (account == null || account.getId() == 0)
 		{
-			throw new AccountNotFoundException("Cannot update account with no id");
+			throw new AccountNotFoundException("Cannot update null account or account with no id");
 		}
 		
 		accountDao.merge(account);
 	}
 
 	@Override
-	public void removeAccount(Account account) throws AccountNotFoundException {
+	public void removeAccount(Account account) throws AccountNotFoundException, CustomerLinkedException {
 		if (account == null || account.getId() == 0)
 		{
-			throw new AccountNotFoundException("Cannot remove account with no id");
+			throw new AccountNotFoundException("Cannot remove null account or account with no id");
+		}
+		if (account.getCustomer() != null)
+		{
+			throw new CustomerLinkedException();
 		}
 		
 		accountDao.remove(account);

@@ -14,22 +14,22 @@
  * the License.
  */
 package za.co.invoketech.store.application.exception;
-
 /**
  * 
  * @author garethc18@gmail.com (Gareth Conry)
- *
+ * 
  */
-public class RoleNotFoundException extends Exception {
-
+public class CustomerLinkedException extends Exception {
+	
 	private static final long serialVersionUID = 1L;
 
-	public RoleNotFoundException() {
-		super("Specified role does not exist.");
+	public CustomerLinkedException()
+	{
+		super ("Customer still dependant on account");
 	}
 	
-	public RoleNotFoundException(String message) {
-		super(message);
+	public CustomerLinkedException(String message)
+	{
+		super (message);
 	}
-	
 }
