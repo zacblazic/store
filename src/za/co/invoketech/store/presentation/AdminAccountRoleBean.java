@@ -17,16 +17,15 @@ package za.co.invoketech.store.presentation;
 
 import java.util.List;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
 
 import za.co.invoketech.store.application.config.Goose;
-import za.co.invoketech.store.application.exception.AccountLinkedException;
 import za.co.invoketech.store.application.exception.AccountNotFoundException;
+import za.co.invoketech.store.application.exception.CurrentAccountException;
 import za.co.invoketech.store.application.exception.CustomerLinkedException;
-import za.co.invoketech.store.application.exception.RoleNotFoundException;
+import za.co.invoketech.store.application.exception.DefaultDeleteException;
+import za.co.invoketech.store.application.util.Faces;
 import za.co.invoketech.store.domain.model.account.Account;
 import za.co.invoketech.store.domain.model.role.Role;
 import za.co.invoketech.store.service.account.AccountService;
@@ -61,7 +60,7 @@ public class AdminAccountRoleBean {
 	
 	public AdminAccountRoleBean(){
 		Goose.guicify(this);
-		accounts = accountService.retrieveAllAccounts();
+		accounts = accountService.retrieveNonCustomerAccounts();
 		roles = roleService.retrieveAllRoles();		
 	}
 	
@@ -74,21 +73,24 @@ public class AdminAccountRoleBean {
 		{
 			if (selectedAccount != null) {
 				accountService.removeAccount(selectedAccount);
-				accounts = accountService.retrieveAllAccounts();
+				accounts = accountService.retrieveNonCustomerAccounts();
 			}
 		} 
 		catch (AccountNotFoundException anfe) 
 		{
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Delete Error",  "Account Not Found");  
-			FacesContext.getCurrentInstance().addMessage(null, message);
+			Faces.showErrorMessage("Delete Error",  "Account Not Found");
 		}
 		catch (CustomerLinkedException cle) {
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Delete Error",  "Account still has a customer linked");  
-			FacesContext.getCurrentInstance().addMessage(null, message);
+			Faces.showErrorMessage("Delete Error",  "Account still has a customer linked");
+		}
+		catch (DefaultDeleteException dde) {
+			Faces.showErrorMessage("Delete Error",  "Cannot delete default accounts");
+		}
+		catch (CurrentAccountException cae) {
+			Faces.showErrorMessage("Delete Error",  "Cant delete currently logged in account");
 		}
 		catch (Exception e) {
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Delete Error",  "Unknown Error Occurred");  
-			FacesContext.getCurrentInstance().addMessage(null, message);
+			Faces.showErrorMessage("Delete Error",  "Unknown Error Occurred");
 		}
 	}
 
@@ -96,7 +98,7 @@ public class AdminAccountRoleBean {
 	public void populateAccountsForRole() {
 		if (selectedRole != null) setAccountsForRole(accountService.retrieveAccountsForRole(selectedRole));
 	}
-	
+	/*
 	public void removeSelectedRole() {
 		try 
 		{
@@ -107,18 +109,15 @@ public class AdminAccountRoleBean {
 		} 
 		catch (RoleNotFoundException anfe) 
 		{
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Delete Error",  "Role Not Found");  
-			FacesContext.getCurrentInstance().addMessage(null, message);
+			Faces.showErrorMessage("Delete Error",  "Role Not Found");
 		}
 		catch (AccountLinkedException ale) {
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Delete Error",  "Role still has linked account(s)");  
-			FacesContext.getCurrentInstance().addMessage(null, message);
+			Faces.showErrorMessage("Delete Error",  "Role still has linked account(s)");
 		}
 		catch (Exception e) {
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Delete Error",  "Unknown Error Occurred");  
-			FacesContext.getCurrentInstance().addMessage(null, message);
+			Faces.showErrorMessage("Delete Error",  "Unknown Error Occurred");
 		}
-	}
+	}*/
 	
 	public Account getSelectedAccount() {
 		return selectedAccount;

@@ -37,15 +37,15 @@
 				<shiro:authenticated>
 					<shiro:hasRole name="admin">
 						<p:splitButton value="Administration" ajax="false" action="/admin/admin?faces-redirect=true">
-							<p:menuitem value="Account Manager" ajax="false" action="/admin/account?faces-redirect=true"/>
-							<p:menuitem value="Role Manager" ajax="false" action="/admin/role?faces-redirect=true"/>
+							<p:menuitem value="Admin/Manager Accounts" ajax="false" action="/admin/account?faces-redirect=true"/>
+							<p:menuitem value="Roles" ajax="false" action="/admin/role?faces-redirect=true"/>
 						</p:splitButton>
 					</shiro:hasRole>
 					<shiro:hasRole name="manager">
 						<p:commandButton value="Management" ajax="false" action="/manage/manage?faces-redirect=true" />
 					</shiro:hasRole>
-					<shiro:hasRole name="user">
-						<p:commandButton value="Account" />
+					<shiro:hasRole name="customer">
+						<p:commandButton value="Account" ajax="false" action="/account/account.xhtml?faces-redirect=true" />
 					</shiro:hasRole>
 					<p:commandButton value="Logout" ajax="false" action="#{loginController.logout}" />				
 				</shiro:authenticated>
