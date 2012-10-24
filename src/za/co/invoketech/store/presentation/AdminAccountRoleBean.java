@@ -59,14 +59,12 @@ public class AdminAccountRoleBean {
 		roles = roleService.retrieveAllRoles();		
 	}
 	
-	public void populateRolesForAccount()
-	{
+	public void populateRolesForAccount() {
 		setRolesForAccount(selectedAccount.getRoles());
 	}
 
 
-	public void populateAccountsForRole()
-	{
+	public void populateAccountsForRole() {
 		setAccountsForRole(accountService.retrieveAccountsForRole(selectedRole));
 	}
 	

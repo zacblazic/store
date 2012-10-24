@@ -15,9 +15,11 @@
 	
 	
 	<h:form id="form">
-		<h1>Account Management</h1>
+		<h1>Account and Role Management</h1>
 	
-		<shiro:authenticated><p:commandLink id="logout" value="Logout" action="#{loginBean.logout}"/></shiro:authenticated>
+		<shiro:authenticated><p:commandLink id="logout" value="Logout" action="#{loginController.logout}"/></shiro:authenticated>
+		<br />
+		<p:commandButton id="to-admin" value="Admin Page" action="admin?faces-redirect=true"/>
 		<br />
 		<p:commandButton id="to-manage" value="Manage Page" action="/manage/manage?faces-redirect=true"/>
 		<br />
@@ -38,10 +40,6 @@
 	        <p:column headerText="Email">  
 	            #{account.email}  
 	        </p:column>  
-	  
-	        <p:column headerText="Password Hash" >  
-	            #{account.password}
-	        </p:column>	  
 	        <f:facet name="footer">  
 	            <p:commandButton id="viewButton1" value="View"  
 	                    update=":form:display1" oncomplete="accountDialog.show()" actionListener="#{adminAccountRoleBean.populateRolesForAccount}"/>  
@@ -50,18 +48,15 @@
 		
 		<p:dialog id="dialog1" header="Account Detail" widgetVar="accountDialog" resizable="false"  
               showEffect="clip" hideEffect="fold">    
-	        <p:outputPanel id="display1" autoUpdate="true">	
-                	
-                <h:outputText value="#{adminAccountRoleBean.selectedAccount.email}"/><br/>
-            	          
-	            <h:outputText value="Roles:" /> <br/>
+	        <p:panelGrid id="display1" columns="2" cellpadding="4">	
+                <f:facet name="header">  
+                	<h:outputText value="#{adminAccountRoleBean.selectedAccount.email}"/>  
+            	</f:facet> 	            	          
+	            <h:outputText value="Roles:" />
 	            <p:dataList value="#{adminAccountRoleBean.rolesForAccount}" var="rfa" itemType="disc">  
 				    #{rfa.roleName}  
 				</p:dataList>
-				
-	            <h:outputText value="Pass:" />  
-	            <h:outputText value="#{adminAccountRoleBean.selectedAccount.password}" /> <br/>
-	        </p:outputPanel>  
+	        </p:panelGrid>  
     	</p:dialog> 
     	
     	
@@ -86,15 +81,15 @@
 		
 		<p:dialog id="dialog2" header="Role Detail" widgetVar="roleDialog" resizable="false"  
               showEffect="clip" hideEffect="fold">    
-	        <p:outputPanel id="display2" autoUpdate="true">	
-                	
-                <h:outputText value="#{adminAccountRoleBean.selectedRole.roleName}"/><br/>
-            	          
-	            <h:outputText value="Accounts:" /> <br/>
+	        <p:panelGrid id="display2" columns="2" cellpadding="4">	
+                <f:facet name="header">  
+                	<h:outputText value="#{adminAccountRoleBean.selectedRole.roleName}"/>  
+            	</f:facet>            	          
+	            <h:outputText value="Accounts:" />
 	            <p:dataList value="#{adminAccountRoleBean.accountsForRole}" var="afr" itemType="disc">  
 				    #{afr.email}  
 				</p:dataList>
-	        </p:outputPanel>  
+	        </p:panelGrid> 
     	</p:dialog> 
     	
 	</h:form>

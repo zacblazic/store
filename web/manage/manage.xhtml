@@ -18,7 +18,7 @@
 		<h1>This is the manager page</h1>
 		<h2>Welcome, <shiro:user><shiro:principal/></shiro:user></h2>
 	
-	<shiro:authenticated><h:commandLink id="logout" value="Logout" action="#{loginBean.logout}"/></shiro:authenticated>
+	<shiro:authenticated><h:commandLink id="logout" value="Logout" action="#{loginController.logout}"/></shiro:authenticated>
 	<br />
 	<shiro:hasRole name="admin"><p:commandButton id="to-admin" value="Admin Page" action="/admin/admin?faces-redirect=true"/></shiro:hasRole>
 	<br />

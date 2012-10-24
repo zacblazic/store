@@ -81,8 +81,8 @@ public class LoginController {
 		    currentUser.login(token);
 		    String email = (String)currentUser.getPrincipal();
 		    
-		    Customer customer = customerService.findCustomerByEmail(email);
-		    System.out.println(customer.getFirstName() + " has just logged in.");
+		    //Customer customer = customerService.findCustomerByEmail(email);
+		    //System.out.println(customer.getFirstName() + " has just logged in.");
 		    
 		    action = "/index?faces-redirect=true";
 		}

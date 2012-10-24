@@ -66,37 +66,39 @@ public class CreateAccountRoleTestData {
 	@Test
 	public void createData() throws RoleNotFoundException, InvalidRoleNameException {
 		// Create roles
-		Role admin = roleService.createRole("Admin");
-		Role manager = roleService.createRole("Manager");
-		Role user = roleService.createRole("User");
+		Role adminRole = roleService.createRole("Admin");
+		Role managerRole = roleService.createRole("Manager");
+		Role userRole = roleService.createRole("User");
 
 		// Add roles to lists
-		List<Role> adminRoles = new ArrayList<Role>();
-		adminRoles.add(roleService.retrieveRole(admin.getId()));
-		adminRoles.add(roleService.retrieveRole(manager.getId()));
+		List<Role> adminAndManagerRoles = new ArrayList<Role>();
+		adminAndManagerRoles.add(roleService.retrieveRole(adminRole.getId()));
+		adminAndManagerRoles.add(roleService.retrieveRole(managerRole.getId()));
 		
 		List<Role> managerRoles = new ArrayList<Role>();
-		managerRoles.add(roleService.retrieveRole(manager.getId()));
+		managerRoles.add(roleService.retrieveRole(managerRole.getId()));
 		
 		List<Role> userRoles = new ArrayList<Role>();
-		userRoles.add(roleService.retrieveRole(user.getId()));
+		userRoles.add(roleService.retrieveRole(userRole.getId()));
 		
 		// Create persons
 		Person gareth = new Person("Gareth", "Conry", Gender.MALE, "0839491159");
 		Person zac = new Person("Zac", "Blazic", Gender.MALE, "0828943000");
-		Person carel = new Person("Carel", "Nel", Gender.MALE, "0828943000");
+		Person carel = new Person("Carel", "Nel", Gender.MALE, "0825003000");
 		
 		// Create accounts
-		Account garethAdmin = accountService.createAccount("gconry@invoketech.co.za", "iamadmin", adminRoles);
+		accountService.createAccount("gconry@invoketech.co.za", "iamadmin", adminAndManagerRoles);
 		accountService.createAccount("manager@invoketech.co.za", "iammanager",managerRoles);
-		accountService.createAccount("garethc18@gmail.com", "iamuser", userRoles);
+		accountService.createAccount("zacblazic@invoketech.co.za", "adminpass", adminAndManagerRoles);
+		accountService.createAccount("cnel@invoketech.co.za", "adminpass", adminAndManagerRoles);
+
+		Account garethCustAcc = accountService.createAccount("garethc18@gmail.com", "iamuser", userRoles);
+		Account zacCustAcc = accountService.createAccount("zacblazic@gmail.com", "password", userRoles);
+		Account carelCustAcc = accountService.createAccount("a.carel.g.nel@gmail.com", "password", userRoles);
 		
-		Account zacAdmin = accountService.createAccount("zacblazic@gmail.com", "password", adminRoles);
-		Account carelAdmin = accountService.createAccount("a.carel.g.nel@gmail.com", "password", adminRoles);
-		
-		Customer garethCustomer = new Customer(gareth, createAddress(), garethAdmin);
-		Customer zacCustomer = new Customer(zac, createAddress(), zacAdmin);
-		Customer carelCustomer = new Customer(carel, createAddress(), carelAdmin);
+		Customer garethCustomer = new Customer(gareth, createAddress(), garethCustAcc);
+		Customer zacCustomer = new Customer(zac, createAddress(), zacCustAcc);
+		Customer carelCustomer = new Customer(carel, createAddress(), carelCustAcc);
 		
 		customerRepository.persist(garethCustomer);
 		customerRepository.persist(zacCustomer);
