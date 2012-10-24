@@ -19,12 +19,14 @@ package za.co.invoketech.store.persistence.internal;
 import za.co.invoketech.store.domain.model.role.Role;
 import za.co.invoketech.store.service.repository.RoleRepository;
 
+import com.google.inject.Singleton;
 import com.google.inject.persist.Transactional;
 
 /**
  * @author zacblazic@gmail.com (Zac Blazic)
  * @author garethc18@gmail.com (Gareth Conry)
  */
+@Singleton
 @Transactional
 class RoleRepositoryImpl extends GenericDaoImpl<Role, Long> implements RoleRepository {
 

@@ -54,7 +54,7 @@ public class AdminAccountRoleBean {
 	private Role selectedRole;
 	
 	public AdminAccountRoleBean(){
-		Goose.getInjector().injectMembers(this);
+		Goose.guicify(this);
 		accounts = accountService.retrieveAllAccounts();
 		roles = roleService.retrieveAllRoles();		
 	}
@@ -67,7 +67,6 @@ public class AdminAccountRoleBean {
 
 	public void populateAccountsForRole()
 	{
-		accountService = Goose.getInjector().getInstance(AccountService.class);
 		setAccountsForRole(accountService.retrieveAccountsForRole(selectedRole));
 	}
 	

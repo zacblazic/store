@@ -28,7 +28,7 @@ public interface GenericDao<T, ID> {
     public List<T> findAll();
     public List<T> findAllByAttribute(String attribute, String value);
     public void persist(final T entity);
-    public void merge(final T entity);
+    public T merge(final T entity);
     public void remove(final T entity);
     public void removeById(final ID id);
     public long count();

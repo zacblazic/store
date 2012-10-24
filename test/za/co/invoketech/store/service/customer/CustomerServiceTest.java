@@ -66,10 +66,13 @@ public class CustomerServiceTest {
 	public void test() {
 		customer = createCustomer();
 		customerRepository.persist(customer);
+		account.setCustomer(customer);
+		accountRepository.merge(account);
 
-		Assert.assertTrue(customer.getId() != 0);
+		Customer foundByEmail = customerService.findCustomerByEmail("zacblazic@gmail.com");
+		Assert.assertNotNull(foundByEmail);
 		
-		Customer c = customerRepository.findById(customer.getId());
-		customerRepository.remove(c);
+		customerRepository.remove(customer);
+		accountRepository.remove(account);
 	}
 }

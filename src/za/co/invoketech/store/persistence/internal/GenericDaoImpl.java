@@ -24,6 +24,7 @@ import javax.persistence.TypedQuery;
 import za.co.invoketech.store.persistence.dao.GenericDao;
 
 import com.google.inject.Inject;
+import com.google.inject.Provider;
 
 /**
  * Generic data access object that conforms to the JPA 2.0 specification.
@@ -33,7 +34,7 @@ import com.google.inject.Inject;
 abstract class GenericDaoImpl<T, ID> implements GenericDao<T, ID> {
 	
 	@Inject
-    private EntityManager em;
+    private Provider<EntityManager> entityManagerProvider;
 	
 	private final Class<T> type;
 	
@@ -77,13 +78,13 @@ abstract class GenericDaoImpl<T, ID> implements GenericDao<T, ID> {
 	}
 
 	@Override
-	public void merge(T entity) {
-		getEntityManager().merge(entity);
+	public T merge(T entity) {
+		return getEntityManager().merge(entity);
 	}
 
 	@Override
 	public void remove(T entity) {
-		getEntityManager().remove(entity);
+		getEntityManager().remove(merge(entity));
 	}
 
 	@Override
@@ -101,6 +102,6 @@ abstract class GenericDaoImpl<T, ID> implements GenericDao<T, ID> {
 	}
 	
 	protected EntityManager getEntityManager() {
-		return em;
+		return entityManagerProvider.get();
 	}
 }

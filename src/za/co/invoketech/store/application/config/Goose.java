@@ -23,7 +23,7 @@ public class Goose {
 		Injector injector = Guice.createInjector(
 				new ServiceModule(),
 				new FactoryModule(), 
-				new PersistenceModule(), 
+				new PersistenceModule(),
 				new JpaPersistModule(Constants.PERSISTENCE_UNIT));
 		injector.getInstance(ApplicationInitializer.class);
 		return injector;
