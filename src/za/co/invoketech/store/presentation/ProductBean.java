@@ -37,11 +37,25 @@ public class ProductBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private List<Category> categories = new ArrayList<Category>();
 	private List<Category> subCategories = new ArrayList<Category>();
+	private List<Category> subSubCategories = new ArrayList<Category>();
 	private String selected;
+	private String subSelected;
+	private String subSubSelected;
+	private boolean hasMoreSubCategories;
+	private boolean hasMoreSubSubCategories;
+	
+	public boolean getHasMoreSubCategories() {
+		return hasMoreSubCategories;
+	}
+	
+	public boolean getHasMoreSubSubCategories() {
+		return hasMoreSubSubCategories;
+	}
 	
 	public ProductBean() {
 		System.out.println("construct method..........");
 		initialiseCategoryList();
+		hasMoreSubCategories = false;
 	}
 	
 	public String getSelected() {
@@ -52,6 +66,26 @@ public class ProductBean implements Serializable {
 	public void setSelected(String selected) {
 		System.out.println("set method..........");
 		this.selected = selected;
+	}
+	
+	public String getSubSelected() {
+		System.out.println("get method.........." + subSelected);
+		return subSelected;
+	}
+	
+	public void setSubSelected(String subSelected) {
+		System.out.println("set method..........");
+		this.subSelected = subSelected;
+	}
+	
+	public String getSubSubSelected() {
+		System.out.println("get method.........." + subSubSelected);
+		return subSubSelected;
+	}
+	
+	public void setSubSubSelected(String subSubSelected) {
+		System.out.println("set method..........");
+		this.subSubSelected = subSubSelected;
 	}
 	
 	public List<Category> getCategories() {
@@ -70,6 +104,14 @@ public class ProductBean implements Serializable {
 		this.subCategories = subCategories;
 	}
 	
+	public List<Category> getSubSubCategories() {
+		return subSubCategories;
+	}
+	
+	public void setSubSubCategories(List<Category> subSubCategories) {
+		this.subSubCategories = subSubCategories;
+	}
+	
 	public void generateElement() {
 		boolean found = false;
 		for(int i = 0; i < categories.size() && !found; i++) {
@@ -77,10 +119,28 @@ public class ProductBean implements Serializable {
 				System.out.println(categories.get(i).getSubCategories());
 				found = true;
 				subCategories = categories.get(i).getSubCategories();
+				if(subCategories.size() > 0) {
+					hasMoreSubCategories = true;
+				}
 			}
 		}
 	}
-		
+	
+	public void generateSubElement() {
+		boolean found = false;
+		for(int i = 0; i < subCategories.size() && !found; i++) {
+			System.out.println("flag");
+			if(subCategories.get(i).getName().equals(subSelected)) {
+				System.out.println(subCategories.get(i).getSubCategories() + "create sub sub");
+				found = true;
+				subSubCategories = subCategories.get(i).getSubCategories();
+				if(subSubCategories.size() > 0) {
+					hasMoreSubSubCategories = true;
+				}
+			}
+		}
+	}
+	
 	private void initialiseCategoryList() {
 		/*---------Component---------*/
 		categories.add(new SimpleCategory("Component"));
