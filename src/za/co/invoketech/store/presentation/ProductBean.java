@@ -114,30 +114,46 @@ public class ProductBean implements Serializable {
 	
 	public void generateElement() {
 		boolean found = false;
-		for(int i = 0; i < categories.size() && !found; i++) {
-			if(categories.get(i).getName().equals(selected)) {
-				System.out.println(categories.get(i).getSubCategories());
-				found = true;
-				subCategories = categories.get(i).getSubCategories();
-				if(subCategories.size() > 0) {
-					hasMoreSubCategories = true;
+		if(selected != "select..") {
+			for(int i = 0; i < categories.size() && !found; i++) {
+				if(categories.get(i).getName().equals(selected)) {
+					System.out.println(categories.get(i).getSubCategories());
+					found = true;
+					subCategories = categories.get(i).getSubCategories();
+					if(subCategories.size() > 0) {
+						hasMoreSubCategories = true;
+					}
+					else {
+						hasMoreSubCategories = false;
+					}
 				}
 			}
+		}
+		else {
+			System.out.println("flag");
+			hasMoreSubCategories = false;
 		}
 	}
 	
 	public void generateSubElement() {
 		boolean found = false;
-		for(int i = 0; i < subCategories.size() && !found; i++) {
-			System.out.println("flag");
-			if(subCategories.get(i).getName().equals(subSelected)) {
-				System.out.println(subCategories.get(i).getSubCategories() + "create sub sub");
-				found = true;
-				subSubCategories = subCategories.get(i).getSubCategories();
-				if(subSubCategories.size() > 0) {
-					hasMoreSubSubCategories = true;
+		if(selected != "select..") {
+			for(int i = 0; i < subCategories.size() && !found; i++) {
+				if(subCategories.get(i).getName().equals(subSelected)) {
+					System.out.println(subCategories.get(i).getSubCategories() + "create sub sub");
+					found = true;
+					subSubCategories = subCategories.get(i).getSubCategories();
+					if(subSubCategories.size() > 0) {
+						hasMoreSubSubCategories = true;
+					}
+					else {
+						hasMoreSubSubCategories = false;
+					}
 				}
 			}
+		}
+		else {
+			hasMoreSubSubCategories = false;
 		}
 	}
 	
