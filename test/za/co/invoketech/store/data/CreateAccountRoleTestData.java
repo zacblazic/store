@@ -19,10 +19,9 @@ package za.co.invoketech.store.data;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
 
-import za.co.invoketech.store.application.config.ApplicationInitializer;
+import za.co.invoketech.store.application.config.Goose;
 import za.co.invoketech.store.application.exception.InvalidRoleNameException;
 import za.co.invoketech.store.application.exception.RoleNotFoundException;
 import za.co.invoketech.store.domain.model.account.Account;
@@ -33,71 +32,74 @@ import za.co.invoketech.store.domain.shared.AddressType;
 import za.co.invoketech.store.domain.shared.Gender;
 import za.co.invoketech.store.domain.shared.InternalAddress;
 import za.co.invoketech.store.domain.shared.Person;
-import za.co.invoketech.store.persistence.internal.PersistenceModule;
 import za.co.invoketech.store.service.account.AccountService;
 import za.co.invoketech.store.service.account.RoleService;
-import za.co.invoketech.store.service.internal.ServiceModule;
 import za.co.invoketech.store.service.repository.CustomerRepository;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-import com.google.inject.persist.jpa.JpaPersistModule;
+import com.google.inject.Inject;
 
 /**
- * 
  * @author garethc18@gmail.com (Gareth Conry)
- *
+ * @author zacblazic@gmail.com (Zac Blazic)
  */
 public class CreateAccountRoleTestData {
-	private static final String PERSISTENCE_UNIT = "storeJpaUnit";
-	private static Injector injector;
-	private static AccountService accountService;
-	private static RoleService roleService;
-	private static CustomerRepository customerDao;
 
+	@Inject private AccountService accountService;
+	@Inject private RoleService roleService;
+	@Inject private CustomerRepository customerRepository;
+
+	public CreateAccountRoleTestData() {
+		Goose.getInjectorForTesting().injectMembers(this);
+	}
 	
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-
-		injector = Guice.createInjector(new ServiceModule(), new PersistenceModule(), new JpaPersistModule(PERSISTENCE_UNIT));
-		injector.getInstance(ApplicationInitializer.class);
-		accountService = injector.getInstance(AccountService.class);
-		roleService = injector.getInstance(RoleService.class);
-		customerDao = injector.getInstance(CustomerRepository.class);
+	private Address createAddress() {
+		InternalAddress internalAddress = new InternalAddress.Builder("Zac", "Blazic", "0828943000")
+			.line1("122 Athens Road")
+			.line2("Table View")
+			.city("Cape Town")
+			.postalCode("7441")
+			.country("South Africa")
+			.addressType(AddressType.PHYSICAL).build();
+		return new Address("Home", internalAddress);
 	}
 	
 	@Test
 	public void createData() throws RoleNotFoundException, InvalidRoleNameException {
+		// Create roles
 		Role admin = roleService.createRole("Admin");
 		Role manager = roleService.createRole("Manager");
 		Role user = roleService.createRole("User");
 
-		List<Role> adminAndManagerRole = new ArrayList<Role>();
-		adminAndManagerRole.add(roleService.retrieveRole(admin.getId()));
-		adminAndManagerRole.add(roleService.retrieveRole(manager.getId()));
+		// Add roles to lists
+		List<Role> adminRoles = new ArrayList<Role>();
+		adminRoles.add(roleService.retrieveRole(admin.getId()));
+		adminRoles.add(roleService.retrieveRole(manager.getId()));
 		
-		List<Role> managerRole = new ArrayList<Role>();
-		managerRole.add(roleService.retrieveRole(manager.getId()));
+		List<Role> managerRoles = new ArrayList<Role>();
+		managerRoles.add(roleService.retrieveRole(manager.getId()));
 		
-		List<Role> userRole = new ArrayList<Role>();
-		userRole.add(roleService.retrieveRole(user.getId()));
+		List<Role> userRoles = new ArrayList<Role>();
+		userRoles.add(roleService.retrieveRole(user.getId()));
 		
-		accountService.createAccount("gconry@invoketech.co.za", "iamadmin", adminAndManagerRole);
-		accountService.createAccount("manager@invoketech.co.za", "iammanager",managerRole);
-		Account userAcc = accountService.createAccount("garethc18@gmail.com", "iamuser", userRole);
+		// Create persons
+		Person gareth = new Person("Gareth", "Conry", Gender.MALE, "0839491159");
+		Person zac = new Person("Zac", "Blazic", Gender.MALE, "0828943000");
+		Person carel = new Person("Carel", "Nel", Gender.MALE, "0828943000");
 		
-		Person p = new Person("Gareth", "TheUser", Gender.MALE, "0839491159");
-		InternalAddress internalAddress = new InternalAddress.Builder("Zac", "Blazic", "0828943000")
-		.line1("122 Athens Road")
-		.line2("Table View")
-		.city("Cape Town")
-		.postalCode("7441")
-		.country("South Africa")
-		.addressType(AddressType.PHYSICAL).build();
-		Customer cust = new Customer(p, new Address("home", internalAddress), userAcc);
+		// Create accounts
+		Account garethAdmin = accountService.createAccount("gconry@invoketech.co.za", "iamadmin", adminRoles);
+		accountService.createAccount("manager@invoketech.co.za", "iammanager",managerRoles);
+		accountService.createAccount("garethc18@gmail.com", "iamuser", userRoles);
 		
-		customerDao.persist(cust);
+		Account zacAdmin = accountService.createAccount("zacblazic@gmail.com", "password", adminRoles);
+		Account carelAdmin = accountService.createAccount("a.carel.g.nel@gmail.com", "password", adminRoles);
+		
+		Customer garethCustomer = new Customer(gareth, createAddress(), garethAdmin);
+		Customer zacCustomer = new Customer(zac, createAddress(), zacAdmin);
+		Customer carelCustomer = new Customer(carel, createAddress(), carelAdmin);
+		
+		customerRepository.persist(garethCustomer);
+		customerRepository.persist(zacCustomer);
+		customerRepository.persist(carelCustomer);
 	}
-
 }
-

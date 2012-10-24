@@ -19,14 +19,12 @@ package za.co.invoketech.store.persistence.internal;
 import za.co.invoketech.store.domain.model.invoice.Invoice;
 import za.co.invoketech.store.service.repository.InvoiceRepository;
 
-import com.google.inject.Singleton;
 import com.google.inject.persist.Transactional;
 
 /**
  * @author zacblazic@gmail.com (Zac Blazic)
  * @author garethc18@gmail.com (Gareth Conry)
  */
-@Singleton
 @Transactional
 class InvoiceRepositoryImpl extends GenericDaoImpl<Invoice, Long> implements InvoiceRepository {
 	

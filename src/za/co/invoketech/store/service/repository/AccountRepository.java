@@ -4,5 +4,6 @@ import za.co.invoketech.store.domain.model.account.Account;
 import za.co.invoketech.store.persistence.dao.GenericDao;
 
 public interface AccountRepository extends GenericDao<Account, Long> {
-
+	
+	Account findByEmail(String email);
 }

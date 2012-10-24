@@ -139,6 +139,10 @@ public class Customer implements Serializable {
 		person.setPhoneNumber(phoneNumber);
 	}
 	
+	public Account getAccount() {
+		return account;
+	}
+	
 	public void addAddress(Address address) {
 		checkAddress(address);
 		

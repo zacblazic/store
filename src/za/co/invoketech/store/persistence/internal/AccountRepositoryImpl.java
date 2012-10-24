@@ -19,18 +19,21 @@ package za.co.invoketech.store.persistence.internal;
 import za.co.invoketech.store.domain.model.account.Account;
 import za.co.invoketech.store.service.repository.AccountRepository;
 
-import com.google.inject.Singleton;
 import com.google.inject.persist.Transactional;
 
 /**
  * @author zacblazic@gmail.com (Zac Blazic)
  * @author garethc18@gmail.com (Gareth Conry)
  */
-@Singleton
 @Transactional
 class AccountRepositoryImpl extends GenericDaoImpl<Account, Long> implements AccountRepository {
 
 	public AccountRepositoryImpl() {
 		super(Account.class);	
+	}
+	
+	@Override
+	public Account findByEmail(String email) {
+		return findByAttribute("email", email);
 	}
 }

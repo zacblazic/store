@@ -42,7 +42,7 @@
 						<p:commandButton value="Management" ajax="false" action="/manage/manage?faces-redirect=true" />
 					</shiro:hasRole>
 					
-					<p:commandButton value="Logout" ajax="false" action="#{loginBean.logout}" />
+					<p:commandButton value="Logout" ajax="false" action="#{loginController.logout}" />
 				
 				</shiro:authenticated>
 				

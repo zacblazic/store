@@ -1,10 +1,11 @@
 package za.co.invoketech.store.service.customer;
 
-import org.junit.BeforeClass;
+import junit.framework.Assert;
+
 import org.junit.Test;
 
-import za.co.invoketech.store.application.config.ApplicationInitializer;
-import za.co.invoketech.store.application.util.Constants;
+import za.co.invoketech.store.application.config.Goose;
+import za.co.invoketech.store.application.factory.CustomerFactory;
 import za.co.invoketech.store.domain.model.account.Account;
 import za.co.invoketech.store.domain.model.customer.Address;
 import za.co.invoketech.store.domain.model.customer.Customer;
@@ -12,34 +13,25 @@ import za.co.invoketech.store.domain.shared.AddressType;
 import za.co.invoketech.store.domain.shared.Gender;
 import za.co.invoketech.store.domain.shared.InternalAddress;
 import za.co.invoketech.store.domain.shared.Person;
-import za.co.invoketech.store.persistence.internal.PersistenceModule;
 import za.co.invoketech.store.service.repository.AccountRepository;
 import za.co.invoketech.store.service.repository.CustomerRepository;
 
-import com.google.inject.Guice;
-import com.google.inject.Injector;
-import com.google.inject.persist.jpa.JpaPersistModule;
+import com.google.inject.Inject;
 
 public class CustomerServiceTest {
 
-	private static Injector injector;
-	private static AccountRepository accountRepository;
-	private static CustomerRepository customerRepository;
-	
-	private static CustomerService customerService;
+	@Inject private AccountRepository accountRepository;
+	@Inject private CustomerRepository customerRepository;	
+	@Inject private CustomerService customerService;
+	@Inject private CustomerFactory customerFactory;
 	
 	private Person person;
 	private Address address;
 	private Account account;
 	private Customer customer;
 	
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-		injector = Guice.createInjector(new PersistenceModule(), new JpaPersistModule(Constants.PERSISTENCE_UNIT));
-		injector.getInstance(ApplicationInitializer.class);
-		accountRepository = injector.getInstance(AccountRepository.class);
-		customerRepository = injector.getInstance(CustomerRepository.class);
-		customerService = injector.getInstance(CustomerService.class);
+	public CustomerServiceTest() {
+		Goose.getInjectorForTesting().injectMembers(this);
 	}
 	
 	private Person createPerson() {
@@ -67,14 +59,17 @@ public class CustomerServiceTest {
 		person = createPerson();
 		address = createAddress();
 		account = createAccount();
-		return new Customer(person, address, account);
+		return customerFactory.createCustomer(person, address, account);
 	}
 	
 	@Test
 	public void test() {
 		customer = createCustomer();
 		customerRepository.persist(customer);
+
+		Assert.assertTrue(customer.getId() != 0);
 		
-		customerService.findCustomerByEmail("zacblazic@gmail.com");
+		Customer c = customerRepository.findById(customer.getId());
+		customerRepository.remove(c);
 	}
 }
