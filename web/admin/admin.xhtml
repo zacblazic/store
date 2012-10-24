@@ -15,16 +15,13 @@
 	
 	
 	<h:form>
+		<ui:insert name="header-buttons">
+			<ui:include src="/components/header.xhtml" />
+		</ui:insert>
+		
 		<h1>This is the administration page</h1>
-	<h2>Welcome, <shiro:user><shiro:principal/></shiro:user></h2>
-	
-	<shiro:authenticated><p:commandLink id="logout" value="Logout" action="#{loginController.logout}"/></shiro:authenticated>
-	<br />
-	<p:commandButton id="to-manage" value="Manage Page" action="/manage/manage?faces-redirect=true"/>
-	<br />
-	<p:commandButton id="to-home" value="Homepage" action="/index?faces-redirect=true"/>
-	<br />
-	<p:commandButton id="to-accmgmt" value="Account Management" action="account?faces-redirect=true"/>
+		<h2>Welcome, <shiro:user><shiro:principal/></shiro:user></h2>
+		<p:commandButton id="to-accmgmt" value="Account Management" action="account?faces-redirect=true"/>
 	
 	</h:form>
 	

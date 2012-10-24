@@ -19,31 +19,28 @@
 				<p:commandButton value="Home" ajax="false" action="/index?faces-redirect=true" />
 			</p:toolbarGroup>
 			<p:toolbarGroup align="right">
-			<!-- 	<p:commandButton id="loginButton" value="Login"/>
-				
-				<p:overlayPanel for="loginButton" hideEffect="fade">
-					<ui:insert>
-						<ui:include src="/components/login.xhtml" />
-					</ui:insert>
-				</p:overlayPanel>  -->
-				
+			
+				Welcome, <shiro:guest>Guest &nbsp;&nbsp;</shiro:guest><shiro:user><shiro:principal/> &nbsp;&nbsp;</shiro:user> 
+							
 				<shiro:guest>
 					<p:commandButton value="Login" ajax="false"  action="/login?faces-redirect=true" />
 					<p:commandButton value="Register" ajax="false"  action="/register?faces-redirect=true" />
 				</shiro:guest>
 				
 				<shiro:authenticated>
-					<p:commandButton value="Uploader" ajax="false" action="/admin/upload?faces-redirect=true" />
-					
 					<shiro:hasRole name="admin">
-						<p:commandButton value="Administration" ajax="false" action="/admin/admin?faces-redirect=true" />
+						<p:splitButton value="Administration" ajax="false" action="/admin/admin?faces-redirect=true">
+							<p:menuitem value="Account Manager" ajax="false" action="/admin/account?faces-redirect=true"/>
+							<p:menuitem value="Role Manager" ajax="false" action="/admin/role?faces-redirect=true"/>
+						</p:splitButton>
 					</shiro:hasRole>
 					<shiro:hasRole name="manager">
 						<p:commandButton value="Management" ajax="false" action="/manage/manage?faces-redirect=true" />
 					</shiro:hasRole>
-					
-					<p:commandButton value="Logout" ajax="false" action="#{loginController.logout}" />
-				
+					<shiro:hasRole name="user">
+						<p:commandButton value="Account" />
+					</shiro:hasRole>
+					<p:commandButton value="Logout" ajax="false" action="#{loginController.logout}" />				
 				</shiro:authenticated>
 				
 				<p:commandButton value="Help"/>

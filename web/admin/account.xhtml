@@ -11,24 +11,15 @@
 <h:head>
 </h:head>
 <h:body style="font-size: 12px;">
-	
-	
-	
 	<h:form id="form">
-		<h1>Account and Role Management</h1>
-	
-		<shiro:authenticated><p:commandLink id="logout" value="Logout" action="#{loginController.logout}"/></shiro:authenticated>
-		<br />
-		<p:commandButton id="to-admin" value="Admin Page" action="admin?faces-redirect=true"/>
-		<br />
-		<p:commandButton id="to-manage" value="Manage Page" action="/manage/manage?faces-redirect=true"/>
-		<br />
-		<p:commandButton id="to-home" value="Homepage" action="/index?faces-redirect=true"/>
-		<br/>
-		<br/>
+		<ui:insert name="header-buttons">
+			<ui:include src="/components/header.xhtml" />
+		</ui:insert>
 		
+		<h1>Account Management</h1>		
+		<center>
 		<p:dataTable id="accounts" var="account" value="#{adminAccountRoleBean.accounts}" rowKey="#{account.id}"  
-                 selection="#{adminAccountRoleBean.selectedAccount}" selectionMode="single">  
+                 selection="#{adminAccountRoleBean.selectedAccount}" selectionMode="single" style="width:500px;">  
 	        <f:facet name="header">  
 	            User Accounts  
 	        </f:facet>  
@@ -46,7 +37,7 @@
 	        </f:facet>  
     	</p:dataTable>
 		
-		<p:dialog id="dialog1" header="Account Detail" widgetVar="accountDialog" resizable="false"  
+		<p:dialog id="dialog1" header="Account Detail" widgetVar="accountDialog" modal="true" resizable="false"  
               showEffect="clip" hideEffect="fold">    
 	        <p:panelGrid id="display1" columns="2" cellpadding="4">	
                 <f:facet name="header">  
@@ -57,41 +48,8 @@
 				    #{rfa.roleName}  
 				</p:dataList>
 	        </p:panelGrid>  
-    	</p:dialog> 
-    	
-    	
-    	<p:dataTable id="roles" var="role" value="#{adminAccountRoleBean.roles}" rowKey="#{role.id}"  
-                 selection="#{adminAccountRoleBean.selectedRole}" selectionMode="single">  
-	        <f:facet name="header">  
-	            User Accounts  
-	        </f:facet>  
-	  
-	        <p:column headerText="ID">  
-	            #{role.id}  
-	        </p:column>  
-	  
-	        <p:column headerText="Role Name">  
-	            #{role.roleName}  
-	        </p:column>  
-	        <f:facet name="footer">  
-	            <p:commandButton id="viewButton2" value="View"  
-	                    update=":form:display2" oncomplete="roleDialog.show()" actionListener="#{adminAccountRoleBean.populateAccountsForRole}"/>  
-	        </f:facet>  
-    	</p:dataTable>
-		
-		<p:dialog id="dialog2" header="Role Detail" widgetVar="roleDialog" resizable="false"  
-              showEffect="clip" hideEffect="fold">    
-	        <p:panelGrid id="display2" columns="2" cellpadding="4">	
-                <f:facet name="header">  
-                	<h:outputText value="#{adminAccountRoleBean.selectedRole.roleName}"/>  
-            	</f:facet>            	          
-	            <h:outputText value="Accounts:" />
-	            <p:dataList value="#{adminAccountRoleBean.accountsForRole}" var="afr" itemType="disc">  
-				    #{afr.email}  
-				</p:dataList>
-	        </p:panelGrid> 
-    	</p:dialog> 
-    	
+    	</p:dialog>  
+    	</center>
 	</h:form>
 	
 </h:body>
