@@ -20,7 +20,7 @@
 			</p:toolbarGroup>
 			<p:toolbarGroup align="right">
 			
-				
+				Welcome, <shiro:guest>Guest &nbsp;&nbsp;</shiro:guest><shiro:user><shiro:principal/> &nbsp;&nbsp;</shiro:user> 
 							
 				<shiro:guest>
 					<p:commandButton value="Login" ajax="false"  action="/login?faces-redirect=true" />
@@ -28,8 +28,6 @@
 				</shiro:guest>
 				
 				<shiro:authenticated>
-					<p:commandButton value="Uploader" ajax="false" action="/admin/upload?faces-redirect=true" />
-					
 					<shiro:hasRole name="admin">
 						<p:splitButton value="Administration" ajax="false" action="/admin/admin?faces-redirect=true">
 							<p:menuitem value="Account/Role Manager" ajax="false" action="/admin/account?faces-redirect=true"/>

@@ -11,10 +11,10 @@
 <h:head>
 </h:head>
 <h:body style="font-size: 12px;">
-	
-	
-	
 	<h:form>
+		<ui:insert name="header-buttons">
+			<ui:include src="/components/header.xhtml" />
+		</ui:insert>
 		<h1>No Access:</h1>
 		<h2>User: <shiro:guest>Guest</shiro:guest><shiro:user><shiro:principal/></shiro:user> has invalid permission to view the requested page</h2>
 	

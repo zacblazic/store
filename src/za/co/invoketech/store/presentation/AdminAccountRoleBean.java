@@ -65,7 +65,7 @@ public class AdminAccountRoleBean {
 
 
 	public void populateAccountsForRole() {
-		if (selectedAccount != null) setAccountsForRole(accountService.retrieveAccountsForRole(selectedRole));
+		if (selectedRole != null) setAccountsForRole(accountService.retrieveAccountsForRole(selectedRole));
 	}
 	
 	public Account getSelectedAccount() {
