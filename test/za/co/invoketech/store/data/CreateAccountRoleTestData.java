@@ -22,8 +22,6 @@ import java.util.List;
 import org.junit.Test;
 
 import za.co.invoketech.store.application.config.Goose;
-import za.co.invoketech.store.application.exception.InvalidRoleNameException;
-import za.co.invoketech.store.application.exception.RoleNotFoundException;
 import za.co.invoketech.store.domain.model.account.Account;
 import za.co.invoketech.store.domain.model.customer.Address;
 import za.co.invoketech.store.domain.model.customer.Customer;
@@ -42,7 +40,7 @@ import com.google.inject.Inject;
  * @author garethc18@gmail.com (Gareth Conry)
  * @author zacblazic@gmail.com (Zac Blazic)
  */
-public class CreateAccountRoleTestData {
+public class CreateAccountRoleTestData{
 
 	@Inject private AccountService accountService;
 	@Inject private RoleService roleService;
@@ -67,7 +65,7 @@ public class CreateAccountRoleTestData {
 	}
 	
 	@Test
-	public void createData() throws RoleNotFoundException, InvalidRoleNameException {
+	public void createData()  throws Exception {
 		// Create roles
 		Role adminRole = roleService.createRole("Admin");
 		Role managerRole = roleService.createRole("Manager");
