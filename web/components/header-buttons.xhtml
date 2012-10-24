@@ -37,8 +37,8 @@
 				<shiro:authenticated>
 					<shiro:hasRole name="admin">
 						<p:splitButton value="Administration" ajax="false" action="/admin/admin?faces-redirect=true">
-							<p:menuitem value="Account Manager" ajax="false" action="/admin/account?faces-redirect=true"/>
-							<p:menuitem value="Role Manager" ajax="false" action="/admin/role?faces-redirect=true"/>
+							<p:menuitem value="Admin/Manager Accounts" ajax="false" action="/admin/account?faces-redirect=true"/>
+							<p:menuitem value="Roles" ajax="false" action="/admin/role?faces-redirect=true"/>
 						</p:splitButton>
 					</shiro:hasRole>
 					<shiro:hasRole name="manager">
