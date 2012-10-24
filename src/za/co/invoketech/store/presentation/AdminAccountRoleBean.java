@@ -17,10 +17,13 @@ package za.co.invoketech.store.presentation;
 
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 import za.co.invoketech.store.application.config.Goose;
+import za.co.invoketech.store.application.exception.AccountNotFoundException;
 import za.co.invoketech.store.domain.model.account.Account;
 import za.co.invoketech.store.domain.model.role.Role;
 import za.co.invoketech.store.service.account.AccountService;
@@ -62,11 +65,32 @@ public class AdminAccountRoleBean {
 	public void populateRolesForAccount() {
 		if (selectedAccount != null) setRolesForAccount(selectedAccount.getRoles());
 	}
+	
+	public void removeAccount() {
+		try 
+		{
+			if (selectedAccount != null) {
+				accountService.removeAccount(selectedAccount);
+				accounts = accountService.retrieveAllAccounts();
+			}
+		} 
+		catch (AccountNotFoundException anfe) 
+		{
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Delete Error",  "Account Not Found");  
+			FacesContext.getCurrentInstance().addMessage(null, message);
+		}
+		catch (Exception e) {
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Delete Error",  "Unknown Error Occurred");  
+			FacesContext.getCurrentInstance().addMessage(null, message);
+		}
+	}
 
 
 	public void populateAccountsForRole() {
 		if (selectedRole != null) setAccountsForRole(accountService.retrieveAccountsForRole(selectedRole));
 	}
+	
+	
 	
 	public Account getSelectedAccount() {
 		return selectedAccount;

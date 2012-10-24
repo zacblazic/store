@@ -16,7 +16,9 @@
 			<ui:include src="/components/header.xhtml" />
 		</ui:insert>
 		
-		<h1>Account Management</h1>		
+		<h1>Account Management</h1>
+		
+		<p:messages id="messages" closable="true" autoUpdate="true" showDetail="true"/>		
 		<center>
 		<p:dataTable id="accounts" var="account" value="#{adminAccountRoleBean.accounts}" rowKey="#{account.id}"  
                  selection="#{adminAccountRoleBean.selectedAccount}" selectionMode="single" style="width:500px;">  
@@ -33,9 +35,12 @@
 	        </p:column>  
 	        <f:facet name="footer">  
 	            <p:commandButton id="viewButton1" value="View"  
-	                    update=":form:display1" oncomplete="accountDialog.show()" actionListener="#{adminAccountRoleBean.populateRolesForAccount}"/>  
+	                    update=":form:display1" oncomplete="accountDialog.show()" actionListener="#{adminAccountRoleBean.populateRolesForAccount}"/>
+	            <p:commandButton id="deleteButton1" value="Delete"  
+	                    update=":form:display1" onclick="deleteConfirm.show()"/>  
 	        </f:facet>  
-    	</p:dataTable>
+    	</p:dataTable>  
+    	</center>
 		
 		<p:dialog id="dialog1" header="Account Detail" widgetVar="accountDialog" modal="true" resizable="false"  
               showEffect="clip" hideEffect="fold">    
@@ -48,8 +53,15 @@
 				    #{rfa.roleName}  
 				</p:dataList>
 	        </p:panelGrid>  
-    	</p:dialog>  
-    	</center>
+    	</p:dialog>
+    	
+    	<p:confirmDialog id="delConfirmDialog" message="Are you sure you want to delete this account?"  
+                header="Confirm Delete" severity="alert" widgetVar="deleteConfirm">                  
+	        <p:commandButton id="confirm" value="Yes" update=":form" oncomplete="deleteConfirm.hide()"  
+	                    actionListener="#{adminAccountRoleBean.removeAccount}"/>
+	        <p:commandButton id="decline" value="Cancel" onclick="deleteConfirm.hide()" type="button" />                   
+	    </p:confirmDialog>
+    	
 	</h:form>
 	
 </h:body>
