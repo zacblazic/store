@@ -20,7 +20,14 @@
 			</p:toolbarGroup>
 			<p:toolbarGroup align="right">
 			
-				Welcome, <shiro:guest>Guest &nbsp;&nbsp;</shiro:guest><shiro:user><shiro:principal/> &nbsp;&nbsp;</shiro:user> 
+				<h:outputText value="Welcome, "  />
+				<shiro:guest>
+					<h:outputText value="Guest " />
+				</shiro:guest>
+				<shiro:authenticated>
+					<shiro:principal />
+					<h:outputText value="  " />
+				</shiro:authenticated>
 							
 				<shiro:guest>
 					<p:commandButton value="Login" ajax="false"  action="/login?faces-redirect=true" />

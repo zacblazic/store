@@ -18,7 +18,6 @@ package za.co.invoketech.store.presentation.login;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
 import org.apache.shiro.SecurityUtils;
@@ -26,8 +25,7 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 
-import za.co.invoketech.store.application.config.Goose;
-import za.co.invoketech.store.presentation.customer.CustomerBean;
+import com.google.inject.servlet.RequestScoped;
 
 /**
  * @author garethc18@gmail.com (Gareth Conry)
@@ -37,14 +35,14 @@ import za.co.invoketech.store.presentation.customer.CustomerBean;
 @ManagedBean
 public class LoginController {
 	
+	private static final String indexPage = "/index?faces-redirect=true";
+	
 	@ManagedProperty(value="#{loginBean}")
 	private LoginBean loginBean;
-	
-	@ManagedProperty(value="#{customerBean}")
-	private CustomerBean customerBean;
+	private Subject currentUser;
 	
 	public LoginController() {
-		Goose.guicify(this);
+		currentUser = SecurityUtils.getSubject();
 	}
 	
 	public LoginBean getLoginBean() {
@@ -55,37 +53,23 @@ public class LoginController {
 		this.loginBean = loginBean;
 	}
 
-	public CustomerBean getCustomerBean() {
-		return customerBean;
-	}
-
-	public void setCustomerBean(CustomerBean customerBean) {
-		this.customerBean = customerBean;
-	}
-
 	public String login() {
-		String action = "";
-		
 		UsernamePasswordToken token = new UsernamePasswordToken(loginBean.getEmail(), loginBean.getPassword());
 		token.setRememberMe(loginBean.isRemember());
 		
-		Subject currentUser = SecurityUtils.getSubject();
-
 		try {
 		    currentUser.login(token);
-		    action = "/index?faces-redirect=true";
+		    return indexPage;
 		}
 		catch(AuthenticationException ae) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"Login Error", "Incorrect Credentials"));
 		}
 		
-		return action;
+		return "";
 	}
 	
 	public String logout() {
-		String action = "/index?faces-redirect=true";
-		Subject currentUser = SecurityUtils.getSubject();
 		currentUser.logout();
-		return action;
+		return indexPage;
 	}
 }
