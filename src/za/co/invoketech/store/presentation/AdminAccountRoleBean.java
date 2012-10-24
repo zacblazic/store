@@ -23,7 +23,10 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 
 import za.co.invoketech.store.application.config.Goose;
+import za.co.invoketech.store.application.exception.AccountLinkedException;
 import za.co.invoketech.store.application.exception.AccountNotFoundException;
+import za.co.invoketech.store.application.exception.CustomerLinkedException;
+import za.co.invoketech.store.application.exception.RoleNotFoundException;
 import za.co.invoketech.store.domain.model.account.Account;
 import za.co.invoketech.store.domain.model.role.Role;
 import za.co.invoketech.store.service.account.AccountService;
@@ -66,7 +69,7 @@ public class AdminAccountRoleBean {
 		if (selectedAccount != null) setRolesForAccount(selectedAccount.getRoles());
 	}
 	
-	public void removeAccount() {
+	public void removeSelectedAccount() {
 		try 
 		{
 			if (selectedAccount != null) {
@@ -77,6 +80,10 @@ public class AdminAccountRoleBean {
 		catch (AccountNotFoundException anfe) 
 		{
 			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Delete Error",  "Account Not Found");  
+			FacesContext.getCurrentInstance().addMessage(null, message);
+		}
+		catch (CustomerLinkedException cle) {
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Delete Error",  "Account still has a customer linked");  
 			FacesContext.getCurrentInstance().addMessage(null, message);
 		}
 		catch (Exception e) {
@@ -90,7 +97,28 @@ public class AdminAccountRoleBean {
 		if (selectedRole != null) setAccountsForRole(accountService.retrieveAccountsForRole(selectedRole));
 	}
 	
-	
+	public void removeSelectedRole() {
+		try 
+		{
+			if (selectedRole != null) {
+				roleService.removeRole(selectedRole);
+				roles = roleService.retrieveAllRoles();
+			}
+		} 
+		catch (RoleNotFoundException anfe) 
+		{
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Delete Error",  "Role Not Found");  
+			FacesContext.getCurrentInstance().addMessage(null, message);
+		}
+		catch (AccountLinkedException ale) {
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Delete Error",  "Role still has linked account(s)");  
+			FacesContext.getCurrentInstance().addMessage(null, message);
+		}
+		catch (Exception e) {
+			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Delete Error",  "Unknown Error Occurred");  
+			FacesContext.getCurrentInstance().addMessage(null, message);
+		}
+	}
 	
 	public Account getSelectedAccount() {
 		return selectedAccount;

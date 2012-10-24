@@ -58,7 +58,7 @@
     	<p:confirmDialog id="delConfirmDialog" message="Are you sure you want to delete this account?"  
                 header="Confirm Delete" severity="alert" widgetVar="deleteConfirm">                  
 	        <p:commandButton id="confirm" value="Yes" update=":form" oncomplete="deleteConfirm.hide()"  
-	                    actionListener="#{adminAccountRoleBean.removeAccount}"/>
+	                    actionListener="#{adminAccountRoleBean.removeSelectedAccount}"/>
 	        <p:commandButton id="decline" value="Cancel" onclick="deleteConfirm.hide()" type="button" />                   
 	    </p:confirmDialog>
     	
