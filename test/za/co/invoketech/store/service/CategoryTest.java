@@ -1,4 +1,4 @@
-package za.co.invoketech.store;
+package za.co.invoketech.store.service;
 
 import java.util.ArrayList;
 import java.util.List;

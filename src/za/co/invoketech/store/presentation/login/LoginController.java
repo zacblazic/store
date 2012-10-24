@@ -27,11 +27,7 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 
 import za.co.invoketech.store.application.config.Goose;
-import za.co.invoketech.store.domain.model.customer.Customer;
 import za.co.invoketech.store.presentation.customer.CustomerBean;
-import za.co.invoketech.store.service.customer.CustomerService;
-
-import com.google.inject.Inject;
 
 /**
  * @author garethc18@gmail.com (Gareth Conry)
@@ -40,8 +36,6 @@ import com.google.inject.Inject;
 @RequestScoped
 @ManagedBean
 public class LoginController {
-	
-	@Inject CustomerService customerService;
 	
 	@ManagedProperty(value="#{loginBean}")
 	private LoginBean loginBean;
@@ -79,11 +73,6 @@ public class LoginController {
 
 		try {
 		    currentUser.login(token);
-		    String email = (String)currentUser.getPrincipal();
-		    
-		    //Customer customer = customerService.findCustomerByEmail(email);
-		    //System.out.println(customer.getFirstName() + " has just logged in.");
-		    
 		    action = "/index?faces-redirect=true";
 		}
 		catch(AuthenticationException ae) {

@@ -1,12 +1,16 @@
 package za.co.invoketech.store.presentation.customer;
 
+import java.io.Serializable;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 @SessionScoped
 @ManagedBean
-public class CustomerBean {
+public class CustomerBean implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	private long id;
 	private String firstName;
 	private String lastName;
