@@ -11,15 +11,12 @@
 <h:head>
 </h:head>
 <h:body style="font-size: 12px;">
-	
-	
-	
 	<h:form id="form">
 		<ui:insert name="header-buttons">
 			<ui:include src="/components/header.xhtml" />
 		</ui:insert>
 		
-		<h1>Account and Role Management</h1>		
+		<h1>Account Management</h1>		
 		<center>
 		<p:dataTable id="accounts" var="account" value="#{adminAccountRoleBean.accounts}" rowKey="#{account.id}"  
                  selection="#{adminAccountRoleBean.selectedAccount}" selectionMode="single" style="width:500px;">  
@@ -51,40 +48,7 @@
 				    #{rfa.roleName}  
 				</p:dataList>
 	        </p:panelGrid>  
-    	</p:dialog> 
-    	
-    	
-    	<p:dataTable id="roles" var="role" value="#{adminAccountRoleBean.roles}" rowKey="#{role.id}"  
-                 selection="#{adminAccountRoleBean.selectedRole}" selectionMode="single" style="width:500px;">  
-	        <f:facet name="header">  
-	            Role Types  
-	        </f:facet>  
-	  
-	        <p:column headerText="ID">  
-	            #{role.id}  
-	        </p:column>  
-	  
-	        <p:column headerText="Role Name">  
-	            #{role.roleName}  
-	        </p:column>  
-	        <f:facet name="footer">  
-	            <p:commandButton id="viewButton2" value="View"  
-	                    update=":form:display2" oncomplete="roleDialog.show()" actionListener="#{adminAccountRoleBean.populateAccountsForRole}"/>  
-	        </f:facet>  
-    	</p:dataTable>
-		
-		<p:dialog id="dialog2" header="Role Detail" widgetVar="roleDialog" modal="true" resizable="false"  
-              showEffect="clip" hideEffect="fold">    
-	        <p:panelGrid id="display2" columns="2" cellpadding="4">	
-                <f:facet name="header">  
-                	<h:outputText value="#{adminAccountRoleBean.selectedRole.roleName}"/>  
-            	</f:facet>            	          
-	            <h:outputText value="Accounts:" />
-	            <p:dataList value="#{adminAccountRoleBean.accountsForRole}" var="afr" itemType="disc">  
-				    #{afr.email}  
-				</p:dataList>
-	        </p:panelGrid> 
-    	</p:dialog> 
+    	</p:dialog>  
     	</center>
 	</h:form>
 	

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:shiro="http://shiro.apache.org/tags">
+ 
+<h:head>
+</h:head>
+<h:body style="font-size: 12px;">
+	
+	<h:form id="form">
+		<ui:insert name="header-buttons">
+			<ui:include src="/components/header.xhtml" />
+		</ui:insert>
+		
+		<h1>Role Management</h1>		
+		<center>
+		<p:dataTable id="roles" var="role" value="#{adminAccountRoleBean.roles}" rowKey="#{role.id}"  
+                 selection="#{adminAccountRoleBean.selectedRole}" selectionMode="single" style="width:500px;">  
+	        <f:facet name="header">  
+	            Role Types  
+	        </f:facet>  
+	  
+	        <p:column headerText="ID">  
+	            #{role.id}  
+	        </p:column>  
+	  
+	        <p:column headerText="Role Name">  
+	            #{role.roleName}  
+	        </p:column>  
+	        <f:facet name="footer">  
+	            <p:commandButton id="viewButton2" value="View"  
+	                    update=":form:display2" oncomplete="roleDialog.show()" actionListener="#{adminAccountRoleBean.populateAccountsForRole}"/>  
+	        </f:facet>  
+    	</p:dataTable>
+		
+		<p:dialog id="dialog2" header="Role Detail" widgetVar="roleDialog" modal="true" resizable="false"  
+              showEffect="clip" hideEffect="fold">    
+	        <p:panelGrid id="display2" columns="2" cellpadding="4">	
+                <f:facet name="header">  
+                	<h:outputText value="#{adminAccountRoleBean.selectedRole.roleName}"/>  
+            	</f:facet>            	          
+	            <h:outputText value="Accounts:" />
+	            <p:dataList value="#{adminAccountRoleBean.accountsForRole}" var="afr" itemType="disc">  
+				    #{afr.email}  
+				</p:dataList>
+	        </p:panelGrid> 
+    	</p:dialog> 
+    	</center>
+	</h:form>
+	
+</h:body>
+</html>
