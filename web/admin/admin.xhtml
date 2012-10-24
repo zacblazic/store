@@ -21,7 +21,8 @@
 		
 		<h1>This is the administration page</h1>
 		<h2>Welcome, <shiro:user><shiro:principal/></shiro:user></h2>
-		<p:commandButton id="to-accmgmt" value="Account Management" action="account?faces-redirect=true"/>
+		<p:commandButton id="to-account" value="Admin/Manager Accounts" action="account?faces-redirect=true"/><br/>
+		<p:commandButton id="to-accrole" value="Roles" action="role?faces-redirect=true"/>
 	
 	</h:form>
 	
