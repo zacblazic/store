@@ -60,12 +60,12 @@ public class AdminAccountRoleBean {
 	}
 	
 	public void populateRolesForAccount() {
-		setRolesForAccount(selectedAccount.getRoles());
+		if (selectedAccount != null) setRolesForAccount(selectedAccount.getRoles());
 	}
 
 
 	public void populateAccountsForRole() {
-		setAccountsForRole(accountService.retrieveAccountsForRole(selectedRole));
+		if (selectedAccount != null) setAccountsForRole(accountService.retrieveAccountsForRole(selectedRole));
 	}
 	
 	public Account getSelectedAccount() {
