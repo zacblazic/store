@@ -128,6 +128,6 @@ public class AddressBean implements Serializable {
 			.addressType(AddressType.valueOf(getAddressType()))
 			.build();
 		
-		return new Address(getLabel(), internal);
+		return new Address(getLabel(), internal, isPrimary());
 	}
 }

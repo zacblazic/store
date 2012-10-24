@@ -44,8 +44,8 @@
 					<shiro:hasRole name="manager">
 						<p:commandButton value="Management" ajax="false" action="/manage/manage?faces-redirect=true" />
 					</shiro:hasRole>
-					<shiro:hasRole name="user">
-						<p:commandButton value="Account" />
+					<shiro:hasRole name="customer">
+						<p:commandButton value="Account" ajax="false" action="/account/account.xhtml?faces-redirect=true" />
 					</shiro:hasRole>
 					<p:commandButton value="Logout" ajax="false" action="#{loginController.logout}" />				
 				</shiro:authenticated>
