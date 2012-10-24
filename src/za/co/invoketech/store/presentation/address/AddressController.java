@@ -1,21 +1,18 @@
 package za.co.invoketech.store.presentation.address;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
-import javax.faces.context.FacesContext;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
-import org.modelmapper.ModelMapper;
 
 import za.co.invoketech.store.application.config.Goose;
 import za.co.invoketech.store.application.exception.AccountNotFoundException;
 import za.co.invoketech.store.application.exception.CustomerNotFoundException;
 import za.co.invoketech.store.application.exception.CustomerNotLinkedException;
 import za.co.invoketech.store.application.exception.MaximumAddressesReachedException;
-import za.co.invoketech.store.domain.model.customer.Address;
+import za.co.invoketech.store.application.util.Faces;
 import za.co.invoketech.store.service.customer.CustomerService;
 
 import com.google.inject.Inject;
@@ -24,7 +21,6 @@ import com.google.inject.Inject;
 @ManagedBean
 public class AddressController {
 		
-	@Inject private ModelMapper mapper;
 	@Inject private CustomerService customerService;
 	
 	@ManagedProperty(value = "#{addressBean}")
@@ -49,24 +45,15 @@ public class AddressController {
 		
 		try {
 			customerId = customerService.findCustomerIdByEmail(email);
+			customerService.addAddress(customerId, addressBean.toAddress());
 		} catch (AccountNotFoundException e) {
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Could not add address",  "Account was not found");  
-			FacesContext.getCurrentInstance().addMessage(null, message);
+			Faces.showErrorMessage("Could not add address",  "Account was not found");  
 		} catch (CustomerNotLinkedException e) {
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Could not add address",  "No customer is linked to this account");  
-			FacesContext.getCurrentInstance().addMessage(null, message);
-		}
-		
-		Address address = mapper.map(addressBean, Address.class);
-		
-		try {
-			customerService.addAddress(customerId, address);
+			Faces.showErrorMessage("Could not add address",  "No customer is linked to this account");  
 		} catch (CustomerNotFoundException e) {
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Could not add address",  "Customer not found");  
-			FacesContext.getCurrentInstance().addMessage(null, message);
+			Faces.showErrorMessage("Could not add address", "Customer was not found");
 		} catch (MaximumAddressesReachedException e) {
-			FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Could not add address",  "Maximum number of accounts reached");  
-			FacesContext.getCurrentInstance().addMessage(null, message);
+			Faces.showErrorMessage("Could not add address",  "Maximum number of addresses reached");
 		}
 	}
 }

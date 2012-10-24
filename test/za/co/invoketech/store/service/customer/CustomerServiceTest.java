@@ -5,6 +5,8 @@ import junit.framework.Assert;
 import org.junit.Test;
 
 import za.co.invoketech.store.application.config.Goose;
+import za.co.invoketech.store.application.exception.AccountNotFoundException;
+import za.co.invoketech.store.application.exception.CustomerNotLinkedException;
 import za.co.invoketech.store.application.factory.CustomerFactory;
 import za.co.invoketech.store.domain.model.account.Account;
 import za.co.invoketech.store.domain.model.customer.Address;
@@ -39,7 +41,10 @@ public class CustomerServiceTest {
 	}
 	
 	private Address createAddress() {
-		InternalAddress internalAddress = new InternalAddress.Builder("Zac", "Blazic", "0828943000")
+		InternalAddress internalAddress = new InternalAddress.Builder()
+			.firstName("Zac")
+			.lastName("Blazic")
+			.phoneNumber("0828943000")
 			.line1("122 Athens Road")
 			.line2("Table View")
 			.city("Cape Town")
@@ -69,7 +74,14 @@ public class CustomerServiceTest {
 		account.setCustomer(customer);
 		accountRepository.merge(account);
 
-		Customer foundByEmail = customerService.findCustomerByEmail("zacblazic@gmail.com");
+		Customer foundByEmail = null;
+		try {
+			foundByEmail = customerService.findCustomerByEmail("zacblazic@gmail.com");
+		} catch (AccountNotFoundException e) {
+			e.printStackTrace();
+		} catch (CustomerNotLinkedException e) {
+			e.printStackTrace();
+		}
 		Assert.assertNotNull(foundByEmail);
 		
 		customerRepository.remove(customer);

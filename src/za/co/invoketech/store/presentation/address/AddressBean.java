@@ -5,13 +5,16 @@ import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import za.co.invoketech.store.domain.model.customer.Address;
+import za.co.invoketech.store.domain.shared.AddressType;
+import za.co.invoketech.store.domain.shared.InternalAddress;
+
 @SessionScoped
 @ManagedBean
 public class AddressBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private long id;
 	private String label;
 	private boolean primary;
 	private String firstName;
@@ -23,14 +26,6 @@ public class AddressBean implements Serializable {
 	private String postalCode;
 	private String country;
 	private String addressType;
-	
-	public long getId() {
-		return id;
-	}
-	
-	public void setId(long id) {
-		this.id = id;
-	}
 	
 	public String getLabel() {
 		return label;
@@ -118,5 +113,21 @@ public class AddressBean implements Serializable {
 	
 	public void setAddressType(String addressType) {
 		this.addressType = addressType;
+	}
+	
+	public Address toAddress() {
+		InternalAddress internal = new InternalAddress.Builder()
+			.firstName(getFirstName())
+			.lastName(getLastName())
+			.phoneNumber(getPhoneNumber())
+			.line1(getLine1())
+			.line2(getLine2())
+			.city(getCity())
+			.postalCode(getPostalCode())
+			.country(getCountry())
+			.addressType(AddressType.valueOf(getAddressType()))
+			.build();
+		
+		return new Address(getLabel(), internal);
 	}
 }

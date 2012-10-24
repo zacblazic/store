@@ -74,10 +74,21 @@ public class InternalAddress implements Serializable {
 		private String country;
 		private AddressType addressType;
 		
-		public Builder(String firstName, String lastName, String phoneNumber) {
+		public Builder() {}
+		
+		public Builder firstName(String firstName) {
 			this.firstName = firstName;
+			return this;
+		}
+		
+		public Builder lastName(String lastName) {
 			this.lastName = lastName;
+			return this;
+		}
+		
+		public Builder phoneNumber(String phoneNumber) {
 			this.phoneNumber = phoneNumber;
+			return this;
 		}
 		
 		public Builder line1(String line1) {

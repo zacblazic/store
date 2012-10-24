@@ -60,6 +60,10 @@
 				<h:outputText value="Phone Number:" />
 				<p:inputText id="phone-number" value="#{addressBean.phoneNumber}" required="true" requiredMessage="Please enter your phone number."/>
 				<p:message for="phone-number" />
+
+				<p:spacer />
+				<p:selectBooleanCheckbox id="primary" value="#{addressBean.primary}" itemLabel="Set as primary address" />
+				<p:spacer />
 				
 			</p:panelGrid>
 			<p:commandButton value="Add" update="add-address-form" actionListener="#{addressController.add}" />

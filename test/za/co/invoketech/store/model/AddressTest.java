@@ -44,7 +44,10 @@ public class AddressTest {
 	}
 	
 	private Address createAddress() {
-		InternalAddress internalAddress = new InternalAddress.Builder("Zac", "Blazic", "0828943000")
+		InternalAddress internalAddress = new InternalAddress.Builder()
+			.firstName("Zac")
+			.lastName("Blazic")
+			.phoneNumber("0828943000")
 			.line1("122 Athens Road")
 			.line2("Table View")
 			.city("Cape Town")
