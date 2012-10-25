@@ -18,7 +18,7 @@ package za.co.invoketech.store.presentation;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
 
 import za.co.invoketech.store.application.config.Goose;
 import za.co.invoketech.store.application.exception.AccountNotFoundException;
@@ -39,7 +39,7 @@ import com.google.inject.Inject;
  *
  */
 
-@SessionScoped
+@RequestScoped
 @ManagedBean
 public class AdminAccountRoleBean {
 	
