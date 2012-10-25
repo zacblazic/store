@@ -31,6 +31,10 @@
 		  		<f:validateLength minimum="6" />
 		  		</p:password>
 		  		
+		  		<h:outputText value="Confirm Password: " />
+		  		<p:password id="confpassword" name="confpassword" required="true" value="#{accountBean.confirmPassword}">
+		  		</p:password>
+		  		
 		  		<p:selectBooleanCheckbox id="adminchk" value="#{accountBean.admin}" />
 		  		<h:outputText value="Administrator" />
 		  		

@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
 import za.co.invoketech.store.application.config.Goose;
 import za.co.invoketech.store.application.exception.RoleNotFoundException;
@@ -35,7 +35,7 @@ import com.google.inject.Inject;
  * @author garethc18@gmail.com (Gareth Conry)
  *
  */
-@SessionScoped
+@ViewScoped
 @ManagedBean
 public class AccountBean implements Serializable{
 
@@ -48,6 +48,7 @@ public class AccountBean implements Serializable{
 	
 	private String email;
 	private String password;
+	private String confirmPassword;
 	
 	private boolean admin;
 	private boolean manager;
@@ -75,6 +76,14 @@ public class AccountBean implements Serializable{
 		this.password = password;
 	}	
 	
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
+	}
+
 	public boolean isAdmin() {
 		return admin;
 	}

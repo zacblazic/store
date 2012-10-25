@@ -55,17 +55,16 @@ public class AccountController {
 	
 	public AccountController() {
 		Goose.guicify(this);
-		System.out.println("id: " + accountId );
 	}
 	
-	public void populateFields() {
-		System.out.println("id: " + accountId );
-		
+	public void populateFields() {		
 		if (accountId != 0){
-			System.out.println("hi");
 			try {
 				account = accountService.retrieveAccount(accountId);
+			} catch (AccountNotFoundException anfe) {
+				Faces.showErrorMessage("Account Edit Error", "Account not found");
 			} catch (Exception e) {
+				Faces.showErrorMessage("Account Edit Error", "Unknown Error: ");
 				e.printStackTrace();
 			}
 			accountBean.setId(accountId);
@@ -105,8 +104,15 @@ public class AccountController {
 	public String add() {
 		String returnString = "";
 		try {
-			accountService.createAccount(accountBean.getEmail(), accountBean.getPassword(), accountBean.toRoleList());
-			returnString = "account?faces-redirect=true";
+			if (accountBean.getPassword().equals(accountBean.getConfirmPassword()))
+			{
+				accountService.createAccount(accountBean.getEmail(), accountBean.getPassword(), accountBean.toRoleList());
+				returnString = "account?faces-redirect=true";
+			}
+			else 
+			{
+				Faces.showErrorMessage("Account Creation Error", "Passwords do not match");
+			}
 		} catch (AccountExistsException aee) {
 			Faces.showErrorMessage("Account Creation Error", "Account already exists");
 		}catch (RoleNotFoundException rnfe) {
@@ -120,13 +126,22 @@ public class AccountController {
 	
 	public String update() {
 		String returnString = "";
-		try {		
-			account = accountService.retrieveAccount(accountBean.getId());
-			PasswordService psvc = new DefaultPasswordService();
-			account.setPassword(psvc.encryptPassword((String)accountBean.getPassword()));
-			account.setRoles(accountBean.toRoleList());
+		try {
+			if (accountBean.getPassword().equals(accountBean.getConfirmPassword()))
+			{
+				account = accountService.retrieveAccount(accountBean.getId());
+				PasswordService psvc = new DefaultPasswordService();
+				account.setPassword(psvc.encryptPassword((String)accountBean.getPassword()));
+				account.setRoles(accountBean.toRoleList());
+				
+				accountService.updateAccount(account);
+				returnString = "account?faces-redirect=true";
+			}
 			
-			accountService.updateAccount(account);
+			else 
+			{
+				Faces.showErrorMessage("Account Edit Error", "Passwords do not match");
+			}
 			
 		} catch (AccountNotFoundException anfe) {
 			Faces.showErrorMessage("Account Edit Error", "Account not found");

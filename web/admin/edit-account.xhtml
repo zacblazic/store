@@ -25,16 +25,17 @@
 		
 		<p:panel id="edit-account-panel" header="Edit Account" style="margin-bottom:10px; width:30%">
 		<p:messages id="messages" closable="true" autoUpdate="true" showDetail="true"/>	 
-			<h:panelGrid columns="2">
-				<h:outputText value="Account ID: " />
-		  		<h:outputText value="#{accountBean.id}"/>
-		  		
+			<h:panelGrid columns="2">		  		
 				<h:outputText value="Email: " />
 		  		<h:outputText value="#{accountBean.email}"/>
 		  		
 		  		<h:outputText value="Password: " />
 		  		<p:password id="password" name="password" required="true" value="#{accountBean.password}">
 		  		<f:validateLength minimum="6" />
+		  		</p:password>
+		  		
+		  		<h:outputText value="Confirm Password: " />
+		  		<p:password id="confpassword" name="confpassword" required="true" value="#{accountBean.confirmPassword}">
 		  		</p:password>
 		  		
 		  		<p:selectBooleanCheckbox id="adminchk" value="#{accountBean.admin}" />
