@@ -33,4 +33,9 @@ class RoleRepositoryImpl extends GenericDaoImpl<Role, Long> implements RoleRepos
 	public RoleRepositoryImpl() {
 		super(Role.class);
 	}
+
+	@Override
+	public Role findByRoleName(String roleName) {
+		return findByAttribute("roleName", roleName);
+	}
 }
