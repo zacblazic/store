@@ -22,6 +22,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.credential.DefaultPasswordService;
 import org.apache.shiro.authc.credential.PasswordService;
 
+import za.co.invoketech.store.application.exception.AccountExistsException;
 import za.co.invoketech.store.application.exception.AccountNotFoundException;
 import za.co.invoketech.store.application.exception.CurrentAccountException;
 import za.co.invoketech.store.application.exception.CustomerLinkedException;
@@ -51,26 +52,31 @@ public class AccountServiceImpl implements AccountService {
 	private AccountRepository accountDao;
 	
 	@Override
-	public Account createAccount(String email, String password, List<Role> roles) throws RoleNotFoundException {
-		Account account;		
+	public Account createAccount(String email, String password, List<Role> roles) throws RoleNotFoundException, AccountExistsException {
+		Account account;
+		
+		// Check if account exists
+		for (Account dbacc : accountDao.findAll()) {
+			if (dbacc.getEmail().equals(email)){
+				throw new AccountExistsException();
+			}
+		}
 		
 		if (roles != null && roles.size() != 0)
 		{
 			// Find if roles exist
-			try 
-			{
-				for (Role role : roles)
-				roleDao.findByAttribute("roleName", role.getRoleName());
+			List<Role> dbRoles = new ArrayList<Role>();
+			
+			for (Role role : roles) {
+				Role foundRole = roleDao.findByAttribute("roleName", role.getRoleName().toLowerCase());
+				if (foundRole == null) throw new RoleNotFoundException();
+				else dbRoles.add(foundRole);
+			}				
 				
-				PasswordService psvc = new DefaultPasswordService();
-				
-				account = new Account(email, psvc.encryptPassword(password), roles);
-				accountDao.persist(account);
-			} 
-			catch (Exception e) 
-			{
-				throw new RoleNotFoundException();
-			}
+			PasswordService psvc = new DefaultPasswordService();
+			
+			account = new Account(email, psvc.encryptPassword(password), dbRoles);
+			accountDao.persist(account);
 			
 		}
 		else throw new RoleNotFoundException("No role assigned");

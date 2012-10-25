@@ -17,6 +17,7 @@ package za.co.invoketech.store.service.account;
 
 import java.util.List;
 
+import za.co.invoketech.store.application.exception.AccountExistsException;
 import za.co.invoketech.store.application.exception.AccountNotFoundException;
 import za.co.invoketech.store.application.exception.CurrentAccountException;
 import za.co.invoketech.store.application.exception.CustomerLinkedException;
@@ -31,7 +32,7 @@ import za.co.invoketech.store.domain.model.role.Role;
  *
  */
 public interface AccountService {
-	public Account createAccount(String email, String password, List<Role> roles) throws RoleNotFoundException;
+	public Account createAccount(String email, String password, List<Role> roles) throws RoleNotFoundException, AccountExistsException;
 	public Account retrieveAccount(long accountId) throws AccountNotFoundException;
 	public void updateAccount(Account account) throws AccountNotFoundException;
 	public void removeAccount(Account account) throws AccountNotFoundException, CustomerLinkedException, DefaultDeleteException, CurrentAccountException;
