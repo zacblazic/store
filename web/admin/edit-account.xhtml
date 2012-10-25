@@ -10,21 +10,27 @@
  
 <h:head>
 </h:head>
+<f:metadata>
+  <f:viewParam name="id" value="#{adminAccountRoleBean.selectedAccountId}" />
+  <f:event listener="#{accountController.populateFields}" type="preRenderView"/> 
+</f:metadata>
+
 <h:body style="font-size: 12px;">
 	<h:form id="form">
 		<ui:insert name="header-buttons">
 			<ui:include src="/components/header.xhtml" />
 		</ui:insert>
 		
-		<h1>Add Admin/Manager Account</h1>
+		<h1>Edit Admin/Manager Account</h1>
 		
-		<p:panel id="add-account-panel" header="Add Account" style="margin-bottom:10px; width:30%">
+		<p:panel id="edit-account-panel" header="Edit Account" style="margin-bottom:10px; width:30%">
 		<p:messages id="messages" closable="true" autoUpdate="true" showDetail="true"/>	 
 			<h:panelGrid columns="2">
+				<h:outputText value="Account ID: " />
+		  		<h:outputText value="#{accountBean.id}"/>
+		  		
 				<h:outputText value="Email: " />
-		  		<p:inputText id="email" name="email" required="true" value="#{accountBean.email}">
-		  		<f:validateLength minimum="2" />
-		  		</p:inputText>
+		  		<h:outputText value="#{accountBean.email}"/>
 		  		
 		  		<h:outputText value="Password: " />
 		  		<p:password id="password" name="password" required="true" value="#{accountBean.password}">
@@ -38,7 +44,7 @@
 		  		<h:outputText value="Manager" />
 			</h:panelGrid>
 		</p:panel>
-		<p:commandButton type="submit" id="add-acc" value="Add" update="add-account-panel" action="#{accountController.add}"/>
+		<p:commandButton type="submit" id="save-acc" update="edit-account-panel" value="Save" action="#{accountController.update}"/>
 		
 	</h:form>
 	

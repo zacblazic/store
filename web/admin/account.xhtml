@@ -38,6 +38,8 @@
 	                    update=":form:display1" oncomplete="accountDialog.show()" actionListener="#{adminAccountRoleBean.populateRolesForAccount}"/>
 	            <p:commandButton id="addButton1" value="Add" 
 	                    action="add-account?faces-redirect=true"/>
+	            <p:commandButton id="editButton1" value="Edit" 
+	                    action="#{adminAccountRoleBean.toEditPage}" />
 	            <p:commandButton id="deleteButton1" value="Delete"  
 	                    update=":form:display1" onclick="deleteConfirm.show()"/>  
 	        </f:facet>  

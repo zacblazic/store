@@ -17,15 +17,21 @@ package za.co.invoketech.store.presentation.admin;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
+
+import org.apache.shiro.authc.credential.DefaultPasswordService;
+import org.apache.shiro.authc.credential.PasswordService;
 
 import za.co.invoketech.store.application.config.Goose;
 import za.co.invoketech.store.application.exception.AccountExistsException;
+import za.co.invoketech.store.application.exception.AccountNotFoundException;
 import za.co.invoketech.store.application.exception.RoleNotFoundException;
 import za.co.invoketech.store.application.util.Faces;
+import za.co.invoketech.store.domain.model.account.Account;
+import za.co.invoketech.store.domain.model.role.Role;
 import za.co.invoketech.store.service.account.AccountService;
 
 import com.google.inject.Inject;
+import com.google.inject.servlet.RequestScoped;
 
 /**
  * 
@@ -42,8 +48,34 @@ public class AccountController {
 	@ManagedProperty(value = "#{accountBean}")
 	private AccountBean accountBean;
 	
+	@ManagedProperty(value = "#{param.id}")
+	private long accountId;
+		
+	private Account account;
+	
 	public AccountController() {
 		Goose.guicify(this);
+		System.out.println("id: " + accountId );
+	}
+	
+	public void populateFields() {
+		System.out.println("id: " + accountId );
+		
+		if (accountId != 0){
+			System.out.println("hi");
+			try {
+				account = accountService.retrieveAccount(accountId);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			accountBean.setId(accountId);
+			accountBean.setEmail(account.getEmail());
+			
+			for (Role role : account.getRoles()) {
+				if (role.getRoleName().equals("admin")) accountBean.setAdmin(true);
+				else if (role.getRoleName().equals("manager")) accountBean.setManager(true);
+			}
+		}
 	}
 
 	public AccountBean getAccountBean() {
@@ -54,6 +86,22 @@ public class AccountController {
 		this.accountBean = accountBean;
 	}
 	
+	public Account getAccount() {
+		return account;
+	}
+
+	public void setAccount(Account account) {
+		this.account = account;
+	}	
+
+	public long getAccountId() {
+		return accountId;
+	}
+
+	public void setAccountId(long accountId) {
+		this.accountId = accountId;
+	}
+
 	public String add() {
 		String returnString = "";
 		try {
@@ -64,7 +112,27 @@ public class AccountController {
 		}catch (RoleNotFoundException rnfe) {
 			Faces.showErrorMessage("Account Creation Error", "Missing role(s)");
 		}catch (Exception e) {
-			Faces.showErrorMessage("Account Creation Error", "Unknown error occurred" + e.getMessage());
+			Faces.showErrorMessage("Account Creation Error", "Unknown error: " + e.getMessage());
+		}
+		
+		return returnString;
+	}
+	
+	public String update() {
+		String returnString = "";
+		try {		
+			account = accountService.retrieveAccount(accountBean.getId());
+			PasswordService psvc = new DefaultPasswordService();
+			account.setPassword(psvc.encryptPassword((String)accountBean.getPassword()));
+			account.setRoles(accountBean.toRoleList());
+			
+			accountService.updateAccount(account);
+			
+		} catch (AccountNotFoundException anfe) {
+			Faces.showErrorMessage("Account Edit Error", "Account not found");
+		} catch (Exception e) {
+			Faces.showErrorMessage("Account Edit Error", "Unknown Error: ");
+			e.printStackTrace();
 		}
 		
 		return returnString;

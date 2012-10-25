@@ -36,6 +36,6 @@ class RoleRepositoryImpl extends GenericDaoImpl<Role, Long> implements RoleRepos
 
 	@Override
 	public Role findByRoleName(String roleName) {
-		return findByAttribute("roleName", roleName);
+		return findByAttribute("roleName", roleName.toLowerCase());
 	}
 }

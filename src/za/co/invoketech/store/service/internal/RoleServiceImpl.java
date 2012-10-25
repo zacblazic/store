@@ -38,10 +38,10 @@ import com.google.inject.Inject;
 public class RoleServiceImpl implements RoleService {
 
 	@Inject
-	private RoleRepository roleDao;
+	private RoleRepository roleRepository;
 	
 	@Inject
-	private AccountRepository accountDao;
+	private AccountRepository accountRepository;
 	
 	@Inject
 	private AccountService accountService;
@@ -56,7 +56,7 @@ public class RoleServiceImpl implements RoleService {
 		roleName = roleName.toLowerCase();
 		
 		// Check for duplicates
-		List<Role> roles = roleDao.findAll();
+		List<Role> roles = roleRepository.findAll();
 		for (Role role : roles) {
 			if (role.getRoleName().equals(roleName))
 				throw new InvalidRoleNameException("Name exists in database");
@@ -64,14 +64,14 @@ public class RoleServiceImpl implements RoleService {
 		
 		Role role = new Role(roleName);
 		
-		roleDao.persist(role);
+		roleRepository.persist(role);
 		
 		return role;
 	}
 
 	@Override
 	public Role retrieveRole(long id) throws RoleNotFoundException {
-		Role role = roleDao.findById(id);
+		Role role = roleRepository.findById(id);
 		if (role == null || role.getId() == 0)
 		{
 			throw new RoleNotFoundException();
@@ -87,7 +87,7 @@ public class RoleServiceImpl implements RoleService {
 			throw new RoleNotFoundException();
 		}
 		
-		roleDao.merge(role);
+		roleRepository.merge(role);
 	}
 
 	@Override
@@ -101,21 +101,31 @@ public class RoleServiceImpl implements RoleService {
 			throw new AccountLinkedException();
 		}
 		
-		roleDao.remove(role);
+		roleRepository.remove(role);
 	}
 
 	@Override
 	public List<Role> retrieveRolesForAccount(Account account) {
 		List<Role> roles;
 		if (account == null) roles = new ArrayList<>();
-		else roles = accountDao.findById(account.getId()).getRoles();
+		else roles = accountRepository.findById(account.getId()).getRoles();
 		return roles;
 	}
 
 	@Override
 	public List<Role> retrieveAllRoles() {
-		List<Role> roles = roleDao.findAll();
+		List<Role> roles = roleRepository.findAll();
 		return roles;
+	}
+
+	@Override
+	public Role retrieveRoleByName(String roleName) throws RoleNotFoundException {
+		Role role = roleRepository.findByRoleName(roleName);
+		if (role == null){
+			throw new RoleNotFoundException();
+		}
+		
+		return role;
 	}
 
 }

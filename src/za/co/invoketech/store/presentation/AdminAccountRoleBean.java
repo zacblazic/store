@@ -49,6 +49,8 @@ public class AdminAccountRoleBean {
 	@Inject
 	private RoleService roleService;
 	
+	private long selectedAccountId;
+	
 	private List<Account> accounts;
 	private List<Role> roles;
 	
@@ -62,6 +64,12 @@ public class AdminAccountRoleBean {
 		Goose.guicify(this);
 		accounts = accountService.retrieveNonCustomerAccounts();
 		roles = roleService.retrieveAllRoles();		
+	}
+	
+	public String toEditPage()
+	{
+		selectedAccountId = selectedAccount.getId();
+		return "edit-account?faces-redirect=true&includeViewParams=true";
 	}
 	
 	public void populateRolesForAccount() {
@@ -158,6 +166,14 @@ public class AdminAccountRoleBean {
 
 	public void setRolesForAccount(List<Role> rolesForAccount) {
 		this.rolesForAccount = rolesForAccount;
+	}
+
+	public long getSelectedAccountId() {
+		return selectedAccountId;
+	}
+
+	public void setSelectedAccountId(long selectedAccountId) {
+		this.selectedAccountId = selectedAccountId;
 	}
 	
 	

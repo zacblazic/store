@@ -36,4 +36,5 @@ public interface RoleService {
 	public void removeRole(Role role) throws RoleNotFoundException, AccountLinkedException;
 	public List<Role> retrieveRolesForAccount(Account account);
 	public List<Role> retrieveAllRoles();
+	public Role retrieveRoleByName (String roleName) throws RoleNotFoundException;
 }

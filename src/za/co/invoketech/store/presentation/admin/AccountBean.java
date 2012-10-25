@@ -22,7 +22,13 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import za.co.invoketech.store.application.config.Goose;
+import za.co.invoketech.store.application.exception.RoleNotFoundException;
+import za.co.invoketech.store.application.util.Faces;
 import za.co.invoketech.store.domain.model.role.Role;
+import za.co.invoketech.store.service.account.RoleService;
+
+import com.google.inject.Inject;
 
 /**
  * 
@@ -35,12 +41,27 @@ public class AccountBean implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
+	@Inject
+	private RoleService roleService;
+	
+	private long id;
+	
 	private String email;
 	private String password;
 	
 	private boolean admin;
 	private boolean manager;
 	
+	public AccountBean() {
+		Goose.guicify(this);
+	}
+
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
 	public String getEmail() {
 		return email;
 	}
@@ -67,9 +88,14 @@ public class AccountBean implements Serializable{
 		this.manager = manager;
 	}
 	public List<Role> toRoleList() {
-		List<Role> roles = new ArrayList<Role>();				
-		if (isAdmin()) roles.add(new Role("admin"));
-		if (isManager()) roles.add(new Role("manager"));		
+		List<Role> roles = new ArrayList<Role>();
+		try {				
+			if (isAdmin()) roles.add(roleService.retrieveRoleByName("admin"));
+			if (isManager()) roles.add(roleService.retrieveRoleByName("manager"));
+		} catch (RoleNotFoundException rnfe) {
+			Faces.showErrorMessage("Role Error", "Missing role(s)");
+		}
+		
 		return roles;
 	}
 }

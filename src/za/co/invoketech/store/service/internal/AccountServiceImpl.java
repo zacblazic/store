@@ -46,17 +46,17 @@ import com.google.inject.Singleton;
 public class AccountServiceImpl implements AccountService {
 	
 	@Inject
-	private RoleRepository roleDao;
+	private RoleRepository roleRepo;
 	
 	@Inject
-	private AccountRepository accountDao;
+	private AccountRepository accountRepo;
 	
 	@Override
 	public Account createAccount(String email, String password, List<Role> roles) throws RoleNotFoundException, AccountExistsException {
 		Account account;
 		
 		// Check if account exists
-		for (Account dbacc : accountDao.findAll()) {
+		for (Account dbacc : accountRepo.findAll()) {
 			if (dbacc.getEmail().equals(email)){
 				throw new AccountExistsException();
 			}
@@ -68,7 +68,7 @@ public class AccountServiceImpl implements AccountService {
 			List<Role> dbRoles = new ArrayList<Role>();
 			
 			for (Role role : roles) {
-				Role foundRole = roleDao.findByAttribute("roleName", role.getRoleName().toLowerCase());
+				Role foundRole = roleRepo.findByRoleName(role.getRoleName());
 				if (foundRole == null) throw new RoleNotFoundException();
 				else dbRoles.add(foundRole);
 			}				
@@ -76,7 +76,7 @@ public class AccountServiceImpl implements AccountService {
 			PasswordService psvc = new DefaultPasswordService();
 			
 			account = new Account(email, psvc.encryptPassword(password), dbRoles);
-			accountDao.persist(account);
+			accountRepo.persist(account);
 			
 		}
 		else throw new RoleNotFoundException("No role assigned");
@@ -86,7 +86,7 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public Account retrieveAccount(long accountId) throws AccountNotFoundException {
-		Account account = accountDao.findById(accountId);
+		Account account = accountRepo.findById(accountId);
 		if (account == null)
 		{
 			throw new AccountNotFoundException();
@@ -100,9 +100,8 @@ public class AccountServiceImpl implements AccountService {
 		if (account == null || account.getId() == 0)
 		{
 			throw new AccountNotFoundException("Cannot update null account or account with no id");
-		}
-		
-		accountDao.merge(account);
+		}		
+		accountRepo.merge(account);
 	}
 
 	@Override
@@ -124,12 +123,12 @@ public class AccountServiceImpl implements AccountService {
 			throw new CurrentAccountException();
 		}		
 		
-		accountDao.remove(account);
+		accountRepo.remove(account);
 	}
 
 	@Override
 	public List<Account> retrieveAccountsForRole(Role role) {
-		List<Account> accounts = accountDao.findAll();
+		List<Account> accounts = accountRepo.findAll();
 		List<Account> returnAccounts = new ArrayList<Account>();
 		boolean remove;		
 		for (Account account : accounts) {
@@ -145,13 +144,13 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public List<Account> retrieveAllAccounts() {
-		List<Account> accounts = accountDao.findAll();
+		List<Account> accounts = accountRepo.findAll();
 		return accounts;
 	}
 
 	@Override
 	public List<Account> retrieveNonCustomerAccounts() {
-		List<Account> accounts = accountDao.findAll();
+		List<Account> accounts = accountRepo.findAll();
 		List<Account> returnAccounts = new ArrayList<Account>();
 		for (Account account : accounts) {
 			if (account.getCustomer() == null) returnAccounts.add(account);
