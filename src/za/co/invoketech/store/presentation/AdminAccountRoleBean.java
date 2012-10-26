@@ -15,10 +15,11 @@
  */
 package za.co.invoketech.store.presentation;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.ViewScoped;
 
 import za.co.invoketech.store.application.config.Goose;
 import za.co.invoketech.store.application.exception.AccountNotFoundException;
@@ -39,10 +40,12 @@ import com.google.inject.Inject;
  *
  */
 
-@RequestScoped
+@ViewScoped
 @ManagedBean
-public class AdminAccountRoleBean {
+public class AdminAccountRoleBean implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
+
 	@Inject
 	private AccountService accountService;
 	
@@ -60,10 +63,15 @@ public class AdminAccountRoleBean {
 	private Account selectedAccount;
 	private Role selectedRole;
 	
+	private boolean viewDisabled;
+	private boolean editDisabled;
+	private boolean deleteDisabled;
+	
 	public AdminAccountRoleBean(){
 		Goose.guicify(this);
 		accounts = accountService.retrieveNonCustomerAccounts();
-		roles = roleService.retrieveAllRoles();		
+		roles = roleService.retrieveAllRoles();
+		disableButtons();
 	}
 	
 	public String toEditPage()
@@ -82,6 +90,7 @@ public class AdminAccountRoleBean {
 			if (selectedAccount != null) {
 				accountService.removeAccount(selectedAccount);
 				accounts = accountService.retrieveNonCustomerAccounts();
+				disableButtons();
 			}
 		} 
 		catch (AccountNotFoundException anfe) 
@@ -126,6 +135,19 @@ public class AdminAccountRoleBean {
 			Faces.showErrorMessage("Delete Error",  "Unknown Error Occurred");
 		}
 	}*/
+
+	public void enableButtons(){
+		System.out.println("Enabling");
+		setViewDisabled(false);
+		setEditDisabled(false);
+		setDeleteDisabled(false);
+	}
+	public void disableButtons(){
+		System.out.println("Disabling");
+		setViewDisabled(true);
+		setEditDisabled(true);
+		setDeleteDisabled(true);
+	}
 	
 	public Account getSelectedAccount() {
 		return selectedAccount;
@@ -133,7 +155,6 @@ public class AdminAccountRoleBean {
 
 	public void setSelectedAccount(Account selectedAccount) {
 		this.selectedAccount = selectedAccount;
-		
 	}
 
 	public Role getSelectedRole() {
@@ -175,6 +196,29 @@ public class AdminAccountRoleBean {
 	public void setSelectedAccountId(long selectedAccountId) {
 		this.selectedAccountId = selectedAccountId;
 	}
-	
+
+	public boolean isViewDisabled() {
+		return viewDisabled;
+	}
+
+	public void setViewDisabled(boolean viewDisabled) {
+		this.viewDisabled = viewDisabled;
+	}
+
+	public boolean isEditDisabled() {
+		return editDisabled;
+	}
+
+	public void setEditDisabled(boolean editDisabled) {
+		this.editDisabled = editDisabled;
+	}
+
+	public boolean isDeleteDisabled() {
+		return deleteDisabled;
+	}
+
+	public void setDeleteDisabled(boolean deleteDisabled) {
+		this.deleteDisabled = deleteDisabled;
+	}
 	
 }

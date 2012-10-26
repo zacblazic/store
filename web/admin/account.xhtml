@@ -21,7 +21,9 @@
 		<p:messages id="messages" closable="true" autoUpdate="true" showDetail="true"/>		
 		<center>
 		<p:dataTable id="accounts" var="account" value="#{adminAccountRoleBean.accounts}" rowKey="#{account.id}"  
-                 selection="#{adminAccountRoleBean.selectedAccount}" selectionMode="single" style="width:500px;">  
+                 selection="#{adminAccountRoleBean.selectedAccount}" selectionMode="single" style="width:500px;" >
+                 <p:ajax event="rowSelect" oncomplete="#{adminAccountRoleBean.enableButtons()}" update="viewButton1 editButton1 deleteButton1"/>
+                 <p:ajax event="rowUnselect" oncomplete="#{adminAccountRoleBean.disableButtons()}" update="viewButton1 editButton1 deleteButton1"/>  
 	        <f:facet name="header">  
 	            Admin and Manager Accounts  
 	        </f:facet>  
@@ -33,15 +35,21 @@
 	        <p:column headerText="Email">  
 	            #{account.email}  
 	        </p:column>  
-	        <f:facet name="footer">  
-	            <p:commandButton id="viewButton1" value="View"  
-	                    update=":form:display1" oncomplete="accountDialog.show()" actionListener="#{adminAccountRoleBean.populateRolesForAccount}"/>
+	        <f:facet name="footer">
+	        <p:toolbar>
+	        <p:toolbarGroup align="left" id="toolbar">
 	            <p:commandButton id="addButton1" value="Add" 
 	                    action="add-account?faces-redirect=true"/>
-	            <p:commandButton id="editButton1" value="Edit" 
+	        </p:toolbarGroup>
+	        <p:toolbarGroup align="right">  
+	            <p:commandButton id="viewButton1" value="View" disabled="#{adminAccountRoleBean.viewDisabled}"
+	                    update=":form:display1" oncomplete="accountDialog.show()" actionListener="#{adminAccountRoleBean.populateRolesForAccount}"/>
+	            <p:commandButton id="editButton1" value="Edit" disabled="#{adminAccountRoleBean.editDisabled}" 
 	                    action="#{adminAccountRoleBean.toEditPage}" />
-	            <p:commandButton id="deleteButton1" value="Delete"  
+	            <p:commandButton id="deleteButton1" value="Delete" disabled="#{adminAccountRoleBean.deleteDisabled}" 
 	                    update=":form:display1" onclick="deleteConfirm.show()"/>  
+	        </p:toolbarGroup>
+	        </p:toolbar>
 	        </f:facet>  
     	</p:dataTable>  
     	</center>
