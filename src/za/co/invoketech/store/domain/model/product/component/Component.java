@@ -1,5 +1,6 @@
 package za.co.invoketech.store.domain.model.product.component;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -22,7 +23,7 @@ public class Component extends Product {
 
 	private static final long serialVersionUID = 1L;
 
-	@ManyToOne
+	@ManyToOne (cascade=CascadeType.PERSIST)
 	private Brand brand;
 	
 	public Brand getBrand() {
