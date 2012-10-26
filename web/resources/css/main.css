@@ -17,3 +17,7 @@ body {
 .account-panel {
 	
 }
+
+.customer-info-panel, .history-panel {
+	width: 300px;
+}

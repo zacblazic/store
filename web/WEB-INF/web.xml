@@ -10,7 +10,7 @@
   <listener>
     <listener-class>org.apache.shiro.web.env.EnvironmentLoaderListener</listener-class>
   </listener>
- 
+  
   <listener>
   	<listener-class>za.co.invoketech.store.application.config.GuiceServletConfig</listener-class>
   </listener>
@@ -49,5 +49,9 @@
   	<filter-name>GuiceFilter</filter-name>
   	<url-pattern>/*</url-pattern>
   </filter-mapping>
+  
+   <session-config>
+      <session-timeout>60</session-timeout>
+  </session-config>
   
 </web-app>

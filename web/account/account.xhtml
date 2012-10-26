@@ -13,11 +13,22 @@
 <h:body>
 	<h:form id="account-form" styleClass="panel-grid">
 		<ui:insert name="header-buttons">
-			<ui:include src="/components/header-buttons.xhtml" />
+			<ui:include src="/components/header.xhtml" />
 		</ui:insert>
 		
-		<p:panel id="account-panel" header="Account">
-		</p:panel>
+			<p:panel header="Customer Information" styleClass="customer-info-panel" >
+				<p:panelGrid styleClass="panel-grid" columns="1">
+					<p:commandLink value="Personal Details" />
+					<p:commandLink value="Address Book" />
+				</p:panelGrid>
+			</p:panel>
+			<p:panel header="History" styleClass="history-panel">
+				<p:panelGrid styleClass="panel-grid" columns="1">
+					<p:commandLink value="Orders" />
+					<p:commandLink value="Invoices" />
+				</p:panelGrid>
+			</p:panel>
+
 	</h:form> 
 </h:body>
 </html>
