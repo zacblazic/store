@@ -82,6 +82,14 @@ public class Product implements Serializable {
 	{
 		this.title = title;
 	}   
+
+	public long getStock() {
+		return stock;
+	}
+	
+	public void setStock(long stock) {
+		this.stock = stock;
+	}
 	
 	public BigDecimal getUnitPrice()
 	{
