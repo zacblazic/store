@@ -22,7 +22,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import za.co.invoketech.store.application.config.ApplicationInitializer;
-import za.co.invoketech.store.application.exception.AccountNotFoundException;
 import za.co.invoketech.store.application.exception.RoleNotFoundException;
 import za.co.invoketech.store.domain.model.account.Account;
 import za.co.invoketech.store.domain.model.role.Role;
