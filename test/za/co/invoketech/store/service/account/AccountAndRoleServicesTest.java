@@ -132,40 +132,4 @@ public class AccountAndRoleServicesTest {
 		Account account = accountService.retrieveAccount(999999);
 		Assert.assertNull(account);		
 	}
-	
-	@Test
-	public void roleCrudTest() throws Exception
-	{
-		// Create
-		Role role = roleService.createRole("User");
-		Assert.assertTrue(role.getId() != 0);
-		
-		System.out.println("RoleCrud: Persist Success");
-		
-		// Read
-		Role newRole = roleService.retrieveRole(role.getId());
-		Assert.assertTrue(role.equals(newRole));
-
-		System.out.println("RoleCrud: Read Success");
-		
-		// Update
-		newRole.setRoleName("Shopper");
-		roleService.updateRole(newRole);
-		
-		Role newRole2 = roleService.retrieveRole(newRole.getId());
-		Assert.assertTrue(newRole2.getRoleName().equals(newRole.getRoleName()));
-
-		System.out.println("RoleCrud: Update Success");
-		
-		// Delete
-		roleService.removeRole(newRole2);
-		try 
-		{
-			Assert.assertNull(roleService.retrieveRole(newRole2.getId()));
-		} 
-		catch (RoleNotFoundException e) 
-		{
-			System.out.println("RoleCrud: Remove Success");
-		}				
-	}
 }

@@ -19,11 +19,8 @@ package za.co.invoketech.store.domain.model.wishlist;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import static za.co.invoketech.store.application.util.DefensiveDate.copyDate;
-
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -38,6 +35,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import za.co.invoketech.store.application.util.Dates;
 
 /**
  * @author zacblazic@gmail.com (Zac Blazic)
@@ -56,6 +55,10 @@ public class WishList implements Serializable {
 	@Column(name = "LABEL", nullable = false)
 	private String label;
 	
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "WISH_LIST_ID")
+	private List<WishListItem> items;
+	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "CREATED_DATE", nullable = false)
 	private Date createdDate;
@@ -63,10 +66,6 @@ public class WishList implements Serializable {
 	@Temporal(TemporalType.DATE)
 	@Column(name = "LAST_UPDATE_DATE", nullable = false)
 	private Date lastUpdatedDate;
-	
-	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "WISH_LIST_ID", nullable = false)
-	private List<WishListItem> items;
 	
 	/**
 	 * @deprecated
@@ -81,30 +80,37 @@ public class WishList implements Serializable {
 	public WishList(String label, List<WishListItem> items) {
 		checkLabel(label);
 		checkItems(items);
-		
-		Date currentDate = Calendar.getInstance().getTime();
-		
 		this.label = label;
-		this.createdDate = currentDate;
-		this.lastUpdatedDate = currentDate;
-		this.items = copyItems(items);
+		this.createdDate = Dates.now();
+		this.lastUpdatedDate = Dates.now();
+		this.items = new ArrayList<>(items);
 	}
 	
-	public WishList(WishList wishList) {
-		checkWishList(wishList);
-		this.id = wishList.id;
-		this.label = wishList.label;
-		this.createdDate = copyDate(wishList.createdDate);
-		this.lastUpdatedDate = copyDate(wishList.lastUpdatedDate);
-		this.items = copyItems(items);
+	private WishList(WishList list) {
+		this.id = list.id;
+		this.label = list.label;
+		this.createdDate = Dates.copy(list.createdDate);
+		this.lastUpdatedDate = Dates.copy(list.lastUpdatedDate);
+		this.items = new ArrayList<>(list.items);
+	}
+	
+	public static WishList copy(WishList list) {
+		if(list != null) {
+			return new WishList(list);
+		}
+		return null;
+	}
+	
+	public static List<WishList> copyAll(List<WishList> lists) {
+		List<WishList> copiedLists = new ArrayList<>();
+		for(WishList list : lists) {
+			copiedLists.add(copy(list));
+		}
+		return copiedLists;
 	}
 
 	public long getId() {
 		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public String getLabel() {
@@ -116,25 +122,23 @@ public class WishList implements Serializable {
 		this.label = label;
 		setLastUpdatedDate();
 	}
-
-	public Date getCreatedDate() {
-		return copyDate(createdDate);
-	}
 	
-	public Date getLastUpdatedDate() {
-		return copyDate(lastUpdatedDate);
-	}
-	
-	public void addItem(WishListItem item) {
+	public boolean addItem(WishListItem item) {
 		checkItem(item);
-		items.add(item);
-		setLastUpdatedDate();
+		if(items.add(item)) {
+			setLastUpdatedDate();
+			return true;
+		}
+		return false;
 	}
 	
-	public void removeItem(WishListItem item) {
+	public boolean removeItem(WishListItem item) {
 		checkItem(item);
-		items.remove(item);
-		setLastUpdatedDate();
+		if(items.remove(item)) {
+			setLastUpdatedDate();
+			return true;
+		}
+		return false;
 	}
 	
 	public boolean hasItem(WishListItem item) {
@@ -148,12 +152,13 @@ public class WishList implements Serializable {
 	}
 	
 	public List<WishListItem> getItems() {
-		return copyItems(items);
+		return new ArrayList<>(items);
 	}
 	
 	public void setItems(List<WishListItem> items) {
+		items = new ArrayList<>(items);
 		checkItems(items);
-		this.items = copyItems(items);
+		this.items = items;
 		setLastUpdatedDate();
 	}
 	
@@ -161,22 +166,16 @@ public class WishList implements Serializable {
 		return items.size();
 	}
 	
+	public Date getCreatedDate() {
+		return Dates.copy(createdDate);
+	}
+	
+	public Date getLastUpdatedDate() {
+		return Dates.copy(lastUpdatedDate);
+	}
+	
 	private void setLastUpdatedDate() {
-		lastUpdatedDate = Calendar.getInstance().getTime();
-	}
-	
-	private List<WishListItem> copyItems(List<WishListItem> items) {
-		List<WishListItem> copiedItems = new ArrayList<WishListItem>();
-		
-		for(WishListItem item : items) {
-			copiedItems.add(new WishListItem(item));
-		}
-		
-		return copiedItems;
-	}
-	
-	private void checkWishList(WishList wishList) {
-		checkNotNull(wishList, "wishList cannot be null");
+		lastUpdatedDate = Dates.now();
 	}
 	
 	private void checkLabel(String label) {

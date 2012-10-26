@@ -59,96 +59,44 @@ public class DeliveryAddress implements Serializable {
 		this.internalAddress = InternalAddress.copy(internalAddress);
 	}
 	
-	private DeliveryAddress(DeliveryAddress deliveryAddress) {
-		id = deliveryAddress.id;
-		internalAddress = InternalAddress.copy(deliveryAddress.internalAddress);
-	}
-	
-	public static DeliveryAddress copy(DeliveryAddress deliveryAddress) {
-		if(deliveryAddress != null) {
-			return new DeliveryAddress(deliveryAddress);
-		}
-		return null;
-	}
-
 	public long getId() {
 		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 	
 	public String getFirstName() {
 		return internalAddress.getFirstName();
 	}
 
-	public void setFirstName(String firstName) {
-		internalAddress.setFirstName(firstName);
-	}
-
 	public String getLastName() {
 		return internalAddress.getLastName();
-	}
-
-	public void setLastName(String lastName) {
-		internalAddress.setLastName(lastName);
 	}
 
 	public String getPhoneNumber() {
 		return internalAddress.getPhoneNumber();
 	}
 
-	public void setPhoneNumber(String phoneNumber) {
-		internalAddress.setPhoneNumber(phoneNumber);
-	}
-
 	public String getLine1() {
 		return internalAddress.getLine1();
-	}
-
-	public void setLine1(String line1) {
-		internalAddress.setLine1(line1);
 	}
 
 	public String getLine2() {
 		return internalAddress.getLine2();
 	}
 
-	public void setLine2(String line2) {
-		internalAddress.setLine2(line2);
-	}
-
 	public String getCity() {
 		return internalAddress.getCity();
-	}
-
-	public void setCity(String city) {
-		internalAddress.setCity(city);
 	}
 
 	public String getPostalCode() {
 		return internalAddress.getPostalCode();
 	}
 
-	public void setPostalCode(String postalCode) {
-		internalAddress.setPostalCode(postalCode);
-	}
-
 	public String getCountry() {
 		return internalAddress.getCountry();
 	}
 
-	public void setCountry(String country) {
-		internalAddress.setCountry(country);
-	}
-
 	public AddressType getAddressType() {
 		return internalAddress.getAddressType();
-	}
-
-	public void setAddressType(AddressType addressType) {
-		internalAddress.setAddressType(addressType);
 	}
 
 	private void checkInternalAddress(InternalAddress internalAddress) {

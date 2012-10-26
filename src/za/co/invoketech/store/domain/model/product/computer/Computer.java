@@ -19,6 +19,5 @@ import za.co.invoketech.store.domain.model.product.Product;
 public class Computer extends Product {
 
 	private static final long serialVersionUID = 1L;
-
    
 }

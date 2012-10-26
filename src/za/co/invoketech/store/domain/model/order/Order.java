@@ -18,12 +18,10 @@ package za.co.invoketech.store.domain.model.order;
 
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
-import static za.co.invoketech.store.application.util.DefensiveDate.copyDate;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -45,6 +43,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import za.co.invoketech.store.application.util.Constants;
+import za.co.invoketech.store.application.util.Dates;
 import za.co.invoketech.store.domain.model.customer.Customer;
 import za.co.invoketech.store.domain.model.invoice.Invoice;
 
@@ -67,7 +66,7 @@ public class Order implements Serializable {
 	private OrderStatus status;
 	
 	@OneToMany(cascade = CascadeType.ALL)
-	@JoinColumn(name = "ORDER_ID", nullable = false)
+	@JoinColumn(name = "ORDER_ID")
 	private List<OrderItem> items;
 	
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -91,7 +90,7 @@ public class Order implements Serializable {
 	private Date createdDate;
 	
 	@Temporal(TemporalType.DATE)
-	@Column(name = "CANCELLED_DATE", nullable = false)
+	@Column(name = "CANCELLED_DATE")
 	private Date cancelledDate;
 	
 	/**
@@ -100,30 +99,25 @@ public class Order implements Serializable {
 	 */
 	public Order() {}
 	
-	public Order(OrderStatus status, Payment payment, Delivery delivery, Customer customer) {
-		this(status, payment, delivery, customer, new ArrayList<OrderItem>());
+	public Order(Customer customer, Payment payment, Delivery delivery) {
+		this(customer, new ArrayList<OrderItem>(), payment, delivery);
 	}
 	
-	public Order(OrderStatus status, Payment payment, Delivery delivery, Customer customer, List<OrderItem> items) {
-		checkStatus(status);
-		checkPayment(payment);
-		checkDelivery(delivery);
+	public Order(Customer customer, List<OrderItem> items, Payment payment, Delivery delivery) {
 		checkCustomer(customer);
 		checkItems(items);
-		this.status = status;
-		this.items = copyItems(items);
-		this.payment = new Payment(payment);
-		this.delivery = new Delivery(delivery);
+		checkPayment(payment);
+		checkDelivery(delivery);
+		this.status = OrderStatus.OUTSTANDING;
 		this.customer = customer;
-		this.createdDate = Calendar.getInstance().getTime();
+		this.items = OrderItem.copyAll(items);
+		this.payment = Payment.copy(payment);
+		this.delivery = Delivery.copy(delivery);
+		this.createdDate = Dates.now();
 	}
 
 	public long getId() {
 		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public OrderStatus getStatus() {
@@ -135,54 +129,35 @@ public class Order implements Serializable {
 		this.status = status;
 	}
 	
-	public void addItem(OrderItem item) {
-		checkItem(item);
-		items.add(item);
-	}
-	
-	public void removeItem(OrderItem item) {
-		checkItem(item);
-		items.remove(item);
-	}
-	
-	public boolean hasItem(OrderItem item) {
-		checkItem(item);
-		return items.contains(item);
-	}
-	
 	public int getItemCount() {
 		return items.size();
 	}
-	
-	public void removeAllItems() {
-		items = new ArrayList<OrderItem>();
-	}
 
 	public List<OrderItem> getItems() {
-		return copyItems(items);
+		return OrderItem.copyAll(items);
 	}
 
 	public void setItems(List<OrderItem> items) {
 		checkItems(items);
-		this.items = copyItems(items);
+		this.items = OrderItem.copyAll(items);
 	}
 
 	public Payment getPayment() {
-		return new Payment(payment);
+		return Payment.copy(payment);
 	}
 
 	public void setPayment(Payment payment) {
 		checkPayment(payment);
-		this.payment = new Payment(payment);
+		this.payment = Payment.copy(payment);
 	}
 
 	public Delivery getDelivery() {
-		return new Delivery(delivery);
+		return Delivery.copy(delivery);
 	}
 
 	public void setDelivery(Delivery delivery) {
 		checkDelivery(delivery);
-		this.delivery = new Delivery(delivery);
+		this.delivery = Delivery.copy(delivery);
 	}
 	
 	public Customer getCustomer() {
@@ -204,11 +179,11 @@ public class Order implements Serializable {
 	}
 
 	public Date getCreatedDate() {
-		return copyDate(createdDate);
+		return Dates.copy(createdDate);
 	}
 
 	public Date getCancelledDate() {
-		return copyDate(cancelledDate);
+		return Dates.copy(cancelledDate);
 	}
 	
 	public boolean isCancelled() {
@@ -217,7 +192,7 @@ public class Order implements Serializable {
 	
 	public void setCancelled(boolean cancelled) {
 		if(cancelled) {
-			cancelledDate = Calendar.getInstance().getTime();
+			cancelledDate = Dates.now();
 		} else {
 			cancelledDate = null;
 		}
@@ -231,7 +206,6 @@ public class Order implements Serializable {
 			BigDecimal quantity = BigDecimal.valueOf(item.getQuantity());
 			amount = amount.add(unitPrice.multiply(quantity));
 		}
-		
 		return amount;
 	}
 	
@@ -244,22 +218,8 @@ public class Order implements Serializable {
 		return getAmount().add(getTax());
 	}
 	
-	private List<OrderItem> copyItems(List<OrderItem> items) {
-		List<OrderItem> copiedItems = new ArrayList<OrderItem>();
-		
-		for(OrderItem item : items) {
-			copiedItems.add(new OrderItem(item));
-		}
-		
-		return copiedItems;
-	}
-	
 	private void checkStatus(OrderStatus status) {
 		checkNotNull(status, "status cannot be null");
-	}
-	
-	private void checkItem(OrderItem item) {
-		checkNotNull(item, "item cannot be null");
 	}
 	
 	private void checkItems(List<OrderItem> items) {

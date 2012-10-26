@@ -16,9 +16,7 @@
 
 package za.co.invoketech.store.domain.model.order;
 
-import static com.google.common.base.Preconditions.*;
-
-import static za.co.invoketech.store.application.util.DefensiveDate.copyDate;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.io.Serializable;
 import java.util.Calendar;
@@ -34,6 +32,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import za.co.invoketech.store.application.util.Dates;
 
 /**
  * @author zacblazic@gmail.com (Zac Blazic)
@@ -68,19 +68,21 @@ public class Payment implements Serializable {
 		this.method = method;
 	}
 	
-	public Payment(Payment payment) {
-		checkPayment(payment);
+	private Payment(Payment payment) {
 		this.id = payment.id;
-		this.paidDate = copyDate(payment.paidDate);
 		this.method = payment.method;
+		this.paidDate = Dates.copy(payment.paidDate);
+	}
+	
+	public static Payment copy(Payment payment) {
+		if(payment != null) {
+			return new Payment(payment);
+		}
+		return null;
 	}
 
 	public long getId() {
 		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public PaymentMethod getMethod() {
@@ -93,7 +95,7 @@ public class Payment implements Serializable {
 	}
 	
 	public Date getPaidDate() {
-		return copyDate(paidDate);
+		return Dates.copy(paidDate);
 	}
 	
 	public boolean isPaid() {
@@ -110,9 +112,5 @@ public class Payment implements Serializable {
 	
 	private void checkMethod(PaymentMethod method) {
 		checkNotNull(method, "method cannot be null");
-	}
-	
-	private void checkPayment(Payment payment) {
-		checkNotNull(payment, "payment cannot be null");
 	}
 }

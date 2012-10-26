@@ -17,11 +17,9 @@
 package za.co.invoketech.store.domain.model.invoice;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static za.co.invoketech.store.application.util.DefensiveDate.copyDate;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -36,6 +34,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import za.co.invoketech.store.application.util.Dates;
 import za.co.invoketech.store.domain.model.order.Order;
 
 /**
@@ -69,15 +68,11 @@ public class Invoice implements Serializable {
 	public Invoice(Order order) {
 		checkOrder(order);
 		this.order = order;
-		this.invoiceDate = Calendar.getInstance().getTime();
+		this.invoiceDate = Dates.now();
 	}
 
 	public long getId() {
 		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public Order getOrder() {
@@ -85,7 +80,7 @@ public class Invoice implements Serializable {
 	}
 	
 	public Date getInvoiceDate() {
-		return copyDate(invoiceDate);
+		return Dates.copy(invoiceDate);
 	}
 	
 	public int getItemCount() {

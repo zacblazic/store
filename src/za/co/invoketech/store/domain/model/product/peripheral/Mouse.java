@@ -1,6 +1,9 @@
 package za.co.invoketech.store.domain.model.product.peripheral;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
@@ -10,12 +13,16 @@ import javax.persistence.Table;
  */
 @Entity
 @Table (name = "MOUSE")
+@Inheritance(strategy=InheritanceType.JOINED)
 @PrimaryKeyJoinColumn (name = "PRODUCT_ID")
 public class Mouse extends Peripheral {
 
 	private static final long serialVersionUID = 1L;
 	
+	@Column(name = "DPI")
 	private int dpi;
+	
+	@Column(name = "BUTTONS")
 	private int buttons;
 	
 	public int getDpi() {
@@ -25,6 +32,7 @@ public class Mouse extends Peripheral {
 	public void setDpi(int dpi) {
 		this.dpi = dpi;
 	}   
+	
 	public int getButtons() {
 		return this.buttons;
 	}
@@ -32,5 +40,4 @@ public class Mouse extends Peripheral {
 	public void setButtons(int buttons) {
 		this.buttons = buttons;
 	}
-   
 }

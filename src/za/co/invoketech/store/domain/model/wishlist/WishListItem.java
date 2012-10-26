@@ -16,12 +16,10 @@
 
 package za.co.invoketech.store.domain.model.wishlist;
 
-import static com.google.common.base.Preconditions.*;
-
-import static za.co.invoketech.store.application.util.DefensiveDate.copyDate;
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.io.Serializable;
-import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -36,9 +34,12 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import za.co.invoketech.store.application.util.Dates;
 import za.co.invoketech.store.domain.model.product.Product;
 
 /**
+ * An immutable object representing a wish list item.
+ * 
  * @author zacblazic@gmail.com (Zac Blazic)
  */
 @Entity
@@ -69,35 +70,19 @@ public class WishListItem implements Serializable {
 	public WishListItem(Product product) {
 		checkProduct(product);
 		this.product = product;
-		this.addedDate = Calendar.getInstance().getTime();
+		this.addedDate = Dates.now();
 	}
 	
-	public WishListItem(WishListItem item) {
-		checkWishListItem(item);
-		this.id = item.id;
-		this.product = item.product;
-		this.addedDate = copyDate(item.addedDate);
-	}
-
 	public long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
-		this.id = id;
-	}
-
 	public Date getAddedDate() {
-		return copyDate(addedDate);
+		return Dates.copy(addedDate);
 	}
 
 	public Product getProduct() {
 		return product;
-	}
-
-	public void setProduct(Product product) {
-		checkProduct(product);
-		this.product = product;
 	}
 	
 	@Override
@@ -107,16 +92,10 @@ public class WishListItem implements Serializable {
 		}
 		
 		WishListItem other = (WishListItem)object;
-		
 		if(!this.product.equals(other.product)) {
 			return false;
 		}
-		
 		return true;
-	}
-	
-	private void checkWishListItem(WishListItem item) {
-		checkNotNull(item, "item cannot be null");
 	}
 	
 	private void checkProduct(Product product) {

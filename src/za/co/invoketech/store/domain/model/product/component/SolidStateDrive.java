@@ -2,6 +2,8 @@ package za.co.invoketech.store.domain.model.product.component;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
@@ -11,6 +13,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table (name = "SOLID_STATE_DRIVE")
+@Inheritance(strategy=InheritanceType.JOINED)
 @PrimaryKeyJoinColumn (name = "PRODUCT_ID")
 public class SolidStateDrive extends InternalStorage {
 
@@ -18,6 +21,7 @@ public class SolidStateDrive extends InternalStorage {
 	
 	@Column(name = "READ_SPEED")
 	private int readSpeed;
+	
 	@Column(name = "WRITE_SPEED")
 	private int writeSpeed;
   
@@ -28,6 +32,7 @@ public class SolidStateDrive extends InternalStorage {
 	public void setReadSpeed(int readSpeed) {
 		this.readSpeed = readSpeed;
 	}   
+	
 	public int getWriteSpeed() {
 		return this.writeSpeed;
 	}
@@ -35,5 +40,4 @@ public class SolidStateDrive extends InternalStorage {
 	public void setWriteSpeed(int writeSpeed) {
 		this.writeSpeed = writeSpeed;
 	}
-   
 }

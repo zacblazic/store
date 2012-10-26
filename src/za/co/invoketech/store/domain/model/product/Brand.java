@@ -1,8 +1,16 @@
 package za.co.invoketech.store.domain.model.product;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
+
 import java.io.Serializable;
-import java.lang.String;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * Entity implementation class for Entity: Brand
@@ -15,17 +23,25 @@ public class Brand implements Serializable {
 	private static final long serialVersionUID = 1L;
 	 
 	@Id
-	@GeneratedValue (strategy = GenerationType.AUTO)
+	@GeneratedValue (strategy = GenerationType.SEQUENCE)
 	private long id;
 	
 	@Column (name = "BRAND_NAME", unique = true)
 	private String brandName; 
-
-	public Brand (){		
+	
+	public long getId() {
+		return this.id;
 	}
 	
+	/**
+	 * @deprecated
+	 * Default constructor should only be used by the persistence mechanism.
+	 */
+	public Brand() {}
+	
 	public Brand (String brandName){
-		setBrandName(brandName);
+		checkBrandName(brandName);
+		this.brandName = brandName;
 	}
   
 	public String getBrandName() {
@@ -33,15 +49,13 @@ public class Brand implements Serializable {
 	}
 
 	public void setBrandName(String brandName) {
+		checkBrandName(brandName);
 		this.brandName = brandName;
 	} 
 	
-	public long getId() {
-		return this.id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
+	private void checkBrandName(String brandName) {
+		checkNotNull(brandName, "brandName cannot be null");
+		checkArgument(!brandName.isEmpty(), "brandName cannot be empty");
 	}
    
 }

@@ -36,6 +36,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import za.co.invoketech.store.application.util.Dates;
+
 /**
  * @author zacblazic@gmail.com (Zac Blazic)
  */
@@ -50,13 +52,13 @@ public class ShoppingCart implements Serializable {
 	@Column(name = "SHOPPING_CART_ID")
 	private long id;
 	
-	@Temporal(TemporalType.DATE)
-	@Column(name = "LAST_UPDATED_DATE")
-	private Date lastUpdatedDate;
-	
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "SHOPPING_CART_ID")
 	private List<ShoppingCartItem> items;
+	
+	@Temporal(TemporalType.DATE)
+	@Column(name = "LAST_UPDATED_DATE", nullable = false)
+	private Date lastUpdatedDate;
 	
 	/**
 	 * @deprecated
@@ -66,54 +68,76 @@ public class ShoppingCart implements Serializable {
 
 	public ShoppingCart(List<ShoppingCartItem> items) {
 		checkItems(items);
-		this.items = copyItems(items);
+		this.items = ShoppingCartItem.copyAll(items);
+		this.lastUpdatedDate = Dates.now();
 	}
 	
-	public ShoppingCart(ShoppingCart cart) {
-		checkShoppingCart(cart);
+	private ShoppingCart(ShoppingCart cart) {
 		this.id = cart.id;
-		this.items = copyItems(cart.items);
+		this.items = ShoppingCartItem.copyAll(cart.items);
+		this.lastUpdatedDate = Dates.copy(cart.lastUpdatedDate);
+	}
+	
+	public static ShoppingCart copy(ShoppingCart cart) {
+		if(cart != null) {
+			return new ShoppingCart(cart);
+		}
+		return null;
 	}
 	
 	public long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public void addItem(ShoppingCartItem item) {
+	public boolean addItem(ShoppingCartItem item) {
+		item = ShoppingCartItem.copy(item);
 		checkItem(item);
 		
+		boolean added = false;
 		if(hasItem(item)) {
 			getItem(item).increaseQuantity(item.getQuantity());
+			added = true;
 		} else {
-			items.add(new ShoppingCartItem(item));
+			added = items.add(item);
 		}
+		
+		if(added) {
+			setLastUpdatedDate();
+		}
+		return added;
 	}
 	
-	public void removeItem(ShoppingCartItem item) {
+	public boolean removeItem(ShoppingCartItem item) {
+		item = ShoppingCartItem.copy(item);
 		checkItem(item);
-		items.remove(item);
+		
+		if(items.remove(item)) {
+			setLastUpdatedDate();
+			return true;
+		}
+		return false;
 	}
 	
 	public boolean hasItem(ShoppingCartItem item) {
+		item = ShoppingCartItem.copy(item);
 		checkItem(item);
 		return items.contains(item);
 	}
 	
 	public void removeAllItems() {
 		items = new ArrayList<ShoppingCartItem>();
+		setLastUpdatedDate();
 	}
 	
 	public List<ShoppingCartItem> getItems() {
-		return copyItems(items);
+		return ShoppingCartItem.copyAll(items);
 	}
 	
 	public void setItems(List<ShoppingCartItem> items) {
+		items = ShoppingCartItem.copyAll(items);
 		checkItems(items);
-		this.items = copyItems(items);
+		this.items = items;
+		setLastUpdatedDate();
 	}
 	
 	public int getItemCount() {
@@ -122,12 +146,18 @@ public class ShoppingCart implements Serializable {
 	
 	public int getItemCountWithQuantity() {
 		int count = 0;
-		
 		for(ShoppingCartItem item : items) {
 			count += item.getQuantity();
 		}
-		
 		return count;
+	}
+	
+	public Date getLastUpdatedDate() {
+		return Dates.copy(lastUpdatedDate);
+	}
+	
+	private void setLastUpdatedDate() {
+		lastUpdatedDate = Dates.now();
 	}
 	
 	private ShoppingCartItem getItem(ShoppingCartItem existingItem) {
@@ -136,22 +166,7 @@ public class ShoppingCart implements Serializable {
 				return item;
 			}
 		}
-		
 		return null;
-	}
-	
-	private List<ShoppingCartItem> copyItems(List<ShoppingCartItem> items) {
-		List<ShoppingCartItem> copiedItems = new ArrayList<ShoppingCartItem>();
-		
-		for(ShoppingCartItem item : items) {
-			copiedItems.add(new ShoppingCartItem(item));
-		}
-		
-		return copiedItems;
-	}
-	
-	private void checkShoppingCart(ShoppingCart cart) {
-		checkNotNull(cart, "cart cannot be null");
 	}
 	
 	private void checkItem(ShoppingCartItem item) {

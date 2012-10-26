@@ -43,14 +43,14 @@ import com.google.inject.persist.jpa.JpaPersistModule;
 public class ProductRepositoryTest {
 	private static final String PERSISTENCE_UNIT = "storeJpaUnit";
 	private static Injector injector;
-	private static ProductRepository dao;
+	private static ProductRepository productRepository;
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 
 		injector = Guice.createInjector(new PersistenceModule(), new JpaPersistModule(PERSISTENCE_UNIT));
 		injector.getInstance(ApplicationInitializer.class);
-		dao = injector.getInstance(ProductRepository.class);
+		productRepository = injector.getInstance(ProductRepository.class);
 	}
 
 	@Test
@@ -63,33 +63,30 @@ public class ProductRepositoryTest {
 		mouse.setDpi(5600);
 		mouse.setButtons(7);
 		mouse.setPrice(productPricingService.setStandardMarkupPrice(new BigDecimal(1200)));
-		mouse.setDescription("Ouroboros");
+		mouse.setTitle("Ouroboros");
 		mouse.setBrand(new Brand("Razer"));
-		mouse.setProductCode("Mo-RO");
 		mouse.setDiscontinued(false);
 		
-		dao.persist(mouse);
+		productRepository.persist(mouse);
 		Assert.assertTrue(mouse.getId() != 0);
 		
 		
 		// Read
 		System.out.println("Reading");
-		Product p =  dao.findById(mouse.getId());		
-		Assert.assertTrue(p.getProductCode() == mouse.getProductCode());		
+		Product p = productRepository.findById(mouse.getId());		
+		Assert.assertNotNull(p);	
 		
 		// Update
 		System.out.println("Updating");
-		p.setProductCode("Mo-RO7");
-		dao.merge(p);
+		p.setTitle("Ouroboros Extreme");
+		productRepository.merge(p);
 		
-		Product p2 = dao.findById(p.getId());
-		Assert.assertTrue(p.getProductCode() == p2.getProductCode());
+		Product p2 = productRepository.findById(p.getId());
+		Assert.assertTrue(p.getTitle() == p2.getTitle());
 				
 		// Delete
 		System.out.println("Deleting");
-		dao.remove(p);
-		Assert.assertNull(dao.findById(p.getId()));
-		
+		productRepository.remove(p);
+		Assert.assertNull(productRepository.findById(p.getId()));	
 	}
-
 }

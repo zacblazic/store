@@ -19,11 +19,10 @@ package za.co.invoketech.store.domain.model.order;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import static za.co.invoketech.store.application.util.DefensiveDate.*;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,8 +33,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import za.co.invoketech.store.domain.model.product.Product;
 
@@ -61,10 +58,6 @@ public class OrderItem implements Serializable {
 	@Column(name = "QUANTITY", nullable = false)
 	private int quantity;
 	
-	@Temporal(TemporalType.DATE)
-	@Column(name = "DISPATCHED_DATE")
-	private Date dispatchedDate;
-	
 	/**
 	 * @deprecated
 	 * Default constructor should only be used by the persistence mechanism.
@@ -84,69 +77,42 @@ public class OrderItem implements Serializable {
 		this.quantity = quantity;
 	}
 	
-	public OrderItem(OrderItem item) {
-		checkOrderItem(item);
+	private OrderItem(OrderItem item) {
 		this.id = item.id;
 		this.product = item.product;
 		this.unitPrice = item.unitPrice;
 		this.quantity = item.quantity;
-		this.dispatchedDate = copyDate(item.dispatchedDate);
+	}
+	
+	public static OrderItem copy(OrderItem item) {
+		if(item != null) {
+			return new OrderItem(item);
+		}
+		return null;
+	}
+	
+	public static List<OrderItem> copyAll(List<OrderItem> items) {
+		List<OrderItem> copiedItems = new ArrayList<>();
+		for(OrderItem item : items) {
+			copiedItems.add(copy(item));
+		}
+		return copiedItems;
 	}
 	
 	public long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
-		this.id = id;
-	}
-
 	public Product getProduct() {
 		return product;
-	}
-
-	public void setProduct(Product product) {
-		checkProduct(product);
-		this.product = product;
 	}
 	
 	public BigDecimal getUnitPrice() {
 		return unitPrice;
 	}
 
-	public void setUnitPrice(BigDecimal unitPrice) {
-		checkUnitPrice(unitPrice);
-		this.unitPrice = unitPrice;
-	}
-
 	public int getQuantity() {
 		return quantity;
-	}
-
-	public void setQuantity(int quantity) {
-		checkQuantity(quantity);
-		this.quantity = quantity;
-	}
-	
-	public void increaseQuantity(int amount) {
-		int newQuantity = quantity + amount;
-		checkQuantity(newQuantity);
-		quantity = newQuantity;
-	}
-	
-	public void decreaseQuantity(int amount) {
-		int newQuantity = quantity - amount;
-		checkQuantity(newQuantity);
-		quantity = newQuantity;
-	}
-	
-	public Date getDispatchedDate() {
-		return new Date(dispatchedDate.getTime());
-	}
-
-	public void setDispatchedDate(Date dispatchedDate) {
-		checkDispatchedDate(dispatchedDate);
-		this.dispatchedDate = new Date(dispatchedDate.getTime());
 	}
 
 	@Override
@@ -156,16 +122,10 @@ public class OrderItem implements Serializable {
 		}
 		
 		OrderItem other = (OrderItem)object;
-		
 		if(!this.product.equals(other.product)) {
 			return false;
 		}
-		
 		return true;
-	}
-	
-	private void checkOrderItem(OrderItem item) {
-		checkNotNull(item, "item cannot be null");
 	}
 	
 	private void checkProduct(Product product) {
@@ -180,9 +140,5 @@ public class OrderItem implements Serializable {
 	
 	private void checkQuantity(int quantity) {
 		checkArgument(quantity > 0, "quantity cannot be < 1");
-	}
-	
-	private void checkDispatchedDate(Date dispatchedDate) {
-		checkNotNull(dispatchedDate, "dispatchedDate cannot be null");
 	}
 }

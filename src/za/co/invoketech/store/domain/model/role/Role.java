@@ -62,17 +62,8 @@ public class Role implements Serializable {
 		return id;
 	}
 
-	public void setId(long id) {
-		this.id = id;
-	}
-
 	public String getRoleName() {
 		return roleName;
-	}
-
-	public void setRoleName(String roleName) {
-		checkRoleName(roleName);
-		this.roleName = roleName;
 	}
 	
 	@Override

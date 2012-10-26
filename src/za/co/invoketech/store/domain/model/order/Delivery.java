@@ -55,25 +55,27 @@ public class Delivery implements Serializable {
 		checkAddress(address);
 		checkCost(cost);
 		this.method = method;
-		this.address = DeliveryAddress.copy(address);
+		this.address = address;
 		this.cost = cost;
 	}
 	
-	public Delivery(Delivery delivery) {
-		checkDelivery(delivery);
+	private Delivery(Delivery delivery) {
 		this.id = delivery.id;
 		this.method = delivery.method;
-		this.address = DeliveryAddress.copy(delivery.address);
+		this.address = delivery.address;
 		this.cost = delivery.cost;
 		this.instructions = delivery.instructions;
 	}
 	
+	public static Delivery copy(Delivery delivery) {
+		if(delivery != null) {
+			return new Delivery(delivery);
+		}
+		return null;
+	}
+	
 	public Long getId() {
 		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public DeliveryMethod getMethod() {
@@ -86,12 +88,12 @@ public class Delivery implements Serializable {
 	}
 	
 	public DeliveryAddress getAddress() {
-		return DeliveryAddress.copy(address);
+		return address;
 	}
 
 	public void setAddress(DeliveryAddress address) {
 		checkAddress(address);
-		this.address = DeliveryAddress.copy(address);
+		this.address = address;
 	}
 
 	public BigDecimal getCost() {
@@ -109,10 +111,6 @@ public class Delivery implements Serializable {
 
 	public void setInstructions(String instructions) {
 		this.instructions = instructions;
-	}
-	
-	private void checkDelivery(Delivery delivery) {
-		checkNotNull(delivery, "delivery cannot be null");
 	}
 	
 	private void checkMethod(DeliveryMethod method) {

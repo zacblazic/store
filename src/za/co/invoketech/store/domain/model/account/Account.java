@@ -91,10 +91,6 @@ public class Account implements Serializable {
 		return id;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
 	public String getEmail() {
 		return email;
 	}
@@ -155,12 +151,12 @@ public class Account implements Serializable {
 	}
 	
 	public List<Role> getRoles() {
-		return roles;
+		return new ArrayList<>(roles);
 	}
 	
 	public void setRoles(List<Role> roles) {
 		checkRoles(roles);
-		this.roles = roles;
+		this.roles = new ArrayList<>(roles);
 	}
 
 	@Override

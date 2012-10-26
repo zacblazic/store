@@ -58,16 +58,11 @@ public class RoleRepositoryTest {
 		// Read
 		Role newRole = roleDao.findById(role.getId());
 		Assert.assertTrue(role.equals(newRole));
-		
-		// Update
-		newRole.setRoleName("Shopper");
-		roleDao.merge(newRole);
-		
-		Role newRole2 = roleDao.findById(newRole.getId());
-		Assert.assertTrue(newRole2.getRoleName().equals(newRole.getRoleName()));
+
+		// Can't update as role is immutable
 		
 		// Deletes
-		roleDao.remove(newRole2);
-		Assert.assertNull(roleDao.findById(newRole2.getId()));		
+		roleDao.remove(newRole);
+		Assert.assertNull(roleDao.findById(newRole.getId()));		
 	}
 }

@@ -1,6 +1,9 @@
 package za.co.invoketech.store.domain.model.product.software;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
@@ -9,14 +12,20 @@ import javax.persistence.Table;
  *
  */
 @Entity
-@Table (name = "OPERATING_SYSTEM")
+@Table(name = "OPERATING_SYSTEM")
+@Inheritance(strategy=InheritanceType.JOINED)
 @PrimaryKeyJoinColumn(name = "PRODUCT_ID")
 public class OperatingSystem extends Software {
 
 	private static final long serialVersionUID = 1L;
 	
+	@Column(name = "PLATFORM")
 	private String platform;
-	private String architechture;
+	
+	@Column(name = "ARCHITECTURE")
+	private String architecture;
+	
+	@Column(name = "LICENCES")
 	private int licences;
 
 	public String getPlatform() {
@@ -26,13 +35,15 @@ public class OperatingSystem extends Software {
 	public void setPlatform(String platform) {
 		this.platform = platform;
 	}   
-	public String getArchitechture() {
-		return this.architechture;
+	
+	public String getArchitecture() {
+		return architecture;
 	}
 
-	public void setArchitechture(String architechture) {
-		this.architechture = architechture;
-	}   
+	public void setArchitecture(String architecture) {
+		this.architecture = architecture;
+	}
+
 	public int getLicences() {
 		return this.licences;
 	}
@@ -40,5 +51,4 @@ public class OperatingSystem extends Software {
 	public void setLicences(int licences) {
 		this.licences = licences;
 	}
-   
 }

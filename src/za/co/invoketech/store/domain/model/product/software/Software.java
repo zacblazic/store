@@ -1,5 +1,6 @@
 package za.co.invoketech.store.domain.model.product.software;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -19,7 +20,8 @@ import za.co.invoketech.store.domain.model.product.Product;
 public class Software extends Product {
 
 	private static final long serialVersionUID = 1L;
-		
+	
+	@Column(name = "DEVELOPER", nullable = false)
 	private String developer;
 
 	public String getDeveloper() {
@@ -29,6 +31,4 @@ public class Software extends Product {
 	public void setDeveloper(String developer) {
 		this.developer = developer;
 	}
-   
-	
 }

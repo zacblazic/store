@@ -1,6 +1,5 @@
 package za.co.invoketech.store.domain.model.product.peripheral;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -23,8 +22,8 @@ public class Peripheral extends Product {
 
 	private static final long serialVersionUID = 1L;
 
-	@ManyToOne(cascade=CascadeType.ALL)
-	private Brand brand = new Brand();
+	@ManyToOne
+	private Brand brand;
 
 	public Brand getBrand() {
 		return brand;
@@ -33,6 +32,4 @@ public class Peripheral extends Product {
 	public void setBrand(Brand brand) {
 		this.brand = brand;
 	} 
-   
-   
 }

@@ -1,6 +1,5 @@
 package za.co.invoketech.store.domain.model.product.component;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -16,23 +15,21 @@ import za.co.invoketech.store.domain.model.product.Product;
  *
  */
 @Entity
-@Table (name = "COMPONENT")
+@Table(name = "COMPONENT")
 @Inheritance(strategy=InheritanceType.JOINED)
 @PrimaryKeyJoinColumn(name = "PRODUCT_ID")
 public class Component extends Product {
 
 	private static final long serialVersionUID = 1L;
 
-	@ManyToOne(cascade=CascadeType.ALL)
-	private Brand brand = new Brand();
-
+	@ManyToOne
+	private Brand brand;
+	
 	public Brand getBrand() {
 		return brand;
 	}
 
 	public void setBrand(Brand brand) {
 		this.brand = brand;
-	} 
-   
-	
+	}
 }

@@ -55,5 +55,7 @@ public class AddressController {
 		} catch (MaximumAddressesReachedException e) {
 			Faces.showErrorMessage("Could not add address",  "Maximum number of addresses reached");
 		}
+		
+		Faces.showInfoMessage("Address added", "");
 	}
 }

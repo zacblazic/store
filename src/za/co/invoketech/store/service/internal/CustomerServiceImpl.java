@@ -65,6 +65,7 @@ public class CustomerServiceImpl implements CustomerService {
 			throw new MaximumAddressesReachedException();
 		}
 		
+		
 		customer.addAddress(address);
 		customerRepository.merge(customer);
 	}

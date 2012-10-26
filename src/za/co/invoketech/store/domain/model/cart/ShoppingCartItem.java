@@ -16,9 +16,12 @@
 
 package za.co.invoketech.store.domain.model.cart;
 
-import static com.google.common.base.Preconditions.*;
+import static com.google.common.base.Preconditions.checkArgument;
+import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -71,28 +74,34 @@ public class ShoppingCartItem implements Serializable {
 		this.quantity = quantity;
 	}
 	
-	public ShoppingCartItem(ShoppingCartItem item) {
-		checkShoppingCartItem(item);
+	private ShoppingCartItem(ShoppingCartItem item) {
 		this.id = item.id;
 		this.product = item.product;
 		this.quantity = item.quantity;
+	}
+	
+	public static ShoppingCartItem copy(ShoppingCartItem item) {
+		if(item != null) {
+			return new ShoppingCartItem(item);
+		}
+		return null;
+	}
+	
+	public static List<ShoppingCartItem> copyAll(List<ShoppingCartItem> items) {
+		List<ShoppingCartItem> copiedItems = new ArrayList<>();
+		
+		for(ShoppingCartItem item : items) {
+			copiedItems.add(copy(item));
+		}
+		return copiedItems;
 	}
 	
 	public long getId() {
 		return id;
 	}
 
-	public void setId(long id) {
-		this.id = id;
-	}
-
 	public Product getProduct() {
 		return product;
-	}
-
-	public void setProduct(Product product) {
-		checkProduct(product);
-		this.product = product;
 	}
 
 	public int getQuantity() {
@@ -105,19 +114,15 @@ public class ShoppingCartItem implements Serializable {
 	}
 	
 	public void increaseQuantity(int amount) {
-		int newQuantity = quantity + amount;
-		checkQuantity(newQuantity);
-		quantity = newQuantity;
+		setQuantity(quantity + amount);
 	}
 	
 	public void decreaseQuantity(int amount) {
-		int newQuantity = quantity - amount;
-		checkQuantity(newQuantity);
-		quantity = newQuantity;
+		setQuantity(quantity - amount);
 	}
 	
 	public void resetQuantity() {
-		quantity = 1;
+		quantity = DEFAULT_QUANTITY;
 	}
 	
 	@Override
@@ -127,18 +132,12 @@ public class ShoppingCartItem implements Serializable {
 		}
 		
 		ShoppingCartItem other = (ShoppingCartItem)object;
-		
 		if(!this.product.equals(other.product)) {
 			return false;
 		}
-		
 		return true;
 	}
-	
-	private void checkShoppingCartItem(ShoppingCartItem item) {
-		checkNotNull(item, "item cannot be null");
-	}
-	
+
 	private void checkProduct(Product product) {
 		checkNotNull(product, "product cannot be null");
 		checkArgument(product.getId() != 0, "product has not been persisted");

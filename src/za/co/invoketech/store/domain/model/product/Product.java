@@ -16,98 +16,99 @@
 
 package za.co.invoketech.store.domain.model.product;
 
-import static com.google.common.base.Preconditions.*; 
+import static com.google.common.base.Preconditions.checkState;
 
 import java.io.Serializable;
-import java.lang.String;
 import java.math.BigDecimal;
+import java.util.Date;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import za.co.invoketech.store.application.util.Dates;
 
 /**
  * @author garethc18@gmail.com (Gareth Conry)
  */
 @Entity
-@Table (name = "PRODUCT")
-@Inheritance (strategy = InheritanceType.JOINED)
+@Table(name = "PRODUCT")
+@Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "PRODUCT_TYPE", discriminatorType=DiscriminatorType.STRING)
 public class Product implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column (name = "PRODUCT_ID")
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@Column(name = "PRODUCT_ID")
 	private long id;
 	
-	@Column (name = "PRODUCT_CODE", unique = true)
-	private String productCode;
+	@Column(name = "TITLE", nullable = false)
+	private String title;
 	
-	@Column (name = "DESCRIPTION")
-	private String description;
+	@Column(name = "UNIT_PRICE", nullable = false)
+	private BigDecimal unitPrice;
 	
-	@Column (name = "PRICE")
-	private BigDecimal price;
+	@Column(name = "STOCK", nullable = false)
+	private long stock;
 	
-	@Column (name = "DISCONTINUED")
-	private boolean discontinued;
+	@Temporal(TemporalType.DATE)
+	@Column(name = "DISCONTINUED_DATE")
+	private Date discontinuedDate;
 	
-	public Product() {
-	}
-	
-	public static Product getInstance() {
-		Product product = new Product();
-		return product;
-	}
+	public Product() {}
 
 	public long getId() 
 	{
 		return id;
 	}
-
-	public void setId(long id)
+	
+	public String getTitle() 
 	{
-		this.id = id;
+		return title;
 	}
 
-	public String getProductCode() 
+	public void setTitle(String title) 
 	{
-		return this.productCode;
-	}
-
-	public void setProductCode(String productCode) 
-	{
-		this.productCode = productCode;
+		this.title = title;
 	}   
 	
-	public String getDescription() 
+	public BigDecimal getUnitPrice()
 	{
-		return this.description;
+		return unitPrice;
 	}
 
-	public void setDescription(String description) 
+	public void setPrice(BigDecimal unitPrice) 
 	{
-		this.description = description;
+		this.unitPrice = unitPrice;
 	}   
 	
-	public BigDecimal getPrice()
+	public Date getDiscontinuedDate() 
 	{
-		return this.price;
+		return Dates.copy(discontinuedDate);
 	}
-
-	public void setPrice(BigDecimal price) 
-	{
-		this.price = price;
-	}   
 	
-	public boolean getDiscontinued() 
+	public boolean isDiscontinued() 
 	{
-		return this.discontinued;
+		return discontinuedDate != null ? true : false;
 	}
-
-	public void setDiscontinued(boolean discontinued) 
-	{
-		this.discontinued = discontinued;
+	
+	public void setDiscontinued(boolean discontinued) {
+		if(discontinued) {
+			discontinuedDate = Dates.now();
+		} else {
+			discontinuedDate = null;
+		}
 	}
 	
 	@Override
@@ -123,7 +124,6 @@ public class Product implements Serializable {
 		if(this.id != other.id) {
 			return false;
 		}
-		
 		return true;
 	}
 }

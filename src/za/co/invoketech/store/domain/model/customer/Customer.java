@@ -61,13 +61,13 @@ public class Customer implements Serializable {
 	@Embedded
 	private Person person;
 	
-	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ACCOUNT_ID", nullable = false)
-	private Account account;
-	
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "CUSTOMER_ID")
 	private List<Address> addresses;
+	
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "ACCOUNT_ID", nullable = false)
+	private Account account;
 	
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "SHOPPING_CART_ID", nullable = false) 
@@ -89,11 +89,11 @@ public class Customer implements Serializable {
 	
 	public Customer(Person person, Address primary, Account account) {
 		checkPerson(person);
-		checkAccount(account);
 		checkPrimaryAddress(primary);
+		checkAccount(account);
 		this.person = Person.copy(person);
-		this.account = account;
 		this.addresses = createAddressesWithPrimary(primary);
+		this.account = account;
 		shoppingCart = createShoppingCart();
 		wishLists = createWishLists();
 		orders = createOrders();
@@ -101,10 +101,6 @@ public class Customer implements Serializable {
 
 	public long getId() {
 		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
 	}
 
 	public String getFirstName() {
@@ -143,20 +139,18 @@ public class Customer implements Serializable {
 		return account;
 	}
 	
-	public void addAddress(Address address) {
+	public boolean addAddress(Address address) {
+		address = Address.copy(address);
 		checkAddress(address);
-		
-		if(address.isPrimary()) {
-			getPrimaryAddress().setPrimary(false);	
-		} 
-		
-		addresses.add(address);
+		return addresses.add(address);
 	}
 	
-	public void removeAddress() {
-		
+	public boolean removeAddress(Address address) {
+		address = Address.copy(address);
+		checkAddress(address);
+		return addresses.remove(address);
 	}
-
+	
 	public Address getPrimaryAddress() {
 		for(Address address : addresses) {
 			if(address.isPrimary()) {
@@ -166,9 +160,22 @@ public class Customer implements Serializable {
 		return null;
 	}
 	
-	public void setPrimaryAddress(Address address) {
-		checkPrimaryAddress(address);
-		getPrimaryAddress().setPrimary(false);
+	public Address getAddressByLabel(String label) {
+		for(Address address : addresses) {
+			if(address.getLabel().equalsIgnoreCase(label)) {
+				return address;
+			}
+		}
+		return null;
+	}
+	
+	public boolean hasAddressWithLabel(String label) {
+		for(Address address : addresses) {
+			if(address.getLabel().equalsIgnoreCase(label)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	public int getAddressCount() {
@@ -195,30 +202,30 @@ public class Customer implements Serializable {
 	}
 
 	public ShoppingCart getShoppingCart() {
-		return new ShoppingCart(shoppingCart);
+		return ShoppingCart.copy(shoppingCart);
 	}
 
 	public void setShoppingCart(ShoppingCart shoppingCart) {
 		checkShoppingCart(shoppingCart);
-		this.shoppingCart = new ShoppingCart(shoppingCart);
+		this.shoppingCart = ShoppingCart.copy(shoppingCart);
 	}
 
 	public List<WishList> getWishLists() {
-		return copyWishLists(wishLists);
+		return WishList.copyAll(wishLists);
 	}
 
 	public void setWishLists(List<WishList> wishLists) {
 		checkWishLists(wishLists);
-		this.wishLists = copyWishLists(wishLists);
+		this.wishLists = WishList.copyAll(wishLists);
 	}
 	
 	public List<Order> getOrders() {
-		return orders;
+		return new ArrayList<>(orders);
 	}
 	
 	public void setOrders(List<Order> orders) {
 		checkOrders(orders);
-		this.orders = orders;
+		this.orders = new ArrayList<>(orders);
 	}
 	
 	private List<Address> createAddressesWithPrimary(Address address) {
@@ -239,18 +246,6 @@ public class Customer implements Serializable {
 	private ShoppingCart createShoppingCart() {
 		return new ShoppingCart(new ArrayList<ShoppingCartItem>());
 	}
-	
-	private List<WishList> copyWishLists(List<WishList> wishLists) {
-		List<WishList> copiedWishLists = createWishLists();
-		
-		for(WishList wishList : wishLists) {
-			copiedWishLists.add(new WishList(wishList));
-		}
-		
-		return copiedWishLists;
-	}
-	
-	
 	
 	private void checkPerson(Person person) {
 		checkNotNull(person, "person cannot be null");
