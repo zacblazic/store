@@ -13,8 +13,12 @@
 <h:body>
 	<ui:composition>
 	
-		<ui:insert>
-			<ui:include src="header-buttons.xhtml" />
+		<p:commandLink action="index?faces-redirect=true">
+			<p:graphicImage library="images" name="invoketech.png" width="20%" height="20%" cache="true" />
+		</p:commandLink>
+	
+		<ui:insert name="header-toolbar">
+			<ui:include src="header-toolbar.xhtml" />
 		</ui:insert>
 	
 	</ui:composition>
