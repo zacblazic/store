@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import junit.framework.Assert;
+
 import org.junit.Test;
 
 import za.co.invoketech.store.application.config.Goose;
@@ -32,7 +34,6 @@ import za.co.invoketech.store.service.repository.ProductRepository;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
 import com.google.inject.Inject;
 
 public class OrderJsonTest {
@@ -134,11 +135,12 @@ public class OrderJsonTest {
 		String jsonString = gson.toJson(order);
 		System.out.println(jsonString);
 		
-		System.out.println("-----------------------------------------------------------");
+		System.out.println("======================================");
 		
-		JsonElement jse =  gson.toJsonTree(order);
-		System.out.println(jse.toString());
+		String newStr = gson.toJson(orderRepository.findById(order.getId()));
+		System.out.println(newStr);
 		
+		Assert.assertEquals(jsonString, newStr);
 	}
 
 }

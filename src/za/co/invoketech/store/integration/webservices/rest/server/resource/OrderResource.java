@@ -23,10 +23,11 @@ public class OrderResource extends ServerResource {
 		Order order;
 		long orderId = Long.valueOf((String) this.getRequestAttributes().get("orderId"));
 		System.out.println(orderId);
-		order = orderRepository.findById(orderId);		
+		order = orderRepository.findById(orderId);	
+
 		Gson gson = new Gson();
-		String jsonString = gson.toJson(order);		
+		String jse =  gson.toJson(order);
 		
-		return jsonString;		
+		return jse.toString();
 	}
 }

@@ -10,7 +10,6 @@ import za.co.invoketech.store.integration.webservices.rest.server.InvokeRestServ
 import za.co.invoketech.store.service.repository.OrderRepository;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.inject.Inject;
 
@@ -38,14 +37,10 @@ public class OrderRestTest {
 		System.out.println(response);
 		System.out.println("------------------------------------------------------------");
 		
-		Gson gson = new GsonBuilder().setPrettyPrinting().create();
-		String jsonString = gson.toJson(orderRepository.findById(1L));
+		Gson gson = new Gson();		
+		JsonElement jse =  gson.toJsonTree(orderRepository.findById(1L));		
 		
-		
-
-		System.out.println(jsonString);
-		
-		assertEquals("Test GSon", jsonString, response);
+		assertEquals("Test GSon", jse.toString(), response);
 	}
 
 }
