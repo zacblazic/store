@@ -16,8 +16,14 @@
 		
 		<p:toolbar styleClass="header-toolbar">
 			<p:toolbarGroup align="left">
-				<p:commandButton value="Home" ajax="false" immediate="true" action="/index?faces-redirect=true"/>
+				<p:commandButton value="Home" icon="ui-icon-home" ajax="false" immediate="true" action="/index?faces-redirect=true"/>
+				<p:separator />
+				<p:commandButton value="Products" ajax="false" immediate="true" />
+				<p:inputText value="" style="width: 300px; height: 18px;"/>
+				<p:commandButton value="Search" ajax="false" immediate="true" />
 			</p:toolbarGroup>
+			
+			
 			<p:toolbarGroup align="right">
 			
 				<h:outputText value="Welcome, "  />

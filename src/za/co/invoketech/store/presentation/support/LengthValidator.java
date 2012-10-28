@@ -15,7 +15,7 @@ public class LengthValidator implements Validator {
 	@Override
 	public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
 		Map<String, Object> attributes = component.getAttributes();
-		String input = value.toString();
+		String input = (String)value;
 		
 		String label = "Input";
 		int minumum = -1;

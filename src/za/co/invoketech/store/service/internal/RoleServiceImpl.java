@@ -59,7 +59,7 @@ public class RoleServiceImpl implements RoleService {
 		List<Role> roles = roleRepository.findAll();
 		for (Role role : roles) {
 			if (role.getRoleName().equals(roleName))
-				throw new InvalidRoleNameException("Name exists in database");
+				throw new InvalidRoleNameException("Role exists");
 		}
 		
 		Role role = new Role(roleName);

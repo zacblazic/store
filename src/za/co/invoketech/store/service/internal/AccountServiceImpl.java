@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.credential.DefaultPasswordService;
 import org.apache.shiro.authc.credential.PasswordService;
 
 import za.co.invoketech.store.application.exception.AccountExistsException;
@@ -45,48 +44,46 @@ import com.google.inject.Singleton;
 @Singleton
 public class AccountServiceImpl implements AccountService {
 	
-	@Inject
-	private RoleRepository roleRepo;
-	
-	@Inject
-	private AccountRepository accountRepo;
+	@Inject private RoleRepository roleRepository;
+	@Inject private AccountRepository accountRepository;
+	@Inject private PasswordService passwordService;
 	
 	@Override
-	public Account createAccount(String email, String password, List<Role> roles) throws RoleNotFoundException, AccountExistsException {
-		Account account;
+	public Account createAccount(String email, String password, List<Role> roles) throws RoleNotFoundException, AccountExistsException {	
+		Account newAccount = new Account(email, passwordService.encryptPassword(password));
+	
+		List<Account> accounts = accountRepository.findAll();
 		
 		// Check if account exists
-		for (Account dbacc : accountRepo.findAll()) {
-			if (dbacc.getEmail().equals(email)){
+		for (Account account : accounts) {
+			if (account.equals(newAccount)){
 				throw new AccountExistsException();
 			}
 		}
 		
-		if (roles != null && roles.size() != 0)
+		if (roles == null || roles.size() == 0)
 		{
-			// Find if roles exist
-			List<Role> dbRoles = new ArrayList<Role>();
-			
-			for (Role role : roles) {
-				Role foundRole = roleRepo.findByRoleName(role.getRoleName());
-				if (foundRole == null) throw new RoleNotFoundException();
-				else dbRoles.add(foundRole);
-			}				
-				
-			PasswordService psvc = new DefaultPasswordService();
-			
-			account = new Account(email, psvc.encryptPassword(password), dbRoles);
-			accountRepo.persist(account);
-			
+			throw new RoleNotFoundException("No role assigned");
 		}
-		else throw new RoleNotFoundException("No role assigned");
+				
+		for (Role role : roles) {
+			Role foundRole = roleRepository.findByRoleName(role.getRoleName());
+			
+			if (foundRole == null) {
+				throw new RoleNotFoundException();
+			}
+			
+			newAccount.addRole(foundRole);
+		}				
 		
-		return account;
+		accountRepository.persist(newAccount);
+		
+		return newAccount;
 	}
 
 	@Override
 	public Account retrieveAccount(long accountId) throws AccountNotFoundException {
-		Account account = accountRepo.findById(accountId);
+		Account account = accountRepository.findById(accountId);
 		if (account == null)
 		{
 			throw new AccountNotFoundException();
@@ -101,7 +98,7 @@ public class AccountServiceImpl implements AccountService {
 		{
 			throw new AccountNotFoundException("Cannot update null account or account with no id");
 		}		
-		accountRepo.merge(account);
+		accountRepository.merge(account);
 	}
 
 	@Override
@@ -123,12 +120,12 @@ public class AccountServiceImpl implements AccountService {
 			throw new CurrentAccountException();
 		}		
 		
-		accountRepo.remove(account);
+		accountRepository.remove(account);
 	}
 
 	@Override
 	public List<Account> retrieveAccountsForRole(Role role) {
-		List<Account> accounts = accountRepo.findAll();
+		List<Account> accounts = accountRepository.findAll();
 		List<Account> returnAccounts = new ArrayList<Account>();
 		boolean remove;		
 		for (Account account : accounts) {
@@ -144,13 +141,13 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public List<Account> retrieveAllAccounts() {
-		List<Account> accounts = accountRepo.findAll();
+		List<Account> accounts = accountRepository.findAll();
 		return accounts;
 	}
 
 	@Override
 	public List<Account> retrieveNonCustomerAccounts() {
-		List<Account> accounts = accountRepo.findAll();
+		List<Account> accounts = accountRepository.findAll();
 		List<Account> returnAccounts = new ArrayList<Account>();
 		for (Account account : accounts) {
 			if (account.getCustomer() == null) returnAccounts.add(account);

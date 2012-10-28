@@ -5,10 +5,16 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 
 import za.co.invoketech.store.application.config.Goose;
+import za.co.invoketech.store.application.exception.AccountExistsException;
+import za.co.invoketech.store.application.exception.RoleNotFoundException;
+import za.co.invoketech.store.application.util.Faces;
+import za.co.invoketech.store.domain.model.account.Account;
+import za.co.invoketech.store.domain.model.customer.Address;
+import za.co.invoketech.store.domain.shared.Person;
 import za.co.invoketech.store.presentation.model.AccountBean;
 import za.co.invoketech.store.presentation.model.AddressBean;
 import za.co.invoketech.store.presentation.model.PersonBean;
-import za.co.invoketech.store.service.account.AccountService;
+import za.co.invoketech.store.service.account.RoleService;
 import za.co.invoketech.store.service.customer.CustomerService;
 
 import com.google.inject.Inject;
@@ -17,47 +23,73 @@ import com.google.inject.Inject;
 @ManagedBean
 public class RegisterController {
 
-	@Inject AccountService accountService;
 	@Inject CustomerService customerService;
+	@Inject RoleService roleService;
 	
 	@ManagedProperty(value="#{personBean}")
-	private PersonBean person;
+	private PersonBean personBean;
 	
 	@ManagedProperty(value="#{addressBean}")
-	private AddressBean address;
+	private AddressBean addressBean;
 	
 	@ManagedProperty(value="#{accountBean}")
-	private AccountBean account;
+	private AccountBean accountBean;
 	
 	public RegisterController() {
 		Goose.guicify(this);
 	}
 	
-	public PersonBean getPerson() {
-		return person;
+	public PersonBean getPersonBean() {
+		return personBean;
 	}
 
-	public void setPerson(PersonBean person) {
-		this.person = person;
+	public void setPersonBean(PersonBean personBean) {
+		this.personBean = personBean;
 	}
 
-	public AddressBean getAddress() {
-		return address;
+	public AddressBean getAddressBean() {
+		return addressBean;
 	}
 
-	public void setAddress(AddressBean address) {
-		this.address = address;
+	public void setAddressBean(AddressBean addressBean) {
+		this.addressBean = addressBean;
 	}
 
-	public AccountBean getAccount() {
-		return account;
+	public AccountBean getAccountBean() {
+		return accountBean;
 	}
 
-	public void setAccount(AccountBean account) {
-		this.account = account;
+	public void setAccountBean(AccountBean accountBean) {
+		this.accountBean = accountBean;
 	}
 
 	public String register() {
+		System.out.println("Settomg address");
+		
+		addressBean.setLabel("Default");
+		addressBean.setFirstName(personBean.getFirstName());
+		addressBean.setLastName(personBean.getLastName());
+		addressBean.setPhoneNumber(personBean.getPhoneNumber());
+		
+		System.out.println("About to create person and account");
+		
+		Person person = personBean.toPerson();
+		Address address = addressBean.toAddress();
+		Account account = accountBean.toAccount();
+		
+		System.out.println("About to create customer");
+
+		try {
+			customerService.createCustomer(person, address, account);
+			System.out.println("About");
+			Faces.showInfoMessage("Registration successful!", "");
+			
+		} catch (RoleNotFoundException e) {
+			Faces.showErrorMessage("Woah I think something just broke!", "");
+		} catch (AccountExistsException e) {
+			Faces.showErrorMessage("Email address already in use.", "");
+		}
+		
 		return "";
 	}	
 }

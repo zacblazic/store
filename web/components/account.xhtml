@@ -25,9 +25,7 @@
   		
   		<h:outputText value="Password:" />
   		<p:password id="password" label="Password" value="#{accountBean.password}" required="true" requiredMessage="Please enter a password." feedback="true">
-  			<f:attribute name="label" value="Your password" />
-  		 	<f:attribute name="minimum" value="8" />
-  			<f:validator  validatorId="lengthValidator" />
+  			
   		</p:password>
   		<p:message for="password" />
   		

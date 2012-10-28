@@ -16,8 +16,8 @@ public class ConfirmPasswordValidator implements Validator {
 	public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
 		Password password = (Password) component.getParent().findComponent("password");
 		
-		String passwordString = password.getValue().toString();
-		String confirmPasswordString = value.toString();
+		String passwordString = (String)password.getValue();
+		String confirmPasswordString = (String)value;
 		
 		if(!passwordString.equals(confirmPasswordString)) {
 			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "", "Passwords do not match."));

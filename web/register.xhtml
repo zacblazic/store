@@ -17,9 +17,8 @@
 			<ui:include src="/components/header.xhtml" />
 		</ui:insert>
 		
-		<h2>Register</h2>
-		
-		<div id="register">
+		<div id="register" style="float: left;">
+			<p:messages id="messages" globalOnly="true" />
 			<p:panel id="person-panel" styleClass="person-panel" header="Personal Details">
 				<p:panelGrid columns="3" styleClass="panel-grid">
 					
@@ -33,7 +32,7 @@
 					
 					<h:outputText value="Gender: " />
 					<p:selectOneMenu id="gender" value="#{personBean.gender}" stlyeClass="it-selectonemenu" required="true" requiredMessage="Please select your gender.">
-						<f:selectItem itemLabel="I am..." itemValue="" />
+						<f:selectItem itemLabel="Select" itemValue="" />
 						<f:selectItem itemLabel="Female" itemValue="FEMALE" />
 						<f:selectItem itemLabel="Male" itemValue="MALE" />
 					</p:selectOneMenu>
@@ -58,7 +57,7 @@
 				</p:panelGrid>
 			</p:panel>
 			
-			<p:commandButton value="Register" async="true" update="person-panel, account-panel, address-panel" action="#{registerController.register}" />
+			<p:commandButton value="Register" async="true" update="person-panel, account-panel, address-panel, messages" action="#{registerController.register}" />
 		</div>
 	</h:form>
 </h:body>

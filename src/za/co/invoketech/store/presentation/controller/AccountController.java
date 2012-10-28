@@ -107,7 +107,7 @@ public class AccountController {
 		try {
 			if (accountBean.getPassword().equals(accountBean.getConfirmPassword()))
 			{
-				accountService.createAccount(accountBean.getEmail(), accountBean.getPassword(), accountBean.toRoleList());
+				accountService.createAccount(accountBean.getEmail(), accountBean.getPassword(), accountBean.getRoles());
 				returnString = "account?faces-redirect=true";
 			}
 			else 
@@ -133,7 +133,7 @@ public class AccountController {
 				account = accountService.retrieveAccount(accountBean.getId());
 				PasswordService psvc = new DefaultPasswordService();
 				account.setPassword(psvc.encryptPassword((String)accountBean.getPassword()));
-				account.setRoles(accountBean.toRoleList());
+				account.setRoles(accountBean.getRoles());
 				
 				accountService.updateAccount(account);
 				returnString = "account?faces-redirect=true";

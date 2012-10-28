@@ -5,6 +5,9 @@ import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import za.co.invoketech.store.domain.shared.Gender;
+import za.co.invoketech.store.domain.shared.Person;
+
 @SessionScoped
 @ManagedBean
 public class PersonBean implements Serializable {
@@ -46,5 +49,9 @@ public class PersonBean implements Serializable {
 	
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
+	}
+	
+	public Person toPerson() {
+		return new Person(firstName, lastName, Gender.valueOf(gender), phoneNumber);
 	}
 }

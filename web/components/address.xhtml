@@ -15,6 +15,7 @@
 	
 		<h:outputText value="Address Type:" />
 		<p:selectOneMenu id="address-type" value="#{addressBean.addressType}" required="true" requiredMessage="Please select the address type." >
+			<f:selectItem itemLabel="Select" itemValue="" />
 			<f:selectItem itemLabel="Physical" itemValue="PHYSICAL" />
 			<f:selectItem itemLabel="Post Office Box" itemValue="BOX" />
 			<f:selectItem itemLabel="Private Bag" itemValue="BAG" />

@@ -14,7 +14,7 @@
 <h:body>
 	<h:form id="login-form">
 		<p:panel id="login-panel" header="Login" styleClass="login-panel">
-			<p:messages id="messages" /> 
+			<p:messages id="messages" globalOnly="true" /> 
 			<h:panelGrid columns="3">
 				
 				<h:outputText value="Email: " />
@@ -32,7 +32,7 @@
 			</h:panelGrid>
 		</p:panel>
 		
-		<p:commandButton value="Login" update="login-panel" async="true" action="#{loginController.login}" />
+		<p:commandButton value="Login" update="login-panel, messages" async="true" action="#{loginController.login}" />
 		
 	</h:form>
 </h:body>
