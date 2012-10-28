@@ -18,6 +18,7 @@ package za.co.invoketech.store.service.product;
 
 import java.util.List;
 
+import za.co.invoketech.store.domain.model.product.Brand;
 import za.co.invoketech.store.domain.model.product.Product;
 import za.co.invoketech.store.domain.model.product.component.GraphicsCard;
 import za.co.invoketech.store.domain.model.product.component.HardDiskDrive;
@@ -41,7 +42,7 @@ import za.co.invoketech.store.domain.model.product.software.OperatingSystem;
 
 public interface ProductService {
 	
-	public long insertProduct(Product product);
+	public long insertProduct(Product product, Brand brand);
 	
 	public Product getProduct(long id);
 	

@@ -19,7 +19,9 @@ package za.co.invoketech.store.service.internal;
 import java.util.ArrayList;
 import java.util.List;
 
+import za.co.invoketech.store.domain.model.product.Brand;
 import za.co.invoketech.store.domain.model.product.Product;
+import za.co.invoketech.store.domain.model.product.component.Component;
 import za.co.invoketech.store.domain.model.product.component.GraphicsCard;
 import za.co.invoketech.store.domain.model.product.component.HardDiskDrive;
 import za.co.invoketech.store.domain.model.product.component.Memory;
@@ -32,10 +34,12 @@ import za.co.invoketech.store.domain.model.product.peripheral.Audio;
 import za.co.invoketech.store.domain.model.product.peripheral.Display;
 import za.co.invoketech.store.domain.model.product.peripheral.Keyboard;
 import za.co.invoketech.store.domain.model.product.peripheral.Mouse;
+import za.co.invoketech.store.domain.model.product.peripheral.Peripheral;
 import za.co.invoketech.store.domain.model.product.software.AntiVirus;
 import za.co.invoketech.store.domain.model.product.software.Game;
 import za.co.invoketech.store.domain.model.product.software.OperatingSystem;
 import za.co.invoketech.store.service.product.ProductService;
+import za.co.invoketech.store.service.repository.BrandRepository;
 import za.co.invoketech.store.service.repository.ProductRepository;
 
 import com.google.inject.Inject;
@@ -48,10 +52,50 @@ public class ProductServiceImpl implements ProductService {
 
 	@Inject
 	ProductRepository productRepository;
+	@Inject
+	BrandRepository brandRepository;
 	
-	public long insertProduct(Product product) {
-		productRepository.persist(product);
-		return product.getId();
+	public long insertProduct(Product product, Brand brand) {
+		long id = 0;
+		
+		if(product instanceof Component) {
+			Component component = (Component)product;
+			Brand existingBrand = brandRepository.findByBrandName(brand.getBrandName()); 
+			System.out.println(brand.getBrandName());
+			if(existingBrand == null) {
+				brandRepository.persist(brand);
+				component.setBrand(brand);
+				productRepository.persist(component);
+				id = product.getId();
+			}
+			else {
+				System.out.println("Existing brand found");
+				component.setBrand(existingBrand);
+				System.out.println(existingBrand.getId());
+				productRepository.persist(component);
+				id = component.getId();
+			}
+		} else if(product instanceof Peripheral) {
+			Peripheral peripheral = (Peripheral)product;
+			Brand existingBrand = brandRepository.findByBrandName(brand.getBrandName());
+			if(existingBrand == null) {
+				brandRepository.persist(brand);
+				peripheral.setBrand(brand);
+				productRepository.persist(peripheral);
+				id = product.getId();
+			}
+			else {
+				peripheral.setBrand(existingBrand);
+				productRepository.persist(peripheral);
+				id = peripheral.getId();
+			}
+		}
+		else {
+			productRepository.persist(product);
+			id = product.getId();
+		}
+		
+		return id;
 	}
 	
 	public Product getProduct(long id) {

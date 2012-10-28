@@ -17,6 +17,7 @@
 package za.co.invoketech.store.persistence.internal;
 
 import za.co.invoketech.store.service.repository.AccountRepository;
+import za.co.invoketech.store.service.repository.BrandRepository;
 import za.co.invoketech.store.service.repository.CustomerRepository;
 import za.co.invoketech.store.service.repository.InvoiceRepository;
 import za.co.invoketech.store.service.repository.OrderRepository;
@@ -39,5 +40,6 @@ public class PersistenceModule extends AbstractModule {
 		bind(OrderRepository.class).to(OrderRepositoryImpl.class);
 		bind(ProductRepository.class).to(ProductRepositoryImpl.class);
 		bind(RoleRepository.class).to(RoleRepositoryImpl.class);
+		bind(BrandRepository.class).to(BrandRepositoryImpl.class);
 	}
 }
