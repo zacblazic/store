@@ -1,4 +1,4 @@
-package za.co.invoketech.store.presentation.address;
+package za.co.invoketech.store.presentation.controller;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -13,6 +13,7 @@ import za.co.invoketech.store.application.exception.CustomerNotFoundException;
 import za.co.invoketech.store.application.exception.CustomerNotLinkedException;
 import za.co.invoketech.store.application.exception.MaximumAddressesReachedException;
 import za.co.invoketech.store.application.util.Faces;
+import za.co.invoketech.store.presentation.model.AddressBean;
 import za.co.invoketech.store.service.customer.CustomerService;
 
 import com.google.inject.Inject;

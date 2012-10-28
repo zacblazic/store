@@ -14,7 +14,7 @@
  * the License.
  */
 
-package za.co.invoketech.store.presentation;
+package za.co.invoketech.store.presentation.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -23,8 +23,8 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
-import za.co.invoketech.store.presentation.category.Category;
-import za.co.invoketech.store.presentation.category.SimpleCategory;
+import za.co.invoketech.store.presentation.support.Category;
+import za.co.invoketech.store.presentation.support.SimpleCategory;
 
 /**
  * @author a.carel.g.nel@gmail.com (Carel Nel)
@@ -32,34 +32,81 @@ import za.co.invoketech.store.presentation.category.SimpleCategory;
 
 @SessionScoped
 @ManagedBean
-public class MenuBean implements Serializable {
+public class ProductBean implements Serializable {
 		
 	private static final long serialVersionUID = 1L;
 	private List<Category> categories = new ArrayList<Category>();
 	private List<Category> subCategories = new ArrayList<Category>();
 	private List<Category> subSubCategories = new ArrayList<Category>();
-	private String category;
-	private int counter;
+	private String selected;
+	private String subSelected;
+	private String subSubSelected;
+	private boolean hasMoreSubCategories;
+	private boolean hasMoreSubSubCategories;
+	private String component;
+	private boolean componentFound;
 	
-	public MenuBean() {
+	public ProductBean() {
 		System.out.println("construct method..........");
 		initialiseCategoryList();
-		counter = 0;
-		category = categories.get(counter).getName();
+		hasMoreSubCategories = false;
+		componentFound = false;
 	}
 	
-	public String getCategory() {
-		/*String temp = category;
-		counter++;
-		category = categories.get(counter).getName();
-		return temp;*/
-		return category;
+	public void setComponentFound(boolean componentFound) {
+		this.componentFound = componentFound;
 	}
 	
-	public void setCategory(String category) {
-		this.category = category;
+	public boolean isComponentFound() {
+		return componentFound;
 	}
-
+	
+	public String getComponent() {
+		return component;
+	}
+	
+	public void setComponent(String component) {
+		this.component = component;
+	}
+	
+	public boolean getHasMoreSubCategories() {
+		return hasMoreSubCategories;
+	}
+	
+	public boolean getHasMoreSubSubCategories() {
+		return hasMoreSubSubCategories;
+	}
+	
+	public String getSelected() {
+		System.out.println("get method.........." + selected);
+		return selected;
+	}
+	
+	public void setSelected(String selected) {
+		System.out.println("set method..........");
+		this.selected = selected;
+	}
+	
+	public String getSubSelected() {
+		System.out.println("get method.........." + subSelected);
+		return subSelected;
+	}
+	
+	public void setSubSelected(String subSelected) {
+		System.out.println("set method..........");
+		this.subSelected = subSelected;
+	}
+	
+	public String getSubSubSelected() {
+		System.out.println("get method.........." + subSubSelected);
+		return subSubSelected;
+	}
+	
+	public void setSubSubSelected(String subSubSelected) {
+		System.out.println("set method..........");
+		this.subSubSelected = subSubSelected;
+	}
+	
 	public List<Category> getCategories() {
 		return categories;
 	}
@@ -83,7 +130,53 @@ public class MenuBean implements Serializable {
 	public void setSubSubCategories(List<Category> subSubCategories) {
 		this.subSubCategories = subSubCategories;
 	}
-
+	
+	public void generateElement() {
+		boolean found = false;
+		if(selected != "select..") {
+			for(int i = 0; i < categories.size() && !found; i++) {
+				if(categories.get(i).getName().equals(selected)) {
+					System.out.println(categories.get(i).getSubCategories());
+					found = true;
+					subCategories = categories.get(i).getSubCategories();
+					if(subCategories.size() > 0) {
+						hasMoreSubCategories = true;
+					}
+					else {
+						hasMoreSubCategories = false;
+						component = subCategories.get(i).getName();
+					}
+				}
+			}
+		}
+		else {
+			hasMoreSubCategories = false;
+		}
+	}
+	
+	public void generateSubElement() {
+		boolean found = false;
+		if(selected != "select..") {
+			for(int i = 0; i < subCategories.size() && !found; i++) {
+				if(subCategories.get(i).getName().equals(subSelected)) {
+					System.out.println(subCategories.get(i).getSubCategories() + "create sub sub");
+					found = true;
+					subSubCategories = subCategories.get(i).getSubCategories();
+					if(subSubCategories.size() > 0) {
+						hasMoreSubSubCategories = true;
+					}
+					else {
+						hasMoreSubSubCategories = false;
+						component = subSubCategories.get(i).getName();
+					}
+				}
+			}
+		}
+		else {
+			hasMoreSubSubCategories = false;
+		}
+	}
+	
 	private void initialiseCategoryList() {
 		/*---------Component---------*/
 		categories.add(new SimpleCategory("Component"));

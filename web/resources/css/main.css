@@ -3,6 +3,18 @@ body {
 	font-family: sans-serif;
 }
 
+.ui-state-error {
+   color: black !important;
+}
+
+.panel-grid tr, .panel-grid td {
+	border: none !important;
+}
+
+.header-toolbar {
+	margin-bottom: 10px;
+}
+
 .side-navigation {
 	width: 200px;
 	float: left;
@@ -10,14 +22,23 @@ body {
 	font-size: 12px;
 }
 
-.panel-grid tr, .panel-grid td {
-	border: none !important;
+#register .person-panel, #register .account-panel, #register .address-panel {
+	width: 700px;
+	margin-bottom: 10px;
 }
 
-.account-panel {
+.page-header-toolbar {
+	font-size: 20px;
+	margin-bottom: 10px;
+	width: 700px
 	
 }
 
 .customer-info-panel, .history-panel {
 	width: 300px;
+}
+
+.login-panel {
+	margin-bottom: 10px; 
+	width: 500px;
 }

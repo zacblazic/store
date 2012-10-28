@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.junit.Test;
 
-import za.co.invoketech.store.presentation.category.Category;
-import za.co.invoketech.store.presentation.category.SimpleCategory;
+import za.co.invoketech.store.presentation.support.Category;
+import za.co.invoketech.store.presentation.support.SimpleCategory;
 
 public class CategoryTest {
 

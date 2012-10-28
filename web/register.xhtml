@@ -8,6 +8,7 @@
 	xmlns:p="http://primefaces.org/ui">
  
 <h:head>
+	<title>Register</title>
 	<h:outputStylesheet library="css" name="main.css" />
 </h:head>
 <h:body>
@@ -16,18 +17,49 @@
 			<ui:include src="/components/header.xhtml" />
 		</ui:insert>
 		
-		<h:outputText value="Register" />
-		<p:panelGrid columns="2">
-			<h:outputText value="First Name:" />
-			<p:inputText value="test" />
-			
-			<h:outputText value="Last Name:" />
-			<p:inputText value="test" />
-			
-			<h:outputText value="Phone Number:" />
-			<p:inputText value="test" />
-		</p:panelGrid>
+		<h2>Register</h2>
 		
+		<div id="register">
+			<p:panel id="person-panel" styleClass="person-panel" header="Personal Details">
+				<p:panelGrid columns="3" styleClass="panel-grid">
+					
+					<h:outputText value="First Name:" />
+					<p:inputText id="first-name" value="#{personBean.firstName}" required="true" requiredMessage="Please enter your first name."/>
+				  	<p:message for="first-name" />
+					
+					<h:outputText value="Last Name:" />
+					<p:inputText id="last-name" value="#{personBean.lastName}" required="true" requiredMessage="Please enter your last name." />
+					<p:message for="last-name" />
+					
+					<h:outputText value="Gender: " />
+					<p:selectOneMenu id="gender" value="#{personBean.gender}" stlyeClass="it-selectonemenu" required="true" requiredMessage="Please select your gender.">
+						<f:selectItem itemLabel="I am..." itemValue="" />
+						<f:selectItem itemLabel="Female" itemValue="FEMALE" />
+						<f:selectItem itemLabel="Male" itemValue="MALE" />
+					</p:selectOneMenu>
+					<p:message for="gender" />
+					
+					<h:outputText value="Phone Number:" />
+					<p:inputText id="phone-number" value="#{personBean.phoneNumber}" required="true" requiredMessage="Please enter your phone number." />
+					<p:message for="phone-number" />
+					
+				</p:panelGrid>
+			</p:panel>
+			
+			<p:panel id="account-panel" styleClass="account-panel" header="Account">
+				<p:panelGrid columns="3" styleClass="panel-grid">
+					<ui:include src="/components/account.xhtml"/>
+				</p:panelGrid>
+			</p:panel>
+			
+			<p:panel id="address-panel" styleClass="address-panel" header="Address">
+				<p:panelGrid columns="3" styleClass="panel-grid">
+					<ui:include src="/components/address.xhtml" />
+				</p:panelGrid>
+			</p:panel>
+			
+			<p:commandButton value="Register" async="true" update="person-panel, account-panel, address-panel" action="#{registerController.register}" />
+		</div>
 	</h:form>
 </h:body>
 </html>

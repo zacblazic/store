@@ -8,16 +8,15 @@
 	xmlns:p="http://primefaces.org/ui">
  
 <h:head>
+	<title>Invoke Tech</title>
 	<h:outputStylesheet library="css" name="main.css" />
 </h:head>
 <h:body>
 	<h:form>
+		
 		<ui:insert name="header-buttons">
 			<ui:include src="/components/header.xhtml" />
 		</ui:insert>
-
-	
-		<p:commandButton value="Test" ajax="false" action="register?faces-redirect=true" />
 	
 		<ui:insert name="side-navigation">
 			<ui:include src="components/side-navigation.xhtml" />

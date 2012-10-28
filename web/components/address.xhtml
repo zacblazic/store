@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+ 
+<h:head>
+	<h:outputStylesheet library="css" name="main.css" />
+</h:head>
+<h:body>
+	<ui:composition>
+	
+		<h:outputText value="Address Type:" />
+		<p:selectOneMenu id="address-type" value="#{addressBean.addressType}" required="true" requiredMessage="Please select the address type." >
+			<f:selectItem itemLabel="Physical" itemValue="PHYSICAL" />
+			<f:selectItem itemLabel="Post Office Box" itemValue="BOX" />
+			<f:selectItem itemLabel="Private Bag" itemValue="BAG" />
+		</p:selectOneMenu>
+		<p:message for="address-type" />
+		
+		<h:outputText value="Address Line 1:" />
+		<p:inputText id="line-1" value="#{addressBean.line1}" required="true" requiredMessage="Please enter line 1."/>
+		<p:message for="line-1"  />
+		
+		<h:outputText value="Address Line 2:" />
+		<p:inputText id="line-2" value="#{addressBean.line2}" required="true" requiredMessage="Please enter line 2."/>
+		<p:message for="line-2" />
+		
+		<h:outputText value="City:" />
+		<p:inputText id="city" value="#{addressBean.city}" required="true" requiredMessage="Please enter your city."/>
+		<p:message for="city" />
+		
+		<h:outputText value="Postal Code:" />
+		<p:inputText id="postal-code" value="#{addressBean.postalCode}" required="true" requiredMessage="Please enter your postal code." maxlength="4">
+		</p:inputText>
+		<p:message for="postal-code" />
+		
+		<h:outputText value="Country:" />
+		<p:selectOneMenu id="country" value="#{addressBean.country}" required="true" requiredMessage="Please select your country." >
+			<f:selectItem itemLabel="South Africa" itemValue="South Africa" />
+		</p:selectOneMenu>
+		<p:message for="country" />
+				
+	</ui:composition>
+</h:body>
+</html>

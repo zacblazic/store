@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package za.co.invoketech.store.presentation.admin;
+package za.co.invoketech.store.presentation.controller;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -28,6 +28,7 @@ import za.co.invoketech.store.application.exception.RoleNotFoundException;
 import za.co.invoketech.store.application.util.Faces;
 import za.co.invoketech.store.domain.model.account.Account;
 import za.co.invoketech.store.domain.model.role.Role;
+import za.co.invoketech.store.presentation.model.AccountBean;
 import za.co.invoketech.store.service.account.AccountService;
 
 import com.google.inject.Inject;
