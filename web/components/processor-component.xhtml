@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+ 
+<h:head>
+	<h:outputStylesheet library="css" name="main.css" />
+</h:head>
+<h:body>
+	<ui:composition>
+	
+		<h:outputLabel for="title" value="Title: " />
+	  <p:inputText id="title" value="#{processorBean.title}" required="true" Label = "Title" />
+		
+		<h:outputLabel for="stock" value="Stock: " />
+		<p:inputText id="stock" value="#{processorBean.stock}" required="true" Label = "Stock" />
+		
+		<h:outputLabel for="brand" value="Brand: " />
+		<p:selectOneMenu value="#<processorBean.brand>" effect="fold" editable="true">
+			<f:selectItems value="#{processorBean.brands}" />
+		</p:selectOneMenu>
+		
+		<h:outputLabel for="family" value="Family: " />
+		<p:inputText id="family" value="#{processorBean.family}" required="true" Label = "Family" />
+		
+		<h:outputLabel for="clockSpeed" value="Clock Speed: " />
+		<p:inputText id="clockSpeed" value="#{processorBean.clockSpeed}" required="true" Label = "Clock Speed" />
+		
+		<h:outputLabel for="boostSpeed" value="Boost Speed: " />
+		<p:inputText id="boostSpeed" value="#{processorBean.boostSpeed}" required="true" Label = "Boost Speed" />
+		
+		<h:outputLabel for="socket" value="Socket: " />
+		<p:inputText id="socket" value="#{processorBean.socket}" required="true" Label = "Socket" />
+		
+		<h:outputLabel for="cache" value="Cache: " />
+		<p:inputText id="cache" value="#{processorBean.cache}" required="true" Label = "Cache" />
+		
+		<h:outputLabel for="cores" value="Cores: " />
+		<p:inputText id="cores" value="#{processorBean.cores}" required="true" Label = "Cores" />
+		
+		<h:outputLabel for="threads" value="Threads: " />
+		<p:inputText id="threads" value="#{processorBean.threads}" required="true" Label = "Threads" />
+		
+		<h:outputLabel for="internalGPU" value="Internal GPU: " />
+		<p:selectBooleanCheckbox value="#{processorBean.showGPU}" />
+		
+		<ui:fragment rendered="#{preocessorBean.showGPU}">
+			<ui:insert>
+				<ui:include src="integrated-gpu-component.xhtml" />
+			</ui:insert>
+		</ui:fragment>
+	
+	<p:commandButton value="Insert" actionListener="#{processorBean.insert()}" oncomplete="#{}" />
+	
+	</ui:composition>
+</h:body>
+</html>

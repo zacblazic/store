@@ -1,6 +1,5 @@
 package za.co.invoketech.store.domain.model.product.component;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -20,7 +19,7 @@ public class Component extends Product {
 
 	private static final long serialVersionUID = 1L;
 
-	@ManyToOne (cascade=CascadeType.PERSIST)
+	@ManyToOne
 	private Brand brand;
 	
 	public Brand getBrand() {

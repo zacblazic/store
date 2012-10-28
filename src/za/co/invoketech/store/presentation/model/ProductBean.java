@@ -184,16 +184,10 @@ public class ProductBean implements Serializable {
 		categories.get(0).addSubCategory(new SimpleCategory("Chassis"));
 		
 		categories.get(0).addSubCategory(new SimpleCategory("Processor"));
-		categories.get(0).getSubCategory(1).addSubCategory(new SimpleCategory("Intel"));
-		categories.get(0).getSubCategory(1).addSubCategory(new SimpleCategory("AMD"));
 		
 		categories.get(0).addSubCategory(new SimpleCategory("Motherboard"));
-		categories.get(0).getSubCategory(2).addSubCategory(new SimpleCategory("Intel"));
-		categories.get(0).getSubCategory(2).addSubCategory(new SimpleCategory("AMD"));
 		
 		categories.get(0).addSubCategory(new SimpleCategory("Graphics Card"));
-		categories.get(0).getSubCategory(3).addSubCategory(new SimpleCategory("Nvidia"));
-		categories.get(0).getSubCategory(3).addSubCategory(new SimpleCategory("ATi"));
 		
 		categories.get(0).addSubCategory(new SimpleCategory("Memory"));
 		

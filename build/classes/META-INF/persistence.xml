@@ -43,6 +43,7 @@
 		<class>za.co.invoketech.store.domain.model.role.Role</class>
 		<class>za.co.invoketech.store.domain.model.product.computer.PreBuiltComputer</class>
 		<class>za.co.invoketech.store.domain.model.cart.ShoppingCart</class>
+		<class>za.co.invoketech.store.domain.model.product.component.Motherboard</class>
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/store"/>
 			<property name="javax.persistence.jdbc.user" value="root"/>
