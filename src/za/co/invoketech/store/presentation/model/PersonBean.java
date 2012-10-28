@@ -1,4 +1,4 @@
-package za.co.invoketech.store.presentation.customer;
+package za.co.invoketech.store.presentation.model;
 
 import java.io.Serializable;
 
@@ -7,23 +7,14 @@ import javax.faces.bean.SessionScoped;
 
 @SessionScoped
 @ManagedBean
-public class CustomerBean implements Serializable {
+public class PersonBean implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	private long id;
 	private String firstName;
 	private String lastName;
 	private String gender;
 	private String phoneNumber;
-	
-	public long getId() {
-		return id;
-	}
-	
-	public void setId(long id) {
-		this.id = id;
-	}
 	
 	public String getFirstName() {
 		return firstName;

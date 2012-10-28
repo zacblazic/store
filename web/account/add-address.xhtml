@@ -11,63 +11,36 @@
 	<h:outputStylesheet library="css" name="main.css" />
 </h:head>
 <h:body style="font-size: 12px;">
-	<h:form id="add-address-form" styleClass="panel-grid">
-		<p:panel header="Add Address">
-			<p:messages id="messages" closable="true" autoUpdate="true" showDetail="true"/>
-			<p:panelGrid columns="3">
-				<h:outputText value="Label:" />
-				<p:inputText id="label" value="#{addressBean.label}" required="true" requiredMessage="Please enter a label."/>
-				<p:message for="label" />
-				
-				<h:outputText value="Address Type:" />
-				<p:selectOneMenu id="address-type" value="#{addressBean.addressType}" required="true" requiredMessage="Please select the address type." >
-					<f:selectItem itemLabel="Physical" itemValue="PHYSICAL" />
-					<f:selectItem itemLabel="Post Office Box" itemValue="BOX" />
-					<f:selectItem itemLabel="Private Bag" itemValue="BAG" />
-				</p:selectOneMenu>
-				<p:message for="address-type" />
-				
-				<h:outputText value="Address Line 1:" />
-				<p:inputText id="line-1" value="#{addressBean.line1}" required="true" requiredMessage="Please enter line 1."/>
-				<p:message for="line-1"  />
-				
-				<h:outputText value="Address Line 2:" />
-				<p:inputText id="line-2" value="#{addressBean.line2}" required="true" requiredMessage="Please enter line 2."/>
-				<p:message for="line-2" />
-				
-				<h:outputText value="City:" />
-				<p:inputText id="city" value="#{addressBean.city}" required="true" requiredMessage="Please enter your city."/>
-				<p:message for="city" />
-				
-				<h:outputText value="Postal Code:" />
-				<p:inputText id="postal-code" value="#{addressBean.postalCode}" required="true" requiredMessage="Please enter your postal code."/>
-				<p:message for="postal-code" />
-				
-				<h:outputText value="Country:" />
-				<p:selectOneMenu id="country" value="#{addressBean.country}" required="true" requiredMessage="Please select your country." >
-					<f:selectItem itemLabel="South Africa" itemValue="South Africa" />
-				</p:selectOneMenu>
-				<p:message for="country" />
-				
-				<h:outputText value="First Name:" />
-				<p:inputText id="first-name" value="#{addressBean.firstName}" required="true" requiredMessage="Please enter your first name."/>
-				<p:message for="first-name" />
-				
-				<h:outputText value="Last Name:" />
-				<p:inputText id="last-name" value="#{addressBean.lastName}" required="true" requiredMessage="Please enter your last name."/>
-				<p:message for="last-name" />
-				
-				<h:outputText value="Phone Number:" />
-				<p:inputText id="phone-number" value="#{addressBean.phoneNumber}" required="true" requiredMessage="Please enter your phone number."/>
-				<p:message for="phone-number" />
+	<h:form id="add-address-form">
+		
+		<p:panel id="add-address-panel" header="Add Address">
+		<p:messages id="messages" />
+		
+		<p:panelGrid columns="3" styleClass="panel-grid">
+			<h:outputText value="Label:" />
+			<p:inputText id="label" value="#{addressBean.label}" required="true" requiredMessage="Please enter a label."/>
+			<p:message for="label" />
+		 
+		 	<ui:include src="/components/address.xhtml" />
+		 
+		 	<h:outputText value="First Name:" />
+			<p:inputText id="first-name" value="#{addressBean.firstName}" required="true" requiredMessage="Please enter your first name."/>
+			<p:message for="first-name" />
+			
+			<h:outputText value="Last Name:" />
+			<p:inputText id="last-name" value="#{addressBean.lastName}" required="true" requiredMessage="Please enter your last name."/>
+			<p:message for="last-name" />
+			
+			<h:outputText value="Phone Number:" />
+			<p:inputText id="phone-number" value="#{addressBean.phoneNumber}" required="true" requiredMessage="Please enter your phone number."/>
+			<p:message for="phone-number" />
 
-				<p:spacer />
-				<p:selectBooleanCheckbox id="primary" value="#{addressBean.primary}" itemLabel="Set as primary address" />
-				<p:spacer />
-				
-			</p:panelGrid>
-			<p:commandButton value="Add" update="add-address-form" actionListener="#{addressController.add}" />
+			<p:spacer />
+			<p:selectBooleanCheckbox id="primary" value="#{addressBean.primary}" itemLabel="Set as primary address" />
+			<p:spacer />
+		</p:panelGrid>
 		</p:panel>
+		<p:commandButton value="Add" update="add-address-panel" actionListener="#{addressController.add}" />
 	</h:form> 
 </h:body>
 </html>

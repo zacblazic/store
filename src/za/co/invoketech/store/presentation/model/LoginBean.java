@@ -1,9 +1,9 @@
-package za.co.invoketech.store.presentation.login;
+package za.co.invoketech.store.presentation.model;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 
-@SessionScoped
+@ViewScoped
 @ManagedBean
 public class LoginBean {
 

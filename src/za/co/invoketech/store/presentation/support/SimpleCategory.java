@@ -1,4 +1,4 @@
-package za.co.invoketech.store.presentation.category;
+package za.co.invoketech.store.presentation.support;
 
 import java.io.Serializable;
 import java.util.ArrayList;

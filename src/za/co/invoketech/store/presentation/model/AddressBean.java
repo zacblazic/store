@@ -1,4 +1,4 @@
-package za.co.invoketech.store.presentation.address;
+package za.co.invoketech.store.presentation.model;
 
 import java.io.Serializable;
 

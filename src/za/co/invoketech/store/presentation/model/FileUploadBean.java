@@ -14,7 +14,7 @@
  * the License.
  */
 
-package za.co.invoketech.store.presentation;
+package za.co.invoketech.store.presentation.model;
 
 import java.io.IOException;
 import java.io.Serializable;

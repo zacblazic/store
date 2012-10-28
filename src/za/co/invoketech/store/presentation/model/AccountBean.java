@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package za.co.invoketech.store.presentation.admin;
+package za.co.invoketech.store.presentation.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
