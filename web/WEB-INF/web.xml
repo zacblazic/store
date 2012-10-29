@@ -54,4 +54,36 @@
       <session-timeout>60</session-timeout>
   </session-config>
   
+  <display-name>Restlet adapters</display-name>
+ 
+   <!-- Servlet to Restlet adapter declaration (Mandatory) -->
+   <servlet>
+           <servlet-name>RestletAdapter</servlet-name>
+           <servlet-class>org.restlet.ext.servlet.ServerServlet</servlet-class>
+
+           <!-- Your application class name (Optional - For mode 3) -->
+           <init-param>
+                   <param-name>org.restlet.application</param-name>
+                   <param-value>za.co.invoketech.store.integration.webservices.rest.server.InvokeRestServer</param-value>
+           </init-param>
+
+           <!-- List of supported client protocols (Optional - Only in mode 3) -->
+           <init-param>
+                   <param-name>org.restlet.clients</param-name>
+                   <param-value>HTTP</param-value>
+           </init-param>
+
+           <!-- Add the Servlet context path to routes (Optional) -->
+           <init-param>
+                   <param-name>org.restlet.autoWire</param-name>
+                   <param-value>true</param-value>
+           </init-param>
+   </servlet>
+
+   <!-- Mapping catching all requests on a given path (Mandatory) -->
+   <servlet-mapping>
+           <servlet-name>RestletAdapter</servlet-name>
+           <url-pattern>/rest/*</url-pattern>
+   </servlet-mapping>
+  
 </web-app>

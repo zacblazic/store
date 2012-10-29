@@ -34,6 +34,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.google.gson.annotations.Expose;
+
 import za.co.invoketech.store.application.util.Dates;
 import za.co.invoketech.store.domain.model.order.Order;
 
@@ -57,6 +59,7 @@ public class Invoice implements Serializable {
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "INVOICE_DATE", nullable = false)
+	@Expose
 	private Date invoiceDate;
 	
 	/**

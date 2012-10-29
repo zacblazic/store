@@ -46,11 +46,159 @@ public class ProductBean implements Serializable {
 	private String component;
 	private boolean componentFound;
 	
+	// show, hide elements
+	private boolean showProcessorElement;
+	private boolean showGraphicsCardElement;
+	private boolean showMotherboardElement;
+	private boolean showHardDiskDriveElement;
+	private boolean showSolidStateDriveElement;
+	private boolean showMemoryElement;
+	private boolean showPowerSupplyInitElement;
+	private boolean showCustomComputerElement;
+	private boolean showPreBuiltComputerElement;
+	private boolean showAudioElement;
+	private boolean showDisplayElement;
+	private boolean showKeyboardElement;
+	private boolean showMouseElement;
+	private boolean showAntiVirusElement;
+	private boolean showGameElement;
+	private boolean showOperatingSystemElement;
+	
 	public ProductBean() {
 		System.out.println("construct method..........");
 		initialiseCategoryList();
 		hasMoreSubCategories = false;
-		componentFound = false;
+		componentFound = false;	
+		
+		showGraphicsCardElement = true;
+	}
+	
+	public boolean isShowSolidStateDriveElement() {
+		return showSolidStateDriveElement;
+	}
+
+	public void setShowSolidStateDriveElement(boolean showSolidStateDriveElement) {
+		this.showSolidStateDriveElement = showSolidStateDriveElement;
+	}
+
+	public boolean isShowGraphicsCardElement() {
+		return showGraphicsCardElement;
+	}
+
+	public void setShowGraphicsCardElement(boolean showGraphicsCardElement) {
+		this.showGraphicsCardElement = showGraphicsCardElement;
+	}
+
+	public boolean isShowMotherboardElement() {
+		return showMotherboardElement;
+	}
+
+	public void setShowMotherboardElement(boolean showMotherboardElement) {
+		this.showMotherboardElement = showMotherboardElement;
+	}
+
+	public boolean isShowHardDiskDriveElement() {
+		return showHardDiskDriveElement;
+	}
+
+	public void setShowHardDiskDriveElement(boolean showHardDiskDriveElement) {
+		this.showHardDiskDriveElement = showHardDiskDriveElement;
+	}
+
+	public boolean isShowMemoryElement() {
+		return showMemoryElement;
+	}
+
+	public void setShowMemoryElement(boolean showMemoryElement) {
+		this.showMemoryElement = showMemoryElement;
+	}
+
+	public boolean isShowPowerSupplyInitElement() {
+		return showPowerSupplyInitElement;
+	}
+
+	public void setShowPowerSupplyInitElement(boolean showPowerSupplyInitElement) {
+		this.showPowerSupplyInitElement = showPowerSupplyInitElement;
+	}
+
+	public boolean isShowCustomComputerElement() {
+		return showCustomComputerElement;
+	}
+
+	public void setShowCustomComputerElement(boolean showCustomComputerElement) {
+		this.showCustomComputerElement = showCustomComputerElement;
+	}
+
+	public boolean isShowPreBuiltComputerElement() {
+		return showPreBuiltComputerElement;
+	}
+
+	public void setShowPreBuiltComputerElement(boolean showPreBuiltComputerElement) {
+		this.showPreBuiltComputerElement = showPreBuiltComputerElement;
+	}
+
+	public boolean isShowAudioElement() {
+		return showAudioElement;
+	}
+
+	public void setShowAudioElement(boolean showAudioElement) {
+		this.showAudioElement = showAudioElement;
+	}
+
+	public boolean isShowDisplayElement() {
+		return showDisplayElement;
+	}
+
+	public void setShowDisplayElement(boolean showDisplayElement) {
+		this.showDisplayElement = showDisplayElement;
+	}
+
+	public boolean isShowKeyboardElement() {
+		return showKeyboardElement;
+	}
+
+	public void setShowKeyboardElement(boolean showKeyboardElement) {
+		this.showKeyboardElement = showKeyboardElement;
+	}
+
+	public boolean isShowMouseElement() {
+		return showMouseElement;
+	}
+
+	public void setShowMouseElement(boolean showMouseElement) {
+		this.showMouseElement = showMouseElement;
+	}
+
+	public boolean isShowAntiVirusElement() {
+		return showAntiVirusElement;
+	}
+
+	public void setShowAntiVirusElement(boolean showAntiVirusElement) {
+		this.showAntiVirusElement = showAntiVirusElement;
+	}
+
+	public boolean isShowGameElement() {
+		return showGameElement;
+	}
+
+	public void setShowGameElement(boolean showGameElement) {
+		this.showGameElement = showGameElement;
+	}
+
+	public boolean isShowOperatingSystemElement() {
+		return showOperatingSystemElement;
+	}
+
+	public void setShowOperatingSystemElement(boolean showOperatingSystemElement) {
+		this.showOperatingSystemElement = showOperatingSystemElement;
+	}
+
+	public boolean isShowProcessorElement() {
+		return showProcessorElement;
+	}
+	
+	public void setShowProcessorElement(boolean showProcessorElement) {
+		this.showProcessorElement = showProcessorElement;
 	}
 	
 	public void setComponentFound(boolean componentFound) {

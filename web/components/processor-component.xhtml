@@ -13,48 +13,55 @@
 <h:body>
 	<ui:composition>
 	
-		<h:outputLabel for="title" value="Title: " />
-	  <p:inputText id="title" value="#{processorBean.title}" required="true" Label = "Title" />
-		
-		<h:outputLabel for="stock" value="Stock: " />
-		<p:inputText id="stock" value="#{processorBean.stock}" required="true" Label = "Stock" />
-		
-		<h:outputLabel for="brand" value="Brand: " />
-		<p:selectOneMenu value="#<processorBean.brand>" effect="fold" editable="true">
-			<f:selectItems value="#{processorBean.brands}" />
-		</p:selectOneMenu>
-		
-		<h:outputLabel for="family" value="Family: " />
-		<p:inputText id="family" value="#{processorBean.family}" required="true" Label = "Family" />
-		
-		<h:outputLabel for="clockSpeed" value="Clock Speed: " />
-		<p:inputText id="clockSpeed" value="#{processorBean.clockSpeed}" required="true" Label = "Clock Speed" />
-		
-		<h:outputLabel for="boostSpeed" value="Boost Speed: " />
-		<p:inputText id="boostSpeed" value="#{processorBean.boostSpeed}" required="true" Label = "Boost Speed" />
-		
-		<h:outputLabel for="socket" value="Socket: " />
-		<p:inputText id="socket" value="#{processorBean.socket}" required="true" Label = "Socket" />
-		
-		<h:outputLabel for="cache" value="Cache: " />
-		<p:inputText id="cache" value="#{processorBean.cache}" required="true" Label = "Cache" />
-		
-		<h:outputLabel for="cores" value="Cores: " />
-		<p:inputText id="cores" value="#{processorBean.cores}" required="true" Label = "Cores" />
-		
-		<h:outputLabel for="threads" value="Threads: " />
-		<p:inputText id="threads" value="#{processorBean.threads}" required="true" Label = "Threads" />
-		
-		<h:outputLabel for="internalGPU" value="Internal GPU: " />
-		<p:selectBooleanCheckbox value="#{processorBean.showGPU}" />
-		
-		<ui:fragment rendered="#{preocessorBean.showGPU}">
-			<ui:insert>
-				<ui:include src="integrated-gpu-component.xhtml" />
-			</ui:insert>
-		</ui:fragment>
+		<p:panelGrid columns="2" styleClass="panel-grid" >
 	
-	<p:commandButton value="Insert" actionListener="#{processorBean.insert()}" oncomplete="#{}" />
+			<h:outputLabel for="processorTitle" value="Title: " />
+		  <p:inputText id="processorTitle" value="#{processorBean.title}" required="true" Label = "Title" />
+			
+			<h:outputLabel for="processorStock" value="Stock: " />
+			<p:inputText id="processorStock" value="#{processorBean.stock}" required="true" Label = "Stock" />
+			
+			<h:outputLabel for="processorPrice" value="Price: " />
+			<p:inputText id="processorPrice" value="#{processorBean.price}" required="true" Label = "Price" />
+			
+			<h:outputLabel for="processorBrand" value="Brand: " style="width:50px" />
+			<p:selectOneMenu value="#{processorBean.theBrand}" id="processorBrand" effect="fold" editable="true">
+				<f:selectItems value="#{processorBean.brands}" />
+			</p:selectOneMenu>
+			
+			<h:outputLabel for="processorFamily" value="Family: " />
+			<p:inputText id="processorFamily" value="#{processorBean.family}" required="true" Label = "Family" />
+			
+			<h:outputLabel for="processorClockSpeed" value="Clock Speed: " />
+			<p:inputText id="processorClockSpeed" value="#{processorBean.clockSpeed}" required="true" Label = "Clock Speed" />
+			
+			<h:outputLabel for="processorBoostSpeed" value="Boost Speed: " />
+			<p:inputText id="processorBoostSpeed" value="#{processorBean.boostClock}" required="true" Label = "Boost Speed" />
+			
+			<h:outputLabel for="processorSocket" value="Socket: " />
+			<p:inputText id="processorSocket" value="#{processorBean.socket}" required="true" Label = "Socket" />
+			
+			<h:outputLabel for="processorCache" value="Cache: " />
+			<p:inputText id="processorCache" value="#{processorBean.cache}" required="true" Label = "Cache" />
+			
+			<h:outputLabel for="processorCores" value="Cores: " />
+			<p:inputText id="processorCores" value="#{processorBean.cores}" required="true" Label = "Cores" />
+			
+			<h:outputLabel for="processorThreads" value="Threads: " />
+			<p:inputText id="processorThreads" value="#{processorBean.threads}" required="true" Label = "Threads" />
+			
+		</p:panelGrid>
+			
+			<ui:fragment id="processorInternalGPU">
+				<ui:insert>
+				<p:panelGrid columns="2" id="gpu">
+					<ui:include src="integrated-gpu-component.xhtml" />
+				</p:panelGrid>
+				</ui:insert>
+			</ui:fragment>
+	
+	<p:spacer />
+	<p:commandButton value="Insert" actionListener="#{processorBean.insert}" />
 	
 	</ui:composition>
 </h:body>

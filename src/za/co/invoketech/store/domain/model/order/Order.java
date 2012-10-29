@@ -47,6 +47,8 @@ import za.co.invoketech.store.application.util.Dates;
 import za.co.invoketech.store.domain.model.customer.Customer;
 import za.co.invoketech.store.domain.model.invoice.Invoice;
 
+import com.google.gson.annotations.Expose;
+
 /**
  * @author zacblazic@gmail.com (Zac Blazic)
  */
@@ -59,14 +61,17 @@ public class Order implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "ORDER_ID")
+	@Expose
 	private long id;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "STATUS", nullable = false)
+	@Expose
 	private OrderStatus status;
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "ORDER_ID")
+	@Expose
 	private List<OrderItem> items;
 	
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -83,14 +88,17 @@ public class Order implements Serializable {
 	
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "INVOICE_ID")
+	@Expose
 	private Invoice invoice;
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "CREATED_DATE", nullable = false)
+	@Expose
 	private Date createdDate;
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "CANCELLED_DATE")
+	@Expose
 	private Date cancelledDate;
 	
 	/**

@@ -17,11 +17,16 @@ package za.co.invoketech.store.quick;
 
 import org.junit.Test;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.inject.Inject;
+
 import za.co.invoketech.store.application.config.Goose;
 import za.co.invoketech.store.service.account.AccountService;
 import za.co.invoketech.store.service.account.RoleService;
 import za.co.invoketech.store.service.repository.AccountRepository;
 import za.co.invoketech.store.service.repository.CustomerRepository;
+import za.co.invoketech.store.service.repository.OrderRepository;
 import za.co.invoketech.store.service.repository.RoleRepository;
 
 /**
@@ -30,10 +35,8 @@ import za.co.invoketech.store.service.repository.RoleRepository;
  */
 @SuppressWarnings("unused")
 public class QuickTest {
-	
-	private CustomerRepository customerRepository;
-	private AccountRepository accountRepository;
-	private  RoleRepository roleRepository;
+
+
 
 	public QuickTest() {
 		Goose.getInjectorForTesting().injectMembers(this);
@@ -41,6 +44,5 @@ public class QuickTest {
 	
 	@Test
 	public void test() {
-		
 	}
 }

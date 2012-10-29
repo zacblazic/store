@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+ 
+<h:head>
+	<h:outputStylesheet library="css" name="main.css" />
+</h:head>
+<h:body>
+	<ui:composition>
+	
+		<p:panelGrid columns="2" styleClass="panel-grid" >
+	
+			<h:outputLabel for="memoryTitle" value="Title: " />
+		  <p:inputText id="memoryTitle" value="#{memoryBean.title}" required="true" Label = "Title" />
+		  
+		  <h:outputLabel for="memoryStock" value="Stock: " />
+		  <p:inputText id="memoryStock" value="#{memoryBean.stock}" required="true" Label = "Stock" />
+		  
+		  <h:outputLabel for="memoryPrice" value="Price: " />
+		  <p:inputText id="memoryPrice" value="#{memoryBean.price}" required="true" Label = "Price" />
+		  
+		  <h:outputLabel for="memoryBrand" value="Brand: " style="width:50px" />
+			<p:selectOneMenu value="#{memoryBean.theBrand}" id="mwmoryBrand" effect="fold" editable="true">
+				<f:selectItems value="#{memoryBean.brands}" />
+			</p:selectOneMenu>
+		  
+		  <h:outputLabel for="memoryModules" value="Modules: " />
+		  <p:inputText id="memoryModules" value="#{memoryBean.modules}" required="true" Label = "Modules" />
+		  
+		  <h:outputLabel for="memorySize" value="Size: " />
+		  <p:inputText id="memorySize" value="#{memoryBean.size}" required="true" Label = "Size" />
+		  
+		  <h:outputLabel for="memoryType" value="Type: " />
+		  <p:inputText id="memoryType" value="#{memoryBean.type}" required="true" Label = "Type" />
+		  
+		  <h:outputLabel for="memoryVoltage" value="voltage: " />
+		  <p:inputText id="memoryVoltage" value="#{memoryBean.voltage}" required="true" Label = "Voltage" />
+		  
+		  <h:outputLabel for="memoryFrequency" value="Frequency: " />
+		  <p:inputText id="memoryFrequency" value="#{memoryBean.frequency}" required="true" Label = "Frequency" />
+		  
+		  <h:outputLabel for="memoryLatency" value="Latency: " />
+		  <p:inputText id="memoryLatency" value="#{memoryBean.latency}" required="true" Label = "Latency" />
+	
+		</p:panelGrid>
+			
+		<p:commandButton value="Insert" actionListener="#{memoryBean.insert}" />
+	
+	</ui:composition>
+</h:body>
+</html>
