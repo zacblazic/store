@@ -32,7 +32,7 @@
 			<h:outputLabel for="graphicsCardMemoryType" value="Memory Type: " />
 			<p:inputText id="graphicsCardMemoryType" value="#{graphicsCardBean.memoryType}" required="true" Label = "Memory Type" />
 			
-			<h:outputLabel for="graphicsCardMemorySize" value="memorySize: " />
+			<h:outputLabel for="graphicsCardMemorySize" value="Memory Size: " />
 			<p:inputText id="graphicsCardMemorySize" value="#{graphicsCardBean.memorySize}" required="true" Label = "Memory Size" />
 			
 			<h:outputLabel for="graphicsCardMemoryInterface" value="Memory Interface: " />
@@ -51,14 +51,14 @@
 			<p:inputText id="graphicsCardMaxResolution" value="#{graphicsCardBean.maxResolution}" required="true" Label = "Max Resolution" />
 			
 			<h:outputLabel for="graphicsCardDxVersion" value="Direct X Version: " />
-			<p:inputText id="graphicsCardDxVersion" value="#{graphicsCardBean.dxVerstion}" required="true" Label = "DirectX Version" />
+			<p:inputText id="graphicsCardDxVersion" value="#{graphicsCardBean.dxVersion}" required="true" Label = "DirectX Version" />
 			
 			<h:outputLabel for="graphicsCardMultipleGpuSupport" value="Multiple GPU Support: " />
 			<p:inputText id="graphicsCardMultipleGpuSupport" value="#{graphicsCardBean.multipleGpuSupport}" required="true" Label = "Multiple GPU Support" />
-			
+						
 		</p:panelGrid>
 			
-	<p:commandButton value="Insert" actionListener="#{processorBean.insert}" />
+	<p:commandButton value="Insert" actionListener="#{graphicsCardBean.insert}" />
 	
 	</ui:composition>
 </h:body>

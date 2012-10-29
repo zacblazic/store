@@ -69,7 +69,7 @@ public class ProductBean implements Serializable {
 		initialiseCategoryList();
 		hasMoreSubCategories = false;
 		componentFound = false;	
-		showProcessorElement = true;
+		
 		showGraphicsCardElement = true;
 	}
 	
