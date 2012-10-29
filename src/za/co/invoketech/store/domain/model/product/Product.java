@@ -35,6 +35,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.google.gson.annotations.Expose;
+
 import za.co.invoketech.store.application.util.Dates;
 
 /**
@@ -54,12 +56,14 @@ public class Product implements Serializable {
 	private long id;
 	
 	@Column(name = "TITLE", nullable = false)
+	@Expose
 	private String title;
 	
 	@Column(name = "UNIT_PRICE", nullable = false)
 	private BigDecimal unitPrice;
 	
 	@Column(name = "STOCK", nullable = false)
+	@Expose
 	private long stock;
 	
 	@Temporal(TemporalType.DATE)

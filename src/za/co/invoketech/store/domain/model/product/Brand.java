@@ -12,6 +12,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.google.gson.annotations.Expose;
+
 /**
  * Entity implementation class for Entity: Brand
  *
@@ -27,6 +29,7 @@ public class Brand implements Serializable {
 	private long id;
 	
 	@Column (name = "BRAND_NAME", unique = true)
+	@Expose
 	private String brandName; 
 	
 	/**

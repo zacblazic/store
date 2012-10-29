@@ -42,6 +42,12 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonStreamParser;
+import com.google.gson.annotations.Expose;
+
 import za.co.invoketech.store.application.util.Constants;
 import za.co.invoketech.store.application.util.Dates;
 import za.co.invoketech.store.domain.model.customer.Customer;
@@ -59,14 +65,17 @@ public class Order implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	@Column(name = "ORDER_ID")
+	@Expose
 	private long id;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "STATUS", nullable = false)
+	@Expose
 	private OrderStatus status;
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "ORDER_ID")
+	@Expose
 	private List<OrderItem> items;
 	
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -83,14 +92,17 @@ public class Order implements Serializable {
 	
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "INVOICE_ID")
+	@Expose
 	private Invoice invoice;
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "CREATED_DATE", nullable = false)
+	@Expose
 	private Date createdDate;
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "CANCELLED_DATE")
+	@Expose
 	private Date cancelledDate;
 	
 	/**
@@ -114,6 +126,12 @@ public class Order implements Serializable {
 		this.payment = Payment.copy(payment);
 		this.delivery = Delivery.copy(delivery);
 		this.createdDate = Dates.now();
+	}
+	
+	public String toJson() {
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		
+		return gson.toJson(this);
 	}
 
 	public long getId() {

@@ -34,6 +34,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.google.gson.annotations.Expose;
+
 import za.co.invoketech.store.domain.model.product.Product;
 
 @Entity
@@ -50,12 +52,14 @@ public class OrderItem implements Serializable {
 	
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "PRODUCT_ID", nullable = false)
+	@Expose
 	private Product product;
 	
 	@Column(name = "UNIT_PRICE", nullable = false)
 	private BigDecimal unitPrice;
 	
 	@Column(name = "QUANTITY", nullable = false)
+	@Expose
 	private int quantity;
 	
 	/**
