@@ -14,7 +14,7 @@
  * the License.
  */
 
-package za.co.invoketech.store.presentation.model;
+package za.co.invoketech.store.presentation.model.components;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -24,6 +24,7 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import za.co.invoketech.store.application.config.Goose;
 import za.co.invoketech.store.domain.model.product.Brand;
 import za.co.invoketech.store.domain.model.product.component.GraphicsCard;
 import za.co.invoketech.store.service.product.ProductService;
@@ -60,6 +61,12 @@ public class GraphicsCardBean implements Serializable{
 	private String maxResolution;
 	private String dxVersion;
 	private String multipleGpuSupport;
+	
+	public GraphicsCardBean(){
+		Goose.guicify(this);
+		brands = brandRepository.findAll();
+	}
+	
 	public List<Brand> getBrands() {
 		return brands;
 	}

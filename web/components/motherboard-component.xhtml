@@ -15,50 +15,86 @@
 	
 		<p:panelGrid columns="2" styleClass="panel-grid" >
 	
-			<h:outputLabel for="title" value="Title: " />
-		  <p:inputText id="title" value="#{graphicsCardBean.title}" required="true" Label = "Title" />
+			<h:outputLabel for="motherboardTitle" value="Title: " />
+		  <p:inputText id="motherboardTitle" value="#{motherboardBean.title}" required="true" Label = "Title" />
 			
-			<h:outputLabel for="stock" value="Stock: " />
-			<p:inputText id="stock" value="#{graphicsCardBean.stock}" required="true" Label = "Stock" />
+			<h:outputLabel for="motherboardStock" value="Stock: " />
+			<p:inputText id="motherboardStock" value="#{motherboardBean.stock}" required="true" Label = "Stock" />
 			
-			<h:outputLabel for="brand" value="Brand: " style="width:50px" />
-			<p:selectOneMenu value="#{graphicsCardBean.theBrand}" id="brand" effect="fold" editable="true">
-				<f:selectItems value="#{graphicsCardBean.brands}" />
+			<h:outputLabel for="motherboardBrand" value="Brand: " style="width:50px" />
+			<p:selectOneMenu value="#{motherboardBean.theBrand}" id="motherboardBrand" effect="fold" editable="true">
+				<f:selectItems value="#{motherboardBean.brands}" />
 			</p:selectOneMenu>
 			
-			<h:outputLabel for="connectionInterface" value="Connection Interface: " />
-			<p:inputText id="connectionInterface" value="#{graphicsCardBean.connectionInterface}" required="true" Label = "Connection Interface" />
+			<h:outputLabel for="motherboardChipset" value="Chipset: " />
+			<p:inputText id="motherboardChipset" value="#{motherboardBean.chipset}" required="true" Label = "Chipset" />
 			
-			<h:outputLabel for="memoryType" value="Memory Type: " />
-			<p:inputText id="memoryType" value="#{graphicsCardBean.memoryType}" required="true" Label = "Memory Type" />
+			<h:outputLabel for="motherboardSocket" value="Socket: " />
+			<p:inputText id="motherboardSocket" value="#{motherboardBean.socket}" required="true" Label = "Socket" />
 			
-			<h:outputLabel for="memorySize" value="memorySize: " />
-			<p:inputText id="memorySize" value="#{graphicsCardBean.memorySize}" required="true" Label = "Memory Size" />
+			<h:outputLabel for="motherboardMemoryType" value="Memory Type: " />
+			<p:inputText id="motherboardMemoryType" value="#{motherboardBean.memoryType}" required="true" Label = "Memory Type" />
 			
-			<h:outputLabel for="memoryInterface" value="Memory Interface: " />
-			<p:inputText id="socket" value="#{graphicsCardBean.memoryInterface}" required="true" Label = "Memory Interface" />
+			<h:outputLabel for="motherboardMemoryChannel" value="Memory Channel: " />
+			<p:inputText id="motherboardMemoryChannel" value="#{motherboardBean.memoryChannel}" required="true" Label = "Memory Channel" />
 			
-			<h:outputLabel for="coreClockSpeed" value="Core Clock Speed: " />
-			<p:inputText id="coreClockSpeed" value="#{graphicsCardBean.coreClockSpeed}" required="true" Label = "Core Clock Speed" />
+			<h:outputLabel for="motherboardMemorySlots" value="Memory Slots: " />
+			<p:inputText id="motherboardMemorySlots" value="#{motherboardBean.memortSlots}" required="true" Label = "Memory Slots" />
 			
-			<h:outputLabel for="memoryClockSpeed" value="Memory Clock Speed: " />
-			<p:inputText id="memoryClockSpeed" value="#{graphicsCardBean.memoryClockSpeed}" required="true" Label = "Memory Clock Speed" />
+			<h:outputLabel for="motherboardMaxMemory" value="Max Memory: " />
+			<p:inputText id="motherboardMaxMemory" value="#{motherboardBean.maxMemory}" required="true" Label = "Max Memory" />
 			
-			<h:outputLabel for="outputs" value="Outputs: " />
-			<p:inputText id="outputs" value="#{graphicsCardBean.outputs}" required="true" Label = "Outputs" />
+			<h:outputLabel for="motherboardPcie" value="PCI-Express: " />
+			<p:inputText id="motherboardPcie" value="#{motherboardBean.pcie}" required="true" Label = "PCI-Express" />
 			
-			<h:outputLabel for="maxResolution" value="Max Resolution: " />
-			<p:inputText id="maxResolution" value="#{graphicsCardBean.maxResolution}" required="true" Label = "Max Resolution" />
+			<h:outputLabel for="motherboardPci" value="PCI: " />
+			<p:inputText id="motherboardPci" value="#{motherboard.pci}" required="true" Label = "PCI" />
 			
-			<h:outputLabel for="dxVersion" value="Direct X Version: " />
-			<p:inputText id="dxVersion" value="#{graphicsCardBean.dxVerstion}" required="true" Label = "DirectX Version" />
+			<h:outputLabel for="motherboardIde" value="IDE: " />
+			<p:inputText id="motherboardIde" value="#{motherboard.ide}" required="true" Label = "IDE" />
 			
-			<h:outputLabel for="multipleGpuSupport" value="Multiple GPU Support: " />
-			<p:inputText id="multipleGpuSupport" value="#{graphicsCardBean.multipleGpuSupport}" required="true" Label = "Multiple GPU Support" />
+			<h:outputLabel for="motherboardSata3" value="Sata 3: " />
+			<p:inputText id="motherboardSata3" value="#{motherboard.sata3}" required="true" Label = "Sata 3" />
+			
+			<h:outputLabel for="motherboardSata2" value="Sata 2: " />
+			<p:inputText id="motherboardSata2" value="#{motherboard.sata2}" required="true" Label = "Sata 2" />
+			
+			<h:outputLabel for="motherboardLan" value="Lan: " />
+			<p:inputText id="motherboardLan" value="#{motherboard.lan}" required="true" Label = "Lan" />
+			
+			<h:outputLabel for="motherboardUsb3" value="USB 3: " />
+			<p:inputText id="motherboardUsb3" value="#{motherboard.usb3}" required="true" Label = "USB 3" />
+			
+			<h:outputLabel for="motherboardUsb2" value="USB 2: " />
+			<p:inputText id="motherboardUsb2" value="#{motherboard.usb2}" required="true" Label = "USB 2" />
+			
+			<h:outputLabel for="motherboardAudio" value="Audio Ports: " />
+			<p:inputText id="motherboardAudio" value="#{motherboard.audio}" required="true" Label = "Audio Ports" />
+			
+			<h:outputLabel for="motherboardFirewire" value="FireWire: " />
+			<p:inputText id="motherboardFirewire" value="#{motherboard.firewire}" required="true" Label = "Firewire" />
+			
+			<h:outputLabel for="motherboardEsata" value="E-Sata: " />
+			<p:inputText id="motherboardEsata" value="#{motherboard.esata}" required="true" Label = "E-Sata" />
+			
+			<h:outputLabel for="motherboardVga" value="VGA: " />
+			<p:inputText id="motherboardVga" value="#{motherboard.vga}" required="true" Label = "VGA" />
+			
+			<h:outputLabel for="motherboardHdmi" value="HDMI: " />
+			<p:inputText id="motherboardHdmi" value="#{motherboard.hdmi}" required="true" Label = "HDMI" />
+			
+			<h:outputLabel for="motherboardDvi" value="DVI: " />
+			<p:inputText id="motherboardDvi" value="#{motherboard.dvi}" required="true" Label = "DVI" />
+			
+			<h:outputLabel for="motherboardFormFactor" value="Form Factor: " />
+			<p:inputText id="motherboardFormFactor" value="#{motherboard.formFactor}" required="true" Label = "Form Factor" />
+			
+			<h:outputLabel for="motherboardSliCrossfire" value="SLI/Crossfire: " />
+			<p:selectBooleanCheckbox id="motherboardSliCrossfire" value="#{motherboard.sliCrossfire}" required="true" Label = "SLI/Crossfire" />
 			
 		</p:panelGrid>
 			
-	<p:commandButton value="Insert" actionListener="#{processorBean.insert}" />
+	<p:commandButton value="Insert" actionListener="#{motherboardBean.insert}" />
 	
 	</ui:composition>
 </h:body>
