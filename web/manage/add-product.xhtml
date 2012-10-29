@@ -39,9 +39,17 @@
 			
 			<br />
 			
-			<ui:fragment>
+			<ui:fragment rendered="#{productBean.showProcessorElement}">
 				<br />
 				<ui:insert>
+					<ui:include src="../components/processor-component.xhtml" />
+				</ui:insert>
+			</ui:fragment>
+			
+			<ui:fragment rendered="#{productBean.showGraphicsCardElement}">
+				<br />
+				<ui:insert>
+					<ui:include src="../components/graphics-card-component.xhtml" />
 				</ui:insert>
 			</ui:fragment>
 

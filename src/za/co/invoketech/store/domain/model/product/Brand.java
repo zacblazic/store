@@ -56,8 +56,12 @@ public class Brand implements Serializable {
 		this.brandName = brandName;
 	} 
 	
+	public String toString() {
+		return brandName;
+	}
+	
 	private void checkBrandName(String brandName) {
 		checkNotNull(brandName, "brandName cannot be null");
 		checkArgument(!brandName.isEmpty(), "brandName cannot be empty");
-	}  
+	} 
 }

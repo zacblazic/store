@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+ 
+<h:head>
+	<h:outputStylesheet library="css" name="main.css" />
+</h:head>
+<h:body>
+	<ui:composition>
+	
+		<p:panelGrid columns="2" styleClass="panel-grid" >
+	
+			<h:outputLabel for="title" value="Title: " />
+		  <p:inputText id="title" value="#{graphicsCardBean.title}" required="true" Label = "Title" />
+			
+			<h:outputLabel for="stock" value="Stock: " />
+			<p:inputText id="stock" value="#{graphicsCardBean.stock}" required="true" Label = "Stock" />
+			
+			<h:outputLabel for="brand" value="Brand: " style="width:50px" />
+			<p:selectOneMenu value="#{graphicsCardBean.theBrand}" id="brand" effect="fold" editable="true">
+				<f:selectItems value="#{graphicsCardBean.brands}" />
+			</p:selectOneMenu>
+			
+			<h:outputLabel for="connectionInterface" value="Connection Interface: " />
+			<p:inputText id="connectionInterface" value="#{graphicsCardBean.connectionInterface}" required="true" Label = "Connection Interface" />
+			
+			<h:outputLabel for="memoryType" value="Memory Type: " />
+			<p:inputText id="memoryType" value="#{graphicsCardBean.memoryType}" required="true" Label = "Memory Type" />
+			
+			<h:outputLabel for="memorySize" value="memorySize: " />
+			<p:inputText id="memorySize" value="#{graphicsCardBean.memorySize}" required="true" Label = "Memory Size" />
+			
+			<h:outputLabel for="memoryInterface" value="Memory Interface: " />
+			<p:inputText id="socket" value="#{graphicsCardBean.memoryInterface}" required="true" Label = "Memory Interface" />
+			
+			<h:outputLabel for="coreClockSpeed" value="Core Clock Speed: " />
+			<p:inputText id="coreClockSpeed" value="#{graphicsCardBean.coreClockSpeed}" required="true" Label = "Core Clock Speed" />
+			
+			<h:outputLabel for="memoryClockSpeed" value="Memory Clock Speed: " />
+			<p:inputText id="memoryClockSpeed" value="#{graphicsCardBean.memoryClockSpeed}" required="true" Label = "Memory Clock Speed" />
+			
+			<h:outputLabel for="outputs" value="Outputs: " />
+			<p:inputText id="outputs" value="#{graphicsCardBean.outputs}" required="true" Label = "Outputs" />
+			
+			<h:outputLabel for="maxResolution" value="Max Resolution: " />
+			<p:inputText id="maxResolution" value="#{graphicsCardBean.maxResolution}" required="true" Label = "Max Resolution" />
+			
+			<h:outputLabel for="dxVersion" value="Direct X Version: " />
+			<p:inputText id="dxVersion" value="#{graphicsCardBean.dxVerstion}" required="true" Label = "DirectX Version" />
+			
+			<h:outputLabel for="multipleGpuSupport" value="Multiple GPU Support: " />
+			<p:inputText id="multipleGpuSupport" value="#{graphicsCardBean.multipleGpuSupport}" required="true" Label = "Multiple GPU Support" />
+			
+		</p:panelGrid>
+			
+	<p:commandButton value="Insert" actionListener="#{processorBean.insert}" />
+	
+	</ui:composition>
+</h:body>
+</html>

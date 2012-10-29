@@ -24,6 +24,7 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import za.co.invoketech.store.application.config.Goose;
 import za.co.invoketech.store.domain.model.product.Brand;
 import za.co.invoketech.store.domain.model.product.component.IntegratedGPU;
 import za.co.invoketech.store.domain.model.product.component.Processor;
@@ -66,6 +67,7 @@ public class ProcessorBean implements Serializable {
 	private int gpuDisplays;
 	
 	public ProcessorBean() {
+		Goose.guicify(this);
 		brands = brandRepository.findAll();
 		showGPU = false;
 	}
@@ -80,6 +82,7 @@ public class ProcessorBean implements Serializable {
 	
 	public void setShowGPU(boolean showGPU) {
 		this.showGPU = showGPU;
+		System.out.println("Set" + showGPU);
 	}
 	
 	public boolean isShowGPU() {
@@ -204,6 +207,20 @@ public class ProcessorBean implements Serializable {
 	
 	public void setBoostClock(float boostClock) {
 		this.boostClock = boostClock;
+	}
+	
+	public void toggleGPU(){
+		System.out.println("showGPU: " + showGPU);
+		
+		if(!showGPU) {
+			showGPU = true;
+		}
+		else if(showGPU) {
+			showGPU = false;
+		}
+		else {
+			showGPU = true;
+		}
 	}
 	
 	public void insertNew() {
