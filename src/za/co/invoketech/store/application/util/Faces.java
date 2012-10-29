@@ -10,8 +10,15 @@ public class Faces {
 		FacesContext.getCurrentInstance().addMessage(null, message);
 	}
 	
+	public static void showErrorMessage(String clientId, String summary, String detail) {
+		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, summary,  detail);  
+		FacesContext.getCurrentInstance().addMessage(clientId, message);
+	}
+	
 	public static void showInfoMessage(String summary, String detail) {
 		FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary,  detail);  
 		FacesContext.getCurrentInstance().addMessage(null, message);
 	}
+	
+	
 }
