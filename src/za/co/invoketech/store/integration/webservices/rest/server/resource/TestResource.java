@@ -9,6 +9,6 @@ public class TestResource extends ServerResource {
 	public String getMessage(){
 		String aword = (String)getRequestAttributes().get("word");
 		
-		return "Hello" + aword;
+		return "Server is working:\nYou Requested:\n" + aword;
 	}
 }

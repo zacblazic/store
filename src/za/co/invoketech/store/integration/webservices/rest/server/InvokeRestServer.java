@@ -24,9 +24,9 @@ public class InvokeRestServer extends Application {
 		component.start();
 	}
 	
-	public static void main(String[] args) throws Exception {
-		runServer(8111);
-	}
+//	public static void main(String[] args) throws Exception {
+//		runServer(8111);
+//	}
 	
 	@Override
 	public Restlet createInboundRoot() {
