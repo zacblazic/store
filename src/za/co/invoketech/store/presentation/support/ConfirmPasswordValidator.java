@@ -19,6 +19,14 @@ public class ConfirmPasswordValidator implements Validator {
 		String passwordString = (String)password.getValue();
 		String confirmPasswordString = (String)value;
 		
+		// If there is no password entered, do nothing
+		if(passwordString == null) {
+			return;
+		}
+		
+		System.out.println(passwordString);
+		System.out.println(confirmPasswordString);
+		
 		if(!passwordString.equals(confirmPasswordString)) {
 			throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "", "Passwords do not match."));
 		}		

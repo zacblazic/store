@@ -24,14 +24,16 @@
   		<p:message for="email" />
   		
   		<h:outputText value="Password:" />
-  		<p:password id="password" label="Password" value="#{accountBean.password}" required="true" requiredMessage="Please enter a password." feedback="true">
-  			
+  		<p:password id="password" value="#{accountBean.password}" required="true" requiredMessage="Please enter a password." feedback="true">
+  			<f:attribute name="label" value="Password" />
+  		 	<f:attribute name="minimum" value="8" />
+  			<f:validator  validatorId="lengthValidator" />
   		</p:password>
   		<p:message for="password" />
   		
   		<h:outputText value="Confirm Password:" />
   		<p:password id="confirm-password" value="#{accountBean.confirmPassword}" required="true" requiredMessage="Please confirm your password.">
-  			<f:validator validatorId="confirmPasswordValidator"/>
+  			<f:validator validatorId="confirmPasswordValidator" />
   		</p:password>
   		<p:message for="confirm-password" />
   			

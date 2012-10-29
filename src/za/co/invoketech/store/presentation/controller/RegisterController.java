@@ -36,6 +36,8 @@ public class RegisterController {
 	private AccountBean accountBean;
 	
 	public RegisterController() {
+		System.out.println("RegisterController Constructor");
+		Faces.showInfoMessage("RegisterController Constructor", "RegisterController Constructor");
 		Goose.guicify(this);
 	}
 	
@@ -64,7 +66,8 @@ public class RegisterController {
 	}
 
 	public String register() {
-		System.out.println("Settomg address");
+		System.out.println("Register Method");
+		Faces.showInfoMessage("Register Method", "Register Method");
 		
 		addressBean.setLabel("Default");
 		addressBean.setFirstName(personBean.getFirstName());
@@ -81,12 +84,14 @@ public class RegisterController {
 
 		try {
 			customerService.createCustomer(person, address, account);
-			System.out.println("About");
+			System.out.println("Fail");
 			Faces.showInfoMessage("Registration successful!", "");
 			
 		} catch (RoleNotFoundException e) {
+			System.out.println(e);
 			Faces.showErrorMessage("Woah I think something just broke!", "");
 		} catch (AccountExistsException e) {
+			System.out.println(e);
 			Faces.showErrorMessage("Email address already in use.", "");
 		}
 		
