@@ -131,10 +131,10 @@ public class OrderJsonTest {
 		garethCustomer.getOrders().add(order);
 		customerRepository.merge(garethCustomer);
 		
-		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().setPrettyPrinting().create();
 		String jsonString = gson.toJson(order);
 		System.out.println(jsonString);
-		
+
 		System.out.println("======================================");
 		
 		String newStr = gson.toJson(orderRepository.findById(order.getId()));

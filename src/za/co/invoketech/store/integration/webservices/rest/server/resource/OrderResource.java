@@ -8,6 +8,7 @@ import za.co.invoketech.store.domain.model.order.Order;
 import za.co.invoketech.store.service.repository.OrderRepository;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.inject.Inject;
 
 public class OrderResource extends ServerResource {
@@ -19,15 +20,14 @@ public class OrderResource extends ServerResource {
 	}
 	
 	@Get
-	public String getOrder(){
+	public String getOrder() {
 		Order order;
 		long orderId = Long.valueOf((String) this.getRequestAttributes().get("orderId"));
-		System.out.println(orderId);
-		order = orderRepository.findById(orderId);	
-
-		Gson gson = new Gson();
-		String jse =  gson.toJson(order);
+		order = orderRepository.findById(orderId);
 		
-		return jse.toString();
+		Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().setPrettyPrinting().create();
+		String jse = gson.toJson(order);		
+		
+		return jse;
 	}
 }
