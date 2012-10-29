@@ -21,6 +21,9 @@
 			<h:outputLabel for="graphicsCardStock" value="Stock: " />
 			<p:inputText id="graphicsCardStock" value="#{graphicsCardBean.stock}" required="true" Label = "Stock" />
 			
+			<h:outputLabel for="graphicsPrice" value="Price: " />
+			<p:inputText id="graphicsCardPrice" value="#{graphicsCardBean.price}" required="true" Label = "Price" />
+			
 			<h:outputLabel for="graphicsCardBrand" value="Brand: " style="width:50px" />
 			<p:selectOneMenu value="#{graphicsCardBean.theBrand}" id="graphicsCardBrand" effect="fold" editable="true">
 				<f:selectItems value="#{graphicsCardBean.brands}" />

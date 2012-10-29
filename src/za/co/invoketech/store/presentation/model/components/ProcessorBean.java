@@ -17,6 +17,7 @@
 package za.co.invoketech.store.presentation.model.components;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -51,6 +52,7 @@ public class ProcessorBean implements Serializable {
 	private String theBrand;
 	private String title;
 	private long stock;
+	private double price;
 	private Date discontinuedDate;
 	private String family;
 	private float clockSpeed;
@@ -209,6 +211,14 @@ public class ProcessorBean implements Serializable {
 		this.boostClock = boostClock;
 	}
 	
+	public void setPrice(double price) {
+		this.price = price;
+	}
+	
+	public double getPrice() {
+		return price;
+	}
+	
 	public void toggleGPU(){
 		System.out.println("showGPU: " + showGPU);
 		
@@ -223,10 +233,11 @@ public class ProcessorBean implements Serializable {
 		}
 	}
 	
-	public void insertNew() {
+	public void insert() {
 		Processor processor = new Processor();
 		processor.setTitle(title);
 		processor.setStock(stock);
+		processor.setPrice(new BigDecimal(price));
 		processor.setFamily(family);
 		processor.setClockSpeed(clockSpeed);
 		processor.setBoostClock(boostClock);

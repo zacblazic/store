@@ -21,6 +21,9 @@
 			<h:outputLabel for="processorStock" value="Stock: " />
 			<p:inputText id="processorStock" value="#{processorBean.stock}" required="true" Label = "Stock" />
 			
+			<h:outputLabel for="processorPrice" value="Price: " />
+			<p:inputText id="processorPrice" value="#{processorBean.price}" required="true" Label = "Price" />
+			
 			<h:outputLabel for="processorBrand" value="Brand: " style="width:50px" />
 			<p:selectOneMenu value="#{processorBean.theBrand}" id="processorBrand" effect="fold" editable="true">
 				<f:selectItems value="#{processorBean.brands}" />
@@ -47,12 +50,9 @@
 			<h:outputLabel for="processorThreads" value="Threads: " />
 			<p:inputText id="processorThreads" value="#{processorBean.threads}" required="true" Label = "Threads" />
 			
-			<h:outputLabel for="processorInternalGPU" value="Internal GPU: " />
-			<p:button value="Add" onclick="#{processorBean.toggleGPU()}" />
-			
 		</p:panelGrid>
 			
-			<ui:fragment id="processorInternalGPU" rendered="#{processorBean.showGPU}">
+			<ui:fragment id="processorInternalGPU">
 				<ui:insert>
 				<p:panelGrid columns="2" id="gpu">
 					<ui:include src="integrated-gpu-component.xhtml" />

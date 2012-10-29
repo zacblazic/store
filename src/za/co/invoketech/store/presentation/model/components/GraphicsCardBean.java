@@ -17,6 +17,7 @@
 package za.co.invoketech.store.presentation.model.components;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -50,6 +51,7 @@ public class GraphicsCardBean implements Serializable{
 	private String theBrand;
 	private String title;
 	private long stock;
+	private double price;
 	private Date discontinuedDate;
 	private String connectionInterface;
 	private String memoryType;
@@ -158,10 +160,19 @@ public class GraphicsCardBean implements Serializable{
 		this.multipleGpuSupport = multipleGpuSupport;
 	}
 	
-	public void insertNew() {
+	public double getPrice() {
+		return price;
+	}
+	
+	public void setPrice(double price) {
+		this.price = price;
+	}
+	
+	public void insert() {
 		GraphicsCard graphicsCard = new GraphicsCard();
 		graphicsCard.setTitle(title);
 		graphicsCard.setStock(stock);
+		graphicsCard.setPrice(new BigDecimal(price));
 		graphicsCard.setConnectionInterface(connectionInterface);
 		graphicsCard.setMemoryType(memoryType);
 		graphicsCard.setMemorySize(memorySize);

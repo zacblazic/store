@@ -52,10 +52,21 @@
 					<ui:include src="../components/graphics-card-component.xhtml" />
 				</ui:insert>
 			</ui:fragment>
-
-				<h:outputText value="dhsj" rendered="#{productBean.componentFound}" />
-
 			
+			<ui:fragment rendered="#{productBean.showMotherboardElement}">
+				<br />
+				<ui:insert>
+					<ui:include src="../components/motherboard-component.xhtml" />
+				</ui:insert>
+			</ui:fragment>
+			
+			<ui:fragment rendered="#{productBean.showMemoryElement}">
+				<br />
+				<ui:insert>
+					<ui:include src="../components/memory-component.xhtml" />
+				</ui:insert>
+			</ui:fragment>
+						
 		</p:panel>
 	</h:form>
 </h:body>

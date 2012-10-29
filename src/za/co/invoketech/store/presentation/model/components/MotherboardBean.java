@@ -17,9 +17,13 @@
 package za.co.invoketech.store.presentation.model.components;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 
 import za.co.invoketech.store.application.config.Goose;
 import za.co.invoketech.store.domain.model.product.Brand;
@@ -33,6 +37,8 @@ import com.google.inject.Inject;
  * @author a.carel.g.nel@gmail.com (Carel Nel)
  */
 
+@SessionScoped
+@ManagedBean
 public class MotherboardBean implements Serializable{
 
 	@Inject
@@ -45,6 +51,7 @@ public class MotherboardBean implements Serializable{
 	private String theBrand;
 	private String title;
 	private long stock;
+	private double price;
 	private Date discontinuedDate;
 	private String chipset;
 	private String socket;
@@ -73,7 +80,7 @@ public class MotherboardBean implements Serializable{
 		Goose.guicify(this);
 		brands = brandRepository.findAll();
 	}
-
+	
 	public List<Brand> getBrands() {
 		return brands;
 	}
@@ -290,10 +297,19 @@ public class MotherboardBean implements Serializable{
 		this.sliCrossfire = sliCrossfire;
 	}
 	
+	public void setPrice(double price) {
+		this.price = price;
+	}
+	
+	public double getPrice() {
+		return price;
+	}
+	
 	public void insert() {
 		Motherboard motherboard = new Motherboard();
 		motherboard.setTitle(title);
 		motherboard.setStock(stock);
+		motherboard.setPrice(new BigDecimal(price));
 		motherboard.setChipset(chipset);
 		motherboard.setSocket(socket);
 		motherboard.setMemoryType(memoryType);
