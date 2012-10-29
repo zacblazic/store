@@ -42,16 +42,12 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonStreamParser;
-import com.google.gson.annotations.Expose;
-
 import za.co.invoketech.store.application.util.Constants;
 import za.co.invoketech.store.application.util.Dates;
 import za.co.invoketech.store.domain.model.customer.Customer;
 import za.co.invoketech.store.domain.model.invoice.Invoice;
+
+import com.google.gson.annotations.Expose;
 
 /**
  * @author zacblazic@gmail.com (Zac Blazic)
@@ -126,12 +122,6 @@ public class Order implements Serializable {
 		this.payment = Payment.copy(payment);
 		this.delivery = Delivery.copy(delivery);
 		this.createdDate = Dates.now();
-	}
-	
-	public String toJson() {
-		Gson gson = new GsonBuilder().setPrettyPrinting().create();
-		
-		return gson.toJson(this);
 	}
 
 	public long getId() {
