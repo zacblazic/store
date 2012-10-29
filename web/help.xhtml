@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:shiro="http://shiro.apache.org/tags">
+ 
+<h:head>
+	<title>InvokeTech: Help</title>
+	<h:outputStylesheet library="css" name="main.css" />
+</h:head>
+<h:body style="font-size: 12px;">
+	
+	
+	
+	<h:form>
+		<ui:insert name="header-buttons">
+			<ui:include src="/components/header.xhtml" />
+		</ui:insert>
+		
+		<h1>Help</h1>
+		<h2>Welcome, <shiro:user><shiro:principal/></shiro:user></h2>
+			<p:panel id="faq-panel" header="Frequently Asked Questions">
+				<p:panelGrid columns="1" styleClass="panel-grid">
+					
+					<p:fieldset legend="How can I register an account with InvokeTech?" toggleable="true" toggleSpeed="500" collapsed="true" >
+				        <h:panelGrid columns="1" cellpadding="10">   
+				            <h:outputText value="On the homepage there is a button called register. When the button is clicked you will be taken to a registration page to fill in your details and complete the rigistration process.
+				            					Once registration is complete, you may then log-in"/>  
+				        </h:panelGrid>  
+			    	</p:fieldset>
+					
+					<p:fieldset legend="What delivery options are available from InvokeTech?" toggleable="true" toggleSpeed="500" collapsed="true">
+				        <h:panelGrid columns="1" cellpadding="10">   
+				            <h:outputText value="You have the option of having your purchase couriered to your door for an additional cost or post box or you can collect from our premises free of charge"/>  
+				        </h:panelGrid>  
+			    	</p:fieldset>
+					
+				</p:panelGrid>
+			</p:panel>
+	
+	
+			<p:panel id="contact-panel" header="Contact Us">
+			<p:messages id="messages" globalOnly="true" /> 
+				<p:panelGrid columns="2" styleClass="panel-grid">
+					
+					<h:outputText value="Full Name:" />
+			  		<p:inputText id="name" value="" required="true"  requiredMessage="Please enter your name" />
+			  		
+			  		<h:outputText value="Email Address: " />
+			  		<p:inputText id="email" value="" required="true"  requiredMessage="Please enter your email address." />
+			  		
+			  		<h:outputText value="Message: " />
+			  		<p:inputTextarea rows="5" cols="30" counter="counter" maxlength="512" counterTemplate="{0} characters remaining." autoResize="true" required="true" requiredMessage="Please enter your message." />  
+  					<h:outputText id="counter" />					
+				</p:panelGrid>
+				
+			<p:commandButton value="Send" />
+			</p:panel>
+	</h:form>
+	
+</h:body>
+</html>
