@@ -13,7 +13,7 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
-package za.co.invoketech.store.integration.webservices.rest.server;
+package za.co.invoketech.store.integration.rest.server;
 
 import org.restlet.Application;
 import org.restlet.Component;
@@ -21,9 +21,9 @@ import org.restlet.Restlet;
 import org.restlet.data.Protocol;
 import org.restlet.routing.Router;
 
-import za.co.invoketech.store.integration.webservices.rest.server.resource.OrderResource;
-import za.co.invoketech.store.integration.webservices.rest.server.resource.OrdersResource;
-import za.co.invoketech.store.integration.webservices.rest.server.resource.TestResource;
+import za.co.invoketech.store.integration.rest.resource.OrderResource;
+import za.co.invoketech.store.integration.rest.resource.OrdersResource;
+import za.co.invoketech.store.integration.rest.resource.TestResource;
 
 /**
  * 

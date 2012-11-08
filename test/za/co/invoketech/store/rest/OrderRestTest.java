@@ -11,7 +11,7 @@ import org.restlet.resource.ClientResource;
 
 import za.co.invoketech.store.application.config.Goose;
 import za.co.invoketech.store.domain.model.order.Order;
-import za.co.invoketech.store.integration.webservices.rest.server.InvokeRestServer;
+import za.co.invoketech.store.integration.rest.server.InvokeRestServer;
 import za.co.invoketech.store.service.repository.OrderRepository;
 
 import com.google.gson.Gson;

@@ -21,7 +21,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
-import za.co.invoketech.store.persistence.dao.GenericDao;
+import za.co.invoketech.store.service.dao.GenericDao;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;

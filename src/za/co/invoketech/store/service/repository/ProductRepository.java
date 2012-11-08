@@ -17,7 +17,7 @@
 package za.co.invoketech.store.service.repository;
 
 import za.co.invoketech.store.domain.model.product.Product;
-import za.co.invoketech.store.persistence.dao.GenericDao;
+import za.co.invoketech.store.service.dao.GenericDao;
 
 /**
  * @author garethc18@gmail.com (Gareth Conry)

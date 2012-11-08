@@ -21,7 +21,7 @@ package za.co.invoketech.store.service.repository;
  */
 
 import za.co.invoketech.store.domain.model.product.Brand;
-import za.co.invoketech.store.persistence.dao.GenericDao;
+import za.co.invoketech.store.service.dao.GenericDao;
 
 public interface BrandRepository extends GenericDao<Brand, Long> {
 

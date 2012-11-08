@@ -14,7 +14,7 @@
  * the License.
  */
 
-package za.co.invoketech.store.persistence.dao;
+package za.co.invoketech.store.service.dao;
 
 import java.util.List;
 
