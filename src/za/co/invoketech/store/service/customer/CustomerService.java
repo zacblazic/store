@@ -15,7 +15,7 @@ public interface CustomerService {
 
 	public static final int MAX_ADDRESSES = 8;
 	
-	void createCustomer(Person person, Address address, Account account) throws RoleNotFoundException, AccountExistsException;
+	Customer createCustomer(Person person, Address address, Account account) throws RoleNotFoundException, AccountExistsException;
 	
 	Customer findCustomerById(long customerId) throws CustomerNotFoundException;
 	Customer findCustomerByEmail(String email) throws AccountNotFoundException, CustomerNotLinkedException;

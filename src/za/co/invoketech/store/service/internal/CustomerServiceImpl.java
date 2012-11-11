@@ -79,7 +79,7 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 	
 	@Override
-	public void createCustomer(Person person, Address address, Account account) throws RoleNotFoundException, AccountExistsException {
+	public Customer createCustomer(Person person, Address address, Account account) throws RoleNotFoundException, AccountExistsException {
 		// Give the custome the default "customer" role
 		account.addRole(roleService.retrieveRoleByName("customer"));
 		
@@ -98,5 +98,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 			e.printStackTrace();
 		}
+		
+		return customer;
 	}
 }
