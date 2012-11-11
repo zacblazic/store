@@ -61,7 +61,7 @@ public class Customer implements Serializable {
 	@Embedded
 	private Person person;
 	
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
 	@JoinColumn(name = "CUSTOMER_ID")
 	private List<Address> addresses;
 	
@@ -69,11 +69,11 @@ public class Customer implements Serializable {
 	@JoinColumn(name = "ACCOUNT_ID", nullable = false)
 	private Account account;
 	
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval=true)
 	@JoinColumn(name = "SHOPPING_CART_ID", nullable = false) 
 	private ShoppingCart shoppingCart;
 	
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
 	@JoinColumn(name = "CUSTOMER_ID")
 	private List<WishList> wishLists;
 	
