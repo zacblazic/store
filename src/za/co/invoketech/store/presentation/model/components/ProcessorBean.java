@@ -18,19 +18,15 @@ package za.co.invoketech.store.presentation.model.components;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 import za.co.invoketech.store.application.config.Goose;
-import za.co.invoketech.store.domain.model.product.Brand;
 import za.co.invoketech.store.domain.model.product.component.IntegratedGPU;
 import za.co.invoketech.store.domain.model.product.component.Processor;
 import za.co.invoketech.store.service.product.ProductService;
-import za.co.invoketech.store.service.repository.BrandRepository;
 
 import com.google.inject.Inject;
 
@@ -43,12 +39,9 @@ import com.google.inject.Inject;
 public class ProcessorBean implements Serializable {
 
 	@Inject
-	private BrandRepository brandRepository;
-	@Inject
 	private ProductService productService;
 	
 	private static final long serialVersionUID = 1L;
-	private List<Brand> brands = new ArrayList<Brand>();
 	private String theBrand;
 	private String title;
 	private long stock;
@@ -70,7 +63,6 @@ public class ProcessorBean implements Serializable {
 	
 	public ProcessorBean() {
 		Goose.guicify(this);
-		brands = brandRepository.findAll();
 		showGPU = false;
 	}
 	
@@ -89,14 +81,6 @@ public class ProcessorBean implements Serializable {
 	
 	public boolean isShowGPU() {
 		return showGPU;
-	}
-
-	public List<Brand> getBrands() {
-		return brands;
-	}
-
-	public void setBrands(List<Brand> brands) {
-		this.brands = brands;
 	}
 
 	public String getTitle() {
@@ -246,8 +230,6 @@ public class ProcessorBean implements Serializable {
 		processor.setCores(cores);
 		processor.setThreads(threads);
 		
-		Brand brand = new Brand(theBrand);
-		
 		if(showGPU) {
 			IntegratedGPU integratedGPU = new IntegratedGPU();
 			integratedGPU.setName(gpuName);
@@ -258,6 +240,6 @@ public class ProcessorBean implements Serializable {
 			processor.setIntegratedGPU(integratedGPU);
 		}
 		
-		productService.insertProduct(processor, brand);
+		productService.insertProduct(processor);
 	}
 }
