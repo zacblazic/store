@@ -5,6 +5,7 @@ import org.apache.shiro.authc.credential.PasswordService;
 
 import za.co.invoketech.store.service.account.AccountService;
 import za.co.invoketech.store.service.account.RoleService;
+import za.co.invoketech.store.service.cart.ShoppingCartService;
 import za.co.invoketech.store.service.customer.CustomerService;
 import za.co.invoketech.store.service.file.FileManager;
 import za.co.invoketech.store.service.file.FileUploadService;
@@ -21,6 +22,7 @@ public class ServiceModule extends AbstractModule {
 		bind(AccountService.class).to(AccountServiceImpl.class);
 		bind(RoleService.class).to(RoleServiceImpl.class);
 		bind(CustomerService.class).to(CustomerServiceImpl.class);
+		bind(ShoppingCartService.class).to(ShoppingCartServiceImpl.class);
 		
 		// Shiro bindings
 		bind(PasswordService.class).to(DefaultPasswordService.class);
