@@ -17,7 +17,6 @@ import za.co.invoketech.store.domain.model.order.Order;
 import za.co.invoketech.store.domain.model.order.OrderItem;
 import za.co.invoketech.store.domain.model.order.Payment;
 import za.co.invoketech.store.domain.model.order.PaymentMethod;
-import za.co.invoketech.store.domain.model.product.Brand;
 import za.co.invoketech.store.domain.model.product.peripheral.Mouse;
 import za.co.invoketech.store.domain.model.role.Role;
 import za.co.invoketech.store.domain.shared.AddressType;
@@ -126,8 +125,7 @@ public class DataTest {
 				mouse.setDpi(5600);
 				mouse.setButtons(7);
 				mouse.setPrice(new BigDecimal(1200));
-				mouse.setTitle("Ouroboros");
-				mouse.setBrand(new Brand("Razer"));
+				mouse.setTitle("Razer Ouroboros");
 				mouse.setDiscontinued(false);
 				
 				productRepository.persist(mouse);
@@ -136,8 +134,7 @@ public class DataTest {
 				newmouse.setDpi(2500);
 				newmouse.setButtons(3);
 				newmouse.setPrice(new BigDecimal(500));
-				newmouse.setTitle("Sentinel");
-				newmouse.setBrand(new Brand("Coolermaster"));
+				newmouse.setTitle("Coolermaster Sentinel");
 				newmouse.setDiscontinued(false);
 				
 				productRepository.persist(newmouse);
