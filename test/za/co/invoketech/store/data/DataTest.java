@@ -122,8 +122,6 @@ public class DataTest {
 				customerRepository.persist(carelCustomer);
 				
 				
-				customerRepository.persist(garethCustomer);
-				
 				Mouse mouse = new Mouse();
 				mouse.setDpi(5600);
 				mouse.setButtons(7);
