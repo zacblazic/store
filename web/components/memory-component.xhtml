@@ -24,11 +24,6 @@
 		<h:outputLabel for="memoryPrice" value="Price: " />
 		<p:inputText id="memoryPrice" value="#{memoryBean.price}" required="true" Label = "Price" />
 		  
-		<h:outputLabel for="memoryBrand" value="Brand: " style="width:50px" />
-		<p:selectOneMenu value="#{memoryBean.theBrand}" id="mwmoryBrand" effect="fold" editable="true">
-			<f:selectItems value="#{memoryBean.brands}" />
-		</p:selectOneMenu>
-		  
 		<h:outputLabel for="memoryModules" value="Modules: " />
 		<p:inputText id="memoryModules" value="#{memoryBean.modules}" required="true" Label = "Modules" />
 		  
