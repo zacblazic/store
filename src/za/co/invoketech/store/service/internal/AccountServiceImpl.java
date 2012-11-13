@@ -18,7 +18,6 @@ package za.co.invoketech.store.service.internal;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.credential.PasswordService;
 
 import za.co.invoketech.store.application.exception.AccountExistsException;
@@ -115,11 +114,15 @@ public class AccountServiceImpl implements AccountService {
 		{
 			throw new DefaultDeleteException();
 		}
-		if (SecurityUtils.getSubject().getPrincipal().equals(account.getEmail()))
-		{
-			throw new CurrentAccountException();
-		}		
-		
+		/*
+		Subject currentUser = SecurityUtils.getSubject();
+		if (currentUser.isAuthenticated() ) {
+			if (currentUser.getPrincipal().equals(account.getEmail()))
+			{
+				throw new CurrentAccountException();
+			}
+		}
+		*/
 		accountRepository.remove(account);
 	}
 

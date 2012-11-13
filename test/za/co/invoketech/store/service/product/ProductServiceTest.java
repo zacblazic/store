@@ -23,7 +23,6 @@ import junit.framework.Assert;
 import org.junit.Test;
 
 import za.co.invoketech.store.application.config.Goose;
-import za.co.invoketech.store.domain.model.product.Brand;
 import za.co.invoketech.store.domain.model.product.Product;
 import za.co.invoketech.store.domain.model.product.component.GraphicsCard;
 import za.co.invoketech.store.domain.model.product.component.HardDiskDrive;
@@ -32,7 +31,6 @@ import za.co.invoketech.store.domain.model.product.component.Memory;
 import za.co.invoketech.store.domain.model.product.component.PowerSupplyUnit;
 import za.co.invoketech.store.domain.model.product.component.Processor;
 import za.co.invoketech.store.domain.model.product.component.SolidStateDrive;
-import za.co.invoketech.store.service.repository.BrandRepository;
 
 import com.google.inject.Inject;
 
@@ -45,9 +43,6 @@ public class ProductServiceTest {
 	@Inject
 	private ProductService productService;
 	
-	@Inject
-	private BrandRepository brandRepository;
-	
 	public ProductServiceTest() {
 		Goose.getInjectorForTesting().injectMembers(this);
 	}
@@ -56,8 +51,7 @@ public class ProductServiceTest {
 	public void graphicsCardTest() {
 		
 		GraphicsCard graphicsCard = new GraphicsCard();
-		Brand brand = new Brand("Nvidia");
-		graphicsCard.setTitle("GTX 670");
+		graphicsCard.setTitle("Gigabyte Nvidia GTX 670");
 		graphicsCard.setPrice(new BigDecimal(5400));
 		graphicsCard.setStock(13);
 		graphicsCard.setConnectionInterface("PCI-Express");
@@ -71,8 +65,7 @@ public class ProductServiceTest {
 		graphicsCard.setDxVersion("DirectX 10");
 		graphicsCard.setMultiGpuSupport("3-Way SLI");
 		
-		long productId = productService.insertProduct(graphicsCard, brand);
-		Product product = productService.getProduct(productId);
+		Product product = productService.insertProduct(graphicsCard);
 		Assert.assertTrue("Product not of the required type", product instanceof GraphicsCard);
 	}
 
@@ -80,8 +73,7 @@ public class ProductServiceTest {
 	public void hardDiskDriveTest() {
 		
 		HardDiskDrive hardDiskDrive = new HardDiskDrive();
-		Brand brand = new Brand("Western Digital");
-		hardDiskDrive.setTitle("Caviar Green");
+		hardDiskDrive.setTitle("Western Digital Caviar Green");
 		hardDiskDrive.setPrice(new BigDecimal(850));
 		hardDiskDrive.setStock(10);
 		hardDiskDrive.setCapacity("2TB");
@@ -90,8 +82,7 @@ public class ProductServiceTest {
 		hardDiskDrive.setCache(64);
 		hardDiskDrive.setSpinRate("5900RPM - 7200RPM");
 		
-		long productId = productService.insertProduct(hardDiskDrive, brand);
-		Product product = productService.getProduct(productId);
+		Product product = productService.insertProduct(hardDiskDrive);
 		Assert.assertTrue("Product not of the required type", product instanceof HardDiskDrive);
 	}
 	
@@ -99,8 +90,7 @@ public class ProductServiceTest {
 	public void solidStateDriveTest() {
 		
 		SolidStateDrive solidStateDrive = new SolidStateDrive();
-		Brand brand = new Brand("OCZ");
-		solidStateDrive.setTitle("Vertex 4");
+		solidStateDrive.setTitle("OCZ Vertex 4");
 		solidStateDrive.setPrice(new BigDecimal(2400));
 		solidStateDrive.setStock(3);
 		solidStateDrive.setCapacity("256 GB");
@@ -110,16 +100,14 @@ public class ProductServiceTest {
 		solidStateDrive.setReadSpeed(580);
 		solidStateDrive.setWriteSpeed(460);
 		
-		long productId = productService.insertProduct(solidStateDrive, brand);
-		Product product = productService.getProduct(productId);
+		Product product = productService.insertProduct(solidStateDrive);
 		Assert.assertTrue("Product not of the required type", product instanceof SolidStateDrive);
 	}
 	
 	@Test
 	public void memoryTest() {
 		Memory memory = new Memory();
-		Brand brand = new Brand("Corsair");
-		memory.setTitle("Dominator Platinum");
+		memory.setTitle("Corsair Dominator Platinum");
 		memory.setPrice(new BigDecimal(2100));
 		memory.setStock(1);
 		memory.setModules(3);
@@ -129,8 +117,7 @@ public class ProductServiceTest {
 		memory.setFrequency("2200 MHz");
 		memory.setLatency("10-4-8-65-5");
 		
-		long productId = productService.insertProduct(memory, brand);
-		Product product = productService.getProduct(productId);
+		Product product = productService.insertProduct(memory);
 		Assert.assertTrue("Product not of the required type", product instanceof Memory);
 	}
 	
@@ -138,8 +125,7 @@ public class ProductServiceTest {
 	public void powerSupplyTest() {
 		
 		PowerSupplyUnit powerSupply = new PowerSupplyUnit();
-		Brand brand = new Brand("Corsair");
-		powerSupply.setTitle("Performance Series");
+		powerSupply.setTitle("Corsair Performance Series");
 		powerSupply.setPrice(new BigDecimal(879.56));
 		powerSupply.setStock(28);
 		powerSupply.setPower("800 Watt");
@@ -151,17 +137,16 @@ public class ProductServiceTest {
 		powerSupply.setSata(10);
 		powerSupply.setFloppy(0);
 		
-		long productId = productService.insertProduct(powerSupply, brand);
-		Product product = productService.getProduct(productId);
+		Product product = productService.insertProduct(powerSupply);
 		Assert.assertTrue("Product not of the required type", product instanceof PowerSupplyUnit);
 	}
 	
 	@Test
 	public void motherboardTest() {
 		
+		/* TODO: CHANGE TO MOTHERBOARD */
 		Processor processor = new Processor();
-		Brand brand = new Brand("Intel");
-		processor.setTitle("I7 780");
+		processor.setTitle("Intel I7 780");
 		processor.setPrice(new BigDecimal(3499.95));
 		processor.setStock(2);
 		processor.setFamily("BloomField");
@@ -172,8 +157,7 @@ public class ProductServiceTest {
 		processor.setCores(4);
 		processor.setThreads(8);
 		
-		long productId = productService.insertProduct(processor, brand);
-		Product product = productService.getProduct(productId);
+		Product product = productService.insertProduct(processor);
 		Assert.assertTrue("Product not of the required type", product instanceof Processor);
 	}
 	
@@ -181,8 +165,7 @@ public class ProductServiceTest {
 	public void processorTest() {
 		
 		Processor processor = new Processor();
-		Brand brand = new Brand("Intel");
-		processor.setTitle("I7 780");
+		processor.setTitle("Intel I7 780");
 		processor.setPrice(new BigDecimal(3499.95));
 		processor.setStock(2);
 		processor.setFamily("BloomField");
@@ -193,8 +176,7 @@ public class ProductServiceTest {
 		processor.setCores(4);
 		processor.setThreads(8);
 		
-		long productId = productService.insertProduct(processor, brand);
-		Product product = productService.getProduct(productId);
+		Product product = productService.insertProduct(processor);
 		Assert.assertTrue("Product not of the required type", product instanceof Processor);
 	}
 	
@@ -202,8 +184,7 @@ public class ProductServiceTest {
 	public void processorWithInternalGPUTest() {
 		
 		Processor processor = new Processor();
-		Brand brand = new Brand("Intel");
-		processor.setTitle("I7 680");
+		processor.setTitle("Intel I7 680");
 		processor.setPrice(new BigDecimal(3499.95));
 		processor.setStock(2);
 		processor.setFamily("YorkField");
@@ -220,8 +201,7 @@ public class ProductServiceTest {
 		integratedGPU.setDisplays(2);
 		processor.setIntegratedGPU(integratedGPU);
 
-		long productId = productService.insertProduct(processor, brand);
-		Product product = productService.getProduct(productId);
+		Product product = productService.insertProduct(processor);
 		Assert.assertTrue("Product not of the required type", product instanceof Processor);
 	}
 	

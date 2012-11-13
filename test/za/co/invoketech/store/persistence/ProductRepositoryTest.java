@@ -23,7 +23,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import za.co.invoketech.store.application.config.ApplicationInitializer;
-import za.co.invoketech.store.domain.model.product.Brand;
 import za.co.invoketech.store.domain.model.product.Product;
 import za.co.invoketech.store.domain.model.product.peripheral.Mouse;
 import za.co.invoketech.store.persistence.internal.PersistenceModule;
@@ -64,7 +63,6 @@ public class ProductRepositoryTest {
 		mouse.setButtons(7);
 		mouse.setPrice(productPricingService.setStandardMarkupPrice(new BigDecimal(1200)));
 		mouse.setTitle("Ouroboros");
-		mouse.setBrand(new Brand("Razer"));
 		mouse.setDiscontinued(false);
 		
 		productRepository.persist(mouse);
