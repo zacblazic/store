@@ -4,17 +4,17 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SimpleCategory implements Category, Serializable {
+public class DefaultCategory implements Category, Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private String name;
 	private List<Category> subCategories;
 	
-	public SimpleCategory(String name) {
+	public DefaultCategory(String name) {
 		this(name, new ArrayList<Category>());
 	}
 	
-	public SimpleCategory(String name, List<Category> subCategories) {
+	public DefaultCategory(String name, List<Category> subCategories) {
 		this.name = name;
 		this.subCategories = subCategories;
 	}
@@ -47,11 +47,11 @@ public class SimpleCategory implements Category, Serializable {
 	@Override
 	public boolean equals(Object obj) {
 		
-		if(!(obj instanceof SimpleCategory)) {
+		if(!(obj instanceof DefaultCategory)) {
 			return false;
 		}
 		
-		SimpleCategory simpleCat = (SimpleCategory)obj;
+		DefaultCategory simpleCat = (DefaultCategory)obj;
 		if(!simpleCat.getName().equalsIgnoreCase(this.name)) {
 			return false;
 		}
@@ -60,8 +60,10 @@ public class SimpleCategory implements Category, Serializable {
 	}
 
 	@Override
-	public Category getSubCategory(String index) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean hasSubCategories() {
+		if(subCategories.size() != 0) {
+			return true;
+		}
+		return false;
 	}
 }

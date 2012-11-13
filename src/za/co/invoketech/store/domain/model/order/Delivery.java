@@ -29,6 +29,7 @@ public class Delivery implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
+	@Column(name = "DELIVERY_ID")
 	private long id;
 	
 	@Column(name = "DELIVERY_METHOD", nullable = false)

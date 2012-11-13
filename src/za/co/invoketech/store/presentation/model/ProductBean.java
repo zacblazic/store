@@ -24,7 +24,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 import za.co.invoketech.store.presentation.support.Category;
-import za.co.invoketech.store.presentation.support.SimpleCategory;
+import za.co.invoketech.store.presentation.support.DefaultCategory;
 
 /**
  * @author a.carel.g.nel@gmail.com (Carel Nel)
@@ -327,40 +327,40 @@ public class ProductBean implements Serializable {
 	
 	private void initialiseCategoryList() {
 		/*---------Component---------*/
-		categories.add(new SimpleCategory("Component"));
+		categories.add(new DefaultCategory("Component"));
 		
-		categories.get(0).addSubCategory(new SimpleCategory("Chassis"));
+		categories.get(0).addSubCategory(new DefaultCategory("Chassis"));
 		
-		categories.get(0).addSubCategory(new SimpleCategory("Processor"));
+		categories.get(0).addSubCategory(new DefaultCategory("Processor"));
 		
-		categories.get(0).addSubCategory(new SimpleCategory("Motherboard"));
+		categories.get(0).addSubCategory(new DefaultCategory("Motherboard"));
 		
-		categories.get(0).addSubCategory(new SimpleCategory("Graphics Card"));
+		categories.get(0).addSubCategory(new DefaultCategory("Graphics Card"));
 		
-		categories.get(0).addSubCategory(new SimpleCategory("Memory"));
+		categories.get(0).addSubCategory(new DefaultCategory("Memory"));
 		
-		categories.get(0).addSubCategory(new SimpleCategory("Power Supply"));
+		categories.get(0).addSubCategory(new DefaultCategory("Power Supply"));
 		
-		categories.get(0).addSubCategory(new SimpleCategory("Internal Storage"));
-		categories.get(0).getSubCategory(6).addSubCategory(new SimpleCategory("Hard Disk Drive"));
-		categories.get(0).getSubCategory(6).addSubCategory(new SimpleCategory("Solid State Drive"));
+		categories.get(0).addSubCategory(new DefaultCategory("Internal Storage"));
+		categories.get(0).getSubCategory(6).addSubCategory(new DefaultCategory("Hard Disk Drive"));
+		categories.get(0).getSubCategory(6).addSubCategory(new DefaultCategory("Solid State Drive"));
 		
 		/*---------Computer---------*/
-		categories.add(new SimpleCategory("Computer"));
-		categories.get(1).addSubCategory(new SimpleCategory("Custom Computer"));
-		categories.get(1).addSubCategory(new SimpleCategory("Pre-Built Computer"));
+		categories.add(new DefaultCategory("Computer"));
+		categories.get(1).addSubCategory(new DefaultCategory("Custom Computer"));
+		categories.get(1).addSubCategory(new DefaultCategory("Pre-Built Computer"));
 		
 		/*---------Peripheral---------*/		
-		categories.add(new SimpleCategory("Peripheral"));
-		categories.get(2).addSubCategory(new SimpleCategory("Audio"));
-		categories.get(2).addSubCategory(new SimpleCategory("Display"));
-		categories.get(2).addSubCategory(new SimpleCategory("Keyboard"));
-		categories.get(2).addSubCategory(new SimpleCategory("Mouse"));
+		categories.add(new DefaultCategory("Peripheral"));
+		categories.get(2).addSubCategory(new DefaultCategory("Audio"));
+		categories.get(2).addSubCategory(new DefaultCategory("Display"));
+		categories.get(2).addSubCategory(new DefaultCategory("Keyboard"));
+		categories.get(2).addSubCategory(new DefaultCategory("Mouse"));
 		
 		/*---------Software---------*/
-		categories.add(new SimpleCategory("Software"));
-		categories.get(3).addSubCategory(new SimpleCategory("Anti Virus"));
-		categories.get(3).addSubCategory(new SimpleCategory("Game"));
-		categories.get(3).addSubCategory(new SimpleCategory("Operating System"));
+		categories.add(new DefaultCategory("Software"));
+		categories.get(3).addSubCategory(new DefaultCategory("Anti Virus"));
+		categories.get(3).addSubCategory(new DefaultCategory("Game"));
+		categories.get(3).addSubCategory(new DefaultCategory("Operating System"));
 	}
 }

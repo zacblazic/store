@@ -11,16 +11,13 @@
 	<h:outputStylesheet library="css" name="main.css" />
 </h:head>
 <h:body>
-	<ui:composition>
-	
-		<p:commandLink action="index?faces-redirect=true">
-			<p:graphicImage library="images" name="invoketech.png" width="20%" height="20%" cache="true" />
-		</p:commandLink>
-	
-		<ui:insert name="header-toolbar">
-			<ui:include src="header-toolbar.xhtml" />
+	<h:form id="cart">
+		<ui:insert name="header">
+			<ui:include src="/components/header.xhtml" />
 		</ui:insert>
-	
-	</ui:composition>
+		
+		
+			
+	</h:form> 
 </h:body>
 </html>

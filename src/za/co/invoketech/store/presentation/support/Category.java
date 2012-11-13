@@ -8,5 +8,5 @@ public interface Category {
 	List<Category> getSubCategories();
 	void addSubCategory(Category category);
 	Category getSubCategory(int index);
-	Category getSubCategory(String index);
+	boolean hasSubCategories();
 }

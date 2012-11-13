@@ -1,0 +1,48 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:shiro="http://shiro.apache.org/tags">
+		
+	<p:toolbar>
+		<p:toolbarGroup align="left">
+			<p:commandButton value="Home" icon="ui-icon-home" ajax="false" immediate="true" action="/index?faces-redirect=true"/>
+			<p:separator />
+			<p:commandButton value="Products" ajax="false" immediate="true" action="/index?faces-redirect=true"/>
+			<p:inputText id="search-term" value="#{searchBean.searchTerm}" style="margin-left: 5px; margin-right: 5px; width: 300px; height: 20px;" />
+			<p:commandButton value="Search" ajax="false" immediate="true" action="/index?faces-redirect=true"/>
+		</p:toolbarGroup>
+		
+		<p:toolbarGroup align="right">
+				
+			<p:commandButton name="cart" value="Cart (0)" icon="ui-icon-cart" ajax="false" immediate="true" />
+			<p:commandButton name="wish-list" value="Wish List (0)" icon="ui-icon-star" ajax="false" immediate="true" />
+			<p:separator />
+						
+			<shiro:guest>
+				<p:commandButton value="Login" ajax="false" immediate="true" action="/login?faces-redirect=true" />
+				<p:commandButton value="Register" ajax="false" immediate="true" action="/register?faces-redirect=true" />
+			</shiro:guest>
+			
+			<shiro:authenticated>
+				<shiro:hasRole name="admin">
+					<p:splitButton value="Administration" ajax="false" immediate="true" action="/admin/admin?faces-redirect=true">
+						<p:menuitem value="Admin/Manager Accounts" immediate="true" ajax="false" action="/admin/account?faces-redirect=true"/>
+						<p:menuitem value="Roles" ajax="false" immediate="true" action="/admin/role?faces-redirect=true"/>
+					</p:splitButton>
+				</shiro:hasRole>
+				<shiro:hasRole name="manager">
+					<p:commandButton value="Management" ajax="false" immediate="true" action="/manage/manage?faces-redirect=true" />
+				</shiro:hasRole>
+				<shiro:hasRole name="customer">
+					<p:commandButton value="Account" ajax="false" immediate="true" action="/account/account.xhtml?faces-redirect=true" />
+				</shiro:hasRole>
+				<p:commandButton value="Logout" ajax="false" immediate="true" action="#{loginController.logout}" />				
+			</shiro:authenticated>
+			
+			<p:commandButton name="help" value="Help" ajax="false" immediate="true" />
+		</p:toolbarGroup>
+	</p:toolbar>
+		
+</ui:composition>
