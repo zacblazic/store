@@ -2,7 +2,6 @@
 <persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
 	<persistence-unit name="storeJpaUnit" transaction-type="RESOURCE_LOCAL">		
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
-		<class>za.co.invoketech.store.domain.model.product.Brand</class>
 		<class>za.co.invoketech.store.domain.model.product.component.SolidStateDrive</class>
 		<class>za.co.invoketech.store.domain.model.wishlist.WishListItem</class>
 		<class>za.co.invoketech.store.domain.model.product.peripheral.Mouse</class>
@@ -21,6 +20,7 @@
 		<class>za.co.invoketech.store.domain.model.order.DeliveryAddress</class>
 		<class>za.co.invoketech.store.domain.model.product.component.PowerSupplyUnit</class>
 		<class>za.co.invoketech.store.domain.model.wishlist.WishList</class>
+		<class>za.co.invoketech.store.domain.model.product.component.Motherboard</class>
 		<class>za.co.invoketech.store.domain.model.product.computer.CustomComputer</class>
 		<class>za.co.invoketech.store.domain.model.product.component.Memory</class>
 		<class>za.co.invoketech.store.domain.model.account.BooleanPreference</class>
@@ -43,7 +43,6 @@
 		<class>za.co.invoketech.store.domain.model.role.Role</class>
 		<class>za.co.invoketech.store.domain.model.product.computer.PreBuiltComputer</class>
 		<class>za.co.invoketech.store.domain.model.cart.ShoppingCart</class>
-		<class>za.co.invoketech.store.domain.model.product.component.Motherboard</class>
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/store"/>
 			<property name="javax.persistence.jdbc.user" value="root"/>
