@@ -5,12 +5,14 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:shiro="http://shiro.apache.org/tags">
 	
-	<h:outputText value="Welcome, " />
-	<shiro:guest>
-		<h:outputText value="Guest" />
-	</shiro:guest>
-	<shiro:authenticated>
-		<shiro:principal />
-	</shiro:authenticated>
+	<div id="greeting">
+		<h:outputText value="Welcome, " />
+		<shiro:guest>
+			<h:outputText value="Guest" />
+		</shiro:guest>
+		<shiro:authenticated>
+			<shiro:principal />
+		</shiro:authenticated>
+	</div>
 
 </ui:composition>

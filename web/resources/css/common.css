@@ -8,34 +8,30 @@ body {
 	
 }
 
-#header .logo {
+#header #logo {
+	
 }
 
-#header .greeting {
+#header #greeting {
 	font-weight: bold;
 	margin-top: 80px;
 	margin-right: 5px;
 	float: right;
 }
 
-#header .toolbar {
-	margin-bottom: 10px;
+#header #toolbar {
+	margin-bottom: 5px;
 }
 
-/* Body */
-#body {
- 	
+/* Content */
+#content {
+	margin: 5px 0px 5px 5px;
 }
 
 /* Footer */
 #footer {
-	clear: all;
-}
-
-/* Left navigation */
-#left-navigation {
-	width: 185px;
-	float: left;
+	padding-top: 5px;
+	clear: both;
 }
 
 /* Theme overrides */

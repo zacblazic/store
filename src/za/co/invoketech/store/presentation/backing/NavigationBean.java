@@ -36,14 +36,14 @@ import za.co.invoketech.store.presentation.support.Category;
 
 @SessionScoped
 @ManagedBean
-public class LeftNavigationBean {
+public class NavigationBean {
 	
 	@ManagedProperty(value = "#{categoriesBean}")
 	private CategoriesBean categoriesBean;
 	
 	private MenuModel model;
 	
-	public LeftNavigationBean() {
+	public NavigationBean() {
 		model = new DefaultMenuModel();
 	}
 	

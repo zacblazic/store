@@ -9,30 +9,35 @@
 	
 <h:head>
 	<h:outputStylesheet library="css" name="common.css" />
-	<ui:insert name="title">
-		<title>No Title Defined</title>
-	</ui:insert>
+	<h:outputStylesheet library="css" name="single-sidebar.css" />
+	<ui:insert name="title" />
 </h:head>
 <h:body>
 	<h:form>
 	
+		<!-- Header -->
 		<div id="header">
-		<ui:insert name="header">
-			<ui:include src="/template/header.xhtml" />
-		</ui:insert>
+			<ui:insert name="header">
+				<ui:include src="/template/common/header.xhtml" />
+			</ui:insert>
 		</div>
 		
-		<div id="left-navigation">
-			<ui:include src="/template/left-navigation.xhtml" />
+		<!-- Left Sidebar -->
+		<div id="left-sidebar">
+			<ui:insert name="left-sidebar">
+				<ui:include src="/template/common/sidebar/navigation.xhtml" />
+			</ui:insert>
 		</div>
 		
-		<div id="body">
-			<ui:insert name="body" />
+		<!-- Content -->
+		<div id="content">
+			<ui:insert name="content" />
 		</div>
 		
+		<!-- Footer -->
 		<div id="footer">
 			<ui:insert name="footer">
-				<ui:include src="/template/footer.xhtml" />
+				<ui:include src="/template/common/footer.xhtml" />
 			</ui:insert>
 		</div>
 		

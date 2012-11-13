@@ -1,0 +1,38 @@
+/* Navigation */
+#left-sidebar {
+	width: 185px;
+	float: left;
+}
+
+/* Content */
+#content {
+	float: left;
+}
+
+/* Right Sidebar */
+#right-sidebar {
+	width: 185px;
+	float: right;
+}
+
+/* Cart */
+#right-sidebar #cart {
+	margin-bottom: 5px;
+}
+
+#right-sidebar #cart .cart-toolbar {
+	margin-bottom: -5px;
+}
+
+#right-sidebar #cart .cart-button {
+	margin-bottom: 5px;
+}
+
+/* Wish List */
+#right-sidebar #wish-list .wish-list-toolbar {
+	margin-bottom: -5px;
+}
+
+#right-sidebar #wish-list .wish-list-button {
+	margin-bottom: 5px;
+}
