@@ -21,11 +21,6 @@
 			<h:outputLabel for="motherboardStock" value="Stock: " />
 			<p:inputText id="motherboardStock" value="#{motherboardBean.stock}" required="true" Label = "Stock" />
 			
-			<h:outputLabel for="motherboardBrand" value="Brand: " style="width:50px" />
-			<p:selectOneMenu value="#{motherboardBean.theBrand}" id="motherboardBrand" effect="fold" editable="true">
-				<f:selectItems value="#{motherboardBean.brands}" />
-			</p:selectOneMenu>
-			
 			<h:outputLabel for="motherboardPrice" value="Price: " />
 			<p:inputText id="motherboardPrice" value="#{motherboardBean.price}" required="true" Label = "Price" />
 			
