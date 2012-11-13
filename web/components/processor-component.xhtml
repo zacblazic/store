@@ -24,11 +24,6 @@
 			<h:outputLabel for="processorPrice" value="Price: " />
 			<p:inputText id="processorPrice" value="#{processorBean.price}" required="true" Label = "Price" />
 			
-			<h:outputLabel for="processorBrand" value="Brand: " style="width:50px" />
-			<p:selectOneMenu value="#{processorBean.theBrand}" id="processorBrand" effect="fold" editable="true">
-				<f:selectItems value="#{processorBean.brands}" />
-			</p:selectOneMenu>
-			
 			<h:outputLabel for="processorFamily" value="Family: " />
 			<p:inputText id="processorFamily" value="#{processorBean.family}" required="true" Label = "Family" />
 			
