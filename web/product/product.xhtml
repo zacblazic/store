@@ -1,0 +1,40 @@
+<ui:composition template="/template/dual-sidebar-template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+		
+	<ui:define name="title">
+		<title>Product</title>
+	</ui:define>
+	
+	<ui:define name="content">
+		
+		<h:form method="get">
+		
+			<p:lightBox>
+				<h:outputLink value="/store/#{productDisplayBean.image}" title="#{productDisplayBean.title}">
+					<p:graphicImage value="#{productDisplayBean.image}" width="200" height="200" />
+				</h:outputLink>
+			</p:lightBox>
+			
+			<h:panelGrid columns="2">
+				<h:outputLabel for="productTitle" value="Title: " />
+				<h:outputLabel id="productTitle" value="#{productDisplayBean.title}" />
+				
+				<h:outputLabel for="productId" value="Product ID: " />
+				<h:outputLabel id="productId" value="#{productDisplayBean.id}" />
+				
+				<h:outputLabel for="productPrice" value="Price:" />
+				<h:outputLabel id="productPrice" value="R#{productDisplayBean.price}" />
+				
+				<h:outputLabel for="productStock" value="Stock: " />
+				<h:outputLabel id="productStock" value="#{productDisplayBean.stock}" />
+			</h:panelGrid>
+		
+		</h:form>
+		
+	</ui:define>
+		
+</ui:composition>
