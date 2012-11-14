@@ -17,9 +17,11 @@
 package za.co.invoketech.store.service.product;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import junit.framework.Assert;
 
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import za.co.invoketech.store.application.config.Goose;
@@ -32,7 +34,7 @@ import za.co.invoketech.store.domain.model.product.component.PowerSupplyUnit;
 import za.co.invoketech.store.domain.model.product.component.Processor;
 import za.co.invoketech.store.domain.model.product.component.SolidStateDrive;
 
-import com.google.inject.Inject;
+import com.google.inject.Injector;
 
 /**
  * @author a.carel.g.nel@gmail.com (Carel Nel)
@@ -40,13 +42,28 @@ import com.google.inject.Inject;
 
 public class ProductServiceTest {
 
-	@Inject
-	private ProductService productService;
+	private static Injector injector;
+	private static ProductService productService;
 	
 	public ProductServiceTest() {
 		Goose.getInjectorForTesting().injectMembers(this);
 	}
+	
+	@BeforeClass
+	public static void beforeClass() {
+		injector = Goose.getInjectorForTesting();
+		productService = injector.getInstance(ProductService.class);
 		
+		clearProductsFromDatabase();
+	}
+	
+	private static void clearProductsFromDatabase() {
+		List<Product> productList = productService.findAllProducts();
+		for(Product product : productList) {
+			productService.removeProduct(product.getId());
+		}
+	}
+
 	@Test
 	public void graphicsCardTest() {
 		
@@ -68,6 +85,8 @@ public class ProductServiceTest {
 		Product product = productService.insertProduct(graphicsCard);
 		Assert.assertTrue("Product not of the required type", product instanceof GraphicsCard);
 
+		
+		
 		//***********************************************************************************************
 
 		GraphicsCard graphicsCard2 = new GraphicsCard();
@@ -227,7 +246,7 @@ public class ProductServiceTest {
 		hardDiskDrive4.setCache(16);
 		hardDiskDrive4.setSpinRate("7200RPM");
 		
-		Product product = productService.insertProduct(hardDiskDrive4);
+		Product product4 = productService.insertProduct(hardDiskDrive4);
 		Assert.assertTrue("Product not of the required type", product4 instanceof HardDiskDrive);
 
 		//***********************************************************************************************
@@ -272,8 +291,8 @@ public class ProductServiceTest {
 		solidStateDrive.setFormFactor("2.5");
 		solidStateDrive.setBus("Sata 3");
 		solidStateDrive.setCache(1024);
-		solidStateDrive.setReadSpeed(550 MB/s);
-		solidStateDrive.setWriteSpeed(420 MB/s);
+		solidStateDrive.setReadSpeed(550);
+		solidStateDrive.setWriteSpeed(420);
 		
 		Product product = productService.insertProduct(solidStateDrive);
 		Assert.assertTrue("Product not of the required type", product instanceof SolidStateDrive);
@@ -288,8 +307,8 @@ public class ProductServiceTest {
 		solidStateDrive2.setFormFactor("2.5");
 		solidStateDrive2.setBus("Sata 3");
 		solidStateDrive2.setCache(1024);
-		solidStateDrive2.setReadSpeed(550 MB/s);
-		solidStateDrive2.setWriteSpeed(465 MB/s);
+		solidStateDrive2.setReadSpeed(550);
+		solidStateDrive2.setWriteSpeed(465);
 		
 		Product product2 = productService.insertProduct(solidStateDrive2);
 		Assert.assertTrue("Product not of the required type", product2 instanceof SolidStateDrive);
@@ -303,9 +322,9 @@ public class ProductServiceTest {
 		solidStateDrive3.setCapacity("128 GB");
 		solidStateDrive3.setFormFactor("2.5");
 		solidStateDrive3.setBus("Sata 3");
-		solidStateDrive3.setCache();
-		solidStateDrive3.setReadSpeed(415 MB/s);
-		solidStateDrive3.setWriteSpeed(175 MB/s);
+		solidStateDrive3.setCache(0);
+		solidStateDrive3.setReadSpeed(415);
+		solidStateDrive3.setWriteSpeed(175);
 		
 		Product product3 = productService.insertProduct(solidStateDrive3);
 		Assert.assertTrue("Product not of the required type", product3 instanceof SolidStateDrive);
@@ -319,9 +338,9 @@ public class ProductServiceTest {
 		solidStateDrive4.setCapacity("480 GB");
 		solidStateDrive4.setFormFactor("2.5");
 		solidStateDrive4.setBus("Sata 3");
-		solidStateDrive4.setCache();
-		solidStateDrive4.setReadSpeed( MB/s);
-		solidStateDrive4.setWriteSpeed( MB/s);
+		solidStateDrive4.setCache(0);
+		solidStateDrive4.setReadSpeed(0);
+		solidStateDrive4.setWriteSpeed(0);
 		
 		Product product4 = productService.insertProduct(solidStateDrive4);
 		Assert.assertTrue("Product not of the required type", product4 instanceof SolidStateDrive);
@@ -335,9 +354,9 @@ public class ProductServiceTest {
 		solidStateDrive5.setCapacity("120 GB");
 		solidStateDrive5.setFormFactor("2.5");
 		solidStateDrive5.setBus("Sata 3");
-		solidStateDrive5.setCache();
-		solidStateDrive5.setReadSpeed(555 MB/s);
-		solidStateDrive5.setWriteSpeed(520 MB/s);
+		solidStateDrive5.setCache(0);
+		solidStateDrive5.setReadSpeed(555);
+		solidStateDrive5.setWriteSpeed(520);
 		
 		Product product5 = productService.insertProduct(solidStateDrive5);
 		Assert.assertTrue("Product not of the required type", product5 instanceof SolidStateDrive);
@@ -351,9 +370,9 @@ public class ProductServiceTest {
 		solidStateDrive6.setCapacity("64 GB");
 		solidStateDrive6.setFormFactor("2.5");
 		solidStateDrive6.setBus("Sata 3");
-		solidStateDrive6.setCache();
-		solidStateDrive6.setReadSpeed( MB/s);
-		solidStateDrive6.setWriteSpeed( MB/s);
+		solidStateDrive6.setCache(0);
+		solidStateDrive6.setReadSpeed(0);
+		solidStateDrive6.setWriteSpeed(0);
 		
 		Product product6 = productService.insertProduct(solidStateDrive6);
 		Assert.assertTrue("Product not of the required type", product6 instanceof SolidStateDrive);
@@ -368,7 +387,7 @@ public class ProductServiceTest {
 		memory.setModules(1);
 		memory.setSize("4 GB");
 		memory.setType("DDR 3");
-		memory.setVoltage();
+		memory.setVoltage(0);
 		memory.setFrequency("1333 MHz");
 		memory.setLatency("");
 		
@@ -432,7 +451,7 @@ public class ProductServiceTest {
 		memory5.setModules(2);
 		memory5.setSize("8 GB");
 		memory5.setType("DDR 3");
-		memory5.setVoltage();
+		memory5.setVoltage(0);
 		memory5.setFrequency("2133 MHz");
 		memory5.setLatency("9-11-10-27");
 		
@@ -466,11 +485,11 @@ public class ProductServiceTest {
 		powerSupply.setPower("730 Watt");
 		powerSupply.setModular(false);
 		powerSupply.setAtx(3);
-		powerSupply.setEps();
-		powerSupply.setPcie();
-		powerSupply.setMolex();
+		powerSupply.setEps(0);
+		powerSupply.setPcie(0);
+		powerSupply.setMolex(0);
 		powerSupply.setSata(6);
-		powerSupply.setFloppy();
+		powerSupply.setFloppy(0);
 		
 		Product product = productService.insertProduct(powerSupply);
 		Assert.assertTrue("Product not of the required type", product instanceof PowerSupplyUnit);
@@ -488,7 +507,7 @@ public class ProductServiceTest {
 		powerSupply2.setPcie(2);
 		powerSupply2.setMolex(8);
 		powerSupply2.setSata(6);
-		powerSupply2.setFloppy();
+		powerSupply2.setFloppy(0);
 		
 		Product product2 = productService.insertProduct(powerSupply2);
 		Assert.assertTrue("Product not of the required type", product2 instanceof PowerSupplyUnit);
@@ -501,12 +520,12 @@ public class ProductServiceTest {
 		powerSupply3.setStock(23);
 		powerSupply3.setPower("350 Watt");
 		powerSupply3.setModular(false);
-		powerSupply3.setAtx();
-		powerSupply3.setEps();
-		powerSupply3.setPcie();
-		powerSupply3.setMolex();
-		powerSupply3.setSata();
-		powerSupply3.setFloppy();
+		powerSupply3.setAtx(0);
+		powerSupply3.setEps(0);
+		powerSupply3.setPcie(0);
+		powerSupply3.setMolex(0);
+		powerSupply3.setSata(0);
+		powerSupply3.setFloppy(0);
 		
 		Product product3 = productService.insertProduct(powerSupply3);
 		Assert.assertTrue("Product not of the required type", product3 instanceof PowerSupplyUnit);
@@ -519,8 +538,8 @@ public class ProductServiceTest {
 		powerSupply4.setStock(3);
 		powerSupply4.setPower("1000 Watt");
 		powerSupply4.setModular(true);
-		powerSupply4.setAtx();
-		powerSupply4.setEps();
+		powerSupply4.setAtx(0);
+		powerSupply4.setEps(0);
 		powerSupply4.setPcie(6);
 		powerSupply4.setMolex(5);
 		powerSupply4.setSata(12);
@@ -542,7 +561,7 @@ public class ProductServiceTest {
 		powerSupply5.setPcie(6);
 		powerSupply5.setMolex(12);
 		powerSupply5.setSata(16);
-		powerSupply5.setFloppy();
+		powerSupply5.setFloppy(0);
 		
 		Product product5 = productService.insertProduct(powerSupply5);
 		Assert.assertTrue("Product not of the required type", product5 instanceof PowerSupplyUnit);
@@ -555,12 +574,12 @@ public class ProductServiceTest {
 		powerSupply6.setStock(1);
 		powerSupply6.setPower("1200 Watt");
 		powerSupply6.setModular(true);
-		powerSupply6.setAtx();
-		powerSupply6.setEps();
-		powerSupply6.setPcie();
-		powerSupply6.setMolex();
-		powerSupply6.setSata();
-		powerSupply6.setFloppy();
+		powerSupply6.setAtx(0);
+		powerSupply6.setEps(0);
+		powerSupply6.setPcie(0);
+		powerSupply6.setMolex(0);
+		powerSupply6.setSata(0);
+		powerSupply6.setFloppy(0);
 		
 		Product product6 = productService.insertProduct(powerSupply6);
 		Assert.assertTrue("Product not of the required type", product6 instanceof PowerSupplyUnit);
@@ -594,13 +613,13 @@ public class ProductServiceTest {
 		processor.setTitle("AMD FX 6-Core 6100 3.3GHz");
 		processor.setPrice(new BigDecimal(1664));
 		processor.setStock(3);
-		processor.setFamily();
+		processor.setFamily(null);
 		processor.setClockSpeed(3.3f);
 		processor.setBoostClock(3.9f);
 		processor.setSocket("AM3+");
 		processor.setCache(8);
 		processor.setCores(6);
-		processor.setThreads();
+		processor.setThreads(0);
 		
 		Product product = productService.insertProduct(processor);
 		Assert.assertTrue("Product not of the required type", product instanceof Processor);
@@ -611,13 +630,13 @@ public class ProductServiceTest {
 		processor2.setTitle("AMD Sempron 145 2.8GHz");
 		processor2.setPrice(new BigDecimal(421));
 		processor2.setStock(4);
-		processor2.setFamily();
+		processor2.setFamily(null);
 		processor2.setClockSpeed(2.8f);
-		processor2.setBoostClock();
+		processor2.setBoostClock(0);
 		processor2.setSocket("");
 		processor2.setCache(1);
 		processor2.setCores(1);
-		processor2.setThreads();
+		processor2.setThreads(0);
 		
 		Product product2 = productService.insertProduct(processor2);
 		Assert.assertTrue("Product not of the required type", product2 instanceof Processor);
@@ -626,13 +645,13 @@ public class ProductServiceTest {
 		processor3.setTitle("AMD FX 8150 8-Core 3.6GHz");
 		processor3.setPrice(new BigDecimal(2415));
 		processor3.setStock(4);
-		processor3.setFamily();
+		processor3.setFamily(null);
 		processor3.setClockSpeed(3.6f);
 		processor3.setBoostClock(4.2f);
 		processor3.setSocket("AM3+");
 		processor3.setCache(8);
 		processor3.setCores(8);
-		processor3.setThreads();
+		processor3.setThreads(0);
 		
 		Product product3 = productService.insertProduct(processor3);
 		Assert.assertTrue("Product not of the required type", product3 instanceof Processor);
@@ -647,7 +666,7 @@ public class ProductServiceTest {
 		processor.setTitle("Intel Core I3 2120 3.30GHz");
 		processor.setPrice(new BigDecimal(1327));
 		processor.setStock(7);
-		processor.setFamily();
+		processor.setFamily(null);
 		processor.setClockSpeed(3.3f);
 		processor.setBoostClock(3.8f);
 		processor.setSocket("1155");
@@ -670,7 +689,7 @@ public class ProductServiceTest {
 		processor2.setTitle("Intel Core I5 3570K 3.40GHz");
 		processor2.setPrice(new BigDecimal(2349));
 		processor2.setStock(5);
-		processor2.setFamily();
+		processor2.setFamily(null);
 		processor2.setClockSpeed(3.4f);
 		processor2.setBoostClock(3.8f);
 		processor2.setSocket("1155");

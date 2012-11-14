@@ -53,7 +53,8 @@ public interface ProductService {
 	public boolean hasStock(long id);
 	
 	public void setDiscontinue(long id, boolean value);
-	
+
+	public List<Product> findAllProducts();
 	public List<GraphicsCard> findAllGraphicsCards();
 	public List<HardDiskDrive> findAllHardDiskDrives();
 	public List<SolidStateDrive> findAllSolidStateDrives();
@@ -69,6 +70,4 @@ public interface ProductService {
 	public List<AntiVirus> findAntiVirus();
 	public List<Game> findGames();
 	public List<OperatingSystem> findOperatingSystems();
-	
-
 }

@@ -80,6 +80,11 @@ public class ProductServiceImpl implements ProductService {
 		productRepository.merge(product);
 	}
 	
+	public List<Product> findAllProducts() {
+		
+		return productRepository.findAll();
+	}
+	
 	public List<GraphicsCard> findAllGraphicsCards() {
 	
 		List<Product> allProducts = productRepository.findAll();

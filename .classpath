@@ -54,7 +54,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/Development/Workspace/store/libs/restlet/org.restlet.jar">
+	<classpathentry kind="lib" path="W:/Workspace/store/libs/restlet/org.restlet.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
@@ -159,7 +159,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="D:/Development/Workspace/store/libs/restlet/org.restlet.ext.servlet.jar">
+	<classpathentry kind="lib" path="W:/Workspace/store/libs/restlet/org.restlet.ext.servlet.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>

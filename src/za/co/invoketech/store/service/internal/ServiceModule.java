@@ -3,6 +3,8 @@ package za.co.invoketech.store.service.internal;
 import org.apache.shiro.authc.credential.DefaultPasswordService;
 import org.apache.shiro.authc.credential.PasswordService;
 
+import za.co.invoketech.store.application.factory.CustomerFactory;
+import za.co.invoketech.store.application.factory.internal.CustomerFactoryImpl;
 import za.co.invoketech.store.service.account.AccountService;
 import za.co.invoketech.store.service.account.RoleService;
 import za.co.invoketech.store.service.cart.ShoppingCartService;
@@ -23,6 +25,7 @@ public class ServiceModule extends AbstractModule {
 		bind(RoleService.class).to(RoleServiceImpl.class);
 		bind(CustomerService.class).to(CustomerServiceImpl.class);
 		bind(ShoppingCartService.class).to(ShoppingCartServiceImpl.class);
+		bind(CustomerFactory.class).to(CustomerFactoryImpl.class);
 		
 		// Shiro bindings
 		bind(PasswordService.class).to(DefaultPasswordService.class);

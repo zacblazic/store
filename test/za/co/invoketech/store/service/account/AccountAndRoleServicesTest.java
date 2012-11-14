@@ -104,10 +104,7 @@ public class AccountAndRoleServicesTest {
 		{
 			System.out.println("NoRoleTest: Delete Role Success");
 		}
-
-		
 	}
-
 	
 	@Test (expected=RoleNotFoundException.class)
 	public void accountWithNullRoleTest() throws Exception {		
@@ -130,6 +127,6 @@ public class AccountAndRoleServicesTest {
 	public void noAccountTest() throws AccountNotFoundException
 	{
 		Account account = accountService.retrieveAccount(999999);
-		Assert.assertNull(account);		
+		Assert.assertNull(account);
 	}
 }

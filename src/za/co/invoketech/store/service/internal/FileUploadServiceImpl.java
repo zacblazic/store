@@ -40,16 +40,19 @@ public class FileUploadServiceImpl implements FileUploadService {
 	@Inject
 	FileManager fileManager;
 	
-	public void uploadImage(String path, String productCode, String size) {
+	public String uploadImage(String path, String productId) {
 		
-		File directory = new File(IMAGE_RESOURCE_PATH + productCode);
+		File directory = new File(fileManager.getApplicationRoot() + IMAGE_RESOURCE_PATH + productId);
 		
 		if(!directory.exists()) {
 			directory.mkdirs();
 		}
 		
 		File sourceImage = new File(path);
-		File destImage = new File(directory + "/" + size + sourceImage.getName().substring(sourceImage.getName().lastIndexOf('.')));
+		File destImage = new File(directory + "/img_" + productId + "_1" + sourceImage.getName().substring(sourceImage.getName().lastIndexOf('.')));
+		
+		System.out.println("Source - " + sourceImage.getAbsolutePath());
+		System.out.println("Destin - " + destImage.getAbsolutePath());
 		
 		try {
 			com.google.common.io.Files.copy(sourceImage, destImage);
@@ -57,6 +60,8 @@ public class FileUploadServiceImpl implements FileUploadService {
 		catch(IOException ioe) {
 			ioe.printStackTrace();
 		}
+		
+		return destImage.getAbsolutePath();
 	}  
 	
 	public void uploadImage(InputStream is, String extension, long productId) throws IOException {
