@@ -14,6 +14,7 @@ import org.junit.Test;
 import za.co.invoketech.store.application.config.Goose;
 import za.co.invoketech.store.application.exception.InvalidStockException;
 import za.co.invoketech.store.domain.model.account.Account;
+import za.co.invoketech.store.domain.model.cart.ShoppingCart;
 import za.co.invoketech.store.domain.model.cart.ShoppingCartItem;
 import za.co.invoketech.store.domain.model.customer.Address;
 import za.co.invoketech.store.domain.model.customer.Customer;
@@ -137,7 +138,8 @@ public class ShoppingCartServiceTest {
 	
 	@After
 	public void afterTest() {
-		peterCustomer.getShoppingCart().removeAllItems();
+		ShoppingCart cart = peterCustomer.getShoppingCart();
+		cart.removeAllItems();
 		
 		if (peterCustomer.getOrders().size() != 0) {
 			for (Order order : peterCustomer.getOrders()) {
@@ -150,13 +152,12 @@ public class ShoppingCartServiceTest {
 	public void testAddProductToCartWithStock() throws Exception{
 		ShoppingCartItem shoppingCartItem = new ShoppingCartItem(memoryInStock);
 		shoppingCartService.addToCustomerCart(peterCustomer.getId(), shoppingCartItem);
-		
-		System.out.println("INTEST: " + peterCustomer.getShoppingCart().getItemCount());
-		
+				
 		boolean incart = false;
-		List<ShoppingCartItem> itemsInCart = peterCustomer.getShoppingCart().getItems();
+		
+		ShoppingCart cart = peterCustomer.getShoppingCart();
+		List<ShoppingCartItem> itemsInCart = cart.getItems();
 		for (ShoppingCartItem item : itemsInCart) {
-			System.out.println("INTEST: " + item.getId());
 			if (item.getId() == memoryInStock.getId()){
 				incart = true;
 				break;
@@ -166,7 +167,6 @@ public class ShoppingCartServiceTest {
 		Assert.assertTrue(incart);
 	}
 
-	@Ignore
 	@Test (expected=InvalidStockException.class)
 	public void testAddProductToCartNoStock() throws Exception{
 		ShoppingCartItem shoppingCartItem = new ShoppingCartItem(memoryNoStock);
@@ -175,18 +175,25 @@ public class ShoppingCartServiceTest {
 		Assert.fail("No Exception Thrown");
 	}
 	
-	@Ignore
 	@Test
 	public void testUpdateQtyValid() throws Exception{
 		ShoppingCartItem shoppingCartItem = new ShoppingCartItem(memoryInStock);
 		shoppingCartService.addToCustomerCart(peterCustomer.getId(), shoppingCartItem);
 		
+		long itemId = 0;
+		peterCustomer = customerService.findCustomerById(peterCustomer.getId());
+		ShoppingCart cart = peterCustomer.getShoppingCart();
+		List<ShoppingCartItem> sci = cart.getItems();
+		
+		
+		
 		shoppingCartService.updateQuantity(peterCustomer.getId(), shoppingCartItem.getId(), 3);
 		
-		Assert.assertTrue(peterCustomer.getShoppingCart().getItems().get(0).getQuantity() == 3);
+		//ShoppingCart cart = peterCustomer.getShoppingCart();
+		List<ShoppingCartItem> items = cart.getItems();
+		Assert.assertTrue(items.get(0).getQuantity() == 3);
 	}
 
-	@Ignore
 	@Test (expected=InvalidStockException.class)
 	public void testUpdateQtyInvalid() throws Exception{
 		ShoppingCartItem shoppingCartItem = new ShoppingCartItem(memoryInStock);

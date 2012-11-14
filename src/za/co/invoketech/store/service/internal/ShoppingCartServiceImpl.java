@@ -4,6 +4,7 @@ import za.co.invoketech.store.application.exception.CustomerNotFoundException;
 import za.co.invoketech.store.application.exception.InvalidStockException;
 import za.co.invoketech.store.application.exception.ProductNotFoundException;
 import za.co.invoketech.store.application.exception.ShoppingCartItemNotFoundException;
+import za.co.invoketech.store.domain.model.cart.ShoppingCart;
 import za.co.invoketech.store.domain.model.cart.ShoppingCartItem;
 import za.co.invoketech.store.domain.model.customer.Customer;
 import za.co.invoketech.store.domain.model.product.Product;
@@ -39,10 +40,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 		
 		customer = customerService.findCustomerById(customerId);
 		
-		boolean x = customer.getShoppingCart().addItem(item);
-		System.out.println("INSERVICE: " + customer.getShoppingCart().getItemCount() + " " + x );
+		ShoppingCart cart = customer.getShoppingCart();
+		cart.addItem(item);
+		customer.setShoppingCart(cart);
+		
 		customerService.updateCustomer(customer);
-		System.out.println("INSERVICE: " + customer.getShoppingCart().getItemCount());
 	}
 
 	@Override
@@ -61,9 +63,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 			boolean found = false;
 			ShoppingCartItem foundItem = null;
 			
-			for (ShoppingCartItem item : customer.getShoppingCart().getItems()) {
+			ShoppingCart cart = customer.getShoppingCart();
+			for (ShoppingCartItem item : cart.getItems()) {
 				if (item.getId() == shoppingCartItemId) {
-					System.out.println("INSERVICE: " + item.getId());
 					found = true;
 					foundItem = item;
 					break;
@@ -71,7 +73,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 			}
 			
 			if (found) {
-				customer.getShoppingCart().removeItem(foundItem);
+				cart = customer.getShoppingCart();
+				cart.removeItem(foundItem);
 				foundItem.setQuantity(quantity);
 				addToCustomerCart(customerId, foundItem);
 			}
