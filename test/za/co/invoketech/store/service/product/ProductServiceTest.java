@@ -460,20 +460,110 @@ public class ProductServiceTest {
 	public void powerSupplyTest() {
 		
 		PowerSupplyUnit powerSupply = new PowerSupplyUnit();
-		powerSupply.setTitle("Corsair Performance Series");
-		powerSupply.setPrice(new BigDecimal(879.56));
-		powerSupply.setStock(28);
-		powerSupply.setPower("800 Watt");
-		powerSupply.setModular(true);
-		powerSupply.setAtx(1);
-		powerSupply.setEps(1);
-		powerSupply.setPcie(3);
-		powerSupply.setMolex(6);
-		powerSupply.setSata(10);
-		powerSupply.setFloppy(0);
+		powerSupply.setTitle("RaidMax 730W");
+		powerSupply.setPrice(new BigDecimal(675));
+		powerSupply.setStock(12);
+		powerSupply.setPower("730 Watt");
+		powerSupply.setModular(false);
+		powerSupply.setAtx(3);
+		powerSupply.setEps();
+		powerSupply.setPcie();
+		powerSupply.setMolex();
+		powerSupply.setSata(6);
+		powerSupply.setFloppy();
 		
 		Product product = productService.insertProduct(powerSupply);
 		Assert.assertTrue("Product not of the required type", product instanceof PowerSupplyUnit);
+
+		//***********************************************************************************************
+
+		PowerSupplyUnit powerSupply2 = new PowerSupplyUnit();
+		powerSupply2.setTitle("Corsair Gamimg Series 700W");
+		powerSupply2.setPrice(new BigDecimal(1055));
+		powerSupply2.setStock(6);
+		powerSupply2.setPower("700 Watt");
+		powerSupply2.setModular(false);
+		powerSupply2.setAtx(1);
+		powerSupply2.setEps(1);
+		powerSupply2.setPcie(2);
+		powerSupply2.setMolex(8);
+		powerSupply2.setSata(6);
+		powerSupply2.setFloppy();
+		
+		Product product2 = productService.insertProduct(powerSupply2);
+		Assert.assertTrue("Product not of the required type", product2 instanceof PowerSupplyUnit);
+
+		//***********************************************************************************************
+		
+		PowerSupplyUnit powerSupply3 = new PowerSupplyUnit();
+		powerSupply3.setTitle("Thermaltake LitePower 350W");
+		powerSupply3.setPrice(new BigDecimal(197));
+		powerSupply3.setStock(23);
+		powerSupply3.setPower("350 Watt");
+		powerSupply3.setModular(false);
+		powerSupply3.setAtx();
+		powerSupply3.setEps();
+		powerSupply3.setPcie();
+		powerSupply3.setMolex();
+		powerSupply3.setSata();
+		powerSupply3.setFloppy();
+		
+		Product product3 = productService.insertProduct(powerSupply3);
+		Assert.assertTrue("Product not of the required type", product3 instanceof PowerSupplyUnit);
+
+		//***********************************************************************************************
+		
+		PowerSupplyUnit powerSupply4 = new PowerSupplyUnit();
+		powerSupply4.setTitle("Cooler Mater Siletnt Pro M2 1000W");
+		powerSupply4.setPrice(new BigDecimal(2075));
+		powerSupply4.setStock(3);
+		powerSupply4.setPower("1000 Watt");
+		powerSupply4.setModular(true);
+		powerSupply4.setAtx();
+		powerSupply4.setEps();
+		powerSupply4.setPcie(6);
+		powerSupply4.setMolex(5);
+		powerSupply4.setSata(12);
+		powerSupply4.setFloppy(1);
+		
+		Product product4 = productService.insertProduct(powerSupply4);
+		Assert.assertTrue("Product not of the required type", product4 instanceof PowerSupplyUnit);
+
+		//***********************************************************************************************
+
+		PowerSupplyUnit powerSupply5 = new PowerSupplyUnit();
+		powerSupply5.setTitle("Corsair 1200W");
+		powerSupply5.setPrice(new BigDecimal(3087));
+		powerSupply5.setStock(3);
+		powerSupply5.setPower("1200 Watt");
+		powerSupply5.setModular(true);
+		powerSupply5.setAtx(1);
+		powerSupply5.setEps(2);
+		powerSupply5.setPcie(6);
+		powerSupply5.setMolex(12);
+		powerSupply5.setSata(16);
+		powerSupply5.setFloppy();
+		
+		Product product5 = productService.insertProduct(powerSupply5);
+		Assert.assertTrue("Product not of the required type", product5 instanceof PowerSupplyUnit);
+
+		//***********************************************************************************************
+
+		PowerSupplyUnit powerSupply6 = new PowerSupplyUnit();
+		powerSupply6.setTitle("Antec HCP 1200W");
+		powerSupply6.setPrice(new BigDecimal(3003));
+		powerSupply6.setStock(1);
+		powerSupply6.setPower("1200 Watt");
+		powerSupply6.setModular(true);
+		powerSupply6.setAtx();
+		powerSupply6.setEps();
+		powerSupply6.setPcie();
+		powerSupply6.setMolex();
+		powerSupply6.setSata();
+		powerSupply6.setFloppy();
+		
+		Product product6 = productService.insertProduct(powerSupply6);
+		Assert.assertTrue("Product not of the required type", product6 instanceof PowerSupplyUnit);
 	}
 	
 	@Test
