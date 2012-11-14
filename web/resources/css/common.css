@@ -3,14 +3,19 @@ body {
 	font-size: 12px;
 }
 
-/* Header */
-#header {
-	
+/* ----- Theme overrides ----- */
+.ui-state-error {
+   color: black !important;
 }
 
-#header #logo {
-	
+.panel-grid tr, .panel-grid td {
+	border: none !important;
 }
+
+/* ----- Header ----- */
+#header {}
+
+#header #logo {}
 
 #header #greeting {
 	font-weight: bold;
@@ -23,22 +28,28 @@ body {
 	margin-bottom: 5px;
 }
 
-/* Content */
+/* ----- Content ------ */
 #content {
-	margin: 5px 0px 5px 5px;
+	
 }
 
-/* Footer */
+/* ----- Footer ----- */
 #footer {
 	padding-top: 5px;
 	clear: both;
 }
 
-/* Theme overrides */
-.ui-state-error {
-   color: black !important;
+/* ----- Register ----- */
+#content .person-panel, #content .account-panel, #content .address-panel {
+	width: 600px;
+	margin-bottom: 5px;
 }
 
-.panel-grid tr, .panel-grid td {
-	border: none !important;
+.customer-info-panel, .history-panel {
+	width: 300px;
+}
+
+.login-panel {
+	margin-bottom: 5px; 
+	width: 500px;
 }
