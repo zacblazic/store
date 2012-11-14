@@ -101,4 +101,10 @@ public class CustomerServiceImpl implements CustomerService {
 		
 		return customer;
 	}
+
+	@Override
+	public void updateCustomer(Customer customer) {
+		// TODO add validation
+		customerRepository.merge(customer);		
+	}
 }

@@ -1,13 +1,15 @@
 package za.co.invoketech.store.service.cart;
 
+import za.co.invoketech.store.application.exception.CustomerNotFoundException;
+import za.co.invoketech.store.application.exception.InvalidStockException;
+import za.co.invoketech.store.application.exception.ProductNotFoundException;
+import za.co.invoketech.store.application.exception.ShoppingCartItemNotFoundException;
 import za.co.invoketech.store.domain.model.cart.ShoppingCartItem;
-import za.co.invoketech.store.domain.model.customer.Customer;
-import za.co.invoketech.store.domain.model.order.DeliveryAddress;
-import za.co.invoketech.store.domain.model.product.Product;
 
 public interface ShoppingCartService {
-	public void addToCustomerCart (Customer customer, ShoppingCartItem item);
-	public void addToCustomerCart (Customer customer, Product product, int quantity);
-	public void checkout(Customer customer, DeliveryAddress address);
-	public void updateQuantity(ShoppingCartItem shoppingCartItem, int quantity);
+	public void addToCustomerCart (long customerId, ShoppingCartItem item) throws InvalidStockException, ProductNotFoundException, CustomerNotFoundException;
+	public void addToCustomerCart (long customerId, long productId, int quantity) throws InvalidStockException, ProductNotFoundException, CustomerNotFoundException;
+	public void updateQuantity(long customerId, long shoppingCartItemId, int quantity) 
+			throws ShoppingCartItemNotFoundException, CustomerNotFoundException, InvalidStockException, ProductNotFoundException;
+	public void checkout(long customerId, long addressId);
 }
