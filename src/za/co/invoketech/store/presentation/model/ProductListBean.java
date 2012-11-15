@@ -17,10 +17,16 @@
 package za.co.invoketech.store.presentation.model;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
+import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+
+import za.co.invoketech.store.application.config.Goose;
+import za.co.invoketech.store.domain.model.product.Product;
+import za.co.invoketech.store.service.product.ProductService;
+
+import com.google.inject.Inject;
 
 /**
  * @author a.carel.g.nel@gmail.com (Carel Nel)
@@ -28,57 +34,38 @@ import javax.faces.bean.SessionScoped;
 
 @SessionScoped
 @ManagedBean
-public class ProductDisplayBean implements Serializable {
+public class ProductListBean implements Serializable {
 		
 	private static final long serialVersionUID = 1L;
-	private String image;
-	private String title;
-	private long id;
-	private BigDecimal price;
-	private long stock;
 	
-	public ProductDisplayBean() {
-		image = "/images/123456/img_123456_1.jpg";
-		title = "test";
+	@Inject
+	ProductService productService;
+	
+	private List<Product> products; 
+	private Product product;
+	
+	public ProductListBean() {
+		Goose.guicify(this);
+		products = productService.findAllProducts();
 	}
 
-	public String getImage() {
-		return image;
+	public List<Product> getProducts() {
+		return products;
 	}
 
-	public void setImages(String image) {
-		this.image = image;
+	public void setProducts(List<Product> products) {
+		this.products = products;
 	}
 
-	public String getTitle() {
-		return title;
+	public Product getProduct() {
+		return product;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setProduct(Product product) {
+		this.product = product;
 	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public BigDecimal getPrice() {
-		return price;
-	}
-
-	public void setPrice(BigDecimal price) {
-		this.price = price;
-	}
-
-	public long getStock() {
-		return stock;
-	}
-
-	public void setStock(long stock) {
-		this.stock = stock;
+	
+	public void addSelectedItemToCart() {
+		
 	}
 }
