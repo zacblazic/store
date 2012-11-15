@@ -22,4 +22,5 @@ public interface CustomerService {
 	long findCustomerIdByEmail(String email) throws AccountNotFoundException, CustomerNotLinkedException;
 	
 	void addAddress(long customerId, Address address) throws CustomerNotFoundException, MaximumAddressesReachedException;
+	void updateCustomer (Customer customer);
 }

@@ -20,15 +20,15 @@ package za.co.invoketech.store.application.exception;
  * @author garethc18@gmail.com (Gareth Conry)
  *
  */
-public class InsufficientStockException extends Exception {
+public class ShoppingCartItemNotFoundException extends Exception {
 	private static final long serialVersionUID = 1L;
 
-	public InsufficientStockException()
+	public ShoppingCartItemNotFoundException()
 	{
-		super ("Insufficient Stock Available");
+		super ("ShoppingCartItem not found");
 	}
 	
-	public InsufficientStockException(String message)
+	public ShoppingCartItemNotFoundException(String message)
 	{
 		super (message);
 	}
