@@ -1,46 +1,56 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition template="/template/basic-template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
- 
-<h:head>
-	<h:outputStylesheet library="css" name="main.css" />
-</h:head>
-<h:body style="font-size: 12px;">
-	<h:form id="add-address-form">
+ 	
+ 	<ui:define name="title">
+ 		<title>Add Address</title>
+ 	</ui:define>
+ 	
+ 	<ui:define name="page-title">
+ 		<h2>Add Address</h2>
+ 	</ui:define>
 		
-		<p:panel id="add-address-panel" header="Add Address">
-		<p:messages id="messages" />
+	<ui:define name="content">	
 		
-		<p:panelGrid columns="3" styleClass="panel-grid">
-			<h:outputText value="Label:" />
-			<p:inputText id="label" value="#{addressBean.label}" required="true" requiredMessage="Please enter a label."/>
-			<p:message for="label" />
-		 
-		 	<ui:include src="/components/address.xhtml" />
-		 
-		 	<h:outputText value="First Name:" />
-			<p:inputText id="first-name" value="#{addressBean.firstName}" required="true" requiredMessage="Please enter your first name."/>
-			<p:message for="first-name" />
+		<p:panel id="add-address-panel" styleClass="add-address-panel" header="New Address Information">
 			
-			<h:outputText value="Last Name:" />
-			<p:inputText id="last-name" value="#{addressBean.lastName}" required="true" requiredMessage="Please enter your last name."/>
-			<p:message for="last-name" />
+			<p:messages id="messages" globalOnly="true" />
 			
-			<h:outputText value="Phone Number:" />
-			<p:inputText id="phone-number" value="#{addressBean.phoneNumber}" required="true" requiredMessage="Please enter your phone number."/>
-			<p:message for="phone-number" />
-
-			<p:spacer />
-			<p:selectBooleanCheckbox id="primary" value="#{addressBean.primary}" itemLabel="Set as primary address" />
-			<p:spacer />
-		</p:panelGrid>
+			<p:panelGrid columns="3" styleClass="panel-grid">
+				<h:outputText value="Label:" />
+				<p:inputText id="label" value="#{addressBean.label}" required="true" requiredMessage="Please enter a label."/>
+				<p:message for="label" />
+			 
+			 	<ui:include src="/components/address.xhtml" />
+			 
+			 	<h:outputText value="First Name:" />
+				<p:inputText id="first-name" value="#{addressBean.firstName}" required="true" requiredMessage="Please enter your first name."/>
+				<p:message for="first-name" />
+				
+				<h:outputText value="Last Name:" />
+				<p:inputText id="last-name" value="#{addressBean.lastName}" required="true" requiredMessage="Please enter your last name."/>
+				<p:message for="last-name" />
+				
+				<h:outputText value="Phone Number:" />
+				<p:inputText id="phone-number" value="#{addressBean.phoneNumber}" required="true" requiredMessage="Please enter your phone number."/>
+				<p:message for="phone-number" />
+	
+				<p:spacer />
+				<p:selectBooleanCheckbox id="primary" value="#{addressBean.primary}" itemLabel="Set as primary address" />
+				<p:spacer />
+			</p:panelGrid>
+			
 		</p:panel>
-		<p:commandButton value="Add" update="add-address-panel" actionListener="#{addressController.add}" />
-	</h:form> 
-</h:body>
-</html>
+		
+		<p:commandButton id="address-add-button" value="Add" update="add-address-panel" actionListener="#{addressController.add}" />
+		<p:defaultCommand target="address-add-button"></p:defaultCommand>
+		
+	</ui:define>
+	
+	<ui:define name="footer">
+	</ui:define>
+	
+</ui:composition>

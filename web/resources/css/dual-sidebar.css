@@ -4,10 +4,14 @@
 	float: left;
 }
 
+/* Page Title */
+#page-title {
+	float: left;
+}
+
 /* Content */
 #content {
-	margin: 5px 0px 5px 5px;
-	float: left;
+	margin: 0px 5px 5px 5px;
 }
 
 /* Right Sidebar */

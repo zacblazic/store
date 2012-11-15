@@ -1,24 +1,35 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition template="/template/basic-template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:shiro="http://shiro.apache.org/tags">
  
-<h:head>
-</h:head>
-<h:body style="font-size: 12px;">
-	<h:form>
-		<ui:insert name="header-buttons">
-			<ui:include src="/components/header.xhtml" />
-		</ui:insert>
-		<h1>This is the manager page</h1>
-		<h2>Welcome, <shiro:user><shiro:principal/></shiro:user></h2>
+ 	<ui:define name="title">
+		<title>Management</title>
+	</ui:define>
 		
-	</h:form>
+	<ui:define name="page-title">
+		<h2>Management</h2>
+	</ui:define>
+
+	<ui:define name="content">
+		
+		<h:outputText value="Welcome, " />
+		
+		<shiro:user>
+			<shiro:principal/>
+		</shiro:user>
+		
+		<br />
+		<p:commandButton value="Add Product" action="/manage/add-product?faces-redirect=true" />
+		<br />
+		<p:commandButton value="Upload Product Image" action="/manage/upload?faces-redirect=true" />
+		
+	</ui:define>
 	
-</h:body>
-</html>
+	<ui:define name="footer">
+	</ui:define>
+	
+</ui:composition>

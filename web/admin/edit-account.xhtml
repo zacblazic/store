@@ -1,28 +1,26 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition template="/template/basic-template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:shiro="http://shiro.apache.org/tags">
  
-<h:head>
-</h:head>
-<f:metadata>
-  <f:viewParam name="id" value="#{adminAccountRoleBean.selectedAccountId}" />
-  <f:event listener="#{accountController.populateFields}" type="preRenderView"/> 
-</f:metadata>
+	<f:metadata>
+	  <f:viewParam name="id" value="#{adminAccountRoleBean.selectedAccountId}" />
+	  <f:event listener="#{accountController.populateFields}" type="preRenderView"/> 
+	</f:metadata>
 
-<h:body style="font-size: 12px;">
-	<h:form id="form">
-		<ui:insert name="header-buttons">
-			<ui:include src="/components/header.xhtml" />
-		</ui:insert>
+	<ui:define name="title">
+		<title>Edit Admin/Manager Account</title>
+	</ui:define>
 		
-		<h1>Edit Admin/Manager Account</h1>
+	<ui:define name="page-title">
+		<h2>Edit Admin/Manager Account</h2>
+	</ui:define>
 		
+	<ui:define name="content">	
+	
 		<p:panel id="edit-account-panel" header="Edit Account" style="margin-bottom:10px; width:30%">
 		<p:messages id="messages" closable="true" autoUpdate="true" showDetail="true"/>	 
 			<h:panelGrid columns="2">		  		
@@ -47,7 +45,9 @@
 		</p:panel>
 		<p:commandButton type="submit" id="save-acc" update="edit-account-panel" value="Save" action="#{accountController.update}"/>
 		
-	</h:form>
+	</ui:define>
 	
-</h:body>
-</html>
+	<ui:define name="footer">
+	</ui:define>
+	
+</ui:composition>

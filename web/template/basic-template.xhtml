@@ -13,13 +13,18 @@
 	<ui:insert name="title" />
 </h:head>
 <h:body>
-	<h:form>
+	<h:form id="form">
 	
 		<!-- Header -->
 		<div id="header">
-		<ui:insert name="header">
-			<ui:include src="/template/common/header.xhtml" />
-		</ui:insert>
+			<ui:insert name="header">
+				<ui:include src="/template/common/header.xhtml" />
+			</ui:insert>
+		</div>
+		
+		<!-- Page Title -->
+		<div id="page-title">
+			<ui:insert name="page-title" />
 		</div>
 		
 		<!-- Content -->

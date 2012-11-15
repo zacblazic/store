@@ -1,36 +1,38 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition template="/template/basic-template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:shiro="http://shiro.apache.org/tags">
  
-<h:head>
-	<h:outputStylesheet library="css" name="main.css" />
-</h:head>
-<h:body>
-	<h:form id="account-form" styleClass="panel-grid">
-		<ui:insert name="header-buttons">
-			<ui:include src="/components/header.xhtml" />
-		</ui:insert>
+	<ui:define name="title">
+		<title>Account</title>
+	</ui:define>
+	
+	<ui:define name="page-title">
+		<h2>Account</h2>
+	</ui:define>
+	
+	<ui:define name="content">
+	
+		<p:panel header="Customer Information" styleClass="customer-info-panel" >
+			<p:panelGrid styleClass="panel-grid" columns="1">
+				<p:commandLink value="Personal Details" />
+				<p:commandLink value="Address Book" ajax="false" action="/account/address-book?faces-redirect=true" />
+			</p:panelGrid>
+		</p:panel>
 		
-		<p:panelGrid columns="2">
-			<p:panel header="Customer Information" styleClass="customer-info-panel" >
-				<p:panelGrid styleClass="panel-grid" columns="1">
-					<p:commandLink value="Personal Details" />
-					<p:commandLink value="Address Book" />
-				</p:panelGrid>
-			</p:panel>
-			<p:panel header="History" styleClass="history-panel">
-				<p:panelGrid styleClass="panel-grid" columns="1">
-					<p:commandLink value="Orders" />
-					<p:commandLink value="Invoices" />
-				</p:panelGrid>
-			</p:panel>
-		</p:panelGrid>
-			
-	</h:form> 
-</h:body>
-</html>
+		<p:panel header="History" styleClass="history-panel">
+			<p:panelGrid styleClass="panel-grid" columns="1">
+				<p:commandLink value="Orders" />
+				<p:commandLink value="Invoices" />
+			</p:panelGrid>
+		</p:panel>
+	
+	</ui:define>
+	
+	<ui:define name="footer">
+	</ui:define>
+	
+</ui:composition>

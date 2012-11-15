@@ -1,32 +1,27 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition template="/template/basic-template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:shiro="http://shiro.apache.org/tags">
  
-<h:head>
-</h:head>
-<h:body style="font-size: 12px;">
-	<h:form id="form">
-		<ui:insert name="header-buttons">
-			<ui:include src="/components/header.xhtml" />
-		</ui:insert>
+	<ui:define name="title">
+		<title>Accounts</title>
+	</ui:define>
 		
-		<h1>Account Management</h1>
+	<ui:define name="page-title">
+		<h2>Accounts</h2>
+	</ui:define>
+		
+	<ui:define name="content">
 		
 		<p:messages id="messages" closable="true" autoUpdate="true" showDetail="true"/>		
-		<center>
+
 		<p:dataTable id="accounts" var="account" value="#{adminAccountRoleBean.accounts}" rowKey="#{account.id}"  
                  selection="#{adminAccountRoleBean.selectedAccount}" selectionMode="single" style="width:500px;" >
                  <p:ajax event="rowSelect" oncomplete="#{adminAccountRoleBean.enableButtons()}" update="viewButton1 editButton1 deleteButton1"/>
                  <p:ajax event="rowUnselect" oncomplete="#{adminAccountRoleBean.disableButtons()}" update="viewButton1 editButton1 deleteButton1"/>  
-	        <f:facet name="header">  
-	            Admin and Manager Accounts  
-	        </f:facet>  
 	  
 	        <p:column headerText="ID">  
 	            #{account.id}  
@@ -51,8 +46,7 @@
 	        </p:toolbarGroup>
 	        </p:toolbar>
 	        </f:facet>  
-    	</p:dataTable>  
-    	</center>
+    	</p:dataTable>
 		
 		<p:dialog id="dialog1" header="Account Detail" widgetVar="accountDialog" modal="true" resizable="false"  
               showEffect="clip" hideEffect="fold">    
@@ -73,8 +67,10 @@
 	                    actionListener="#{adminAccountRoleBean.removeSelectedAccount}"/>
 	        <p:commandButton id="decline" value="Cancel" onclick="deleteConfirm.hide()" type="button" />                   
 	    </p:confirmDialog>
-    	
-	</h:form>
 	
-</h:body>
-</html>
+	</ui:define>
+    	
+	<ui:define name="footer">
+	</ui:define>
+	
+</ui:composition>

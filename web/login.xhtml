@@ -8,12 +8,17 @@
 	<ui:define name="title">
 		<title>Login</title>
 	</ui:define>
+	
+	<ui:define name="page-title">
+		<h2>Login</h2>
+	</ui:define>
 
 	<ui:define name="content">
-		<p:panel id="login-panel" header="Login" styleClass="login-panel">
+		<p:panel id="login-panel" header="Login Information" styleClass="login-panel">
+			
 			<p:messages id="messages" globalOnly="true" /> 
+			
 			<h:panelGrid columns="3">
-				
 				<h:outputText value="Email: " />
 		  		<p:inputText id="email" value="#{loginBean.email}" required="true" requiredMessage="Please enter your email address." />
 		  		<p:message for="email" />
@@ -25,10 +30,13 @@
 		  		<p:spacer />
 		  		<p:selectBooleanCheckbox id="remember-me" value="#{loginBean.remember}" itemLabel="Remember me" />
 		  		<p:spacer />
-		  		
 			</h:panelGrid>
+			
 		</p:panel>
-		<p:commandButton value="Login" update="login-panel, messages" async="true" action="#{loginController.login}" />
+		
+		<p:commandButton id="login-button" value="Login" update="login-panel, messages" async="true" action="#{loginController.login}" />
+		<p:defaultCommand target="login-button" />
+		
 	</ui:define>
 	
 	<ui:define name="footer" />

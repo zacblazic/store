@@ -9,12 +9,16 @@
 		 <title>Register</title>
 	</ui:define>
 	
+	<ui:define name="page-title">
+		<h2>Register</h2>
+	</ui:define>
+	
 	<ui:define name="content">
 		
 		<p:messages id="messages" globalOnly="true" />
+		
 		<p:panel id="person-panel" styleClass="person-panel" header="Personal Details">
 			<p:panelGrid columns="3" styleClass="panel-grid">
-				
 				<h:outputText value="First Name:" />
 				<p:inputText id="first-name" value="#{personBean.firstName}" required="true" requiredMessage="Please enter your first name."/>
 			  	<p:message for="first-name" />
@@ -33,8 +37,7 @@
 				
 				<h:outputText value="Phone Number:" />
 				<p:inputText id="phone-number" value="#{personBean.phoneNumber}" required="true" requiredMessage="Please enter your phone number." />
-				<p:message for="phone-number" />
-				
+				<p:message for="phone-number" />	
 			</p:panelGrid>
 		</p:panel>
 		
@@ -49,7 +52,10 @@
 				<ui:include src="/components/address.xhtml" />
 			</p:panelGrid>
 		</p:panel>
-		<p:commandButton value="Register" async="true" update="person-panel, account-panel, address-panel, messages" action="#{registerController.register}" />
+		
+		<p:commandButton id="register-button" value="Register" async="true" update="person-panel, account-panel, address-panel, messages" action="#{registerController.register}" />
+		<p:defaultCommand target="register-button" />
+		
 	</ui:define>
 	
 	<ui:define name="footer" />

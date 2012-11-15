@@ -28,6 +28,11 @@ body {
 	margin-bottom: 5px;
 }
 
+/* ----- Page Title ----- */
+#page-title {
+	margin-left: 5px;
+}
+
 /* ----- Content ------ */
 #content {
 	
@@ -39,17 +44,36 @@ body {
 	clear: both;
 }
 
+/* ----- Login ----- */
+.login-panel {
+	margin-bottom: 5px; 
+	width: 500px;
+}
+
 /* ----- Register ----- */
 #content .person-panel, #content .account-panel, #content .address-panel {
 	width: 600px;
 	margin-bottom: 5px;
 }
 
-.customer-info-panel, .history-panel {
+/* ----- Account ----- */
+#content .customer-info-panel, #content .history-panel {
 	width: 300px;
+	float: left;
 }
 
-.login-panel {
-	margin-bottom: 5px; 
-	width: 500px;
+#content .customer-info-panel {
+	margin-right: 5px;
+}
+
+/* ----- Add Address -----*/
+#content .add-address-panel {
+	width: 600px;
+	margin-bottom: 5px;
+}
+
+/* ----- Add Account (Administration) ----- */
+#content .add-account-panel {
+	width: 600px;
+	margin-bottom: 5px;
 }
