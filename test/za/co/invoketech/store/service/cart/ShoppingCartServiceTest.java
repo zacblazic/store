@@ -12,6 +12,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import za.co.invoketech.store.application.config.Goose;
+import za.co.invoketech.store.application.exception.CustomerNotFoundException;
 import za.co.invoketech.store.application.exception.InvalidStockException;
 import za.co.invoketech.store.domain.model.account.Account;
 import za.co.invoketech.store.domain.model.cart.ShoppingCart;
@@ -41,7 +42,6 @@ import com.google.inject.Injector;
 public class ShoppingCartServiceTest {
 	private static Injector injector;
 	 
-	private static RoleService roleService;
 	private static AccountService accountService;
 	private static CustomerService customerService;
 	private static ProductRepository productRepository;
@@ -68,19 +68,19 @@ public class ShoppingCartServiceTest {
 			.addressType(AddressType.PHYSICAL).build();
 		return new Address("Home", internalAddress);
 	}
-	private static DeliveryAddress createDeliveryAddress() {
-		InternalAddress internalAddress = new InternalAddress.Builder()
-			.firstName("Zac")
-			.lastName("Blazic")
-			.phoneNumber("0828943000")
-			.line1("122 Athens Road")
-			.line2("Table View")
-			.city("Cape Town")
-			.postalCode("7441")
-			.country("South Africa")
-			.addressType(AddressType.PHYSICAL).build();
-		return new DeliveryAddress(internalAddress);
-	}
+//	private static DeliveryAddress createDeliveryAddress() {
+//		InternalAddress internalAddress = new InternalAddress.Builder()
+//			.firstName("Zac")
+//			.lastName("Blazic")
+//			.phoneNumber("0828943000")
+//			.line1("122 Athens Road")
+//			.line2("Table View")
+//			.city("Cape Town")
+//			.postalCode("7441")
+//			.country("South Africa")
+//			.addressType(AddressType.PHYSICAL).build();
+//		return new DeliveryAddress(internalAddress);
+//	}
 
 	public ShoppingCartServiceTest() {
 		
@@ -90,7 +90,6 @@ public class ShoppingCartServiceTest {
 	public static void createData() throws Exception {
 		injector = Goose.getInjectorForTesting();
 		
-		roleService = injector.getInstance(RoleService.class);
 		accountService = injector.getInstance(AccountService.class);
 		customerService = injector.getInstance(CustomerService.class);
 		productRepository = injector.getInstance(ProductRepository.class);
@@ -129,6 +128,7 @@ public class ShoppingCartServiceTest {
 	
 	@AfterClass
 	public static void removeData() throws Exception {
+		peterCustomer = customerService.findCustomerById(peterCustomer.getId());
 		customerRepository.remove(peterCustomer);
 		peterCustAcc.setCustomer(null);
 		accountService.removeAccount(peterCustAcc);
@@ -137,9 +137,12 @@ public class ShoppingCartServiceTest {
 	}
 	
 	@After
-	public void afterTest() {
+	public void afterTest() throws CustomerNotFoundException {
+		peterCustomer = customerService.findCustomerById(peterCustomer.getId());
 		ShoppingCart cart = peterCustomer.getShoppingCart();
 		cart.removeAllItems();
+		peterCustomer.setShoppingCart(cart);
+		customerService.updateCustomer(peterCustomer);
 		
 		if (peterCustomer.getOrders().size() != 0) {
 			for (Order order : peterCustomer.getOrders()) {
@@ -155,10 +158,11 @@ public class ShoppingCartServiceTest {
 				
 		boolean incart = false;
 		
+		peterCustomer = customerService.findCustomerById(peterCustomer.getId());
 		ShoppingCart cart = peterCustomer.getShoppingCart();
 		List<ShoppingCartItem> itemsInCart = cart.getItems();
 		for (ShoppingCartItem item : itemsInCart) {
-			if (item.getId() == memoryInStock.getId()){
+			if (item.getProduct().equals(memoryInStock)){
 				incart = true;
 				break;
 			}
@@ -184,12 +188,18 @@ public class ShoppingCartServiceTest {
 		peterCustomer = customerService.findCustomerById(peterCustomer.getId());
 		ShoppingCart cart = peterCustomer.getShoppingCart();
 		List<ShoppingCartItem> sci = cart.getItems();
+		for (ShoppingCartItem item : sci) {
+			if (item.getProduct().equals(memoryInStock)){
+				itemId = item.getId();
+				break;
+			}
+		}
 		
 		
+		shoppingCartService.updateQuantity(peterCustomer.getId(), itemId, 3);
 		
-		shoppingCartService.updateQuantity(peterCustomer.getId(), shoppingCartItem.getId(), 3);
-		
-		//ShoppingCart cart = peterCustomer.getShoppingCart();
+		peterCustomer = customerService.findCustomerById(peterCustomer.getId());
+		cart = peterCustomer.getShoppingCart();
 		List<ShoppingCartItem> items = cart.getItems();
 		Assert.assertTrue(items.get(0).getQuantity() == 3);
 	}
@@ -199,7 +209,18 @@ public class ShoppingCartServiceTest {
 		ShoppingCartItem shoppingCartItem = new ShoppingCartItem(memoryInStock);
 		shoppingCartService.addToCustomerCart(peterCustomer.getId(), shoppingCartItem);
 		
-		shoppingCartService.updateQuantity(peterCustomer.getId(), shoppingCartItem.getId(), 6);
+		long itemId = 0;
+		peterCustomer = customerService.findCustomerById(peterCustomer.getId());
+		ShoppingCart cart = peterCustomer.getShoppingCart();
+		List<ShoppingCartItem> sci = cart.getItems();
+		for (ShoppingCartItem item : sci) {
+			if (item.getProduct().equals(memoryInStock)){
+				itemId = item.getId();
+				break;
+			}
+		}		
+		
+		shoppingCartService.updateQuantity(peterCustomer.getId(),itemId, 6);
 		
 		Assert.fail("No Exception Thrown");
 	}

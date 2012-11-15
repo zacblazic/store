@@ -52,7 +52,7 @@ public class ShoppingCart implements Serializable {
 	@Column(name = "SHOPPING_CART_ID")
 	private long id;
 	
-	@OneToMany(cascade = CascadeType.ALL)
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval=true)
 	@JoinColumn(name = "SHOPPING_CART_ID")
 	private List<ShoppingCartItem> items;
 	

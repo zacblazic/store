@@ -75,6 +75,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 			if (found) {
 				cart = customer.getShoppingCart();
 				cart.removeItem(foundItem);
+				customer.setShoppingCart(cart);
+				customerService.updateCustomer(customer);
+				
 				foundItem.setQuantity(quantity);
 				addToCustomerCart(customerId, foundItem);
 			}
