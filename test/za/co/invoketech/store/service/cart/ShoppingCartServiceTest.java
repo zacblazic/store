@@ -8,7 +8,6 @@ import junit.framework.Assert;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import za.co.invoketech.store.application.config.Goose;
@@ -19,15 +18,16 @@ import za.co.invoketech.store.domain.model.cart.ShoppingCart;
 import za.co.invoketech.store.domain.model.cart.ShoppingCartItem;
 import za.co.invoketech.store.domain.model.customer.Address;
 import za.co.invoketech.store.domain.model.customer.Customer;
-import za.co.invoketech.store.domain.model.order.DeliveryAddress;
+import za.co.invoketech.store.domain.model.order.DeliveryMethod;
 import za.co.invoketech.store.domain.model.order.Order;
+import za.co.invoketech.store.domain.model.order.Payment;
+import za.co.invoketech.store.domain.model.order.PaymentMethod;
 import za.co.invoketech.store.domain.model.product.component.Memory;
 import za.co.invoketech.store.domain.shared.AddressType;
 import za.co.invoketech.store.domain.shared.Gender;
 import za.co.invoketech.store.domain.shared.InternalAddress;
 import za.co.invoketech.store.domain.shared.Person;
 import za.co.invoketech.store.service.account.AccountService;
-import za.co.invoketech.store.service.account.RoleService;
 import za.co.invoketech.store.service.customer.CustomerService;
 import za.co.invoketech.store.service.repository.CustomerRepository;
 import za.co.invoketech.store.service.repository.OrderRepository;
@@ -226,13 +226,15 @@ public class ShoppingCartServiceTest {
 	}
 	
 	@Test
-	@Ignore
-	public void testCheckout() throws Exception{
+	public void testCheckout() throws Exception {
 		ShoppingCartItem shoppingCartItem = new ShoppingCartItem(memoryInStock, 1);
 		shoppingCartService.addToCustomerCart(peterCustomer.getId(), shoppingCartItem);
 		
-		shoppingCartService.checkout(peterCustomer.getId(), peterCustomer.getPrimaryAddress().getId());
+		Payment payment = new Payment(PaymentMethod.CASH);
 		
+		shoppingCartService.checkout(peterCustomer.getId(), peterCustomer.getPrimaryAddress().getId(), payment, DeliveryMethod.COLLECT);
+		
+		peterCustomer = customerService.findCustomerById(peterCustomer.getId());
 		if (peterCustomer.getOrders().size() != 0) {
 			for (Order order : peterCustomer.getOrders()) {
 				Assert.assertTrue(order.getItems().get(0).getProduct().equals(memoryInStock));
