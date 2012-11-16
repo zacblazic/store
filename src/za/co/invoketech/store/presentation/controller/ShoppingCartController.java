@@ -76,6 +76,8 @@ public class ShoppingCartController {
 				item.setSelected(false);
 			}
 		}
+		
+		
 	}
 
 	public String addItem(long productId) {
@@ -111,6 +113,7 @@ public class ShoppingCartController {
 			}
 		}
 		
+		setSelectAll(false);
 		saveCart();
 	}
 	

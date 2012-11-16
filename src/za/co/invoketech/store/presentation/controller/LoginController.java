@@ -29,6 +29,7 @@ import za.co.invoketech.store.presentation.model.LoginBean;
 import za.co.invoketech.store.presentation.support.CustomerBean;
 
 import com.google.inject.servlet.RequestScoped;
+//import za.co.invoketech.store.presentation.support.CustomerBean;
 
 /**
  * @author garethc18@gmail.com (Gareth Conry)

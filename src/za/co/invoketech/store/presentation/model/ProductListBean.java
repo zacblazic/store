@@ -35,7 +35,7 @@ import com.google.inject.Inject;
 @SessionScoped
 @ManagedBean
 public class ProductListBean implements Serializable {
-		
+	
 	private static final long serialVersionUID = 1L;
 	
 	@Inject
@@ -43,11 +43,28 @@ public class ProductListBean implements Serializable {
 	
 	private List<Product> products; 
 	private Product product;
-	
-	
+
 	public ProductListBean() {
 		Goose.guicify(this);
 		products = productService.findAllProducts();
+	}
+
+	public String availibility(long stock) {
+		if(stock > 0) {
+			return "In stock";
+		}
+		else {
+			return "Out of stock";
+		}
+	}
+	
+	public String availibilityColor(long stock) {
+		if(stock > 0) {
+			return "Green";
+		}
+		else {
+			return "Red";
+		}
 	}
 
 	public List<Product> getProducts() {

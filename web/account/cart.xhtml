@@ -16,14 +16,16 @@
 	<ui:define name="content">	
 	
 		<div id="shopping-cart-grid">
-			<p:dataGrid var="shoppingCartItemBean" value="#{shoppingCartBean.shoppingCartItemBeans}" columns="1" rows="10">
+			<p:dataGrid id="xgrid" var="shoppingCartItemBean" value="#{shoppingCartBean.shoppingCartItemBeans}" columns="1" rows="10" emptyMessage="Cart is empty.">
 				
 				<f:facet name="header">
 					<div id="data-grid-header">
 						<table>
 							<tr>
 								<td class="select-checkbox">
-									<p:selectBooleanCheckbox value="#{shoppingCartController.selectAll}" onchange="#{shoppingCartController.toggleSelectAll()}" />
+									<p:selectBooleanCheckbox value="#{shoppingCartController.selectAll}">
+										<p:ajax listener="#{shoppingCartController.toggleSelectAll()}" update="xgrid" />
+									</p:selectBooleanCheckbox>
 								</td>
 								<td class="item-description">
 									<h:outputText value="Item Description" />
@@ -78,6 +80,9 @@
 								<td>
 									<p:commandButton value="Check Out" ajax="false" update="shopping-cart-grid" styleClass="check-out" actionListener="#{shoppingCartController.checkout()}"/>
 								</td>
+								<td style="text-alight: right;">
+									<h:outputText value="Total: R#{shoppingCartBean.getTotal()}" />
+								</td>	
 							</tr>
 						</table>
 					</div>

@@ -27,9 +27,7 @@
 				<h:panelGrid columns="1" width="300">
 					<h:outputText style="font-weight:bold;" value="#{product.title}"  />
 					<h:outputText style="color:grey;" value="R#{product.unitPrice}"  />
-					<h:outputText style="" value="#{product.stock}" />
-					<label id="InStock" style="color:Green;" >In Stock</label>
-					<label id="OutOFStock" style="color:Red" >Out Of Stock</label>
+					<label id="InStock" style="color:#{productListBean.availibilityColor(product.stock)};" >#{productListBean.availibility(product.stock)}</label>
 				</h:panelGrid>
 				
 				<h:panelGrid columns="1">
