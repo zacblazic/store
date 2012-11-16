@@ -23,13 +23,20 @@
 		<h:panelGrid columns="2">
 			<p:graphicImage value="//images/#{product.id}/img_#{product.id}_1.jpg"  width="100" height="100" onclick="" />
 			
-			<h:panelGrid columns="1">
-				<h:outputText value="#{product.title}"  />
-				<h:outputText value="R#{product.unitPrice}"  />
+			<h:panelGrid columns="2">
+				<h:panelGrid columns="1" width="300">
+					<h:outputText style="font-weight:bold;" value="#{product.title}"  />
+					<h:outputText style="color:red;" value="R#{product.unitPrice}"  />
+				</h:panelGrid>
 				
-				<p:commandButton value="Add to cart" oncomplete="">
-					<f:setPropertyActionListener target="#{productListBean.selectedProduct}" value="#{car}" />
-				</p:commandButton>
+				<h:panelGrid columns="1">
+					<p:commandButton value="Add to cart" oncomplete="" style="width:120px;">
+						<f:setPropertyActionListener target="#{productListBean.selectedProduct}" value="#{car}" />
+					</p:commandButton>
+					<p:commandButton value="Add to wishlist" oncomplete="" style="width:120px;">
+						<f:setPropertyActionListener target="#{productListBean.selectedProduct}" value="#{car}" />
+					</p:commandButton>
+				</h:panelGrid>
 			</h:panelGrid>
 		</h:panelGrid>
 		
