@@ -52,11 +52,11 @@
 						<td>
 							<p:graphicImage value="/images/#{shoppingCartItemBean.shoppingCartItem.product.id}/img_#{shoppingCartItemBean.shoppingCartItem.product.id}_1.jpg" width="100" height="100" />
 						</td>
-						<td class="item-description">
+						<td style="width: 505px;">
 							<h:outputText value="#{shoppingCartItemBean.shoppingCartItem.product.title}" />
 						</td>
 						<td class="quantity">
-							<p:spinner min="1" max="#{shoppingCartItemBean.shoppingCartItem.product.stock}" value="#{shoppingCartItemBean.shoppingCartItem.quantity}" />
+							<p:spinner size="2" min="1" max="#{shoppingCartItemBean.shoppingCartItem.product.stock}" value="#{shoppingCartItemBean.shoppingCartItem.quantity}" />
 						</td>
 						<td class="unit-price">
 							<h:outputText value="R#{shoppingCartItemBean.shoppingCartItem.product.unitPrice}" />
@@ -80,7 +80,7 @@
 								<td>
 									<p:commandButton value="Check Out" ajax="false" styleClass="check-out" actionListener="#{shoppingCartController.checkout()}"/>
 								</td>
-								<td style="text-alight: right;">
+								<td style="width: 480px; text-align: right;">
 									<h:outputText value="Total: R#{shoppingCartBean.getTotal()}" />
 								</td>	
 							</tr>
