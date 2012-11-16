@@ -33,7 +33,7 @@
 				</h:panelGrid>
 				
 				<h:panelGrid columns="1">
-					<p:commandButton value="Add to cart" ajax="true" actionListener="#{productListBean.add}" update="products, growl" action="#{shoppingCartController.addItem(product.id)}" disabled="#{productListBean.availibilityColor(product.stock)}" style="width:120px;" >
+					<p:commandButton value="Add to cart" ajax="true" update="products, growl" action="#{shoppingCartController.addItem(product.id)}" disabled="#{productListBean.availibilityColor(product.stock)}" style="width:120px;" >
 					</p:commandButton>
 					<p:commandButton value="Add to wishlist" ajax="false" disabled="true" style="width:120px;">
 					</p:commandButton>

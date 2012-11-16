@@ -210,7 +210,7 @@ public class ShoppingCartController {
 				
 				FacesContext fc = FacesContext.getCurrentInstance();  
 				  if (fc.getExternalContext().getSessionMap().containsKey("shoppingCartBean")) {
-				    fc.getExternalContext().getSessionMap().remove("shoppingCartBean");  
+				    fc.getExternalContext().getSessionMap().put("shoppingCartBean", newBean);  
 				  }
 				
 				newBean.setShoppingCartItemBeans(new ArrayList<ShoppingCartItemBean>());
