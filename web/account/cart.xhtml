@@ -1,0 +1,96 @@
+<ui:composition template="/template/basic-template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+ 	
+ 	<ui:define name="title">
+ 		<title>Your Cart</title>
+ 	</ui:define>
+ 	
+ 	<ui:define name="page-title">
+ 		<h2>Your Cart</h2>
+ 	</ui:define>
+		
+	<ui:define name="content">	
+	
+		<div id="shopping-cart-grid">
+			<p:dataGrid var="shoppingCartItemBean" value="#{shoppingCartBean.shoppingCartItemBeans}" columns="1" rows="10">
+				
+				<f:facet name="header">
+					<div id="data-grid-header">
+						<table>
+							<tr>
+								<td class="select-checkbox">
+									<p:selectBooleanCheckbox value="#{shoppingCartController.selectAll}" onchange="#{shoppingCartController.toggleSelectAll()}" />
+								</td>
+								<td class="item-description">
+									<h:outputText value="Item Description" />
+								</td>
+								<td class="quantity">
+									<h:outputText value="Quantity" />
+								</td>
+								<td class="unit-price">
+									<h:outputText value="Unit Price" />
+								</td>
+								<td class="sub-total">
+									<h:outputText value="Sub Total" />
+								</td>
+							</tr>
+						</table>
+					</div>
+				</f:facet>
+				
+				<table>
+					<tr>
+						<td class="select-checkbox">
+							<p:selectBooleanCheckbox id="select-checkbox" value="#{shoppingCartItemBean.selected}" />
+						</td>
+						<td>
+							<p:graphicImage value="/images/#{shoppingCartItemBean.shoppingCartItem.product.id}/img_#{shoppingCartItemBean.shoppingCartItem.product.id}_1.jpg" width="100" height="100" />
+						</td>
+						<td class="item-description">
+							<h:outputText value="#{shoppingCartItemBean.shoppingCartItem.product.title}" />
+						</td>
+						<td class="quantity">
+							<p:spinner min="1" max="#{shoppingCartItemBean.shoppingCartItem.product.stock}" value="#{shoppingCartItemBean.shoppingCartItem.quantity}" />
+						</td>
+						<td class="unit-price">
+							<h:outputText value="R#{shoppingCartItemBean.shoppingCartItem.product.unitPrice}" />
+						</td>
+						<td class="sub-total">
+							<h:outputText value="R#{shoppingCartItemBean.shoppingCartItem.getSubTotal()}" />
+						</td>
+					</tr>
+				</table>		
+		
+				<f:facet name="footer">
+					<div id="data-grid-footer">
+						<table>
+							<tr>
+								<td>
+									<p:commandButton value="Update Quantity" ajax="false" actionListener="#{shoppingCartController.updateQuantities()}" styleClass="update-quantity-button" />
+								</td>
+								<td>
+									<p:commandButton value="Remove Selected Items" ajax="false" actionListener="#{shoppingCartController.removeItems()}" styleClass="remove-selected-items" />
+								</td>
+								<td>
+									<p:commandButton value="Check Out" styleClass="check-out" />
+								</td>
+							</tr>
+						</table>
+					</div>
+				</f:facet>
+		
+			</p:dataGrid>
+		</div>	
+		
+		
+		
+	</ui:define>
+	
+	<ui:define name="footer">
+	</ui:define>
+	
+</ui:composition>
