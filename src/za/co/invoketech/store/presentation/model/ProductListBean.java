@@ -16,11 +16,14 @@
 
 package za.co.invoketech.store.presentation.model;
 
+import java.awt.event.ActionEvent;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 import za.co.invoketech.store.application.config.Goose;
 import za.co.invoketech.store.domain.model.product.Product;
@@ -44,9 +47,15 @@ public class ProductListBean implements Serializable {
 	private List<Product> products; 
 	private Product product;
 
+	private String title;
+	
 	public ProductListBean() {
 		Goose.guicify(this);
 		products = productService.findAllProducts();
+	}
+	
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public String availibility(long stock) {
@@ -65,6 +74,20 @@ public class ProductListBean implements Serializable {
 		else {
 			return "Red";
 		}
+	}
+	
+	public String hasStock(long stock) {
+		if(stock > 0) {
+			return "false";
+		}
+		else {
+			return "true";
+		}
+	}
+	
+	public void add(ActionEvent actionEvent) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.addMessage(null, new FacesMessage("Product added", title));
 	}
 
 	public List<Product> getProducts() {
