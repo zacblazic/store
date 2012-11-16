@@ -76,7 +76,7 @@
 									<p:commandButton value="Remove Selected Items" ajax="false" actionListener="#{shoppingCartController.removeItems()}" styleClass="remove-selected-items" />
 								</td>
 								<td>
-									<p:commandButton value="Check Out" styleClass="check-out" />
+									<p:commandButton value="Check Out" ajax="false" update="shopping-cart-grid" styleClass="check-out" actionListener="#{shoppingCartController.checkout()}"/>
 								</td>
 							</tr>
 						</table>

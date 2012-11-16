@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.SessionScoped;
 
 import org.apache.shiro.SecurityUtils;
 
@@ -15,21 +14,28 @@ import za.co.invoketech.store.application.exception.AccountNotFoundException;
 import za.co.invoketech.store.application.exception.CustomerNotLinkedException;
 import za.co.invoketech.store.domain.model.cart.ShoppingCart;
 import za.co.invoketech.store.domain.model.cart.ShoppingCartItem;
+import za.co.invoketech.store.domain.model.customer.Address;
 import za.co.invoketech.store.domain.model.customer.Customer;
+import za.co.invoketech.store.domain.model.order.DeliveryMethod;
+import za.co.invoketech.store.domain.model.order.Payment;
+import za.co.invoketech.store.domain.model.order.PaymentMethod;
 import za.co.invoketech.store.domain.model.product.Product;
 import za.co.invoketech.store.presentation.model.ShoppingCartBean;
 import za.co.invoketech.store.presentation.model.ShoppingCartItemBean;
+import za.co.invoketech.store.service.cart.ShoppingCartService;
 import za.co.invoketech.store.service.customer.CustomerService;
 import za.co.invoketech.store.service.product.ProductService;
 
 import com.google.inject.Inject;
+import com.google.inject.servlet.RequestScoped;
 
-@SessionScoped
+@RequestScoped
 @ManagedBean
 public class ShoppingCartController {
 
 	@Inject private ProductService productService;
 	@Inject private CustomerService customerService;
+	@Inject private ShoppingCartService shoppingCartService;
 	
 	@ManagedProperty(value="#{shoppingCartBean}")
 	private ShoppingCartBean shoppingCartBean;
@@ -177,5 +183,32 @@ public class ShoppingCartController {
 	
 	public boolean isAuthenticated() {
 		return SecurityUtils.getSubject().isAuthenticated();
+	}
+	
+	public void checkout() {
+		String email = (String)SecurityUtils.getSubject().getPrincipal();
+		Customer customer = null;
+		
+		try {
+			customer = customerService.findCustomerByEmail(email);
+		} catch (AccountNotFoundException | CustomerNotLinkedException e) {
+			e.printStackTrace();
+		}
+		
+		if(customer != null) {
+			Address address = customer.getPrimaryAddress();
+			Payment payment = new Payment(PaymentMethod.EFT);
+			DeliveryMethod delMethod = DeliveryMethod.COLLECT;
+			
+			try {
+				shoppingCartService.checkout(customer.getId(), address.getId(), payment, delMethod);
+				ShoppingCartBean newBean = new ShoppingCartBean();
+				newBean.setShoppingCartItemBeans(new ArrayList<ShoppingCartItemBean>());
+				setShoppingCartBean(newBean);
+				loadCart();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }

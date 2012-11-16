@@ -132,6 +132,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 		for (ShoppingCartItem sci : sciList) {
 			OrderItem newItem = new OrderItem(sci.getProduct(), sci.getProduct().getUnitPrice(), sci.getQuantity());
 			items.add(newItem);
+			Product product = sci.getProduct();
+			product.setStock(product.getStock() - sci.getQuantity());
+			productService.updateProduct(product);
 		}
 		
 		Address address = null;
