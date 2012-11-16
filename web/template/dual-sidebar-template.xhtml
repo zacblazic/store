@@ -29,6 +29,14 @@
 			</ui:insert>
 		</div>
 		
+		<!-- Right Sidebar -->
+		<div id="right-sidebar">
+			<ui:insert name="right-sidebar">
+				<ui:include src="/template/common/sidebar/cart.xhtml" />
+				<ui:include src="/template/common/sidebar/wish-list.xhtml" />
+			</ui:insert>
+		</div>
+		
 		<!-- Page Title -->
 		<div id="page-title">
 			<ui:insert name="page-title" />
@@ -37,14 +45,6 @@
 		<!-- Content -->
 		<div id="content">
 			<ui:insert name="content" />
-		</div>
-		
-		<!-- Right Sidebar -->
-		<div id="right-sidebar">
-			<ui:insert name="right-sidebar">
-				<ui:include src="/template/common/sidebar/cart.xhtml" />
-				<ui:include src="/template/common/sidebar/wish-list.xhtml" />
-			</ui:insert>
 		</div>
 		
 		<!-- Footer -->
