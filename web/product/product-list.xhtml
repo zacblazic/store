@@ -1,0 +1,35 @@
+<ui:composition template="/template/dual-sidebar-template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+		
+	<ui:define name="title">
+		<title>Products</title>
+	</ui:define>
+	
+	<ui:define name="content">
+		
+	<p:dataList value="#{productListBean.products}" var="product" id="products"
+		paginator="true" rows="5" effectSpeed="fast"
+		paginatorTemplate ="{PreviousPageLink} {CurrentPageReport} {NextPageLink} {RowsPerPageDropdown}"
+		rowsPerPageTemplate="5,10,15" type="none">
+		
+		<f:facet name="header">
+			Products
+		</f:facet>
+		
+		<p:graphicImage value="/images/123456/img_123456_1.jpg"  width="100" height="100" />
+		
+		<h:outputText value="#{product.title}, R#{product.unitPrice}"  />
+		
+		<p:commandButton value="Add to cart" oncomplete="">
+			<f:setPropertyActionListener target="#{productListBean.selectedProduct}" value="#{car}" />
+		</p:commandButton>
+		
+	</p:dataList>
+	
+	</ui:define>
+		
+</ui:composition>

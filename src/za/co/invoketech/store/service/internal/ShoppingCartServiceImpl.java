@@ -82,7 +82,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
 	@Override
 	public void addToCustomerCart(long customerId, long productId,	int quantity) throws InvalidStockException, ProductNotFoundException, CustomerNotFoundException {
-		Product product = productService.getProduct(productId);
+		Product product = productService.findProductById(productId);
 		
 		ShoppingCartItem item = new ShoppingCartItem(product, quantity);
 		addToCustomerCart(customerId, item);

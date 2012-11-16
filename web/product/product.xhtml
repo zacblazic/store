@@ -5,6 +5,11 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 		
+	<f:metadata>
+		<f:viewParam name="id" value="/store/#{productDisplayBean.id}" />
+		<f:event listener="#{productController.populateFields}" type="preRenderView"></f:event>
+	</f:metadata>
+		
 	<ui:define name="title">
 		<title>Product</title>
 	</ui:define>
@@ -23,8 +28,6 @@
 				<h:outputLabel for="productTitle" value="Title: " />
 				<h:outputLabel id="productTitle" value="#{productDisplayBean.title}" />
 				
-				<h:outputLabel for="productId" value="Product ID: " />
-				<h:outputLabel id="productId" value="#{productDisplayBean.id}" />
 				
 				<h:outputLabel for="productPrice" value="Price:" />
 				<h:outputLabel id="productPrice" value="R#{productDisplayBean.price}" />

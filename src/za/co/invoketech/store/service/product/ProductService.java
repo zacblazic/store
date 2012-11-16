@@ -44,7 +44,7 @@ public interface ProductService {
 	
 	public Product insertProduct(Product product);
 	
-	public Product getProduct(long id);
+	public Product findProductById(long id);
 	
 	public void updateProduct(Product product);
 	
