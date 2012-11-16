@@ -44,6 +44,7 @@ public class ProductListBean implements Serializable {
 	private List<Product> products; 
 	private Product product;
 	
+	
 	public ProductListBean() {
 		Goose.guicify(this);
 		products = productService.findAllProducts();

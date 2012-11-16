@@ -14,7 +14,7 @@
 	<p:dataList value="#{productListBean.products}" var="product" id="products"
 		paginator="true" rows="5" effectSpeed="fast"
 		paginatorTemplate ="{PreviousPageLink} {CurrentPageReport} {NextPageLink} {RowsPerPageDropdown}"
-		rowsPerPageTemplate="5,10,15,50" type="none">
+		rowsPerPageTemplate="10,30,50" type="none">
 		
 		<f:facet name="header">
 			Products
@@ -26,15 +26,16 @@
 			<h:panelGrid columns="2">
 				<h:panelGrid columns="1" width="300">
 					<h:outputText style="font-weight:bold;" value="#{product.title}"  />
-					<h:outputText style="color:red;" value="R#{product.unitPrice}"  />
+					<h:outputText style="color:grey;" value="R#{product.unitPrice}"  />
+					<h:outputText style="" value="#{product.stock}" />
+					<label id="InStock" style="color:Green;" >In Stock</label>
+					<label id="OutOFStock" style="color:Red" >Out Of Stock</label>
 				</h:panelGrid>
 				
 				<h:panelGrid columns="1">
 					<p:commandButton value="Add to cart" oncomplete="" style="width:120px;">
-						<f:setPropertyActionListener target="#{productListBean.selectedProduct}" value="#{car}" />
 					</p:commandButton>
 					<p:commandButton value="Add to wishlist" oncomplete="" style="width:120px;">
-						<f:setPropertyActionListener target="#{productListBean.selectedProduct}" value="#{car}" />
 					</p:commandButton>
 				</h:panelGrid>
 			</h:panelGrid>
