@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.SessionScoped;
 
 import org.apache.shiro.SecurityUtils;
 
@@ -27,9 +28,8 @@ import za.co.invoketech.store.service.customer.CustomerService;
 import za.co.invoketech.store.service.product.ProductService;
 
 import com.google.inject.Inject;
-import com.google.inject.servlet.RequestScoped;
 
-@RequestScoped
+@SessionScoped
 @ManagedBean
 public class ShoppingCartController {
 
