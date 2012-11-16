@@ -16,6 +16,7 @@
 
 package za.co.invoketech.store.service.product;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -33,6 +34,7 @@ import za.co.invoketech.store.domain.model.product.component.Memory;
 import za.co.invoketech.store.domain.model.product.component.PowerSupplyUnit;
 import za.co.invoketech.store.domain.model.product.component.Processor;
 import za.co.invoketech.store.domain.model.product.component.SolidStateDrive;
+import za.co.invoketech.store.service.file.FileUploadService;
 
 import com.google.inject.Injector;
 
@@ -44,6 +46,7 @@ public class ProductServiceTest {
 
 	private static Injector injector;
 	private static ProductService productService;
+	private static FileUploadService fileUploadService;
 	
 	public ProductServiceTest() {
 		Goose.getInjectorForTesting().injectMembers(this);
@@ -53,6 +56,7 @@ public class ProductServiceTest {
 	public static void beforeClass() {
 		injector = Goose.getInjectorForTesting();
 		productService = injector.getInstance(ProductService.class);
+		fileUploadService = injector.getInstance(FileUploadService.class);
 		
 		clearProductsFromDatabase();
 	}
@@ -85,7 +89,11 @@ public class ProductServiceTest {
 		Product product = productService.insertProduct(graphicsCard);
 		Assert.assertTrue("Product not of the required type", product instanceof GraphicsCard);
 
-		
+		String path = "W:/Workspace/store/test/za/co/invoketech/store/service/product/images/Gigabyte GTX 670 OC.jpg";
+		String productCode = String.valueOf(product.getId());
+		String newPath = fileUploadService.uploadImage(path, productCode);
+		File image = new File(newPath);
+		Assert.assertTrue(image.getAbsolutePath() + " does not exist", image.exists());
 		
 		//***********************************************************************************************
 
@@ -106,6 +114,12 @@ public class ProductServiceTest {
 		
 		Product product2 = productService.insertProduct(graphicsCard2);
 		Assert.assertTrue("Product not of the required type", product2 instanceof GraphicsCard);
+		
+		String path2 = "W:/Workspace/store/test/za/co/invoketech/store/service/product/images/Gigabyte HD 6950.jpg";
+		String productCode2 = String.valueOf(product2.getId());
+		String newPath2 = fileUploadService.uploadImage(path2, productCode2);
+		File image2 = new File(newPath2);
+		Assert.assertTrue(image2.getAbsolutePath() + " does not exist", image2.exists());
 
 		//***********************************************************************************************
 
@@ -126,6 +140,12 @@ public class ProductServiceTest {
 		
 		Product product3 = productService.insertProduct(graphicsCard3);
 		Assert.assertTrue("Product not of the required type", product3 instanceof GraphicsCard);
+		
+		String path3 = "W:/Workspace/store/test/za/co/invoketech/store/service/product/images/MSI GTX 670 Power Edition.jpg";
+		String productCode3 = String.valueOf(product3.getId());
+		String newPath3 = fileUploadService.uploadImage(path3, productCode3);
+		File image3 = new File(newPath3);
+		Assert.assertTrue(image3.getAbsolutePath() + " does not exist", image3.exists());
 
 		//***********************************************************************************************
 
@@ -147,6 +167,12 @@ public class ProductServiceTest {
 		Product product4 = productService.insertProduct(graphicsCard4);
 		Assert.assertTrue("Product not of the required type", product4 instanceof GraphicsCard);
 
+		String path4 = "W:/Workspace/store/test/za/co/invoketech/store/service/product/images/Asus AMD HD 7950.jpg";
+		String productCode4 = String.valueOf(product4.getId());
+		String newPath4 = fileUploadService.uploadImage(path4, productCode4);
+		File image4 = new File(newPath4);
+		Assert.assertTrue(image4.getAbsolutePath() + " does not exist", image4.exists());
+		
 		//***********************************************************************************************
 
 		GraphicsCard graphicsCard5 = new GraphicsCard();
@@ -167,6 +193,12 @@ public class ProductServiceTest {
 		Product product5 = productService.insertProduct(graphicsCard5);
 		Assert.assertTrue("Product not of the required type", product5 instanceof GraphicsCard);
 
+		String path5 = "W:/Workspace/store/test/za/co/invoketech/store/service/product/images/Gigabyte GTX 680.jpg";
+		String productCode5 = String.valueOf(product5.getId());
+		String newPath5 = fileUploadService.uploadImage(path5, productCode5);
+		File image5 = new File(newPath5);
+		Assert.assertTrue(image5.getAbsolutePath() + " does not exist", image5.exists());
+		
 		//***********************************************************************************************
 
 		GraphicsCard graphicsCard6 = new GraphicsCard();
@@ -186,6 +218,13 @@ public class ProductServiceTest {
 		
 		Product product6 = productService.insertProduct(graphicsCard6);
 		Assert.assertTrue("Product not of the required type", product6 instanceof GraphicsCard);
+		
+		String path6 = "W:/Workspace/store/test/za/co/invoketech/store/service/product/images/MSI GTX 680 Lightning Edition.jpg";
+		String productCode6 = String.valueOf(product6.getId());
+		String newPath6 = fileUploadService.uploadImage(path6, productCode6);
+		File image6 = new File(newPath6);
+		Assert.assertTrue(image6.getAbsolutePath() + " does not exist", image6.exists());
+		
 	}
 
 	@Test
@@ -204,6 +243,12 @@ public class ProductServiceTest {
 		Product product = productService.insertProduct(hardDiskDrive);
 		Assert.assertTrue("Product not of the required type", product instanceof HardDiskDrive);
 
+		String path = "W:/Workspace/store/test/za/co/invoketech/store/service/product/images/Seagate Barracuda 2TB.jpg";
+		String productCode = String.valueOf(product.getId());
+		String newPath = fileUploadService.uploadImage(path, productCode);
+		File image = new File(newPath);
+		Assert.assertTrue(image.getAbsolutePath() + " does not exist", image.exists());
+		
 		//***********************************************************************************************
 
 		HardDiskDrive hardDiskDrive2 = new HardDiskDrive();
@@ -218,7 +263,13 @@ public class ProductServiceTest {
 		
 		Product product2 = productService.insertProduct(hardDiskDrive2);
 		Assert.assertTrue("Product not of the required type", product2 instanceof HardDiskDrive);
-
+		
+		String path2 = "W:/Workspace/store/test/za/co/invoketech/store/service/product/images/WD Caviar Green 3TB.jpg";
+		String productCode2 = String.valueOf(product2.getId());
+		String newPath2 = fileUploadService.uploadImage(path2, productCode2);
+		File image2 = new File(newPath2);
+		Assert.assertTrue(image2.getAbsolutePath() + " does not exist", image2.exists());
+		
 		//***********************************************************************************************
 
 		HardDiskDrive hardDiskDrive3 = new HardDiskDrive();
@@ -234,6 +285,12 @@ public class ProductServiceTest {
 		Product product3 = productService.insertProduct(hardDiskDrive3);
 		Assert.assertTrue("Product not of the required type", product3 instanceof HardDiskDrive);
 
+		String path3 = "W:/Workspace/store/test/za/co/invoketech/store/service/product/images/Seagate Barracuda 3TB.jpg";
+		String productCode3 = String.valueOf(product3.getId());
+		String newPath3 = fileUploadService.uploadImage(path3, productCode3);
+		File image3 = new File(newPath3);
+		Assert.assertTrue(image3.getAbsolutePath() + " does not exist", image3.exists());
+		
 		//***********************************************************************************************
 
 		HardDiskDrive hardDiskDrive4 = new HardDiskDrive();
@@ -248,7 +305,13 @@ public class ProductServiceTest {
 		
 		Product product4 = productService.insertProduct(hardDiskDrive4);
 		Assert.assertTrue("Product not of the required type", product4 instanceof HardDiskDrive);
-
+		
+		String path4 = "W:/Workspace/store/test/za/co/invoketech/store/service/product/images/WD Scorpio Black 320GB.jpg";
+		String productCode4 = String.valueOf(product4.getId());
+		String newPath4 = fileUploadService.uploadImage(path4, productCode4);
+		File image4 = new File(newPath4);
+		Assert.assertTrue(image4.getAbsolutePath() + " does not exist", image4.exists());
+		
 		//***********************************************************************************************
 
 		HardDiskDrive hardDiskDrive5 = new HardDiskDrive();
@@ -263,6 +326,12 @@ public class ProductServiceTest {
 		
 		Product product5 = productService.insertProduct(hardDiskDrive5);
 		Assert.assertTrue("Product not of the required type", product5 instanceof HardDiskDrive);
+		
+		String path5 = "W:/Workspace/store/test/za/co/invoketech/store/service/product/images/Seagate Momentus XT 750GB.jpg";
+		String productCode5 = String.valueOf(product5.getId());
+		String newPath5 = fileUploadService.uploadImage(path5, productCode5);
+		File image5 = new File(newPath5);
+		Assert.assertTrue(image5.getAbsolutePath() + " does not exist", image5.exists());
 
 		//***********************************************************************************************
 
@@ -278,6 +347,12 @@ public class ProductServiceTest {
 		
 		Product product6 = productService.insertProduct(hardDiskDrive6);
 		Assert.assertTrue("Product not of the required type", product6 instanceof HardDiskDrive);
+		
+		String path6 = "W:/Workspace/store/test/za/co/invoketech/store/service/product/images/WD Caviar Black 2TB.jpg";
+		String productCode6 = String.valueOf(product6.getId());
+		String newPath6 = fileUploadService.uploadImage(path6, productCode6);
+		File image6 = new File(newPath6);
+		Assert.assertTrue(image6.getAbsolutePath() + " does not exist", image6.exists());
 	}
 	
 	@Test
@@ -296,6 +371,12 @@ public class ProductServiceTest {
 		
 		Product product = productService.insertProduct(solidStateDrive);
 		Assert.assertTrue("Product not of the required type", product instanceof SolidStateDrive);
+		
+		String path = "W:/Workspace/store/test/za/co/invoketech/store/service/product/images/OCZ Vertex 4 128GB.jpg";
+		String productCode = String.valueOf(product.getId());
+		String newPath = fileUploadService.uploadImage(path, productCode);
+		File image = new File(newPath);
+		Assert.assertTrue(image.getAbsolutePath() + " does not exist", image.exists());
 
 		//***********************************************************************************************
 
@@ -312,6 +393,12 @@ public class ProductServiceTest {
 		
 		Product product2 = productService.insertProduct(solidStateDrive2);
 		Assert.assertTrue("Product not of the required type", product2 instanceof SolidStateDrive);
+		
+		String path2 = "W:/Workspace/store/test/za/co/invoketech/store/service/product/images/OCZ Vertex 4 256GB.jpg";
+		String productCode2 = String.valueOf(product2.getId());
+		String newPath2 = fileUploadService.uploadImage(path2, productCode2);
+		File image2 = new File(newPath2);
+		Assert.assertTrue(image2.getAbsolutePath() + " does not exist", image2.exists());
 
 		//***********************************************************************************************
 
@@ -328,6 +415,12 @@ public class ProductServiceTest {
 		
 		Product product3 = productService.insertProduct(solidStateDrive3);
 		Assert.assertTrue("Product not of the required type", product3 instanceof SolidStateDrive);
+		
+		String path3 = "W:/Workspace/store/test/za/co/invoketech/store/service/product/images/Crucial 128GB.jpg";
+		String productCode3 = String.valueOf(product3.getId());
+		String newPath3 = fileUploadService.uploadImage(path3, productCode3);
+		File image3 = new File(newPath3);
+		Assert.assertTrue(image3.getAbsolutePath() + " does not exist", image3.exists());
 
 		//***********************************************************************************************
 
@@ -344,6 +437,12 @@ public class ProductServiceTest {
 		
 		Product product4 = productService.insertProduct(solidStateDrive4);
 		Assert.assertTrue("Product not of the required type", product4 instanceof SolidStateDrive);
+		
+		String path4 = "W:/Workspace/store/test/za/co/invoketech/store/service/product/images/OCZ Vertex 3 480GB.jpg";
+		String productCode4 = String.valueOf(product4.getId());
+		String newPath4 = fileUploadService.uploadImage(path4, productCode4);
+		File image4 = new File(newPath4);
+		Assert.assertTrue(image4.getAbsolutePath() + " does not exist", image4.exists());
 
 		//***********************************************************************************************
 
@@ -360,6 +459,12 @@ public class ProductServiceTest {
 		
 		Product product5 = productService.insertProduct(solidStateDrive5);
 		Assert.assertTrue("Product not of the required type", product5 instanceof SolidStateDrive);
+		
+		String path5 = "W:/Workspace/store/test/za/co/invoketech/store/service/product/images/Patriot Wildfire 120GB.jpg";
+		String productCode5 = String.valueOf(product5.getId());
+		String newPath5 = fileUploadService.uploadImage(path5, productCode5);
+		File image5 = new File(newPath5);
+		Assert.assertTrue(image5.getAbsolutePath() + " does not exist", image5.exists());
 
 		//***********************************************************************************************
 
@@ -376,6 +481,12 @@ public class ProductServiceTest {
 		
 		Product product6 = productService.insertProduct(solidStateDrive6);
 		Assert.assertTrue("Product not of the required type", product6 instanceof SolidStateDrive);
+		
+		String path6 = "W:/Workspace/store/test/za/co/invoketech/store/service/product/images/Transcend Value Series 64GB.jpg";
+		String productCode6 = String.valueOf(product6.getId());
+		String newPath6 = fileUploadService.uploadImage(path6, productCode6);
+		File image6 = new File(newPath6);
+		Assert.assertTrue(image6.getAbsolutePath() + " does not exist", image6.exists());
 	}
 	
 	@Test
@@ -393,6 +504,12 @@ public class ProductServiceTest {
 		
 		Product product = productService.insertProduct(memory);
 		Assert.assertTrue("Product not of the required type", product instanceof Memory);
+		
+		String path = "W:/Workspace/store/test/za/co/invoketech/store/service/product/images/Transcend JetRam 4GB.jpg";
+		String productCode = String.valueOf(product.getId());
+		String newPath = fileUploadService.uploadImage(path, productCode);
+		File image = new File(newPath);
+		Assert.assertTrue(image.getAbsolutePath() + " does not exist", image.exists());
 
 		//***********************************************************************************************
 
@@ -409,6 +526,12 @@ public class ProductServiceTest {
 		
 		Product product2 = productService.insertProduct(memory2);
 		Assert.assertTrue("Product not of the required type", product2 instanceof Memory);
+		
+		String path2 = "W:/Workspace/store/test/za/co/invoketech/store/service/product/images/Corsair Vengeance 8GB.jpg";
+		String productCode2 = String.valueOf(product2.getId());
+		String newPath2 = fileUploadService.uploadImage(path2, productCode2);
+		File image2 = new File(newPath2);
+		Assert.assertTrue(image2.getAbsolutePath() + " does not exist", image2.exists());
 
 		//***********************************************************************************************
 
@@ -425,6 +548,12 @@ public class ProductServiceTest {
 		
 		Product product3 = productService.insertProduct(memory3);
 		Assert.assertTrue("Product not of the required type", product3 instanceof Memory);
+		
+		String path3 = "W:/Workspace/store/test/za/co/invoketech/store/service/product/images/Corsair Vengeance 4GB OC.jpg";
+		String productCode3 = String.valueOf(product3.getId());
+		String newPath3 = fileUploadService.uploadImage(path3, productCode3);
+		File image3 = new File(newPath3);
+		Assert.assertTrue(image3.getAbsolutePath() + " does not exist", image3.exists());
 
 		//***********************************************************************************************
 
@@ -441,6 +570,12 @@ public class ProductServiceTest {
 		
 		Product product4 = productService.insertProduct(memory4);
 		Assert.assertTrue("Product not of the required type", product4 instanceof Memory);
+		
+		String path4 = "W:/Workspace/store/test/za/co/invoketech/store/service/product/images/Patriot Viper Extreme Series 8GB.jpg";
+		String productCode4 = String.valueOf(product4.getId());
+		String newPath4 = fileUploadService.uploadImage(path4, productCode4);
+		File image4 = new File(newPath4);
+		Assert.assertTrue(image4.getAbsolutePath() + " does not exist", image4.exists());
 
 		//***********************************************************************************************
 
@@ -457,6 +592,12 @@ public class ProductServiceTest {
 		
 		Product product5 = productService.insertProduct(memory5);
 		Assert.assertTrue("Product not of the required type", product5 instanceof Memory);
+		
+		String path5 = "W:/Workspace/store/test/za/co/invoketech/store/service/product/images/Corsair Dominator Platinum 8GB.jpg";
+		String productCode5 = String.valueOf(product5.getId());
+		String newPath5 = fileUploadService.uploadImage(path5, productCode5);
+		File image5 = new File(newPath5);
+		Assert.assertTrue(image5.getAbsolutePath() + " does not exist", image5.exists());
 
 		//***********************************************************************************************
 
@@ -473,6 +614,12 @@ public class ProductServiceTest {
 		
 		Product product6 = productService.insertProduct(memory6);
 		Assert.assertTrue("Product not of the required type", product6 instanceof Memory);
+		
+		String path6 = "W:/Workspace/store/test/za/co/invoketech/store/service/product/images/AMD Entertainment Series.jpg";
+		String productCode6 = String.valueOf(product6.getId());
+		String newPath6 = fileUploadService.uploadImage(path6, productCode6);
+		File image6 = new File(newPath6);
+		Assert.assertTrue(image6.getAbsolutePath() + " does not exist", image6.exists());
 	}
 	
 	@Test
@@ -493,6 +640,12 @@ public class ProductServiceTest {
 		
 		Product product = productService.insertProduct(powerSupply);
 		Assert.assertTrue("Product not of the required type", product instanceof PowerSupplyUnit);
+		
+		String path = "W:/Workspace/store/test/za/co/invoketech/store/service/product/images/Raidmax 730W.jpg";
+		String productCode = String.valueOf(product.getId());
+		String newPath = fileUploadService.uploadImage(path, productCode);
+		File image = new File(newPath);
+		Assert.assertTrue(image.getAbsolutePath() + " does not exist", image.exists());
 
 		//***********************************************************************************************
 
@@ -511,6 +664,12 @@ public class ProductServiceTest {
 		
 		Product product2 = productService.insertProduct(powerSupply2);
 		Assert.assertTrue("Product not of the required type", product2 instanceof PowerSupplyUnit);
+		
+		String path2 = "W:/Workspace/store/test/za/co/invoketech/store/service/product/images/Corsair GS 700W.jpg";
+		String productCode2 = String.valueOf(product2.getId());
+		String newPath2 = fileUploadService.uploadImage(path2, productCode2);
+		File image2 = new File(newPath2);
+		Assert.assertTrue(image2.getAbsolutePath() + " does not exist", image2.exists());
 
 		//***********************************************************************************************
 		
@@ -529,6 +688,12 @@ public class ProductServiceTest {
 		
 		Product product3 = productService.insertProduct(powerSupply3);
 		Assert.assertTrue("Product not of the required type", product3 instanceof PowerSupplyUnit);
+		
+		String path3 = "W:/Workspace/store/test/za/co/invoketech/store/service/product/images/Thermaltake LitePower 350W.jpg";
+		String productCode3 = String.valueOf(product3.getId());
+		String newPath3 = fileUploadService.uploadImage(path3, productCode3);
+		File image3 = new File(newPath3);
+		Assert.assertTrue(image3.getAbsolutePath() + " does not exist", image3.exists());
 
 		//***********************************************************************************************
 		
@@ -547,11 +712,17 @@ public class ProductServiceTest {
 		
 		Product product4 = productService.insertProduct(powerSupply4);
 		Assert.assertTrue("Product not of the required type", product4 instanceof PowerSupplyUnit);
+		
+		String path4 = "W:/Workspace/store/test/za/co/invoketech/store/service/product/images/CoolerMaster Silent Pro 1000W.jpg";
+		String productCode4 = String.valueOf(product4.getId());
+		String newPath4 = fileUploadService.uploadImage(path4, productCode4);
+		File image4 = new File(newPath4);
+		Assert.assertTrue(image4.getAbsolutePath() + " does not exist", image4.exists());
 
 		//***********************************************************************************************
 
 		PowerSupplyUnit powerSupply5 = new PowerSupplyUnit();
-		powerSupply5.setTitle("Corsair 1200W");
+		powerSupply5.setTitle("Corsair Proffesional Series 1200W");
 		powerSupply5.setPrice(new BigDecimal(3087));
 		powerSupply5.setStock(3);
 		powerSupply5.setPower("1200 Watt");
@@ -565,6 +736,12 @@ public class ProductServiceTest {
 		
 		Product product5 = productService.insertProduct(powerSupply5);
 		Assert.assertTrue("Product not of the required type", product5 instanceof PowerSupplyUnit);
+		
+		String path5 = "W:/Workspace/store/test/za/co/invoketech/store/service/product/images/Corsair Proffesional Series 1200W.jpg";
+		String productCode5 = String.valueOf(product5.getId());
+		String newPath5 = fileUploadService.uploadImage(path5, productCode5);
+		File image5 = new File(newPath5);
+		Assert.assertTrue(image5.getAbsolutePath() + " does not exist", image5.exists());
 
 		//***********************************************************************************************
 
@@ -583,6 +760,12 @@ public class ProductServiceTest {
 		
 		Product product6 = productService.insertProduct(powerSupply6);
 		Assert.assertTrue("Product not of the required type", product6 instanceof PowerSupplyUnit);
+		
+		String path6 = "W:/Workspace/store/test/za/co/invoketech/store/service/product/images/Antec HCP 1200W.jpg";
+		String productCode6 = String.valueOf(product6.getId());
+		String newPath6 = fileUploadService.uploadImage(path6, productCode6);
+		File image6 = new File(newPath6);
+		Assert.assertTrue(image6.getAbsolutePath() + " does not exist", image6.exists());
 	}
 	
 	@Test
@@ -623,6 +806,12 @@ public class ProductServiceTest {
 		
 		Product product = productService.insertProduct(processor);
 		Assert.assertTrue("Product not of the required type", product instanceof Processor);
+		
+		String path = "W:/Workspace/store/test/za/co/invoketech/store/service/product/images/AMD FX 6100.jpg";
+		String productCode = String.valueOf(product.getId());
+		String newPath = fileUploadService.uploadImage(path, productCode);
+		File image = new File(newPath);
+		Assert.assertTrue(image.getAbsolutePath() + " does not exist", image.exists());
 
 		//***********************************************************************************************
 
@@ -640,7 +829,15 @@ public class ProductServiceTest {
 		
 		Product product2 = productService.insertProduct(processor2);
 		Assert.assertTrue("Product not of the required type", product2 instanceof Processor);
-
+		
+		String path2 = "W:/Workspace/store/test/za/co/invoketech/store/service/product/images/AMD Sempron 145.jpg";
+		String productCode2 = String.valueOf(product2.getId());
+		String newPath2 = fileUploadService.uploadImage(path2, productCode2);
+		File image2 = new File(newPath2);
+		Assert.assertTrue(image2.getAbsolutePath() + " does not exist", image2.exists());
+		
+		//***********************************************************************************************
+		
 		Processor processor3 = new Processor();
 		processor3.setTitle("AMD FX 8150 8-Core 3.6GHz");
 		processor3.setPrice(new BigDecimal(2415));
@@ -655,6 +852,12 @@ public class ProductServiceTest {
 		
 		Product product3 = productService.insertProduct(processor3);
 		Assert.assertTrue("Product not of the required type", product3 instanceof Processor);
+		
+		String path3 = "W:/Workspace/store/test/za/co/invoketech/store/service/product/images/AMD FX 8150.jpg";
+		String productCode3 = String.valueOf(product3.getId());
+		String newPath3 = fileUploadService.uploadImage(path3, productCode3);
+		File image3 = new File(newPath3);
+		Assert.assertTrue(image3.getAbsolutePath() + " does not exist", image3.exists());
 
 		//***********************************************************************************************
 	}
@@ -682,6 +885,12 @@ public class ProductServiceTest {
 
 		Product product = productService.insertProduct(processor);
 		Assert.assertTrue("Product not of the required type", product instanceof Processor);
+		
+		String path = "W:/Workspace/store/test/za/co/invoketech/store/service/product/images/Intel Core i3 2120.jpg";
+		String productCode = String.valueOf(product.getId());
+		String newPath = fileUploadService.uploadImage(path, productCode);
+		File image = new File(newPath);
+		Assert.assertTrue(image.getAbsolutePath() + " does not exist", image.exists());
 
 		//***********************************************************************************************
 
@@ -705,6 +914,12 @@ public class ProductServiceTest {
 
 		Product product2 = productService.insertProduct(processor2);
 		Assert.assertTrue("Product not of the required type", product2 instanceof Processor);
+		
+		String path2 = "W:/Workspace/store/test/za/co/invoketech/store/service/product/images/Intel i5 3570K.jpg";
+		String productCode2 = String.valueOf(product2.getId());
+		String newPath2 = fileUploadService.uploadImage(path2, productCode2);
+		File image2 = new File(newPath2);
+		Assert.assertTrue(image2.getAbsolutePath() + " does not exist", image2.exists());
 
 		//***********************************************************************************************
 
@@ -728,5 +943,11 @@ public class ProductServiceTest {
 
 		Product product3 = productService.insertProduct(processor3);
 		Assert.assertTrue("Product not of the required type", product3 instanceof Processor);
+		
+		String path3 = "W:/Workspace/store/test/za/co/invoketech/store/service/product/images/Intel i7 3770K.jpg";
+		String productCode3 = String.valueOf(product3.getId());
+		String newPath3 = fileUploadService.uploadImage(path3, productCode3);
+		File image3 = new File(newPath3);
+		Assert.assertTrue(image3.getAbsolutePath() + " does not exist", image3.exists());
 	}
 }

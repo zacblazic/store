@@ -42,7 +42,7 @@ public class FileUploadServiceImpl implements FileUploadService {
 	
 	public String uploadImage(String path, String productId) {
 		
-		File directory = new File(fileManager.getApplicationRoot() + IMAGE_RESOURCE_PATH + productId);
+		File directory = new File("images/" + productId);
 		
 		if(!directory.exists()) {
 			directory.mkdirs();
