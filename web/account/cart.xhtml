@@ -78,7 +78,7 @@
 									<p:commandButton value="Remove Selected Items" ajax="false" actionListener="#{shoppingCartController.removeItems()}" styleClass="remove-selected-items" />
 								</td>
 								<td>
-									<p:commandButton value="Check Out" ajax="false" styleClass="check-out" actionListener="#{shoppingCartController.checkout()}"/>
+									<p:commandButton value="Check Out" ajax="false" update="xgrid" styleClass="check-out" actionListener="#{shoppingCartController.checkout()}"/>
 								</td>
 								<td style="text-alight: right;">
 									<h:outputText value="Total: R#{shoppingCartBean.getTotal()}" />
