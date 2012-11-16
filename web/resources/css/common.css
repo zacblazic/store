@@ -44,6 +44,15 @@ body {
 	clear: both;
 }
 
+/* ---------------------------------- Common ---------------------------------------- */
+/* ----- Data Grid ----- */
+ #content #data-grid-header {
+ 	padding: 5px 0px 5px 5px;
+ }
+ 
+
+/* ---------------------------------- Custom ----------------------------------------- */
+
 /* ----- Login ----- */
 .login-panel {
 	margin-bottom: 5px; 
@@ -76,4 +85,31 @@ body {
 #content .add-account-panel {
 	width: 600px;
 	margin-bottom: 5px;
+}
+
+
+
+/* ----- Shopping Cart Page ----- */
+#content #shopping-cart-grid {
+	width: 1000px;
+}
+
+#content #shopping-cart-grid .item-description {
+	text-align: left;
+	width: 600px;
+}
+
+#content #shopping-cart-grid .quantity {
+	text-align: left;
+	width: 100px;
+}
+
+#content #shopping-cart-grid .unit-price {
+	text-align: left;
+	width: 100px;
+}
+
+#content #shopping-cart-grid .sub-total {
+	text-align: left;
+	width: 100px;	
 }
