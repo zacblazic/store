@@ -1,0 +1,55 @@
+<ui:composition template="/template/basic-template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:shiro="http://shiro.apache.org/tags">
+ 
+	<f:metadata>
+	  <f:viewParam name="id" value="#{ordersBean.orderId}" />
+	  <f:event listener="#{orderController.populate}" type="preRenderView"/> 
+	</f:metadata>
+ 
+	<ui:define name="title">
+		<title>Orders</title>
+	</ui:define>
+		
+	<ui:define name="page-title">
+		<h2>Orders</h2>
+	</ui:define>
+		
+	<ui:define name="content">
+		
+		<p:messages id="messages" closable="true" autoUpdate="true" showDetail="true"/>		
+
+		<p:dataTable id="dataTable" var="item" value="#{orderBean.items}">  
+  
+        <f:facet name="header">  
+            List of Items  
+        </f:facet>  
+  
+        <p:column headerText="Product">  
+            <h:outputText value="#{item.product.title}" /> 
+        </p:column>  
+  
+        <p:column headerText="Quantity">  
+            <h:outputText value="#{item.quantity}" />  
+        </p:column>  
+  
+        <p:column headerText="Unit Price">  
+            <h:outputText value="#{item.unitPrice}" />  
+        </p:column>
+  
+        <f:facet name="footer">  
+            Total R#{orderBean.order.getAmount()}  
+        </f:facet>  
+  
+    </p:dataTable>
+	
+	</ui:define>
+    	
+	<ui:define name="footer">
+	</ui:define>
+	
+</ui:composition>

@@ -137,13 +137,11 @@ public class AdminAccountRoleBean implements Serializable{
 	}*/
 
 	public void enableButtons(){
-		System.out.println("Enabling");
 		setViewDisabled(false);
 		setEditDisabled(false);
 		setDeleteDisabled(false);
 	}
 	public void disableButtons(){
-		System.out.println("Disabling");
 		setViewDisabled(true);
 		setEditDisabled(true);
 		setDeleteDisabled(true);

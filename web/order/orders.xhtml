@@ -1,0 +1,66 @@
+<ui:composition template="/template/basic-template.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:shiro="http://shiro.apache.org/tags">
+ 
+	<ui:define name="title">
+		<title>Orders</title>
+	</ui:define>
+		
+	<ui:define name="page-title">
+		<h2>Orders</h2>
+	</ui:define>
+		
+	<ui:define name="content">
+		
+		<p:messages id="messages" closable="true" autoUpdate="true" showDetail="true"/>		
+
+		<p:dataTable id="orders" var="order" value="#{ordersBean.orders}" rowKey="#{order.id}"  
+                 selection="#{ordersBean.selectedOrder}" selectionMode="single" style="width:auto;" >
+                 <p:ajax event="rowSelect" oncomplete="#{ordersBean.showButton()}" update="viewButton1"/>
+                 <p:ajax event="rowUnselect" oncomplete="#{ordersBean.hideButton()}" update="viewButton1"/>  
+	  
+	        <p:column headerText="ID">  
+	            #{order.id}  
+	        </p:column>  
+	  
+	        <p:column headerText="Status">  
+	            #{order.status}  
+	        </p:column>  
+	  
+	        <p:column headerText="Payment">  
+	            #{order.payment.method}  
+	        </p:column>  
+	  
+	        <p:column headerText="Delivery Method">  
+	            #{order.delivery.method}  
+	        </p:column>  
+	  
+	        <p:column headerText="Invoice">  
+	            #{order.invoice}  
+	        </p:column>  
+	  
+	        <p:column headerText="Order Date">  
+	            #{order.createdDate}  
+	        </p:column>
+	        
+	          
+	        <f:facet name="footer">
+	        <p:toolbar>
+	        <p:toolbarGroup align="right">  
+	            <p:commandButton id="viewButton1" value="View" disabled="#{ordersBean.viewDisabled}"
+	                    action="#{ordersBean.viewOrder}"/>
+	        </p:toolbarGroup>
+	        </p:toolbar>
+	        </f:facet>  
+    	</p:dataTable>
+	
+	</ui:define>
+    	
+	<ui:define name="footer">
+	</ui:define>
+	
+</ui:composition>
