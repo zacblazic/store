@@ -31,7 +31,7 @@
 				</h:panelGrid>
 				
 				<h:panelGrid columns="1">
-					<p:commandButton value="Add to cart" oncomplete="" style="width:120px;">
+					<p:commandButton value="Add to cart" action="#{shoppingCartController.addItem(product.id)}" style="width:120px;">
 					</p:commandButton>
 					<p:commandButton value="Add to wishlist" oncomplete="" style="width:120px;">
 					</p:commandButton>
