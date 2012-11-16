@@ -20,6 +20,7 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -123,6 +124,10 @@ public class ShoppingCartItem implements Serializable {
 	
 	public void resetQuantity() {
 		quantity = DEFAULT_QUANTITY;
+	}
+	
+	public BigDecimal getSubTotal() {
+		return product.getUnitPrice().multiply(new BigDecimal(quantity));
 	}
 	
 	@Override

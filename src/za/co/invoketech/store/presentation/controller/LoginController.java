@@ -26,6 +26,7 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 
 import za.co.invoketech.store.presentation.model.LoginBean;
+import za.co.invoketech.store.presentation.support.CustomerBean;
 
 import com.google.inject.servlet.RequestScoped;
 
@@ -39,14 +40,26 @@ public class LoginController {
 	
 	private static final String indexPage = "/index?faces-redirect=true";
 	
+	@ManagedProperty(value="#{customerBean}")
+	private CustomerBean customerBean;
+	
 	@ManagedProperty(value="#{loginBean}")
 	private LoginBean loginBean;
+	
 	private Subject currentUser;
 	
 	public LoginController() {
 		currentUser = SecurityUtils.getSubject();
 	}
-	
+
+	public CustomerBean getCustomerBean() {
+		return customerBean;
+	}
+
+	public void setCustomerBean(CustomerBean customerBean) {
+		this.customerBean = customerBean;
+	}
+
 	public LoginBean getLoginBean() {
 		return loginBean;
 	}
@@ -61,6 +74,8 @@ public class LoginController {
 		
 		try {
 		    currentUser.login(token);
+		    customerBean.load();
+		    
 		    return indexPage;
 		}
 		catch(AuthenticationException ae) {

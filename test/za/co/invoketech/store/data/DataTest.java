@@ -8,6 +8,8 @@ import org.junit.Test;
 
 import za.co.invoketech.store.application.config.Goose;
 import za.co.invoketech.store.domain.model.account.Account;
+import za.co.invoketech.store.domain.model.cart.ShoppingCart;
+import za.co.invoketech.store.domain.model.cart.ShoppingCartItem;
 import za.co.invoketech.store.domain.model.customer.Address;
 import za.co.invoketech.store.domain.model.customer.Customer;
 import za.co.invoketech.store.domain.model.order.Delivery;
@@ -127,7 +129,6 @@ public class DataTest {
 				mouse.setPrice(new BigDecimal(1200));
 				mouse.setTitle("Razer Ouroboros");
 				mouse.setDiscontinued(false);
-				
 				productRepository.persist(mouse);
 				
 				Mouse newmouse = new Mouse();
@@ -136,9 +137,15 @@ public class DataTest {
 				newmouse.setPrice(new BigDecimal(500));
 				newmouse.setTitle("Coolermaster Sentinel");
 				newmouse.setDiscontinued(false);
-				
 				productRepository.persist(newmouse);
-
+				
+				// Shopping cart for Zac
+				ShoppingCart cart = zacCustomer.getShoppingCart();
+				cart.addItem(new ShoppingCartItem(mouse));
+				cart.addItem(new ShoppingCartItem(newmouse));
+				zacCustomer.setShoppingCart(cart);
+				customerRepository.merge(zacCustomer);
+				
 				OrderItem item1 = new OrderItem(mouse, mouse.getUnitPrice());
 				OrderItem item2 = new OrderItem(newmouse, newmouse.getUnitPrice());
 				

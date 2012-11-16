@@ -87,6 +87,7 @@ body {
 	margin-bottom: 5px;
 }
 
+<<<<<<< HEAD
 
 
 /* ----- Shopping Cart Page ----- */
@@ -112,4 +113,9 @@ body {
 #content #shopping-cart-grid .sub-total {
 	text-align: left;
 	width: 100px;	
+=======
+/* ---- Product ---- */
+#content .product-title {
+	font-style: 
+>>>>>>> branch 'master' of https://github.com/invoketech/store.git
 }
