@@ -7,6 +7,7 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 import org.apache.shiro.SecurityUtils;
 
@@ -206,6 +207,12 @@ public class ShoppingCartController {
 			try {
 				shoppingCartService.checkout(customer.getId(), address.getId(), payment, delMethod);
 				ShoppingCartBean newBean = new ShoppingCartBean();
+				
+				FacesContext fc = FacesContext.getCurrentInstance();  
+				  if (fc.getExternalContext().getSessionMap().containsKey("shoppingCartBean")) {
+				    fc.getExternalContext().getSessionMap().remove("shoppingCartBean");  
+				  }
+				
 				newBean.setShoppingCartItemBeans(new ArrayList<ShoppingCartItemBean>());
 				setShoppingCartBean(newBean);
 				loadCart();

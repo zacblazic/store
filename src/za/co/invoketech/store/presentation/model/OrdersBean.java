@@ -33,7 +33,6 @@ public class OrdersBean implements Serializable{
 	public OrdersBean() {
 		Goose.guicify(this);
 		orders = orderRepository.findAll();
-		hideButton();
 	}
 
 	
