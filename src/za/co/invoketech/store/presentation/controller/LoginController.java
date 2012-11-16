@@ -26,9 +26,10 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 
 import za.co.invoketech.store.presentation.model.LoginBean;
-//import za.co.invoketech.store.presentation.support.CustomerBean;
+import za.co.invoketech.store.presentation.support.CustomerBean;
 
 import com.google.inject.servlet.RequestScoped;
+//import za.co.invoketech.store.presentation.support.CustomerBean;
 
 /**
  * @author garethc18@gmail.com (Gareth Conry)
@@ -38,7 +39,7 @@ import com.google.inject.servlet.RequestScoped;
 @ManagedBean
 public class LoginController {
 	
-	/*private static final String indexPage = "/index?faces-redirect=true";
+	private static final String indexPage = "/index?faces-redirect=true";
 	
 	@ManagedProperty(value="#{customerBean}")
 	private CustomerBean customerBean;
@@ -88,5 +89,5 @@ public class LoginController {
 	public String logout() {
 		currentUser.logout();
 		return indexPage;
-	}*/
+	}
 }
